@@ -5,95 +5,91 @@
   "functional": [
     {
       "id": "TC-FUNC-001",
-      "title": "Verify benchmark report displays all insurance modules ranked by response time",
+      "title": "Verify benchmark report displays all insurance modules ranked by response time against defined targets",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is logged in as Operations Manager with 'benchmark_reports' permission",
-        "At least 5 insurance modules (Claims, Underwriting, Policy Admin, Billing, Renewals) have performance data recorded in the production environment",
-        "Defined performance targets exist for each module in the system configuration (e.g., Claims target response time: 200ms, throughput: 500 req/s, error rate: <1%)",
+        "User is logged in as an Operations Manager with 'benchmark_reports' permission",
+        "At least 5 insurance modules (e.g., Claims, Underwriting, Policy Admin, Billing, Renewals) have recorded performance data in the production environment",
+        "Performance targets (response time, throughput, error rate) have been configured for each module in the system settings",
         "User is on the main Operations Dashboard page"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Click on 'Performance Benchmarking' in the left navigation menu under 'Reports' section",
-          "expectedResult": "The Performance Benchmarking page loads displaying a header 'Module-Level Performance Benchmarking', environment selector defaulting to 'Production', and a date range picker defaulting to the last 30 days"
+          "action": "Click on the 'Performance Benchmarking' menu item in the left navigation panel",
+          "expectedResult": "The Performance Benchmarking landing page loads displaying a summary overview with options for 'Benchmark Reports', 'Optimization Recommendations', and 'Environment Comparison'"
         },
         {
           "step": 2,
-          "action": "Verify the default benchmark report table is displayed with all insurance modules listed",
-          "expectedResult": "A table is displayed with columns: 'Rank', 'Module Name', 'Avg Response Time (ms)', 'Response Time Target (ms)', 'Throughput (req/s)', 'Throughput Target (req/s)', 'Error Rate (%)', 'Error Rate Target (%)', and 'Status'. All 5 modules are listed and ranked from slowest to fastest by response time"
+          "action": "Click the 'Benchmark Reports' card or tab",
+          "expectedResult": "The Benchmark Reports page loads showing a table/grid of all insurance modules with columns: Module Name, Avg Response Time, Target Response Time, Throughput (req/s), Target Throughput, Error Rate (%), Target Error Rate, and Status (Pass/Fail indicator)"
         },
         {
           "step": 3,
-          "action": "Click on the 'Rank By' dropdown and select 'Response Time' if not already selected",
-          "expectedResult": "Modules are sorted in descending order by average response time, with the slowest module ranked #1 at the top. Each module row shows a red indicator if response time exceeds target, green if within target"
+          "action": "Verify the default sort order of the modules in the report table",
+          "expectedResult": "All insurance modules are ranked by response time in descending order (slowest first), clearly identifying the slowest operations at the top of the list"
         },
         {
           "step": 4,
-          "action": "Click on the column header 'Throughput (req/s)' to re-rank modules by throughput",
-          "expectedResult": "The table re-sorts with modules ranked by throughput in ascending order (lowest throughput first). Rank numbers update accordingly. Modules below throughput target show a red indicator"
+          "action": "Click the column header 'Throughput (req/s)' to re-sort the table",
+          "expectedResult": "The table re-sorts all modules by throughput, with the lowest throughput modules appearing first. A sort indicator arrow appears on the Throughput column header"
         },
         {
           "step": 5,
-          "action": "Click on the column header 'Error Rate (%)' to re-rank modules by error rate",
-          "expectedResult": "The table re-sorts with modules ranked by error rate in descending order (highest error rate first). Modules exceeding the error rate target threshold display a red warning icon and the 'Status' column shows 'Exceeds Target'"
+          "action": "Click the column header 'Error Rate (%)' to re-sort the table",
+          "expectedResult": "The table re-sorts all modules by error rate in descending order (highest error rate first). Each module row shows a red indicator if the error rate exceeds the defined target, and green if within target"
         },
         {
           "step": 6,
-          "action": "Verify the summary section at the top of the report shows aggregate statistics",
-          "expectedResult": "A summary panel displays: total modules benchmarked (5), number of modules exceeding at least one target threshold, overall average response time, overall average throughput, and overall average error rate across all modules"
+          "action": "Verify that each module row displays a comparison of actual vs. target values for all three metrics",
+          "expectedResult": "Each row shows actual values alongside target values for response time, throughput, and error rate. Modules exceeding targets are visually highlighted (e.g., red text or warning icon), and modules meeting targets show a green checkmark or 'Pass' status"
         }
       ],
       "postconditions": [
-        "Benchmark report remains displayed with the last selected ranking criteria (Error Rate)",
+        "Benchmark report is displayed with all insurance modules ranked correctly by the selected metric",
+        "User remains on the Benchmark Reports page and can continue interacting with the report",
         "No data has been modified; the report is read-only",
-        "User session remains active on the Performance Benchmarking page"
+        "Report generation event is logged in the system audit trail with timestamp and user ID"
       ]
     },
     {
       "id": "TC-FUNC-002",
-      "title": "Verify benchmark report displays top operations within each module ranked by performance metrics",
+      "title": "Verify benchmark report identifies and ranks top operations within each module by response time",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is logged in as Operations Manager with 'benchmark_reports' permission",
-        "The Claims module has at least 10 distinct operations with recorded performance data (e.g., 'Submit Claim', 'Approve Claim', 'Reject Claim', 'Search Claims', etc.)",
+        "User is logged in as an Operations Manager",
+        "The Claims module has at least 10 distinct operations (e.g., Create Claim, Approve Claim, Reject Claim, Search Claims, etc.) with recorded performance data",
         "Performance targets are defined at the operation level for the Claims module",
-        "User is on the Performance Benchmarking page with the default report loaded"
+        "User is on the Benchmark Reports page"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "In the benchmark report table, click on the 'Claims' module row to expand or drill down into its operations",
-          "expectedResult": "A detailed sub-table or drill-down view opens showing all operations within the Claims module, each with columns: 'Operation Name', 'Avg Response Time (ms)', 'Target Response Time (ms)', 'Throughput (req/s)', 'Target Throughput', 'Error Rate (%)', 'Target Error Rate (%)', and 'Variance from Target'"
+          "action": "Click on the 'Claims' module row in the benchmark report table to expand or drill down into module-level details",
+          "expectedResult": "A detailed view opens showing all operations within the Claims module, listed in a sub-table with columns: Operation Name, Avg Response Time (ms), Target Response Time (ms), Throughput, Target Throughput, Error Rate, Target Error Rate, and Variance (%)"
         },
         {
           "step": 2,
-          "action": "Verify that operations are ranked by response time in descending order (slowest first) by default",
-          "expectedResult": "Operations are listed with the slowest operation at the top. For example, 'Search Claims' might show 850ms against a 300ms target, appearing first. Each operation shows a percentage variance from target (e.g., '+183%' in red text)"
+          "action": "Verify the operations are ranked by response time in descending order (slowest first)",
+          "expectedResult": "The top operations are listed with the slowest response times at the top. For example, 'Generate Claim Report' at 4500ms appears above 'Search Claims' at 2100ms"
         },
         {
           "step": 3,
-          "action": "Identify the top 5 operations listed and verify they include response time, throughput, and error rate data",
-          "expectedResult": "Each of the top 5 operations displays non-null values for all three metrics. Operations exceeding any target threshold are highlighted with a visual indicator (red background or warning icon)"
+          "action": "Verify the Variance column shows the percentage difference between actual and target for each operation",
+          "expectedResult": "Each operation row displays a calculated variance percentage. Operations exceeding targets show a positive variance in red (e.g., '+125%' meaning 125% over target), while operations within target show a negative or zero variance in green"
         },
         {
           "step": 4,
           "action": "Click the 'Back to Module Overview' breadcrumb or back button",
-          "expectedResult": "User returns to the module-level benchmark report with all modules still ranked as previously configured"
-        },
-        {
-          "step": 5,
-          "action": "Click on the 'Underwriting' module row to drill down into its operations",
-          "expectedResult": "The Underwriting operations sub-table loads showing all operations within Underwriting, ranked by response time descending, with the same column structure as the Claims drill-down"
+          "expectedResult": "User returns to the main Benchmark Reports page showing all modules ranked, with the previous sort order and filters preserved"
         }
       ],
       "postconditions": [
-        "User can navigate between module-level and operation-level views without data loss",
-        "All drill-down data is consistent with the selected date range and environment",
-        "Report state is preserved when navigating back to module overview"
+        "Drill-down into module operations displayed correct ranking of top operations by response time",
+        "User is back on the main Benchmark Reports overview page",
+        "No data modifications occurred during the drill-down"
       ]
     },
     {
@@ -102,543 +98,538 @@
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is logged in as Operations Manager with 'benchmark_reports' permission",
-        "At least 3 operations across different modules have metrics exceeding their defined target thresholds (e.g., Claims 'Search Claims' response time 850ms vs 300ms target, Billing 'Generate Invoice' error rate 5% vs 1% target, Underwriting 'Risk Assessment' throughput 50 req/s vs 200 req/s target)",
-        "The optimization recommendation engine is configured and active",
-        "User is on the Performance Benchmarking page"
+        "User is logged in as an Operations Manager",
+        "At least 3 operations across different modules have actual performance metrics exceeding their defined target thresholds (e.g., Claims > Create Claim response time is 3000ms vs. target 1500ms)",
+        "The recommendation engine has been configured with optimization rules and estimated impact calculations",
+        "User is on the Performance Benchmarking landing page"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Click on the 'Optimization Recommendations' tab or section within the Performance Benchmarking page",
-          "expectedResult": "An 'Optimization Recommendations' panel loads displaying a list of recommendations, each tied to a specific operation that exceeds its target threshold. The list is sorted by estimated improvement impact (highest impact first)"
+          "action": "Click on the 'Optimization Recommendations' tab or card on the Performance Benchmarking page",
+          "expectedResult": "The Optimization Recommendations page loads displaying a list of recommendations, each tied to a specific operation that exceeds its target threshold"
         },
         {
           "step": 2,
-          "action": "Review the first recommendation in the list for the operation with the highest impact",
-          "expectedResult": "The recommendation displays: 'Module Name', 'Operation Name', 'Current Metric Value', 'Target Value', 'Variance', 'Recommendation Description' (e.g., 'Optimize database query indexing for Claims Search'), and 'Estimated Improvement Impact' (e.g., 'Potential 60% response time reduction, saving ~330ms per request')"
+          "action": "Verify the first recommendation entry contains the required fields: Module Name, Operation Name, Current Metric Value, Target Value, Recommendation Description, and Estimated Improvement Impact",
+          "expectedResult": "The recommendation displays all required fields. For example: Module: 'Claims', Operation: 'Create Claim', Current Response Time: '3000ms', Target: '1500ms', Recommendation: 'Optimize database query for claim creation by adding index on policy_id', Estimated Impact: 'Reduce response time by ~40% (to ~1800ms)'"
         },
         {
           "step": 3,
-          "action": "Verify that each recommendation includes an estimated improvement impact with quantified metrics",
-          "expectedResult": "All listed recommendations show a quantified estimated impact, such as percentage improvement, absolute time savings, or throughput gain. No recommendation has a blank or 'N/A' impact field"
+          "action": "Verify that recommendations are sorted by estimated improvement impact in descending order (highest impact first)",
+          "expectedResult": "Recommendations with the highest estimated improvement impact appear at the top of the list, allowing the Operations Manager to prioritize the most impactful optimizations"
         },
         {
           "step": 4,
-          "action": "Click on the second recommendation to expand its details",
-          "expectedResult": "An expanded view shows additional details including: historical trend of the metric, when the threshold was first exceeded, severity classification (Critical/High/Medium/Low), and suggested action steps for remediation"
+          "action": "Click on a specific recommendation row to view its detailed breakdown",
+          "expectedResult": "A detail panel or modal opens showing: full recommendation description, root cause analysis summary, estimated effort level (Low/Medium/High), estimated improvement percentage, historical trend of the metric, and a link to the related benchmark report entry"
         },
         {
           "step": 5,
-          "action": "Verify that only operations exceeding their target thresholds have recommendations generated",
-          "expectedResult": "No recommendations are listed for operations that are within their target thresholds. The total count of recommendations matches the number of operations exceeding at least one target metric"
-        },
-        {
-          "step": 6,
-          "action": "Click 'Export Recommendations' button in the top-right of the recommendations panel",
-          "expectedResult": "A file download dialog appears offering export in CSV or PDF format. The exported file contains all recommendations with their full details including module, operation, metrics, and estimated impact"
+          "action": "Click the 'Export Recommendations' button in the top-right corner of the Optimization Recommendations page",
+          "expectedResult": "A file download dialog appears offering export in CSV or PDF format. The exported file contains all displayed recommendations with their full details including module, operation, current values, targets, recommendations, and estimated impacts"
         }
       ],
       "postconditions": [
-        "Optimization recommendations remain displayed and are not modified by viewing them",
-        "Exported file is saved to the user's default download location",
-        "Recommendations are timestamped with the report generation date and selected date range"
+        "Optimization recommendations are displayed for all operations exceeding target thresholds",
+        "Each recommendation includes an estimated improvement impact value",
+        "Export file (if downloaded) is saved to the user's local machine with correct data",
+        "System audit log records the recommendation report access and any export actions"
       ]
     },
     {
       "id": "TC-FUNC-004",
-      "title": "Verify benchmark comparisons across dev, staging, and production environments identify performance variances",
+      "title": "Verify benchmark comparison across environments (dev, staging, production) identifies environment-specific variances",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is logged in as Operations Manager with 'benchmark_reports' permission and access to all three environments (dev, staging, production)",
-        "Performance data exists for the same set of modules and operations across dev, staging, and production environments for the same date range",
-        "At least one module shows a significant performance variance between environments (e.g., Claims module response time: dev=150ms, staging=300ms, production=850ms)",
-        "User is on the Performance Benchmarking page"
+        "User is logged in as an Operations Manager with access to all three environments (dev, staging, production)",
+        "Performance benchmark data exists for the same set of modules and operations across dev, staging, and production environments",
+        "Environment configurations are registered in the system (e.g., dev: 2 CPU/4GB RAM, staging: 4 CPU/8GB RAM, production: 8 CPU/16GB RAM)",
+        "User is on the Performance Benchmarking landing page"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Locate the 'Environment Comparison' section or tab on the Performance Benchmarking page and click on it",
-          "expectedResult": "An environment comparison view loads showing a multi-environment selector with checkboxes for 'Development', 'Staging', and 'Production'. All three are checked by default"
+          "action": "Click on the 'Environment Comparison' tab or card on the Performance Benchmarking page",
+          "expectedResult": "The Environment Comparison page loads displaying a multi-environment comparison view with environment selector checkboxes for 'Dev', 'Staging', and 'Production', all checked by default"
         },
         {
           "step": 2,
-          "action": "Ensure all three environments (Development, Staging, Production) are selected and click 'Generate Comparison'",
-          "expectedResult": "A side-by-side comparison table loads showing each module with its performance metrics (response time, throughput, error rate) displayed in separate columns for each environment. A 'Variance' column highlights the difference between environments"
+          "action": "Verify the comparison table displays all modules with performance metrics side-by-side for each environment",
+          "expectedResult": "A comparison table is displayed with columns grouped by environment: Dev (Response Time, Throughput, Error Rate), Staging (Response Time, Throughput, Error Rate), Production (Response Time, Throughput, Error Rate). Each module row shows actual values for all three environments"
         },
         {
           "step": 3,
-          "action": "Review the Claims module row in the comparison table",
-          "expectedResult": "The Claims module row shows: Dev response time (150ms), Staging response time (300ms), Production response time (850ms). The variance column shows the percentage difference between the best and worst performing environments (e.g., '+467% variance between dev and production'). The production column is highlighted in red indicating it is the worst performer"
+          "action": "Verify that environment-specific performance variances are highlighted in the comparison table",
+          "expectedResult": "Cells where one environment significantly deviates from others are highlighted. For example, if the Claims module response time is 500ms in dev, 600ms in staging, but 2500ms in production, the production cell is highlighted in red/orange with a variance indicator showing '+316% vs. dev'"
         },
         {
           "step": 4,
-          "action": "Click on the 'Claims' module row to drill down into operation-level environment comparison",
-          "expectedResult": "An operation-level comparison table loads showing each Claims operation with its metrics across all three environments. Operations with the largest environment-specific variances are highlighted and sorted to the top"
+          "action": "Uncheck the 'Dev' environment checkbox to filter the comparison to only Staging and Production",
+          "expectedResult": "The comparison table updates to show only Staging and Production columns. The variance calculations update to compare only between the two selected environments"
         },
         {
           "step": 5,
-          "action": "Deselect the 'Development' environment checkbox and click 'Update Comparison'",
-          "expectedResult": "The comparison table updates to show only Staging and Production columns. The variance column recalculates to show differences between only the two selected environments. The Development column is removed from the view"
+          "action": "Click on a highlighted variance cell (e.g., Production Claims response time) to view the variance detail",
+          "expectedResult": "A detail panel opens showing: environment configuration differences, historical performance trend for that operation in each environment, potential causes for the variance (e.g., 'Production has 10x more concurrent users'), and a link to related optimization recommendations"
         },
         {
           "step": 6,
-          "action": "Re-select 'Development' and verify the comparison chart/visualization is available",
-          "expectedResult": "A visual chart (bar chart or line chart) is displayed below the table showing a graphical comparison of each module's response time across all three environments, making it easy to visually identify environment-specific performance variances"
+          "action": "Re-check the 'Dev' checkbox and click the 'Generate Variance Report' button",
+          "expectedResult": "A variance summary report is generated showing all environment-specific variances ranked by severity, with the most significant variances listed first. The report includes a summary section stating total number of variances found and the top 3 most critical ones"
         }
       ],
       "postconditions": [
-        "Environment comparison data is displayed accurately reflecting actual performance data from each environment",
-        "User can toggle between environments without page reload or data loss",
-        "The comparison view correctly identifies and highlights environment-specific variances with quantified differences"
+        "Environment comparison view correctly displays side-by-side metrics for all selected environments",
+        "Environment-specific variances are identified and highlighted with percentage differences",
+        "Variance report is generated and available for review or export",
+        "User remains on the Environment Comparison page with all filters intact"
       ]
     },
     {
       "id": "TC-FUNC-005",
-      "title": "Verify date range selection filters benchmark data correctly",
+      "title": "Verify date range filtering on benchmark reports returns correct time-scoped data",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is logged in as Operations Manager with 'benchmark_reports' permission",
-        "Performance data exists for at least the last 90 days across all modules",
-        "User is on the Performance Benchmarking page with the default 30-day date range loaded"
+        "User is logged in as an Operations Manager",
+        "Performance benchmark data exists for at least the last 90 days across all modules",
+        "User is on the Benchmark Reports page",
+        "Default date range is set to 'Last 30 Days'"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Click on the date range picker and select 'Last 7 Days' from the preset options",
-          "expectedResult": "The date range picker updates to show the last 7 days. The benchmark report table refreshes and displays metrics calculated only from data within the last 7 days. A loading indicator appears briefly during data refresh"
+          "action": "Verify the default date range filter shows 'Last 30 Days' and the report data corresponds to the last 30 days",
+          "expectedResult": "The date range picker displays 'Last 30 Days' as the selected option. The report header or subtitle shows the exact date range (e.g., 'May 16, 2025 - June 15, 2025'). All metric values in the table are aggregated from data within this 30-day window"
         },
         {
           "step": 2,
-          "action": "Note the response time values for the Claims module, then change the date range to 'Last 90 Days'",
-          "expectedResult": "The benchmark report refreshes with data from the last 90 days. The Claims module response time value may differ from the 7-day view, reflecting the broader data set. The date range displayed in the report header updates to show the 90-day range"
+          "action": "Click the date range picker and select 'Last 7 Days'",
+          "expectedResult": "The report refreshes and displays benchmark data aggregated over the last 7 days only. Module rankings may change as the shorter time window may show different performance patterns. A loading indicator appears briefly during data refresh"
         },
         {
           "step": 3,
-          "action": "Click on the date range picker and select 'Custom Range'. Enter a start date of 2 months ago and an end date of 1 month ago, then click 'Apply'",
-          "expectedResult": "The benchmark report refreshes showing data only from the specified custom date range. The report header displays the exact custom date range selected. All module metrics reflect only the data within that specific window"
+          "action": "Click the date range picker and select 'Custom Range', then enter start date '2025-04-01' and end date '2025-04-30'",
+          "expectedResult": "The report refreshes to show benchmark data for April 2025 only. The report header updates to show 'April 1, 2025 - April 30, 2025'. All metrics reflect the custom date range"
         },
         {
           "step": 4,
-          "action": "Navigate to the 'Optimization Recommendations' tab while the custom date range is still active",
-          "expectedResult": "Optimization recommendations are generated based on the custom date range data. The recommendations header shows the active date range filter. Recommendations may differ from the default 30-day view"
-        },
-        {
-          "step": 5,
-          "action": "Navigate to the 'Environment Comparison' tab while the custom date range is still active",
-          "expectedResult": "Environment comparison data reflects the custom date range across all selected environments. The date range filter persists across all tabs/sections of the benchmarking page"
+          "action": "Compare the module rankings between the 'Last 7 Days' view and the 'Custom Range (April 2025)' view by noting the top 3 slowest modules in each",
+          "expectedResult": "The rankings may differ between time periods, demonstrating that the system correctly scopes data to the selected date range. The data is not stale or cached from a previous query"
         }
       ],
       "postconditions": [
-        "The selected custom date range persists across all sections of the Performance Benchmarking page",
-        "Data displayed is consistent with the selected date range filter",
-        "User can change the date range at any time without losing other filter selections (environment, sort order)"
+        "Benchmark report correctly reflects data within the selected date range",
+        "Date range filter persists on the page until the user changes it or navigates away",
+        "No data outside the selected date range is included in the report calculations"
       ]
     },
     {
       "id": "TC-FUNC-006",
-      "title": "Verify authentication and role-based access for Operations Manager accessing benchmark reports",
+      "title": "Verify API endpoint returns correct benchmark data with proper authentication",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "An Operations Manager user account exists with 'benchmark_reports' permission",
-        "A standard Agent user account exists without 'benchmark_reports' permission",
-        "Both accounts are active and have valid credentials",
-        "The Performance Benchmarking feature is enabled in the system"
+        "A valid API authentication token exists for an Operations Manager user",
+        "Performance benchmark data is available in the application database for at least 3 modules",
+        "API endpoint URL is documented (e.g., GET /api/v1/benchmarks/reports)",
+        "API testing tool (e.g., Postman or curl) is available"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Log in with the Operations Manager credentials (username: 'ops_manager@test.com', password: 'ValidPass123!')",
-          "expectedResult": "User is authenticated successfully and redirected to the Operations Dashboard. The left navigation menu displays the 'Performance Benchmarking' option under the 'Reports' section"
+          "action": "Send a GET request to '/api/v1/benchmarks/reports' with a valid Authorization header (Bearer token) and query parameter 'environment=production'",
+          "expectedResult": "API returns HTTP 200 OK with a JSON response body containing an array of module benchmark objects. Each object includes: moduleId, moduleName, avgResponseTime, targetResponseTime, throughput, targetThroughput, errorRate, targetErrorRate, status, and timestamp"
         },
         {
           "step": 2,
-          "action": "Click on 'Performance Benchmarking' in the navigation menu",
-          "expectedResult": "The Performance Benchmarking page loads successfully with full access to all features: module ranking table, optimization recommendations, environment comparison, date range picker, and export functionality"
+          "action": "Send a GET request to '/api/v1/benchmarks/reports' without an Authorization header",
+          "expectedResult": "API returns HTTP 401 Unauthorized with an error message: {\"error\": \"Authentication required\", \"message\": \"A valid authentication token must be provided\"}"
         },
         {
           "step": 3,
-          "action": "Log out and log in with the standard Agent credentials (username: 'agent@test.com', password: 'AgentPass123!')",
-          "expectedResult": "Agent user is authenticated successfully and redirected to their dashboard. The left navigation menu does NOT display the 'Performance Benchmarking' option under 'Reports'"
+          "action": "Send a GET request to '/api/v1/benchmarks/recommendations?environment=production' with a valid Authorization header",
+          "expectedResult": "API returns HTTP 200 OK with a JSON response body containing an array of optimization recommendation objects. Each object includes: recommendationId, moduleId, operationName, currentValue, targetValue, recommendation, estimatedImpact, and priority"
         },
         {
           "step": 4,
-          "action": "Attempt to navigate directly to the Performance Benchmarking page by entering the URL '/reports/performance-benchmarking' in the browser address bar",
-          "expectedResult": "The system displays an 'Access Denied' or '403 Forbidden' message indicating the user does not have permission to access this feature. The user is not shown any benchmark data"
+          "action": "Send a GET request to '/api/v1/benchmarks/compare?environments=dev,staging,production' with a valid Authorization header",
+          "expectedResult": "API returns HTTP 200 OK with a JSON response body containing environment comparison data structured by module, with nested objects for each environment showing their respective metrics and calculated variances"
+        },
+        {
+          "step": 5,
+          "action": "Verify the response time of the API call is within SLA requirements (e.g., under 3 seconds)",
+          "expectedResult": "The API response is received within the defined SLA threshold. Response headers include appropriate cache-control directives and content-type is 'application/json'"
         }
       ],
       "postconditions": [
-        "Operations Manager retains full access to benchmark reports upon subsequent logins",
-        "Agent user is not able to access benchmark data through any navigation path or direct URL",
-        "Access denial is logged in the system audit trail"
+        "API endpoints return correct, well-structured JSON data matching the UI display",
+        "Authentication is enforced on all benchmark API endpoints",
+        "API response times meet SLA requirements",
+        "No sensitive data is leaked in error responses for unauthenticated requests"
       ]
     },
     {
       "id": "TC-FUNC-007",
-      "title": "Verify benchmark report correctly compares actual performance against defined targets with status indicators",
+      "title": "Verify system correctly processes and returns results when benchmark data is refreshed (Scenario 4)",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is logged in as Operations Manager on the Performance Benchmarking page",
-        "Defined targets are configured: Claims module - response time target: 300ms, throughput target: 500 req/s, error rate target: 1%",
-        "Actual Claims module performance: response time: 450ms, throughput: 480 req/s, error rate: 0.5%",
-        "At least one module meets all its targets and at least one module exceeds at least one target"
+        "User is logged in as an Operations Manager",
+        "Benchmark data was last refreshed more than 1 hour ago",
+        "New performance data has been ingested into the application database since the last refresh",
+        "User is on the Benchmark Reports page viewing stale data"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Locate the Claims module row in the benchmark report table",
-          "expectedResult": "Claims module row displays: Avg Response Time = 450ms (Target: 300ms), Throughput = 480 req/s (Target: 500 req/s), Error Rate = 0.5% (Target: 1%). Response Time shows red indicator (exceeds target by 50%), Throughput shows red indicator (below target by 4%), Error Rate shows green indicator (within target)"
+          "action": "Note the 'Last Updated' timestamp displayed on the Benchmark Reports page header (e.g., 'Last Updated: June 15, 2025 08:00 AM')",
+          "expectedResult": "The 'Last Updated' timestamp is visible and shows the time of the last data refresh, which is more than 1 hour ago"
         },
         {
           "step": 2,
-          "action": "Locate a module that meets all its targets (e.g., Renewals module with response time 180ms vs 250ms target, throughput 600 req/s vs 400 req/s target, error rate 0.3% vs 1% target)",
-          "expectedResult": "Renewals module row displays all metrics in green with green status indicators. The 'Status' column shows 'Within Target' or a green checkmark. No warning icons are displayed for this module"
+          "action": "Click the 'Refresh Data' button (or equivalent refresh icon) on the Benchmark Reports page",
+          "expectedResult": "A loading spinner or progress indicator appears. The system begins processing the latest performance data from the application database. A status message such as 'Refreshing benchmark data...' is displayed"
         },
         {
           "step": 3,
-          "action": "Hover over the response time value for the Claims module",
-          "expectedResult": "A tooltip appears showing: 'Actual: 450ms | Target: 300ms | Variance: +150ms (+50%)'. The tooltip clearly indicates the metric is above the acceptable threshold"
+          "action": "Wait for the refresh operation to complete",
+          "expectedResult": "The loading indicator disappears. The 'Last Updated' timestamp updates to the current time (e.g., 'Last Updated: June 15, 2025 10:30 AM'). A success notification appears: 'Benchmark data refreshed successfully'"
         },
         {
           "step": 4,
-          "action": "Verify the overall status summary at the top of the report",
-          "expectedResult": "The summary shows the count of modules with status 'Exceeds Target' (at least 1) and 'Within Target' (at least 1). A pie chart or progress bar visualizes the proportion of modules meeting vs exceeding targets"
+          "action": "Verify the benchmark report data has been updated with the latest metrics",
+          "expectedResult": "Module rankings and metric values reflect the newly ingested data. If a module's performance changed (e.g., Claims response time improved from 3000ms to 2200ms), the updated value is displayed and the ranking order may have changed accordingly"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to the Optimization Recommendations page and verify recommendations are updated based on the refreshed data",
+          "expectedResult": "Recommendations reflect the latest benchmark data. If an operation that previously exceeded its target now meets the target after the refresh, its recommendation is either removed or marked as 'Resolved'. New recommendations may appear for operations that now exceed targets"
         }
       ],
       "postconditions": [
-        "All target comparisons are mathematically accurate (actual vs target with correct variance calculation)",
-        "Color coding and status indicators are consistent across all modules",
-        "Target values displayed match the configured targets in the system settings"
+        "Benchmark data is refreshed and persisted in the database with the latest performance metrics",
+        "All dependent views (reports, recommendations, comparisons) reflect the updated data",
+        "The 'Last Updated' timestamp accurately reflects the most recent refresh time",
+        "System audit log records the data refresh event with user ID and timestamp"
       ]
     },
     {
       "id": "TC-FUNC-008",
-      "title": "Verify system correctly processes and returns benchmark data via API endpoint",
+      "title": "Verify system handles concurrent benchmark report access and returns expected results (Scenario 5)",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is authenticated with a valid API token for Operations Manager role",
-        "Performance data exists in the application database for at least 3 modules",
-        "API endpoint for benchmark reports is available at the expected URL (e.g., '/api/v1/benchmarks/modules')",
-        "Defined targets are configured in the system for all modules"
+        "Two separate Operations Manager user accounts are available (UserA and UserB)",
+        "Both users have 'benchmark_reports' permission",
+        "Performance benchmark data exists for all modules in the production environment",
+        "Both users are logged in on separate browser sessions"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Send a GET request to '/api/v1/benchmarks/modules' with Authorization header containing a valid bearer token and query parameters: environment=production, dateFrom=2024-01-01, dateTo=2024-01-31",
-          "expectedResult": "API returns HTTP 200 OK with a JSON response body containing an array of module benchmark objects. Each object includes: moduleId, moduleName, avgResponseTime, responseTimeTarget, throughput, throughputTarget, errorRate, errorRateTarget, rank, and status fields"
+          "action": "As UserA, navigate to the Performance Benchmarking page and click 'Benchmark Reports'",
+          "expectedResult": "UserA sees the full benchmark report with all modules ranked by response time. The report loads within the SLA time limit"
         },
         {
           "step": 2,
-          "action": "Send a GET request to '/api/v1/benchmarks/modules/{moduleId}/operations' for a specific module to retrieve operation-level benchmarks",
-          "expectedResult": "API returns HTTP 200 OK with a JSON array of operation benchmark objects within the specified module. Each object includes: operationId, operationName, avgResponseTime, responseTimeTarget, throughput, throughputTarget, errorRate, errorRateTarget, and varianceFromTarget"
+          "action": "Simultaneously, as UserB, navigate to the Performance Benchmarking page and click 'Benchmark Reports'",
+          "expectedResult": "UserB also sees the full benchmark report with identical data to UserA. Both sessions load independently without interference or data corruption"
         },
         {
           "step": 3,
-          "action": "Send a GET request to '/api/v1/benchmarks/recommendations' with the same date range and environment parameters",
-          "expectedResult": "API returns HTTP 200 OK with a JSON array of optimization recommendation objects. Each includes: recommendationId, moduleId, operationId, currentValue, targetValue, variance, description, estimatedImpact, and severity"
+          "action": "As UserA, apply a date range filter of 'Last 7 Days' on the benchmark report",
+          "expectedResult": "UserA's report updates to show data for the last 7 days only. UserB's report remains unchanged (still showing the default 'Last 30 Days' view)"
         },
         {
           "step": 4,
-          "action": "Send a GET request to '/api/v1/benchmarks/environments/compare' with environments=dev,staging,production",
-          "expectedResult": "API returns HTTP 200 OK with a JSON response containing environment comparison data. Each module has metrics broken down by environment with calculated variance between environments"
+          "action": "As UserB, navigate to the Environment Comparison page and select only 'Staging' and 'Production' environments",
+          "expectedResult": "UserB sees the environment comparison for Staging and Production. UserA's session is unaffected and still shows the filtered benchmark report"
         },
         {
           "step": 5,
-          "action": "Verify the response time of the API call is within SLA requirements",
-          "expectedResult": "The API response is returned within the defined SLA (e.g., under 3 seconds for standard report queries). Response headers include appropriate cache control and content-type headers"
+          "action": "As UserA, click 'Refresh Data' on the benchmark report",
+          "expectedResult": "UserA's data refreshes successfully. UserB's current view is not disrupted. If UserB refreshes their page afterward, they will see the updated data as well"
         }
       ],
       "postconditions": [
-        "All API responses contain valid JSON with correct data types for each field",
-        "API responses are consistent with the data displayed in the UI for the same parameters",
-        "No server errors (5xx) are returned for valid requests with proper authentication"
+        "Both users received correct and consistent benchmark data without cross-session interference",
+        "Filters and selections applied by one user do not affect the other user's session",
+        "System handled concurrent access without errors, data corruption, or performance degradation",
+        "Database integrity is maintained with no duplicate or conflicting records"
       ]
     },
     {
       "id": "TC-FUNC-009",
-      "title": "Verify data persistence - benchmark data is correctly stored and retrieved from the application database",
+      "title": "Verify benchmark report visual indicators correctly distinguish pass/fail status against targets",
       "category": "Functional",
       "priority": "Medium",
       "preconditions": [
-        "User is logged in as Operations Manager with 'benchmark_reports' permission",
-        "New performance data has been ingested into the system within the last hour for the Claims module",
-        "User is on the Performance Benchmarking page",
-        "Database connectivity is stable and operational"
+        "User is logged in as an Operations Manager",
+        "At least 2 modules are within target thresholds (pass) and at least 2 modules exceed target thresholds (fail)",
+        "User is on the Benchmark Reports page"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Set the date range to include today's date and click 'Generate Report' or refresh the benchmark report",
-          "expectedResult": "The benchmark report loads and includes the most recently ingested performance data. The Claims module metrics reflect the latest data points including those ingested within the last hour"
+          "action": "Observe the status column for a module that meets all three targets (response time, throughput, error rate)",
+          "expectedResult": "The module row displays a green checkmark icon or 'Pass' badge in the Status column. The response time, throughput, and error rate cells are displayed in standard or green text"
         },
         {
           "step": 2,
-          "action": "Note the exact values displayed for the Claims module (response time, throughput, error rate) and the report generation timestamp",
-          "expectedResult": "Values are displayed with appropriate precision (e.g., response time to nearest millisecond, error rate to two decimal places). A 'Report Generated At' timestamp is shown indicating when the data was last calculated"
+          "action": "Observe the status column for a module that exceeds the response time target but meets throughput and error rate targets",
+          "expectedResult": "The module row displays a yellow/amber warning icon or 'Partial' badge in the Status column. The response time cell is highlighted in red/orange, while throughput and error rate cells remain in standard/green text"
         },
         {
           "step": 3,
-          "action": "Navigate away from the Performance Benchmarking page to the main dashboard, then navigate back to the Performance Benchmarking page",
-          "expectedResult": "The benchmark report reloads with the same data values as previously observed (within the same date range). Data is consistently retrieved from the database without discrepancies"
+          "action": "Observe the status column for a module that exceeds all three target thresholds",
+          "expectedResult": "The module row displays a red X icon or 'Fail' badge in the Status column. All three metric cells (response time, throughput, error rate) are highlighted in red"
         },
         {
           "step": 4,
-          "action": "Open the Performance Benchmarking page in a new browser tab simultaneously",
-          "expectedResult": "The second tab displays the same benchmark data as the first tab, confirming data consistency across concurrent sessions. Both tabs show identical metrics for the same date range and environment"
+          "action": "Hover over a red-highlighted metric cell to view the tooltip",
+          "expectedResult": "A tooltip appears showing: 'Current: 3000ms | Target: 1500ms | Variance: +100%' (with actual values for the specific metric). The tooltip provides clear context for the failure"
         }
       ],
       "postconditions": [
-        "Benchmark data persists in the database and is retrievable across multiple sessions",
-        "Data integrity is maintained - no data corruption or loss between page loads",
-        "Concurrent access does not cause data inconsistencies"
+        "Visual indicators correctly reflect pass/fail/partial status for all modules",
+        "Color coding is consistent across the entire report",
+        "Tooltips provide additional context for all highlighted metrics"
       ]
     },
     {
       "id": "TC-FUNC-010",
-      "title": "Verify error handling for benchmark report generation with proper user feedback",
+      "title": "Verify benchmark report data persistence and retrieval after user session ends",
       "category": "Functional",
       "priority": "Medium",
       "preconditions": [
-        "User is logged in as Operations Manager with 'benchmark_reports' permission",
-        "User is on the Performance Benchmarking page",
-        "System is operational with normal connectivity"
+        "User is logged in as an Operations Manager",
+        "A benchmark report has been generated and viewed with specific filters (date range: 'Last 7 Days', sorted by Error Rate)",
+        "User is on the Benchmark Reports page"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Select a date range where no performance data exists (e.g., a future date range: start date = tomorrow, end date = next week) and click 'Generate Report'",
-          "expectedResult": "The system displays an informational message such as 'No benchmark data available for the selected date range. Please select a different date range.' The report table shows an empty state with no module rows. No error or crash occurs"
+          "action": "Note the current benchmark report data, including the top 3 modules by error rate and their exact metric values",
+          "expectedResult": "The benchmark report displays the current data with the applied filters. User records the top 3 modules and their error rates for later comparison"
         },
         {
           "step": 2,
-          "action": "Select a valid date range and select an environment that has no data (e.g., if a 'QA' environment option exists but has no data)",
-          "expectedResult": "The system displays a message indicating no data is available for the selected environment. The UI remains functional and the user can switch to another environment without issues"
+          "action": "Log out of the application by clicking the user avatar in the top-right corner and selecting 'Sign Out'",
+          "expectedResult": "User is redirected to the login page. Session is terminated"
         },
         {
           "step": 3,
-          "action": "Attempt to generate an environment comparison with only one environment selected",
-          "expectedResult": "The system either displays a validation message 'Please select at least two environments for comparison' or shows the single environment data with a note that comparison requires multiple environments"
+          "action": "Log back in with the same Operations Manager credentials and navigate to the Performance Benchmarking > Benchmark Reports page",
+          "expectedResult": "The Benchmark Reports page loads successfully. The report displays the default view (Last 30 Days, sorted by response time) since session-specific filters are not persisted across sessions"
         },
         {
           "step": 4,
-          "action": "Verify that the page handles a slow database response gracefully by observing the loading state during report generation",
-          "expectedResult": "A loading spinner or progress indicator is displayed while data is being fetched. The UI remains responsive and the user can cancel or navigate away. If the request times out, a user-friendly timeout message is displayed with a 'Retry' option"
+          "action": "Re-apply the same filters (date range: 'Last 7 Days', sort by Error Rate) and compare the data with the previously noted values",
+          "expectedResult": "The benchmark data matches the previously noted values exactly (assuming no new data was ingested during the brief logout period). This confirms that the underlying benchmark data is persisted in the database and not lost when the session ends"
         }
       ],
       "postconditions": [
-        "System remains stable and functional after encountering empty data or error conditions",
-        "User is provided with clear, actionable feedback for all error scenarios",
-        "No unhandled exceptions or blank screens are displayed to the user"
+        "Benchmark data is correctly persisted in the application database independent of user sessions",
+        "Data retrieval after re-login returns consistent and accurate results",
+        "User session filters are reset to defaults upon new login (expected behavior)"
       ]
     },
     {
       "id": "TC-FUNC-011",
-      "title": "Verify export functionality for benchmark reports in multiple formats",
+      "title": "Verify Operations Manager can export benchmark report in multiple formats",
       "category": "Functional",
       "priority": "Medium",
       "preconditions": [
-        "User is logged in as Operations Manager with 'benchmark_reports' permission",
-        "A benchmark report is loaded on the Performance Benchmarking page with data for at least 5 modules",
-        "The date range is set to 'Last 30 Days' and environment is 'Production'"
+        "User is logged in as an Operations Manager",
+        "Benchmark report is displayed with data for at least 5 modules",
+        "User is on the Benchmark Reports page with default filters applied",
+        "Browser allows file downloads"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Click the 'Export' button located in the top-right corner of the benchmark report",
-          "expectedResult": "A dropdown or modal appears with export format options: 'CSV', 'PDF', and optionally 'Excel'. Each option is clearly labeled"
+          "action": "Click the 'Export' button located in the top-right area of the Benchmark Reports page",
+          "expectedResult": "A dropdown menu appears with export format options: 'Export as CSV', 'Export as PDF', and optionally 'Export as Excel'"
         },
         {
           "step": 2,
-          "action": "Select 'CSV' from the export options",
-          "expectedResult": "A CSV file is downloaded with a descriptive filename (e.g., 'benchmark_report_production_2024-01-01_2024-01-31.csv'). The file contains headers matching the report columns and all module data rows with correct values"
+          "action": "Select 'Export as CSV' from the dropdown",
+          "expectedResult": "A CSV file is downloaded to the user's default download location. The filename includes the report type and date (e.g., 'benchmark_report_2025-06-15.csv'). A success toast notification appears: 'Report exported successfully'"
         },
         {
           "step": 3,
           "action": "Open the downloaded CSV file and verify its contents",
-          "expectedResult": "The CSV contains all modules with their rank, name, response time, throughput, error rate, targets, and status. Values match exactly what is displayed in the UI report. The file includes a header row with the date range and environment metadata"
+          "expectedResult": "The CSV file contains headers matching the report columns: Module Name, Avg Response Time, Target Response Time, Throughput, Target Throughput, Error Rate, Target Error Rate, Status. All module rows from the report are present with correct values matching the UI display"
         },
         {
           "step": 4,
-          "action": "Click 'Export' again and select 'PDF'",
-          "expectedResult": "A PDF file is downloaded with a formatted report including the benchmark table, summary statistics, and any charts/visualizations. The PDF includes a title, date range, environment, and generation timestamp"
-        },
-        {
-          "step": 5,
-          "action": "Navigate to the Optimization Recommendations tab and click 'Export Recommendations'",
-          "expectedResult": "The recommendations are exported in the selected format, including all recommendation details: module, operation, current value, target, variance, description, and estimated impact"
+          "action": "Click the 'Export' button again and select 'Export as PDF'",
+          "expectedResult": "A PDF file is downloaded with a formatted version of the benchmark report including the report title, date range, generation timestamp, and a properly formatted table of all modules with their metrics. The PDF includes visual indicators (color coding) for pass/fail status"
         }
       ],
       "postconditions": [
-        "Exported files are saved to the user's default download directory",
-        "Exported data is complete and matches the on-screen report exactly",
-        "Export functionality does not alter or affect the displayed report data"
+        "Both CSV and PDF export files are saved to the user's local machine",
+        "Exported data matches the on-screen report data exactly",
+        "Export action is logged in the system audit trail",
+        "No data corruption or truncation in exported files"
       ]
     },
     {
       "id": "TC-FUNC-012",
-      "title": "Verify benchmark report refreshes with real-time or near-real-time data updates",
+      "title": "Verify role-based access control restricts benchmark features to authorized users only",
       "category": "Functional",
-      "priority": "Medium",
+      "priority": "High",
       "preconditions": [
-        "User is logged in as Operations Manager on the Performance Benchmarking page",
-        "The report is loaded with current data for the 'Production' environment",
-        "New performance data is being continuously ingested into the system",
-        "A manual or automatic refresh mechanism exists on the page"
+        "Three user accounts exist: Operations Manager (full access), Read-Only Analyst (view-only access), and Claims Adjuster (no benchmark access)",
+        "All three users are able to log in to the application",
+        "Performance benchmark data exists in the system"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Note the current 'Report Generated At' or 'Last Updated' timestamp displayed on the benchmark report",
-          "expectedResult": "A timestamp is visible showing when the report data was last calculated/refreshed (e.g., 'Last Updated: 2024-01-15 10:30:00 UTC')"
+          "action": "Log in as the Operations Manager and navigate to the Performance Benchmarking page",
+          "expectedResult": "The Performance Benchmarking page loads fully with all features accessible: Benchmark Reports, Optimization Recommendations, Environment Comparison, Refresh Data button, and Export button are all visible and enabled"
         },
         {
           "step": 2,
-          "action": "Wait for 5 minutes (or the configured refresh interval) and observe the report",
-          "expectedResult": "If auto-refresh is enabled, the report automatically updates with a new timestamp. If manual refresh is required, a 'Refresh' button or indicator shows that newer data is available"
+          "action": "Log out and log in as the Read-Only Analyst. Navigate to the Performance Benchmarking page",
+          "expectedResult": "The Performance Benchmarking page loads with view-only access. Benchmark Reports and Environment Comparison are visible and viewable. The 'Refresh Data' button is either hidden or disabled (greyed out). Export functionality may be available for read-only users"
         },
         {
           "step": 3,
-          "action": "Click the 'Refresh' button (if manual refresh) to update the report",
-          "expectedResult": "The report refreshes with updated metrics. The 'Last Updated' timestamp changes to the current time. A brief loading indicator appears during the refresh. Module rankings may change if new data affects the metrics"
+          "action": "Log out and log in as the Claims Adjuster. Attempt to navigate to the Performance Benchmarking page via direct URL '/performance-benchmarking'",
+          "expectedResult": "The user is either redirected to an 'Access Denied' page with message 'You do not have permission to access Performance Benchmarking' or the Performance Benchmarking menu item is not visible in the navigation at all"
         },
         {
           "step": 4,
-          "action": "Verify that the refreshed data reflects any changes in module performance",
-          "expectedResult": "If a module's performance has changed (e.g., response time improved or degraded), the updated values are reflected in the report. Rankings are recalculated based on the new data. Status indicators update accordingly"
+          "action": "As the Claims Adjuster, attempt to access the benchmark API directly: GET '/api/v1/benchmarks/reports' with the Claims Adjuster's auth token",
+          "expectedResult": "API returns HTTP 403 Forbidden with error message: {\"error\": \"Access denied\", \"message\": \"You do not have the required permissions to access benchmark reports\"}"
         }
       ],
       "postconditions": [
-        "Report displays the most current data available after refresh",
-        "Historical data is not lost or overwritten by the refresh - only the current view updates",
-        "The refresh mechanism does not cause data inconsistencies or partial updates"
+        "Operations Manager has full read/write access to all benchmark features",
+        "Read-Only Analyst can view reports but cannot trigger data refresh or modifications",
+        "Claims Adjuster is completely blocked from accessing benchmark features via both UI and API",
+        "Access control violations are logged in the security audit trail"
       ]
     },
     {
       "id": "TC-FUNC-013",
-      "title": "Verify input validation for date range and filter parameters on benchmark page",
+      "title": "Verify benchmark report displays throughput metrics correctly with proper units and formatting",
       "category": "Functional",
       "priority": "Medium",
       "preconditions": [
-        "User is logged in as Operations Manager on the Performance Benchmarking page",
-        "The date range picker and environment selector are visible and functional"
+        "User is logged in as an Operations Manager",
+        "Modules have varying throughput levels: high throughput (e.g., Policy Search at 500 req/s), medium throughput (e.g., Claims Processing at 50 req/s), and low throughput (e.g., Report Generation at 2 req/s)",
+        "Throughput targets are defined for each module",
+        "User is on the Benchmark Reports page"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "In the custom date range picker, set the 'Start Date' to a date after the 'End Date' (e.g., Start: 2024-02-01, End: 2024-01-01) and click 'Apply'",
-          "expectedResult": "The system displays a validation error message: 'Start date must be before end date' or prevents the invalid selection. The report does not refresh with invalid parameters"
+          "action": "Verify the Throughput column displays values with appropriate units (e.g., 'req/s' or 'requests/second')",
+          "expectedResult": "All throughput values are displayed with consistent units. High throughput modules show values like '500 req/s', medium modules show '50 req/s', and low throughput modules show '2 req/s'. Units are clearly labeled in the column header or next to each value"
         },
         {
           "step": 2,
-          "action": "Set the date range to an extremely large range (e.g., 5 years) and click 'Apply'",
-          "expectedResult": "The system either processes the request with a warning about large data sets and potential slow performance, or limits the maximum date range with a message like 'Maximum date range is 1 year. Please narrow your selection.'"
+          "action": "Click the 'Throughput' column header to sort modules by throughput in ascending order (lowest first)",
+          "expectedResult": "Modules are re-sorted with the lowest throughput at the top (e.g., Report Generation at 2 req/s) and highest at the bottom (e.g., Policy Search at 500 req/s). Modules with throughput below their target are highlighted"
         },
         {
           "step": 3,
-          "action": "Attempt to deselect all environments in the environment comparison view and click 'Generate Comparison'",
-          "expectedResult": "The system displays a validation message: 'Please select at least one environment' and prevents the report from generating with no environments selected"
-        },
-        {
-          "step": 4,
-          "action": "Enter a valid date range and valid environment selection, then click 'Generate Report'",
-          "expectedResult": "The report generates successfully with no validation errors. All filters are applied correctly and the data reflects the selected parameters"
+          "action": "Verify that modules with throughput below their target are flagged appropriately",
+          "expectedResult": "Modules where actual throughput is below the target throughput are highlighted with a red/warning indicator. For example, if Claims Processing target is 100 req/s but actual is 50 req/s, the cell shows a red highlight and the variance is displayed as '-50%'"
         }
       ],
       "postconditions": [
-        "Invalid inputs are rejected with clear, user-friendly validation messages",
-        "The system does not crash or display errors for any combination of filter inputs",
-        "Valid inputs are processed correctly after correcting any validation errors"
+        "Throughput metrics are displayed with correct values, units, and formatting",
+        "Sorting by throughput works correctly in both ascending and descending order",
+        "Below-target throughput values are visually distinguished from on-target values"
       ]
     },
     {
       "id": "TC-FUNC-014",
-      "title": "Verify benchmark report UI elements render correctly and are interactive",
+      "title": "Verify environment comparison chart/visualization renders correctly for all three environments",
       "category": "Functional",
       "priority": "Medium",
       "preconditions": [
-        "User is logged in as Operations Manager on the Performance Benchmarking page",
-        "Benchmark data is loaded for at least 5 modules in the Production environment",
-        "Browser is a supported modern browser (Chrome, Firefox, Edge, Safari latest versions)"
+        "User is logged in as an Operations Manager",
+        "Performance data exists for dev, staging, and production environments for at least 5 common modules",
+        "User is on the Environment Comparison page"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Verify the page layout includes: page title 'Module-Level Performance Benchmarking', date range picker, environment selector, benchmark table, summary panel, and navigation tabs for 'Module Rankings', 'Optimization Recommendations', and 'Environment Comparison'",
-          "expectedResult": "All listed UI elements are present and visible on the page. The layout is well-organized with clear section headers. No elements overlap or are cut off"
+          "action": "Verify that a visual chart (bar chart, line chart, or radar chart) is displayed alongside the comparison table showing environment performance side-by-side",
+          "expectedResult": "A chart visualization is rendered showing performance metrics for all three environments. Each environment is represented by a distinct color (e.g., Dev=blue, Staging=yellow, Production=green). A legend clearly identifies each environment"
         },
         {
           "step": 2,
-          "action": "Resize the browser window to a tablet width (768px) and verify the page responsiveness",
-          "expectedResult": "The page layout adjusts responsively. The benchmark table may switch to a scrollable horizontal view or a card-based layout. All data remains visible and accessible. No content is hidden or inaccessible"
+          "action": "Hover over a data point on the chart for the 'Claims' module in the 'Production' environment",
+          "expectedResult": "A tooltip appears showing: 'Claims - Production: Response Time: 2500ms, Throughput: 50 req/s, Error Rate: 2.5%'. The tooltip data matches the corresponding row in the comparison table"
         },
         {
           "step": 3,
-          "action": "Click on each column header in the benchmark table to verify sorting functionality",
-          "expectedResult": "Each column header is clickable and sorts the table by that column. A sort direction indicator (arrow up/down) appears on the active sort column. Clicking the same column header toggles between ascending and descending sort"
+          "action": "Toggle the chart metric selector from 'Response Time' to 'Error Rate'",
+          "expectedResult": "The chart updates to display error rate comparisons across environments. The Y-axis label changes to 'Error Rate (%)' and the data points reflect error rate values for each module across all environments"
         },
         {
           "step": 4,
-          "action": "Verify that color coding is consistent: green for within-target metrics, red/orange for exceeding-target metrics",
-          "expectedResult": "All metrics within target show green text or green background. All metrics exceeding target show red or orange text/background. The color coding is consistent across all modules and all metric types"
-        },
-        {
-          "step": 5,
-          "action": "Verify that pagination or scrolling works if there are many modules or operations listed",
-          "expectedResult": "If pagination is implemented, page controls are visible and functional (Previous, Next, page numbers). If infinite scroll is used, additional data loads as the user scrolls down. The total count of items is displayed"
+          "action": "Uncheck the 'Dev' environment from the chart legend or filter",
+          "expectedResult": "The Dev environment data is removed from the chart. Only Staging and Production data points remain. The chart rescales appropriately to the remaining data range"
         }
       ],
       "postconditions": [
-        "All UI elements are functional and interactive as expected",
-        "Page renders correctly across different viewport sizes",
-        "Sorting, filtering, and navigation controls work without errors"
+        "Chart visualization accurately represents the benchmark comparison data",
+        "Interactive elements (tooltips, filters, metric selectors) function correctly",
+        "Chart data is consistent with the tabular comparison data"
       ]
     },
     {
       "id": "TC-FUNC-015",
-      "title": "Verify optimization recommendations include severity classification and are actionable",
+      "title": "Verify input validation on benchmark target configuration prevents invalid values",
       "category": "Functional",
-      "priority": "High",
+      "priority": "Medium",
       "preconditions": [
-        "User is logged in as Operations Manager on the Performance Benchmarking page",
-        "Multiple operations exceed their targets at varying degrees: one operation exceeds response time target by 200% (Critical), one exceeds throughput target by 30% (Medium), one exceeds error rate target by 10% (Low)",
-        "Optimization recommendations have been generated for all exceeding operations"
+        "User is logged in as an Operations Manager with admin-level permissions to configure benchmark targets",
+        "User navigates to the Benchmark Configuration or Settings page where performance targets are defined",
+        "At least one module (e.g., Claims) has existing target values configured"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Navigate to the 'Optimization Recommendations' tab",
-          "expectedResult": "Recommendations are displayed in a list, sorted by severity (Critical first, then High, Medium, Low). Each recommendation has a visible severity badge/tag with color coding: Critical=Red, High=Orange, Medium=Yellow, Low=Blue"
+          "action": "Click 'Edit' on the Claims module target configuration row",
+          "expectedResult": "An edit form or inline editor opens showing current target values: Response Time Target (ms), Throughput Target (req/s), Error Rate Target (%). All fields are editable"
         },
         {
           "step": 2,
-          "action": "Click on the Critical severity recommendation to view its full details",
-          "expectedResult": "The expanded recommendation shows: Module name, Operation name, Current metric value vs target, Percentage variance (200%), Severity: 'Critical', Detailed description of the issue, Recommended action steps (e.g., '1. Review database query execution plan, 2. Add index on frequently queried columns, 3. Implement query caching'), and Estimated improvement impact (e.g., 'Expected 65% reduction in response time, bringing it within target')"
+          "action": "Clear the 'Response Time Target' field and enter a negative value: '-500'",
+          "expectedResult": "A validation error message appears immediately: 'Response time target must be a positive number'. The 'Save' button is disabled or the form prevents submission"
         },
         {
           "step": 3,
-          "action": "Filter recommendations by severity by clicking on a 'Critical' filter chip or selecting 'Critical' from a severity dropdown",
-          "expectedResult": "Only Critical severity recommendations are displayed. The count updates to show the filtered number (e.g., 'Showing 1 of 3 recommendations'). A clear filter option is available"
+          "action": "Enter a valid response time target of '2000', enter a valid throughput target of '100', and enter an error rate target of '150' (exceeding 100%)",
+          "expectedResult": "A validation error appears on the Error Rate Target field: 'Error rate target must be between 0 and 100%'. The form prevents saving until the value is corrected"
         },
         {
           "step": 4,
-          "action": "Clear the severity filter and verify all recommendations are shown again",
-          "expectedResult": "All recommendations reappear in the list, sorted by severity. The count shows the total number of recommendations"
+          "action": "Correct the error rate target to '5', and click the 'Save' button",
+          "expectedResult": "A success notification appears: 'Benchmark targets for Claims module updated successfully'. The configuration page refreshes showing the updated target values: Response Time: 2000ms, Throughput: 100 req/s, Error Rate: 5%"
         },
         {
           "step": 5,
-          "action": "Verify that each recommendation's estimated improvement impact includes quantified metrics",
-          "expectedResult": "Every recommendation displays a specific estimated impact with numbers (e.g., '~150ms response time reduction', '20% throughput improvement', '0.5% error rate reduction'). No recommendation shows generic or vague impact descriptions"
+          "action": "Navigate to the Benchmark Reports page and verify the Claims module now uses the updated targets",
+          "expectedResult": "The Claims module row in the benchmark report shows the updated target values (2000ms, 100 req/s, 5%). The pass/fail status is recalculated based on the new targets"
         }
       ],
       "postconditions": [
-        "All recommendations are properly classified by severity based on the degree of target threshold exceedance",
-        "Estimated improvement impacts are quantified and specific for each recommendation",
-        "Filtering and sorting of recommendations works correctly without data loss"
+        "Updated benchmark targets are persisted in the database",
+        "Benchmark reports reflect the newly configured targets immediately",
+        "Invalid inputs are rejected with clear, user-friendly error messages",
+        "Configuration change is logged in the audit trail with old and new values"
       ]
     }
   ],
