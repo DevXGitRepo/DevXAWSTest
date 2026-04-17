@@ -1,0 +1,2067 @@
+{
+  "storyId": "ado-14125",
+  "storyTitle": "As Insurance Agent, I want to perform account status and history viewing to achieve understanding of the account's current standing and lifecycle events",
+  "testCases": [],
+  "functional": [
+    {
+      "id": "TC-FUNC-001",
+      "title": "Verify current account status is prominently displayed with color-coded badge at top of detail view",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent user is authenticated and logged into the system",
+        "At least one account exists in the database with status 'Active'",
+        "Agent has permission to view account details",
+        "Application database is accessible and responsive"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the Account Management section from the main navigation menu",
+          "expectedResult": "Account Management page loads displaying a list of accounts"
+        },
+        {
+          "step": 2,
+          "action": "Search for or select an account with 'Active' status from the account list",
+          "expectedResult": "Account detail view opens and loads successfully"
+        },
+        {
+          "step": 3,
+          "action": "Observe the top section of the account detail view for the account status display",
+          "expectedResult": "Current account status 'Active' is prominently displayed at the top of the detail view as a color-coded badge (e.g., green badge for Active)"
+        },
+        {
+          "step": 4,
+          "action": "Verify the badge is visually distinct with appropriate color coding and readable text",
+          "expectedResult": "The status badge has a clearly visible color (green for Active), readable font size, and is positioned prominently at the top of the view above other account details"
+        },
+        {
+          "step": 5,
+          "action": "Verify the status text within the badge matches the actual account status stored in the database",
+          "expectedResult": "The displayed status text 'Active' matches the account_status field in the application database for this account"
+        }
+      ],
+      "postconditions": [
+        "Account detail view remains displayed with the status badge visible",
+        "No data modifications have occurred — this is a read-only operation",
+        "Agent session remains active and authenticated"
+      ]
+    },
+    {
+      "id": "TC-FUNC-002",
+      "title": "Verify color-coded badge displays correctly for each distinct account status type",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "Test accounts exist in the database with each possible status: Active, Suspended, Cancelled, Pending, and Reinstated",
+        "Agent has permission to view all test accounts"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the account with status 'Active'",
+          "expectedResult": "Status badge displays 'Active' with a green color-coded indicator"
+        },
+        {
+          "step": 2,
+          "action": "Navigate back to Account Management and open the account with status 'Suspended'",
+          "expectedResult": "Status badge displays 'Suspended' with a yellow or orange color-coded indicator"
+        },
+        {
+          "step": 3,
+          "action": "Navigate back and open the account with status 'Cancelled'",
+          "expectedResult": "Status badge displays 'Cancelled' with a red color-coded indicator"
+        },
+        {
+          "step": 4,
+          "action": "Navigate back and open the account with status 'Pending'",
+          "expectedResult": "Status badge displays 'Pending' with a blue or grey color-coded indicator"
+        },
+        {
+          "step": 5,
+          "action": "Navigate back and open the account with status 'Reinstated'",
+          "expectedResult": "Status badge displays 'Reinstated' with an appropriate distinct color-coded indicator differentiating it from other statuses"
+        },
+        {
+          "step": 6,
+          "action": "Compare all observed badge colors to confirm each status has a unique, distinguishable color",
+          "expectedResult": "Each account status type has a unique color-coded badge that is visually distinguishable from all other status types"
+        }
+      ],
+      "postconditions": [
+        "All status badges rendered correctly with distinct colors for each status type",
+        "No data was modified during the viewing operations",
+        "Agent remains on the last viewed account detail page"
+      ]
+    },
+    {
+      "id": "TC-FUNC-003",
+      "title": "Verify account history section displays chronological list of status changes with all required fields",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account exists that has undergone at least 3 status changes (e.g., Pending → Active → Suspended → Active)",
+        "Each status change has a recorded date, previous status, new status, and reason in the database",
+        "Agent has permission to view account history"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the test account with multiple status changes",
+          "expectedResult": "Account detail view loads with the current status badge displayed at the top"
+        },
+        {
+          "step": 2,
+          "action": "Scroll down or navigate to the 'Account History' section of the detail view",
+          "expectedResult": "Account History section is visible and populated with a list of status change entries"
+        },
+        {
+          "step": 3,
+          "action": "Verify each status change entry displays the 'Date' field",
+          "expectedResult": "Each entry in the history list shows a date/timestamp of when the status change occurred in a readable format (e.g., 'MM/DD/YYYY HH:MM AM/PM')"
+        },
+        {
+          "step": 4,
+          "action": "Verify each status change entry displays the 'Previous Status' field",
+          "expectedResult": "Each entry shows the previous status value before the change (e.g., 'Pending', 'Active', 'Suspended')"
+        },
+        {
+          "step": 5,
+          "action": "Verify each status change entry displays the 'New Status' field",
+          "expectedResult": "Each entry shows the new status value after the change (e.g., 'Active', 'Suspended', 'Active')"
+        },
+        {
+          "step": 6,
+          "action": "Verify each status change entry displays the 'Reason' field",
+          "expectedResult": "Each entry shows the reason for the status change (e.g., 'Policy approved', 'Non-payment', 'Payment received')"
+        },
+        {
+          "step": 7,
+          "action": "Verify the list is ordered chronologically with the most recent status change at the top (or bottom, per design)",
+          "expectedResult": "Status change entries are displayed in chronological order, and the sequence of previous/new statuses is logically consistent (e.g., the 'new status' of one entry matches the 'previous status' of the next)"
+        }
+      ],
+      "postconditions": [
+        "Account history section displays all status changes with complete data for each entry",
+        "The chronological order is verified and consistent",
+        "No data was modified during the read-only viewing operation"
+      ]
+    },
+    {
+      "id": "TC-FUNC-004",
+      "title": "Verify key account events (creation, endorsements, cancellations, reinstatements) are listed with timestamps and actor information",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account exists with the following recorded events: account creation, at least one endorsement, a cancellation, and a reinstatement",
+        "Each event has associated timestamp and actor (user who performed the action) stored in the database",
+        "Agent has permission to view account events"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the test account with multiple lifecycle events",
+          "expectedResult": "Account detail view loads successfully"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the key account events section (may be within Account History or a separate 'Events' tab)",
+          "expectedResult": "Key account events section is visible and populated with event entries"
+        },
+        {
+          "step": 3,
+          "action": "Locate the 'Account Creation' event entry and verify it displays the event type, timestamp, and actor",
+          "expectedResult": "Account Creation event is listed with event type 'Creation', a specific timestamp (e.g., '01/15/2024 09:30 AM'), and the actor name/ID who created the account"
+        },
+        {
+          "step": 4,
+          "action": "Locate an 'Endorsement' event entry and verify it displays the event type, timestamp, and actor",
+          "expectedResult": "Endorsement event is listed with event type 'Endorsement', a specific timestamp, and the actor name/ID who processed the endorsement"
+        },
+        {
+          "step": 5,
+          "action": "Locate the 'Cancellation' event entry and verify it displays the event type, timestamp, and actor",
+          "expectedResult": "Cancellation event is listed with event type 'Cancellation', a specific timestamp, and the actor name/ID who initiated the cancellation"
+        },
+        {
+          "step": 6,
+          "action": "Locate the 'Reinstatement' event entry and verify it displays the event type, timestamp, and actor",
+          "expectedResult": "Reinstatement event is listed with event type 'Reinstatement', a specific timestamp, and the actor name/ID who processed the reinstatement"
+        },
+        {
+          "step": 7,
+          "action": "Verify all events are listed in chronological order",
+          "expectedResult": "Events are ordered by timestamp from earliest to latest (or latest to earliest per design), and the sequence is logically consistent with the account lifecycle"
+        }
+      ],
+      "postconditions": [
+        "All key account events are displayed with complete timestamp and actor information",
+        "Events are in correct chronological order",
+        "No data was modified during the viewing operation",
+        "Agent session remains active"
+      ]
+    },
+    {
+      "id": "TC-FUNC-005",
+      "title": "Verify system correctly processes and returns account status and history data via API",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated with a valid session token",
+        "A test account with known status and history data exists in the application database",
+        "API endpoint for account status and history retrieval is deployed and accessible",
+        "Agent has appropriate API access permissions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Send a GET request to the account status API endpoint (e.g., GET /api/accounts/{accountId}/status) with a valid account ID and authentication token",
+          "expectedResult": "API returns HTTP 200 OK response with the current account status in the response body"
+        },
+        {
+          "step": 2,
+          "action": "Validate the response payload contains the current status field matching the database value",
+          "expectedResult": "Response JSON includes a 'currentStatus' field with the correct status value (e.g., 'Active') matching the database record"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to the account history API endpoint (e.g., GET /api/accounts/{accountId}/history) with the same valid account ID",
+          "expectedResult": "API returns HTTP 200 OK response with a chronological list of status changes and key events"
+        },
+        {
+          "step": 4,
+          "action": "Validate the history response contains entries with date, previousStatus, newStatus, reason, and actor fields",
+          "expectedResult": "Each history entry in the response array contains all required fields: 'date' (ISO 8601 format), 'previousStatus', 'newStatus', 'reason', and 'actor'"
+        },
+        {
+          "step": 5,
+          "action": "Verify the API response time is within SLA requirements (e.g., under 2 seconds)",
+          "expectedResult": "API response is received within the defined SLA threshold, confirming performance requirements are met"
+        }
+      ],
+      "postconditions": [
+        "API returned correct and complete data matching the database records",
+        "Response format and structure conform to the API specification",
+        "No data was modified by the GET requests",
+        "API performance met SLA requirements"
+      ]
+    },
+    {
+      "id": "TC-FUNC-006",
+      "title": "Verify account detail view loads correctly during an active customer interaction scenario",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "Agent is simulating a customer interaction scenario where they need to quickly look up account standing",
+        "The customer's account exists with a known status and history",
+        "System is under normal operational load"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "From the main dashboard, use the account search functionality to search for the customer's account by account number or customer name",
+          "expectedResult": "Search results display matching account(s) within acceptable response time"
+        },
+        {
+          "step": 2,
+          "action": "Click on the matching account from the search results to open the account detail view",
+          "expectedResult": "Account detail view opens and the current status badge is immediately visible at the top of the page without additional scrolling"
+        },
+        {
+          "step": 3,
+          "action": "Quickly scan the status badge to determine the account's current standing",
+          "expectedResult": "The color-coded status badge (e.g., green 'Active') is prominently displayed and immediately communicates the account standing at a glance"
+        },
+        {
+          "step": 4,
+          "action": "Scroll to the Account History section to review recent status changes and events",
+          "expectedResult": "Account History section loads with chronological entries showing recent status changes and key events with all required details (dates, statuses, reasons, actors)"
+        },
+        {
+          "step": 5,
+          "action": "Verify the entire page load and data retrieval completes within an acceptable timeframe for a live customer interaction",
+          "expectedResult": "The complete account detail view including status and history loads within 3 seconds, suitable for real-time customer service interactions"
+        }
+      ],
+      "postconditions": [
+        "Agent was able to quickly determine account standing and review history",
+        "All data displayed is accurate and matches database records",
+        "Agent session remains active for continued customer interaction"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Verify account with only a creation event displays correctly with minimal history",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A newly created test account exists with only one event (account creation) and no subsequent status changes",
+        "Agent has permission to view the account"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the newly created test account",
+          "expectedResult": "Account detail view loads successfully"
+        },
+        {
+          "step": 2,
+          "action": "Observe the status badge at the top of the detail view",
+          "expectedResult": "Status badge displays the initial status (e.g., 'Pending' or 'Active') with the appropriate color-coded indicator"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to the Account History section",
+          "expectedResult": "Account History section is visible and contains exactly one entry"
+        },
+        {
+          "step": 4,
+          "action": "Verify the single history entry is the account creation event with timestamp and actor",
+          "expectedResult": "The entry shows event type 'Creation', the creation timestamp, and the actor who created the account. No status change history is shown since no changes have occurred"
+        },
+        {
+          "step": 5,
+          "action": "Verify no empty state errors or broken UI elements are displayed",
+          "expectedResult": "The history section renders cleanly with the single entry, no error messages, and no placeholder text indicating missing data"
+        }
+      ],
+      "postconditions": [
+        "Account with minimal history displays correctly without UI issues",
+        "Single creation event is accurately represented",
+        "No errors logged in the system for this view"
+      ]
+    },
+    {
+      "id": "TC-FUNC-008",
+      "title": "Verify data persistence — status changes made to an account are reflected in the history view",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account exists with status 'Active' and a known history of events",
+        "Agent or admin has the ability to trigger a status change on the account (e.g., suspend the account)",
+        "Agent has permission to view account details and history"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the test account detail view and note the current status and number of history entries",
+          "expectedResult": "Account shows status 'Active' and the existing history entries are displayed"
+        },
+        {
+          "step": 2,
+          "action": "Trigger a status change on the account (e.g., suspend the account with reason 'Non-payment') through the appropriate system action or admin tool",
+          "expectedResult": "System processes the status change and confirms the account is now 'Suspended'"
+        },
+        {
+          "step": 3,
+          "action": "Refresh or re-navigate to the account detail view",
+          "expectedResult": "Account detail view reloads with updated data"
+        },
+        {
+          "step": 4,
+          "action": "Verify the status badge now shows 'Suspended' with the appropriate color-coded indicator (e.g., yellow/orange)",
+          "expectedResult": "Status badge has changed from green 'Active' to yellow/orange 'Suspended'"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to the Account History section and verify a new entry has been added",
+          "expectedResult": "A new history entry appears at the top (or bottom) of the chronological list showing: Date = current date/time, Previous Status = 'Active', New Status = 'Suspended', Reason = 'Non-payment'"
+        },
+        {
+          "step": 6,
+          "action": "Verify the actor information on the new history entry",
+          "expectedResult": "The actor field shows the name or ID of the user who performed the suspension action"
+        }
+      ],
+      "postconditions": [
+        "Account status has been updated to 'Suspended' in both the UI and the database",
+        "A new history entry has been persisted in the database with all required fields",
+        "The history maintains chronological integrity with all previous entries intact",
+        "Audit trail is complete with actor information recorded"
+      ]
+    },
+    {
+      "id": "TC-FUNC-009",
+      "title": "Verify account history displays multiple endorsement events with distinct details",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account exists with at least 3 endorsement events recorded at different dates by different actors",
+        "Agent has permission to view account events"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the test account with multiple endorsements",
+          "expectedResult": "Account detail view loads successfully with the current status badge displayed"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the key account events section",
+          "expectedResult": "Events section is populated with multiple entries including endorsement events"
+        },
+        {
+          "step": 3,
+          "action": "Count the number of endorsement events displayed",
+          "expectedResult": "At least 3 endorsement events are listed in the events section"
+        },
+        {
+          "step": 4,
+          "action": "Verify each endorsement event has a unique timestamp",
+          "expectedResult": "Each endorsement event displays a distinct date/time, and no two endorsement events share the same timestamp"
+        },
+        {
+          "step": 5,
+          "action": "Verify each endorsement event shows the actor who performed it",
+          "expectedResult": "Each endorsement event displays the actor name/ID, and different actors are shown where applicable"
+        },
+        {
+          "step": 6,
+          "action": "Verify endorsement events are interspersed correctly in the chronological timeline with other event types",
+          "expectedResult": "Endorsement events appear in their correct chronological position relative to other events like status changes, and the overall timeline is logically consistent"
+        }
+      ],
+      "postconditions": [
+        "All endorsement events are displayed with complete and accurate details",
+        "Chronological ordering is maintained across all event types",
+        "No duplicate or missing endorsement events compared to database records"
+      ]
+    },
+    {
+      "id": "TC-FUNC-010",
+      "title": "Verify authenticated agent can access account status view with proper authorization",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent user account exists with the 'Insurance Agent' role and appropriate permissions",
+        "Agent credentials are valid and not expired",
+        "At least one account exists in the system for viewing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Log in to the system using valid Insurance Agent credentials (e.g., username: 'agent.smith', password: valid password)",
+          "expectedResult": "Agent is successfully authenticated and redirected to the main dashboard"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to Account Management from the main navigation",
+          "expectedResult": "Account Management page loads and the agent can see the list of accounts they are authorized to view"
+        },
+        {
+          "step": 3,
+          "action": "Select an account from the list to view its details",
+          "expectedResult": "Account detail view opens with the status badge and history section accessible"
+        },
+        {
+          "step": 4,
+          "action": "Verify the agent can see the current status badge, status change history, and key account events",
+          "expectedResult": "All sections (status badge, status change history, key events) are visible and populated with data. No 'Access Denied' or permission error messages are displayed"
+        }
+      ],
+      "postconditions": [
+        "Agent successfully accessed account status and history information",
+        "Authentication and authorization checks passed without errors",
+        "Agent session remains active for further operations"
+      ]
+    },
+    {
+      "id": "TC-FUNC-011",
+      "title": "Verify account history handles reinstatement after cancellation with correct status chain",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account exists that went through the lifecycle: Active → Cancelled → Reinstated → Active",
+        "All status changes have recorded reasons and actor information"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the test account that was reinstated after cancellation",
+          "expectedResult": "Account detail view loads with the current status badge showing 'Active'"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the Account History section",
+          "expectedResult": "History section displays the full status change chain"
+        },
+        {
+          "step": 3,
+          "action": "Verify the cancellation entry shows Previous Status = 'Active', New Status = 'Cancelled', with a reason such as 'Customer requested cancellation'",
+          "expectedResult": "Cancellation status change entry is present with correct previous status, new status, reason, date, and actor"
+        },
+        {
+          "step": 4,
+          "action": "Verify the reinstatement entry shows Previous Status = 'Cancelled', New Status = 'Reinstated' or 'Active', with a reason such as 'Customer requested reinstatement'",
+          "expectedResult": "Reinstatement status change entry is present with correct previous status, new status, reason, date, and actor"
+        },
+        {
+          "step": 5,
+          "action": "Verify the key events section includes both a 'Cancellation' event and a 'Reinstatement' event with timestamps and actors",
+          "expectedResult": "Both cancellation and reinstatement are listed as key account events with accurate timestamps and actor information"
+        },
+        {
+          "step": 6,
+          "action": "Verify the chronological order: cancellation event timestamp is before reinstatement event timestamp",
+          "expectedResult": "The cancellation event appears before the reinstatement event in the timeline, confirming correct chronological ordering"
+        }
+      ],
+      "postconditions": [
+        "Full lifecycle from Active → Cancelled → Reinstated is accurately represented in the history",
+        "Status chain is logically consistent with no gaps or contradictions",
+        "Current status badge reflects the final state of the account"
+      ]
+    },
+    {
+      "id": "TC-FUNC-012",
+      "title": "Verify UI layout and positioning of status badge and history section on account detail view",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account with status and history data exists",
+        "Agent is using a standard desktop browser (e.g., Chrome, latest version)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the test account detail view",
+          "expectedResult": "Account detail view loads completely"
+        },
+        {
+          "step": 2,
+          "action": "Verify the status badge is positioned at the top of the detail view, above other account information sections",
+          "expectedResult": "The color-coded status badge is the first or one of the first elements visible at the top of the detail view, without requiring scrolling"
+        },
+        {
+          "step": 3,
+          "action": "Verify the Account History section is present and accessible on the same page or via a clearly labeled tab/section",
+          "expectedResult": "Account History section is clearly labeled and accessible, either visible on scroll or via a tab labeled 'History' or 'Account History'"
+        },
+        {
+          "step": 4,
+          "action": "Verify the history entries are displayed in a structured list or table format with clear column headers for Date, Previous Status, New Status, Reason, and Actor",
+          "expectedResult": "History entries are displayed in a well-structured format with clearly labeled columns/fields, making it easy to scan and read during customer interactions"
+        },
+        {
+          "step": 5,
+          "action": "Verify the key events section is distinguishable from the status change history or integrated clearly within it",
+          "expectedResult": "Key account events (creation, endorsements, cancellations, reinstatements) are either in a separate clearly labeled section or clearly marked within the unified history timeline"
+        }
+      ],
+      "postconditions": [
+        "UI layout meets design specifications with status badge prominently at top",
+        "History and events sections are well-organized and readable",
+        "Page renders correctly without layout issues or overlapping elements"
+      ]
+    }
+  ],
+  "negative": [
+    {
+      "id": "TC-NEGA-001",
+      "title": "Verify system handles request for a non-existent account ID gracefully",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "No account exists in the database with ID '9999999999'",
+        "Agent has general account viewing permissions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Attempt to navigate directly to the account detail view using a non-existent account ID (e.g., via URL: /accounts/9999999999/details)",
+          "expectedResult": "System does not crash or display a raw error/stack trace"
+        },
+        {
+          "step": 2,
+          "action": "Observe the system response and displayed message",
+          "expectedResult": "System displays a user-friendly error message such as 'Account not found' or 'The requested account does not exist'"
+        },
+        {
+          "step": 3,
+          "action": "Verify the error page or message provides navigation options to return to the account list or search",
+          "expectedResult": "A link or button is available to navigate back to Account Management or perform a new search"
+        },
+        {
+          "step": 4,
+          "action": "Check the browser console and network tab for any unhandled exceptions",
+          "expectedResult": "No unhandled JavaScript exceptions in the console. API returns HTTP 404 Not Found with a structured error response body"
+        }
+      ],
+      "postconditions": [
+        "System handled the invalid account ID gracefully without crashing",
+        "User-friendly error message was displayed",
+        "Agent session remains active and the agent can continue using the system",
+        "Error is logged in the system logs for monitoring purposes"
+      ]
+    },
+    {
+      "id": "TC-NEGA-002",
+      "title": "Verify unauthenticated user cannot access account status and history",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is not logged in (no active session or authentication token)",
+        "A valid account exists in the system",
+        "The account detail view URL is known"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open a new browser session without logging in",
+          "expectedResult": "Browser opens with no active authentication session"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to navigate directly to the account detail view URL (e.g., /accounts/12345/details)",
+          "expectedResult": "System does not display the account status or history data"
+        },
+        {
+          "step": 3,
+          "action": "Observe the system response",
+          "expectedResult": "System redirects the user to the login page or displays an 'Authentication Required' / 'Please log in' message"
+        },
+        {
+          "step": 4,
+          "action": "Attempt to call the account status API directly without an authentication token (e.g., GET /api/accounts/12345/status with no Authorization header)",
+          "expectedResult": "API returns HTTP 401 Unauthorized response with no account data in the response body"
+        }
+      ],
+      "postconditions": [
+        "No account data was exposed to the unauthenticated user",
+        "System enforced authentication requirements correctly",
+        "Login page or authentication prompt is displayed for the user to authenticate"
+      ]
+    },
+    {
+      "id": "TC-NEGA-003",
+      "title": "Verify unauthorized role cannot access account status and history view",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "A user account exists with a role that does NOT have permission to view account details (e.g., 'Read-Only Auditor' or a role without account access)",
+        "The unauthorized user is authenticated and logged in",
+        "A valid account exists in the system"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Log in with the unauthorized user credentials",
+          "expectedResult": "User is authenticated and reaches the dashboard appropriate for their role"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to navigate to Account Management section",
+          "expectedResult": "Account Management menu item is either hidden or the user is denied access with a permission error"
+        },
+        {
+          "step": 3,
+          "action": "If the menu is hidden, attempt to navigate directly via URL to the account detail view (e.g., /accounts/12345/details)",
+          "expectedResult": "System displays an 'Access Denied' or 'Insufficient Permissions' error message. No account status or history data is displayed"
+        },
+        {
+          "step": 4,
+          "action": "Attempt to call the account status API with the unauthorized user's authentication token",
+          "expectedResult": "API returns HTTP 403 Forbidden response with no account data in the response body"
+        }
+      ],
+      "postconditions": [
+        "No account data was exposed to the unauthorized user",
+        "System enforced role-based access control correctly",
+        "Unauthorized access attempt is logged in the system audit trail"
+      ]
+    },
+    {
+      "id": "TC-NEGA-004",
+      "title": "Verify system handles invalid account ID format in URL/API request",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "Agent has account viewing permissions",
+        "System expects numeric or specific format account IDs"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the account detail view using an alphabetic string as account ID (e.g., /accounts/abcdef/details)",
+          "expectedResult": "System displays a user-friendly error message such as 'Invalid account identifier' and does not crash"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the account detail view using special characters as account ID (e.g., /accounts/!@#$%^/details)",
+          "expectedResult": "System displays a validation error message and does not process the request. No server error or stack trace is shown"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to the account detail view using an extremely long string as account ID (e.g., /accounts/123456789012345678901234567890.../details — 500 characters)",
+          "expectedResult": "System rejects the request with an appropriate error message about invalid input length"
+        },
+        {
+          "step": 4,
+          "action": "Attempt API call with SQL injection payload as account ID (e.g., GET /api/accounts/1 OR 1=1--/status)",
+          "expectedResult": "System sanitizes the input and returns HTTP 400 Bad Request or 404 Not Found. No SQL injection is executed and no unauthorized data is returned"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to the account detail view using a negative number as account ID (e.g., /accounts/-1/details)",
+          "expectedResult": "System displays a validation error or 'Account not found' message. No unexpected behavior occurs"
+        }
+      ],
+      "postconditions": [
+        "System handled all invalid ID formats gracefully without crashes or data exposure",
+        "Input validation prevented malicious payloads from being processed",
+        "Agent session remains active and functional",
+        "All invalid requests are logged for security monitoring"
+      ]
+    },
+    {
+      "id": "TC-NEGA-005",
+      "title": "Verify system handles database connectivity failure gracefully when loading account status",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "Database connectivity is simulated as unavailable (e.g., database service is stopped or network to database is blocked)",
+        "Agent attempts to view an account that would normally load successfully"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "With database connectivity disrupted, navigate to Account Management and attempt to open an account detail view",
+          "expectedResult": "System does not display a raw database error, stack trace, or connection string"
+        },
+        {
+          "step": 2,
+          "action": "Observe the error handling behavior on the UI",
+          "expectedResult": "System displays a user-friendly error message such as 'Unable to load account information. Please try again later.' or 'Service temporarily unavailable'"
+        },
+        {
+          "step": 3,
+          "action": "Verify the error message does not expose any technical details (database name, server IP, connection strings)",
+          "expectedResult": "Error message is generic and user-friendly with no technical details exposed"
+        },
+        {
+          "step": 4,
+          "action": "Restore database connectivity and attempt to load the account detail view again",
+          "expectedResult": "Account detail view loads successfully with the status badge and history section populated correctly after connectivity is restored"
+        }
+      ],
+      "postconditions": [
+        "System handled database failure gracefully without exposing sensitive technical information",
+        "Error was logged in the application logs with technical details for debugging",
+        "System recovered automatically once database connectivity was restored",
+        "Agent session remained active throughout the failure scenario"
+      ]
+    },
+    {
+      "id": "TC-NEGA-006",
+      "title": "Verify system handles expired session during account status viewing",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent was previously authenticated and logged in",
+        "Agent has the account detail view open with status and history displayed",
+        "Session timeout is configured (e.g., 30 minutes of inactivity)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "With the account detail view open, allow the session to expire by waiting beyond the session timeout period (or manually invalidate the session token)",
+          "expectedResult": "Session expires on the server side"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to interact with the account detail view (e.g., click to refresh history, navigate to another account, or scroll to load more events)",
+          "expectedResult": "System detects the expired session and does not return any new account data"
+        },
+        {
+          "step": 3,
+          "action": "Observe the system response",
+          "expectedResult": "System redirects the agent to the login page or displays a session expired notification such as 'Your session has expired. Please log in again.'"
+        },
+        {
+          "step": 4,
+          "action": "Log in again with valid credentials and navigate back to the same account",
+          "expectedResult": "Agent is re-authenticated and can access the account detail view with status and history displayed correctly"
+        }
+      ],
+      "postconditions": [
+        "Expired session was handled securely without exposing data",
+        "Agent was prompted to re-authenticate",
+        "After re-authentication, full functionality was restored",
+        "No data loss or corruption occurred due to the session expiration"
+      ]
+    },
+    {
+      "id": "TC-NEGA-007",
+      "title": "Verify system handles account with corrupted or missing history data",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account exists where some history records have been deliberately corrupted or deleted from the database (e.g., missing 'reason' field, null 'previousStatus', or missing actor information)",
+        "Agent has permission to view the account"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the test account with corrupted/incomplete history data",
+          "expectedResult": "Account detail view loads without crashing. The status badge displays the current status correctly"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the Account History section",
+          "expectedResult": "History section loads and displays available entries. The system does not crash due to missing data fields"
+        },
+        {
+          "step": 3,
+          "action": "Observe how entries with missing 'reason' field are displayed",
+          "expectedResult": "Entries with missing reason display a placeholder such as 'N/A', 'Not specified', or a dash '-' instead of showing a blank or causing an error"
+        },
+        {
+          "step": 4,
+          "action": "Observe how entries with null 'previousStatus' are displayed",
+          "expectedResult": "Entries with null previous status display a placeholder or are handled gracefully (e.g., showing 'Unknown' or 'N/A')"
+        },
+        {
+          "step": 5,
+          "action": "Observe how entries with missing actor information are displayed",
+          "expectedResult": "Entries with missing actor display a placeholder such as 'System' or 'Unknown' instead of showing blank or causing a rendering error"
+        }
+      ],
+      "postconditions": [
+        "System displayed available data gracefully despite corrupted/missing fields",
+        "No application crashes or unhandled exceptions occurred",
+        "Data integrity issues are logged for investigation",
+        "Agent was still able to view the account's current status and available history"
+      ]
+    },
+    {
+      "id": "TC-NEGA-008",
+      "title": "Verify system handles API timeout when retrieving account history for large datasets",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account exists with an extremely large number of history entries (e.g., 10,000+ status changes and events) to simulate slow response",
+        "Network conditions are simulated to cause API timeout (or API timeout threshold is set very low for testing)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and attempt to open the test account with the extremely large history dataset",
+          "expectedResult": "System begins loading the account detail view"
+        },
+        {
+          "step": 2,
+          "action": "Observe the loading behavior as the system attempts to retrieve the large history dataset",
+          "expectedResult": "A loading indicator (spinner, progress bar, or skeleton screen) is displayed while data is being fetched"
+        },
+        {
+          "step": 3,
+          "action": "If the request times out, observe the error handling",
+          "expectedResult": "System displays a user-friendly timeout message such as 'Request timed out. Please try again.' rather than a raw timeout error or blank page"
+        },
+        {
+          "step": 4,
+          "action": "Verify the current status badge still loads even if the history section times out",
+          "expectedResult": "If possible, the current status badge loads independently and is displayed even if the history section fails to load, providing partial functionality"
+        },
+        {
+          "step": 5,
+          "action": "Click a 'Retry' or 'Try Again' button if available, or manually refresh the page",
+          "expectedResult": "System re-attempts to load the data and either succeeds or displays the timeout message again with retry options"
+        }
+      ],
+      "postconditions": [
+        "System handled the timeout gracefully without crashing",
+        "User-friendly error message was displayed with retry options",
+        "Agent session remained active and the agent can continue using other features",
+        "Timeout event is logged in the system for performance monitoring"
+      ]
+    },
+    {
+      "id": "TC-NEGA-009",
+      "title": "Verify system prevents XSS attacks through account history reason or actor fields",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account exists where a history entry's 'reason' field contains a script injection payload (e.g., '<script>alert(\"XSS\")</script>') stored in the database",
+        "A test account exists where an actor name contains HTML injection (e.g., '<b>Hacker</b><img src=x onerror=alert(1)>')"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the test account with the XSS payload in the history reason field",
+          "expectedResult": "Account detail view loads without executing any JavaScript"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the Account History section and locate the entry with the script injection in the reason field",
+          "expectedResult": "The reason field displays the raw text '<script>alert(\"XSS\")</script>' as escaped/sanitized text, NOT as executable HTML/JavaScript. No alert dialog appears"
+        },
+        {
+          "step": 3,
+          "action": "Locate the entry with HTML injection in the actor name field",
+          "expectedResult": "The actor field displays the raw text as escaped/sanitized content. No HTML is rendered (no bold text, no image loading). The text is displayed as plain text"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the page source/DOM to verify the injected content is properly HTML-encoded",
+          "expectedResult": "The injected content is HTML-encoded in the DOM (e.g., '&lt;script&gt;' instead of '<script>') confirming proper output encoding"
+        }
+      ],
+      "postconditions": [
+        "No XSS or HTML injection was executed in the browser",
+        "All user-supplied content is properly sanitized and encoded before rendering",
+        "System security is maintained against injection attacks",
+        "Agent session and data integrity are unaffected"
+      ]
+    },
+    {
+      "id": "TC-NEGA-010",
+      "title": "Verify system handles concurrent access to the same account detail view",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Two Insurance Agent users (Agent A and Agent B) are authenticated and logged in on separate browser sessions",
+        "Both agents have permission to view the same account",
+        "The account has existing status and history data"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Agent A navigates to Account Management and opens account ID 12345 detail view",
+          "expectedResult": "Agent A sees the account detail view with current status badge and history"
+        },
+        {
+          "step": 2,
+          "action": "Simultaneously, Agent B navigates to Account Management and opens the same account ID 12345 detail view",
+          "expectedResult": "Agent B also sees the account detail view with the same current status badge and history. No locking or access denial occurs for a read-only view"
+        },
+        {
+          "step": 3,
+          "action": "While both agents have the view open, a status change occurs on the account (e.g., account is suspended by an admin)",
+          "expectedResult": "The status change is processed and persisted in the database"
+        },
+        {
+          "step": 4,
+          "action": "Agent A refreshes the account detail view",
+          "expectedResult": "Agent A sees the updated status badge (e.g., 'Suspended') and the new history entry reflecting the status change"
+        },
+        {
+          "step": 5,
+          "action": "Agent B refreshes the account detail view",
+          "expectedResult": "Agent B also sees the updated status badge and the new history entry, confirming both agents see consistent, up-to-date data"
+        }
+      ],
+      "postconditions": [
+        "Both agents were able to view the account simultaneously without conflicts",
+        "After refresh, both agents see consistent and up-to-date data",
+        "No data corruption or race conditions occurred",
+        "Read-only viewing operations do not block each other"
+      ]
+    },
+    {
+      "id": "TC-NEGA-011",
+      "title": "Verify system handles account with no history events (empty history state)",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and logged in",
+        "A test account exists in the database with a current status but with zero history entries (edge case where history records were purged or the account was created through a data migration without history)",
+        "Agent has permission to view the account"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Account Management and open the test account with no history entries",
+          "expectedResult": "Account detail view loads without errors"
+        },
+        {
+          "step": 2,
+          "action": "Verify the status badge is displayed at the top of the detail view",
+          "expectedResult": "Current status badge is displayed correctly with the appropriate color-coded indicator, even though there is no history"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to the Account History section",
+          "expectedResult": "Account History section loads without errors"
+        },
+        {
+          "step": 4,
+          "action": "Observe the empty history state",
+          "expectedResult": "System displays a meaningful empty state message such as 'No history available for this account' or 'No events recorded'. No error messages, broken layouts, or 'null'/'undefined' text is displayed"
+        },
+        {
+          "step": 5,
+          "action": "Verify the page layout remains intact and other sections are unaffected",
+          "expectedResult": "The rest of the account detail view renders correctly. The empty history section does not break the page layout or affect other UI components"
+        }
+      ],
+      "postconditions": [
+        "System handled the empty history state gracefully with an appropriate message",
+        "No application errors or UI rendering issues occurred",
+        "Agent can still view the current account status despite empty history",
+        "Agent session remains active for continued use"
+      ]
+    },
+    {
+      "id": "TC-NEGA-012",
+      "title": "Verify API returns proper error response for malformed request headers",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated with a valid token",
+        "API endpoint for account status/history is accessible",
+        "API testing tool (e.g., Postman, curl) is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Send a GET request to /api/accounts/12345/status with an invalid Content-Type header (e.g., 'Content-Type: text/xml' when JSON is expected)",
+          "expectedResult": "API returns an appropriate HTTP error response (e.g., 415 Unsupported Media Type or processes the GET request normally since GET typically doesn't require Content-Type)"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to /api/accounts/12345/history with a malformed Authorization header (e.g., 'Authorization: InvalidTokenFormat')",
+          "expectedResult": "API returns HTTP 401 Unauthorized with a structured error response indicating invalid authentication credentials"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to /api/accounts/12345/status with an expired authentication token",
+          "expectedResult": "API returns HTTP 401 Unauthorized with a message indicating the token has expired"
+        },
+        {
+          "step": 4,
+          "action": "Send a GET request with an Accept header requesting an unsupported format (e.g., 'Accept: application/xml' when only JSON is supported)",
+          "expectedResult": "API returns HTTP 406 Not Acceptable or returns the default JSON format with appropriate Content-Type header"
+        }
+      ],
+      "postconditions": [
+        "API handled all malformed requests with appropriate HTTP status codes",
+        "No sensitive data was leaked in error responses",
+        "Error responses follow a consistent structured format",
+        "All malformed requests are logged for security monitoring"
+      ]
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "TC-EDGE-001",
+      "title": "Account with no status change history - only creation event exists",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials and has account viewing permissions",
+        "A test account exists that was just created and has never undergone any status change (only the initial 'Active' status from creation)",
+        "Agent is on the Account Search page",
+        "Database confirms the account has exactly one event record (creation) and zero status change records"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter the account number of the newly created account in the search field and click 'Search'",
+          "expectedResult": "The account detail view loads successfully without errors"
+        },
+        {
+          "step": 2,
+          "action": "Observe the current account status badge at the top of the detail view",
+          "expectedResult": "The status badge displays 'Active' with the appropriate color-coded indicator (e.g., green badge)"
+        },
+        {
+          "step": 3,
+          "action": "Scroll down to the 'Account History' section and review the status change list",
+          "expectedResult": "The status change history list is empty or displays a user-friendly message such as 'No status changes recorded' rather than an error or blank space"
+        },
+        {
+          "step": 4,
+          "action": "Review the 'Key Account Events' section below the status change history",
+          "expectedResult": "A single creation event is listed with the correct timestamp, actor information (the user/system that created the account), and event type 'Account Created'"
+        },
+        {
+          "step": 5,
+          "action": "Verify no loading spinners remain and the page is fully rendered",
+          "expectedResult": "All sections are fully loaded with no infinite spinners, broken layouts, or console errors"
+        }
+      ],
+      "postconditions": [
+        "The account detail view renders completely with all sections visible even when history data is minimal",
+        "No JavaScript errors or API errors are logged in the browser console",
+        "Agent remains on the account detail view and can navigate away normally"
+      ]
+    },
+    {
+      "id": "TC-EDGE-002",
+      "title": "Account with extremely long status change history (100+ events)",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account exists with over 100 status change events and 50+ key account events (endorsements, suspensions, reinstatements, cancellations, etc.)",
+        "Agent is on the Account Search page",
+        "Performance monitoring tools are available to measure page load time"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Search for the account with 100+ history events by entering its account number and clicking 'Search'",
+          "expectedResult": "The account detail view loads within the SLA-defined performance threshold (e.g., under 3 seconds)"
+        },
+        {
+          "step": 2,
+          "action": "Observe the current account status badge at the top of the detail view",
+          "expectedResult": "The current status badge is prominently displayed and reflects the most recent status accurately with the correct color-coded indicator"
+        },
+        {
+          "step": 3,
+          "action": "Scroll to the 'Account History' section and verify the chronological ordering of all status changes",
+          "expectedResult": "Status changes are listed in chronological order (most recent first or oldest first per design) with date, previous status, new status, and reason for each entry. Pagination or infinite scroll is available if the list exceeds the visible area"
+        },
+        {
+          "step": 4,
+          "action": "If pagination is present, navigate to the last page of status change history",
+          "expectedResult": "The last page loads correctly, showing the earliest status change events with accurate data. Page navigation controls work without errors"
+        },
+        {
+          "step": 5,
+          "action": "Scroll to the 'Key Account Events' section and verify all event types are displayed",
+          "expectedResult": "All event types (creation, endorsements, cancellations, reinstatements) are listed with timestamps and actor information. The list handles the large volume without truncation or data loss"
+        },
+        {
+          "step": 6,
+          "action": "Measure the total page load time and memory usage in browser developer tools",
+          "expectedResult": "Page load time is within acceptable SLA limits. Memory usage does not spike excessively (no memory leaks). The browser remains responsive during scrolling and interaction"
+        }
+      ],
+      "postconditions": [
+        "All 100+ status change events and 50+ key account events are accessible and viewable by the agent",
+        "No data truncation or missing records compared to the database",
+        "Browser performance remains stable with no crashes or freezes",
+        "Agent can navigate away from the page without issues"
+      ]
+    },
+    {
+      "id": "TC-EDGE-003",
+      "title": "Account with special characters and Unicode in status change reason fields",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account exists with status change reasons containing special characters: ampersands (&), quotes (\"), angle brackets (<>), Unicode characters (é, ñ, ü), and emojis (📋)",
+        "The account has at least 3 status changes with these special character reasons stored in the database",
+        "Agent is on the Account Search page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Search for the test account by entering its account number and clicking 'Search'",
+          "expectedResult": "The account detail view loads without any rendering errors or XSS-related issues"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the 'Account History' section and review the status change entries",
+          "expectedResult": "All status change entries are displayed with the special characters rendered correctly: '&' shows as ampersand, quotes display properly, angle brackets are escaped/rendered safely, Unicode characters (é, ñ, ü) display correctly"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the reason field containing the emoji character (📋)",
+          "expectedResult": "The emoji renders correctly in the reason field without being replaced by a placeholder box or question mark. Text alignment and row height are not broken by the emoji"
+        },
+        {
+          "step": 4,
+          "action": "Right-click on a reason field with angle brackets and inspect the HTML source",
+          "expectedResult": "Angle brackets are properly HTML-encoded (e.g., &lt; and &gt;) to prevent XSS injection. No raw HTML is rendered from the reason text"
+        },
+        {
+          "step": 5,
+          "action": "Check the 'Key Account Events' section for any events with special characters in actor names or descriptions",
+          "expectedResult": "Actor names and event descriptions with special characters display correctly without encoding artifacts or layout breaks"
+        }
+      ],
+      "postconditions": [
+        "All special characters and Unicode text render correctly throughout the account detail view",
+        "No XSS vulnerabilities are exposed through the reason or actor fields",
+        "Page layout remains intact with no visual distortion from special characters"
+      ]
+    },
+    {
+      "id": "TC-EDGE-004",
+      "title": "Rapid consecutive navigation between multiple account detail views",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "At least 5 different accounts exist with varying statuses (Active, Suspended, Cancelled, Reinstated, Pending)",
+        "Agent is on the Account Search results page showing multiple accounts",
+        "Network conditions are normal"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the first account (Active status) to open its detail view",
+          "expectedResult": "Account detail view loads showing 'Active' status badge in green with correct history"
+        },
+        {
+          "step": 2,
+          "action": "Immediately click the browser back button and then quickly click on the second account (Cancelled status) within 1 second",
+          "expectedResult": "The second account's detail view loads correctly showing 'Cancelled' status badge (e.g., red) without displaying stale data from the first account"
+        },
+        {
+          "step": 3,
+          "action": "Repeat the rapid back-and-forward navigation pattern for the third account (Suspended status) by clicking back and immediately selecting it",
+          "expectedResult": "The third account loads with 'Suspended' status badge (e.g., yellow/orange). No data from previous accounts bleeds into this view. The status history is specific to this account only"
+        },
+        {
+          "step": 4,
+          "action": "Open the fourth account, and while the page is still loading (spinner visible), click the browser back button",
+          "expectedResult": "Navigation is handled gracefully. No partial data is displayed, no JavaScript errors occur, and the agent returns to the search results page cleanly"
+        },
+        {
+          "step": 5,
+          "action": "Click on the fifth account and verify all sections load completely",
+          "expectedResult": "The account detail view loads fully with correct status badge, complete status change history, and all key account events. No residual data from any previously viewed account is present"
+        }
+      ],
+      "postconditions": [
+        "No race conditions or stale data displayed across rapid account switches",
+        "Browser history stack is clean and back/forward navigation works predictably",
+        "No orphaned API calls or memory leaks from cancelled requests"
+      ]
+    },
+    {
+      "id": "TC-EDGE-005",
+      "title": "Account with simultaneous status changes by multiple agents",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Two Insurance Agent accounts (Agent A and Agent B) are logged in on separate browser sessions",
+        "Both agents have permissions to view and modify account status",
+        "A test account with 'Active' status is available",
+        "Both agents have the same account detail view open simultaneously"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Agent A views the account detail page and confirms the status badge shows 'Active' in green",
+          "expectedResult": "Agent A sees 'Active' status badge with the current history of events"
+        },
+        {
+          "step": 2,
+          "action": "Agent B (in a separate session) triggers a status change on the same account from 'Active' to 'Suspended' with reason 'Non-payment'",
+          "expectedResult": "The status change is processed successfully in Agent B's session"
+        },
+        {
+          "step": 3,
+          "action": "Agent A refreshes the account detail page by clicking the browser refresh button or a 'Refresh' control on the page",
+          "expectedResult": "Agent A's view updates to show the 'Suspended' status badge (e.g., yellow/orange) instead of 'Active'. The status change history now includes the new entry showing 'Active → Suspended' with reason 'Non-payment', timestamp, and Agent B's name as the actor"
+        },
+        {
+          "step": 4,
+          "action": "Agent A reviews the Key Account Events section after refresh",
+          "expectedResult": "The suspension event appears in the events list with the correct timestamp, event type, and Agent B identified as the actor who performed the change"
+        },
+        {
+          "step": 5,
+          "action": "Verify the chronological order of the history after the concurrent update",
+          "expectedResult": "The new status change entry is correctly positioned in chronological order relative to all previous entries. No duplicate entries exist"
+        }
+      ],
+      "postconditions": [
+        "Both agents see consistent and accurate account status after refresh",
+        "The status change history contains exactly one entry for the concurrent change (no duplicates)",
+        "Database integrity is maintained with correct timestamps and actor attribution",
+        "No data corruption from the concurrent access scenario"
+      ]
+    },
+    {
+      "id": "TC-EDGE-006",
+      "title": "Account detail view when API response is slow or times out",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "Network throttling is enabled in browser developer tools to simulate slow connection (e.g., Slow 3G or custom 500ms+ latency)",
+        "A valid test account exists in the system",
+        "Agent is on the Account Search page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enable network throttling to 'Slow 3G' in browser developer tools, then search for the test account and click to open its detail view",
+          "expectedResult": "A loading indicator (spinner or skeleton screen) is displayed while the account data is being fetched. The page does not appear broken or blank"
+        },
+        {
+          "step": 2,
+          "action": "Observe the page during the slow load - check if the status badge area, history section, and events section each show individual loading states",
+          "expectedResult": "Each section shows an appropriate loading state (spinner, skeleton, or placeholder text). The page layout is maintained and does not shift dramatically when data arrives"
+        },
+        {
+          "step": 3,
+          "action": "Wait for the data to fully load and verify all sections populate correctly",
+          "expectedResult": "The status badge, status change history, and key account events all populate with correct data once the API responses arrive. No data is missing or corrupted due to the slow connection"
+        },
+        {
+          "step": 4,
+          "action": "Set network throttling to 'Offline' mode and attempt to refresh the account detail page",
+          "expectedResult": "A clear, user-friendly error message is displayed (e.g., 'Unable to load account data. Please check your connection and try again.'). No raw error codes or stack traces are shown to the agent"
+        },
+        {
+          "step": 5,
+          "action": "Restore network connectivity (disable throttling) and click a 'Retry' button or refresh the page",
+          "expectedResult": "The account detail view loads successfully with all data intact. The error message is dismissed and replaced with the actual account data"
+        }
+      ],
+      "postconditions": [
+        "The system handles slow and failed network conditions gracefully with appropriate user feedback",
+        "No data corruption or partial rendering occurs due to timeout scenarios",
+        "Agent can recover from network errors by retrying without needing to restart the workflow"
+      ]
+    },
+    {
+      "id": "TC-EDGE-007",
+      "title": "Account with status change entries having identical timestamps",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account exists with two or more status change events that share the exact same timestamp (e.g., batch processing created multiple entries at 2024-01-15 10:30:00.000)",
+        "Agent is on the Account Search page",
+        "Database has been verified to contain the duplicate-timestamp records"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Search for the test account and open its detail view",
+          "expectedResult": "The account detail view loads without errors"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the 'Account History' section and locate the entries with identical timestamps",
+          "expectedResult": "Both status change entries are displayed individually - neither is hidden, merged, or overwritten. Each entry shows its own previous status, new status, and reason"
+        },
+        {
+          "step": 3,
+          "action": "Verify the chronological ordering of the duplicate-timestamp entries",
+          "expectedResult": "The entries with identical timestamps are displayed in a consistent, deterministic order (e.g., by database insertion order or secondary sort key). The order does not change on page refresh"
+        },
+        {
+          "step": 4,
+          "action": "Refresh the page 3 times and verify the order remains stable",
+          "expectedResult": "The order of the duplicate-timestamp entries remains identical across all 3 refreshes, confirming deterministic sorting"
+        }
+      ],
+      "postconditions": [
+        "All status change entries are visible regardless of timestamp collisions",
+        "Sort order is deterministic and stable across multiple page loads",
+        "No data loss or merging of records with identical timestamps"
+      ]
+    },
+    {
+      "id": "TC-EDGE-008",
+      "title": "Account with extremely long reason text in status change history",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account exists with a status change reason field containing 1000+ characters of text",
+        "Another status change on the same account has a reason field that is completely empty (null or empty string)",
+        "Agent is on the Account Search page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Search for the test account and open its detail view",
+          "expectedResult": "The account detail view loads without layout breaking or horizontal scrollbar appearing"
+        },
+        {
+          "step": 2,
+          "action": "Locate the status change entry with the 1000+ character reason in the Account History section",
+          "expectedResult": "The long reason text is either fully displayed with proper text wrapping or truncated with an ellipsis and a 'Show More' / 'View Full Reason' control. The text does not overflow its container or overlap adjacent elements"
+        },
+        {
+          "step": 3,
+          "action": "If truncated, click the 'Show More' or expand control to view the full reason text",
+          "expectedResult": "The full 1000+ character reason text is displayed completely. The expansion is smooth and does not break the layout of surrounding history entries"
+        },
+        {
+          "step": 4,
+          "action": "Locate the status change entry with the empty reason field",
+          "expectedResult": "The entry is displayed with a graceful placeholder such as 'No reason provided' or a dash (-) rather than showing 'null', 'undefined', or a blank space that collapses the row layout"
+        },
+        {
+          "step": 5,
+          "action": "Resize the browser window to a narrow width (e.g., 768px) and verify both entries still display correctly",
+          "expectedResult": "Both the long-text entry and the empty-reason entry adapt to the narrower viewport without horizontal overflow, overlapping text, or broken layout"
+        }
+      ],
+      "postconditions": [
+        "Long text content is handled gracefully with wrapping or truncation controls",
+        "Empty/null reason fields display a user-friendly placeholder",
+        "Page layout remains intact across different viewport sizes"
+      ]
+    },
+    {
+      "id": "TC-EDGE-009",
+      "title": "Account status view with browser zoom at 400% magnification",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account with multiple status changes and events is available",
+        "Browser is set to default 100% zoom level initially",
+        "Agent has the account detail view open"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "With the account detail view open, use Ctrl+Plus (Cmd+Plus on Mac) to zoom the browser to 200%",
+          "expectedResult": "The status badge, history list, and events section reflow properly. All text remains readable. No content is cut off or hidden behind other elements"
+        },
+        {
+          "step": 2,
+          "action": "Continue zooming to 300% using Ctrl+Plus",
+          "expectedResult": "The layout adapts to the extreme zoom level. The status badge color-coded indicator is still visible and distinguishable. Scrolling allows access to all content"
+        },
+        {
+          "step": 3,
+          "action": "Zoom to 400% and attempt to read the status change history entries",
+          "expectedResult": "Each history entry (date, previous status, new status, reason) remains accessible via scrolling. No text overlaps. Interactive elements remain clickable"
+        },
+        {
+          "step": 4,
+          "action": "At 400% zoom, verify the current account status badge is still visible and identifiable",
+          "expectedResult": "The status badge text and color indicator are both visible. The badge does not overflow off-screen without the ability to scroll to it"
+        },
+        {
+          "step": 5,
+          "action": "Reset zoom to 100% using Ctrl+0 (Cmd+0 on Mac)",
+          "expectedResult": "The page returns to normal layout immediately without requiring a refresh. All data remains intact and correctly displayed"
+        }
+      ],
+      "postconditions": [
+        "All account status and history information is accessible at extreme zoom levels",
+        "No content is permanently hidden or inaccessible at any zoom level",
+        "Layout returns to normal when zoom is reset"
+      ]
+    },
+    {
+      "id": "TC-EDGE-010",
+      "title": "Account with all possible status transitions in history",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account exists that has gone through every possible status transition: Created → Active → Suspended → Reinstated → Active → Cancelled → Reinstated → Active → Suspended → Cancelled",
+        "Each transition has a unique reason and was performed by different actors",
+        "Agent is on the Account Search page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Search for the test account and open its detail view",
+          "expectedResult": "The account detail view loads showing the current (final) status with the correct color-coded badge"
+        },
+        {
+          "step": 2,
+          "action": "Review the Account History section for completeness of all status transitions",
+          "expectedResult": "All status transitions are listed: Active→Suspended, Suspended→Reinstated, Reinstated→Active, Active→Cancelled, Cancelled→Reinstated, Reinstated→Active, Active→Suspended, Suspended→Cancelled. Each shows the correct previous status, new status, date, and reason"
+        },
+        {
+          "step": 3,
+          "action": "Verify that each status change entry shows the correct actor who performed the change",
+          "expectedResult": "Each of the different actors is correctly attributed to their respective status change. No actor information is missing or incorrectly assigned"
+        },
+        {
+          "step": 4,
+          "action": "Review the Key Account Events section for all corresponding events",
+          "expectedResult": "Events for creation, each endorsement, each cancellation, and each reinstatement are listed with correct timestamps and actor information. The event count matches the expected number of lifecycle events"
+        },
+        {
+          "step": 5,
+          "action": "Verify the chronological order is strictly maintained from oldest to newest (or newest to oldest per design)",
+          "expectedResult": "All entries are in strict chronological order with no out-of-sequence entries. Timestamps progress logically without any entry appearing before its predecessor"
+        }
+      ],
+      "postconditions": [
+        "Complete lifecycle history is accurately represented in both the status change and events sections",
+        "All status types and transitions are correctly color-coded and labeled",
+        "Actor attribution is accurate across all entries",
+        "No missing or duplicate entries in the history"
+      ]
+    },
+    {
+      "id": "TC-EDGE-011",
+      "title": "Account detail view accessed with an invalid or non-existent account ID in URL",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "Agent is on any page within the application",
+        "The account ID 'XXXXXXXXX999' does not exist in the database",
+        "The URL pattern for account detail view is known (e.g., /accounts/{accountId}/detail)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Manually modify the browser URL to navigate to an account detail view with a non-existent account ID (e.g., /accounts/XXXXXXXXX999/detail) and press Enter",
+          "expectedResult": "The system displays a clear error message such as 'Account not found' or 'The requested account does not exist'. No blank page, no unhandled exception, no raw error stack trace"
+        },
+        {
+          "step": 2,
+          "action": "Modify the URL to use special characters in the account ID (e.g., /accounts/<script>alert(1)</script>/detail) and press Enter",
+          "expectedResult": "The system rejects the invalid input safely. No script execution occurs. A user-friendly error message is displayed. The application remains secure and functional"
+        },
+        {
+          "step": 3,
+          "action": "Modify the URL to use an extremely long string (500+ characters) as the account ID and press Enter",
+          "expectedResult": "The system handles the oversized input gracefully, either truncating it or returning a validation error. No server error (500) or application crash occurs"
+        },
+        {
+          "step": 4,
+          "action": "Navigate back to the Account Search page using the application navigation",
+          "expectedResult": "The agent can navigate back to the search page normally. The application state is not corrupted by the invalid URL attempts"
+        }
+      ],
+      "postconditions": [
+        "No security vulnerabilities exposed through URL manipulation",
+        "Application remains stable and navigable after invalid URL attempts",
+        "No sensitive error information leaked to the user interface"
+      ]
+    },
+    {
+      "id": "TC-EDGE-012",
+      "title": "Account history with status changes spanning multiple years and timezone boundaries",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account exists with status changes spanning 5+ years, including changes that occurred at midnight UTC, on daylight saving time transition dates, and on December 31 / January 1 boundaries",
+        "Agent's local timezone is different from the server timezone (e.g., agent in PST, server in UTC)",
+        "Agent is on the Account Search page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Search for the test account and open its detail view",
+          "expectedResult": "The account detail view loads with all historical data spanning multiple years"
+        },
+        {
+          "step": 2,
+          "action": "Review the timestamps on status change entries that occurred at midnight UTC on a DST transition date",
+          "expectedResult": "Timestamps are displayed consistently in the agent's local timezone (or a clearly labeled timezone). The date is not off by one day due to timezone conversion errors"
+        },
+        {
+          "step": 3,
+          "action": "Locate the status change that occurred on December 31, 2023 at 11:59 PM UTC and the one on January 1, 2024 at 12:01 AM UTC",
+          "expectedResult": "Both entries show the correct dates after timezone conversion. The year boundary is handled correctly - the Dec 31 entry does not show as Jan 1 or vice versa"
+        },
+        {
+          "step": 4,
+          "action": "Verify that the chronological sort order is correct across the year boundary and DST transitions",
+          "expectedResult": "All entries maintain correct chronological order. No entries are out of sequence due to timezone conversion or DST offset changes"
+        },
+        {
+          "step": 5,
+          "action": "Check the oldest entry (5+ years ago) for correct date formatting",
+          "expectedResult": "The date format is consistent with recent entries. No formatting issues with older dates (e.g., two-digit year display, missing century)"
+        }
+      ],
+      "postconditions": [
+        "All timestamps display correctly regardless of timezone differences and DST transitions",
+        "Chronological ordering is accurate across year boundaries and timezone changes",
+        "Date formatting is consistent across all historical entries"
+      ]
+    }
+  ],
+  "accessibility": [
+    {
+      "id": "TC-ACCE-001",
+      "title": "Full keyboard navigation through account status and history sections",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account with multiple status changes and key events is open in the detail view",
+        "Mouse/trackpad is not used - keyboard only",
+        "Browser is Chrome, Firefox, or Edge (latest version)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Press Tab key repeatedly starting from the top of the account detail page to navigate through all interactive elements",
+          "expectedResult": "Focus moves in a logical, sequential order: first to the status badge area (if interactive), then through the Account History section entries, then through the Key Account Events section. Each focusable element receives a visible focus indicator"
+        },
+        {
+          "step": 2,
+          "action": "Continue pressing Tab to navigate through any 'Show More', 'Expand', pagination, or filter controls in the history section",
+          "expectedResult": "All interactive controls (buttons, links, pagination controls) receive keyboard focus in a logical order. No interactive element is skipped"
+        },
+        {
+          "step": 3,
+          "action": "Press Shift+Tab to navigate backwards through the same elements",
+          "expectedResult": "Focus moves in reverse order through all previously focused elements. The reverse order is the exact opposite of the forward Tab order"
+        },
+        {
+          "step": 4,
+          "action": "If pagination exists in the history section, use Tab to focus on a page number and press Enter to navigate to that page",
+          "expectedResult": "The page changes to the selected page number. Focus is managed appropriately - either remaining on the pagination control or moving to the first item in the newly loaded list"
+        },
+        {
+          "step": 5,
+          "action": "If any expandable/collapsible sections exist (e.g., event details), focus on the expand control and press Enter or Space",
+          "expectedResult": "The section expands/collapses. Focus remains on the control or moves to the newly revealed content. The expanded state is communicated to assistive technology"
+        },
+        {
+          "step": 6,
+          "action": "Press Escape key while focused on any expanded section or modal",
+          "expectedResult": "The expanded section collapses or the modal closes. Focus returns to the trigger element that opened it"
+        }
+      ],
+      "postconditions": [
+        "All interactive elements on the account detail view are reachable via keyboard alone",
+        "No keyboard traps exist - the user can always Tab away from any element",
+        "Focus order follows a logical reading order consistent with the visual layout"
+      ]
+    },
+    {
+      "id": "TC-ACCE-002",
+      "title": "Screen reader announces account status badge with color-independent information",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "Screen reader is active (NVDA on Windows, VoiceOver on Mac, or JAWS)",
+        "A test account with 'Suspended' status is open in the detail view",
+        "Screen reader verbosity is set to default level"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the account status badge at the top of the detail view using the screen reader's navigation commands (e.g., Tab or arrow keys)",
+          "expectedResult": "The screen reader announces the status text (e.g., 'Account Status: Suspended') along with any semantic role. The color of the badge is NOT the only way the status is communicated - the text label is sufficient on its own"
+        },
+        {
+          "step": 2,
+          "action": "Use the screen reader's heading navigation (e.g., 'H' key in NVDA browse mode) to navigate through the page sections",
+          "expectedResult": "The page has proper heading hierarchy: the account title/name as a top-level heading, 'Account Status' as a section heading, 'Account History' as a section heading, and 'Key Account Events' as a section heading. Headings are in logical order (h1 → h2 → h3)"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to the Account History section and have the screen reader read the first status change entry",
+          "expectedResult": "The screen reader announces all relevant information: date of change, previous status, new status, and reason. The information is presented in a logical reading order"
+        },
+        {
+          "step": 4,
+          "action": "Navigate to the Key Account Events section and have the screen reader read an event entry",
+          "expectedResult": "The screen reader announces the event type, timestamp, and actor information. Each piece of data is clearly labeled (e.g., 'Event: Endorsement, Date: January 15, 2024, Performed by: John Smith')"
+        },
+        {
+          "step": 5,
+          "action": "Use the screen reader's landmark navigation (e.g., 'D' key in NVDA) to jump between page regions",
+          "expectedResult": "ARIA landmarks are defined for the main content area, navigation, and key sections. The screen reader can jump between landmarks efficiently"
+        }
+      ],
+      "postconditions": [
+        "All account status and history information is fully accessible via screen reader without visual reference",
+        "Status information is conveyed through text, not color alone",
+        "Page structure uses proper semantic HTML and ARIA landmarks"
+      ]
+    },
+    {
+      "id": "TC-ACCE-003",
+      "title": "Color-coded status badge meets WCAG 2.1 contrast requirements and does not rely on color alone",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "Accounts with each possible status are available: Active (green), Suspended (yellow/orange), Cancelled (red), Reinstated (blue or other)",
+        "A color contrast analyzer tool is available (e.g., WebAIM Contrast Checker, browser DevTools accessibility panel)",
+        "Agent has the account detail view open"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open the account with 'Active' status and use the color contrast analyzer to measure the contrast ratio between the badge text color and the badge background color (green)",
+          "expectedResult": "The contrast ratio between the text and background of the Active badge meets WCAG 2.1 AA minimum: 4.5:1 for normal text or 3:1 for large text (18pt+ or 14pt+ bold)"
+        },
+        {
+          "step": 2,
+          "action": "Repeat the contrast measurement for the 'Suspended' status badge (yellow/orange background)",
+          "expectedResult": "The Suspended badge meets the same WCAG 2.1 AA contrast ratio requirements. Yellow backgrounds are particularly checked as they often fail contrast with white text"
+        },
+        {
+          "step": 3,
+          "action": "Repeat for 'Cancelled' (red) and any other status badge colors",
+          "expectedResult": "All status badge variants meet WCAG 2.1 AA contrast requirements"
+        },
+        {
+          "step": 4,
+          "action": "Enable Windows High Contrast Mode (or equivalent OS accessibility setting) and view each status badge",
+          "expectedResult": "Status badges remain distinguishable in High Contrast Mode. The status text is readable and the badge boundaries are visible"
+        },
+        {
+          "step": 5,
+          "action": "Verify that each status badge includes a text label in addition to the color indicator",
+          "expectedResult": "Each badge displays the status name as text (e.g., 'Active', 'Suspended', 'Cancelled'). An icon or pattern may also supplement the color, but at minimum, text is always present so color is never the sole means of conveying status"
+        },
+        {
+          "step": 6,
+          "action": "Use a color blindness simulator (e.g., Chrome DevTools rendering emulation for protanopia, deuteranopia, tritanopia) to view all status badges",
+          "expectedResult": "Under all color blindness simulations, the status badges remain distinguishable from each other due to the text labels and/or supplementary visual indicators (icons, patterns). No two statuses appear identical"
+        }
+      ],
+      "postconditions": [
+        "All color-coded status badges meet WCAG 2.1 AA contrast requirements",
+        "Status information is conveyed through text and not color alone (WCAG 1.4.1)",
+        "Badges are distinguishable under all color vision deficiency simulations"
+      ]
+    },
+    {
+      "id": "TC-ACCE-004",
+      "title": "Account history table/list uses proper ARIA roles and labels for data structure",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account with at least 5 status change entries is open in the detail view",
+        "Browser developer tools are available for DOM inspection",
+        "Screen reader (NVDA or VoiceOver) is active"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open browser developer tools and inspect the HTML structure of the Account History section",
+          "expectedResult": "If the history is presented as a table, it uses proper <table>, <thead>, <tbody>, <tr>, <th>, and <td> elements. If it is a list, it uses <ul>/<ol> with <li> elements or appropriate ARIA roles (role='list', role='listitem'). Column headers or data labels are properly associated with data cells"
+        },
+        {
+          "step": 2,
+          "action": "Check for aria-label or aria-labelledby on the history section container",
+          "expectedResult": "The history section has an accessible name via aria-label (e.g., 'Account Status Change History') or aria-labelledby pointing to the section heading. Screen readers can identify the purpose of this section"
+        },
+        {
+          "step": 3,
+          "action": "Using the screen reader, navigate into the history table/list and read through the first entry",
+          "expectedResult": "The screen reader announces the table/list context (e.g., 'Table with 5 rows and 4 columns' or 'List with 5 items'). For tables, column headers are announced with each cell value (e.g., 'Date: January 15, 2024, Previous Status: Active, New Status: Suspended, Reason: Non-payment')"
+        },
+        {
+          "step": 4,
+          "action": "Check the Key Account Events section for similar ARIA implementation",
+          "expectedResult": "The events section also has proper semantic structure, accessible name, and data associations. Each event entry's components (type, timestamp, actor) are properly labeled"
+        },
+        {
+          "step": 5,
+          "action": "Verify that any dynamic content updates (e.g., loading new history entries via pagination or filtering) use aria-live regions",
+          "expectedResult": "When new content loads, an aria-live='polite' region announces the update (e.g., 'Showing entries 6-10 of 25' or 'History updated'). The screen reader user is informed of content changes without losing their current focus position"
+        }
+      ],
+      "postconditions": [
+        "All data structures use proper semantic HTML or ARIA roles",
+        "Screen readers can navigate and understand the data relationships in history and events sections",
+        "Dynamic content updates are announced via ARIA live regions"
+      ]
+    },
+    {
+      "id": "TC-ACCE-005",
+      "title": "Focus management when loading account detail view and during dynamic content updates",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "Agent is on the Account Search results page with multiple accounts listed",
+        "Screen reader is active",
+        "Keyboard-only navigation is being used"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Using keyboard, Tab to an account in the search results and press Enter to open its detail view",
+          "expectedResult": "Focus is moved to the account detail view - either to the page heading, the status badge, or the beginning of the main content area. Focus does not remain on the search results page or get lost at the top of the document"
+        },
+        {
+          "step": 2,
+          "action": "Observe the visible focus indicator on the element that receives initial focus",
+          "expectedResult": "A clearly visible focus ring or outline is displayed on the focused element. The focus indicator has sufficient contrast (at least 3:1 against adjacent colors per WCAG 2.4.7)"
+        },
+        {
+          "step": 3,
+          "action": "If the account detail view has a loading state, observe focus behavior during and after loading",
+          "expectedResult": "During loading, focus is either held on a loading indicator with an aria-live announcement ('Loading account details...') or managed so the user is informed of the loading state. After loading completes, focus moves to the main content or an announcement is made ('Account details loaded')"
+        },
+        {
+          "step": 4,
+          "action": "If pagination exists in the history section, activate a page change via keyboard and observe focus management",
+          "expectedResult": "After the new page of history entries loads, focus is moved to the first entry in the new page or to the pagination control. Focus does not jump to the top of the page or get lost"
+        },
+        {
+          "step": 5,
+          "action": "Tab through all elements on the page and verify no focus traps exist",
+          "expectedResult": "The user can Tab through all elements and eventually Tab past the last element on the page to the browser's address bar or next page section. At no point is the user trapped in a focus loop within a component"
+        }
+      ],
+      "postconditions": [
+        "Focus is managed predictably during page navigation and dynamic content updates",
+        "Visible focus indicators are present on all focusable elements",
+        "No focus traps exist anywhere on the account detail view"
+      ]
+    },
+    {
+      "id": "TC-ACCE-006",
+      "title": "Account detail view is usable at 200% browser zoom without loss of content or functionality",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account with status changes and events is open in the detail view",
+        "Browser zoom is set to 100% initially",
+        "Browser window is at a standard desktop resolution (1920x1080)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Zoom the browser to 200% using Ctrl+Plus (Cmd+Plus on Mac) or browser zoom settings",
+          "expectedResult": "The page reflows to accommodate the larger text and elements. No horizontal scrollbar appears for text content (WCAG 1.4.10 Reflow). All content is accessible via vertical scrolling only"
+        },
+        {
+          "step": 2,
+          "action": "Verify the account status badge is fully visible and readable at 200% zoom",
+          "expectedResult": "The status badge text is fully visible, not truncated, and the color indicator is still present. The badge does not overlap other elements"
+        },
+        {
+          "step": 3,
+          "action": "Scroll through the Account History section at 200% zoom",
+          "expectedResult": "All status change entries are fully readable. Date, previous status, new status, and reason fields are all visible without requiring horizontal scrolling. Text wraps appropriately within containers"
+        },
+        {
+          "step": 4,
+          "action": "Verify all interactive elements (buttons, links, pagination) are still usable at 200% zoom",
+          "expectedResult": "All interactive elements have touch/click targets of at least 44x44 CSS pixels (WCAG 2.5.5). Buttons and links are not overlapping and can be activated individually"
+        },
+        {
+          "step": 5,
+          "action": "Verify the Key Account Events section at 200% zoom",
+          "expectedResult": "Event entries with timestamps and actor information are fully readable. No content is clipped or hidden behind other elements"
+        },
+        {
+          "step": 6,
+          "action": "Increase zoom to 400% and verify critical content remains accessible",
+          "expectedResult": "At 400% zoom, the status badge and history entries are still accessible via scrolling. The layout may switch to a single-column mobile-like view but all information remains available"
+        }
+      ],
+      "postconditions": [
+        "All content and functionality is accessible at 200% zoom without horizontal scrolling (WCAG 1.4.10)",
+        "Text remains readable and interactive elements remain usable at increased zoom levels",
+        "No content is permanently hidden or inaccessible at any tested zoom level"
+      ]
+    },
+    {
+      "id": "TC-ACCE-007",
+      "title": "Status change history timestamps use accessible date/time formatting",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A test account with multiple status changes across different dates and times is open in the detail view",
+        "Screen reader (NVDA or VoiceOver) is active"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the Account History section and focus on the first status change entry's timestamp using the screen reader",
+          "expectedResult": "The screen reader announces the date and time in a human-readable format (e.g., 'January 15, 2024 at 2:30 PM') rather than a raw format like '2024-01-15T14:30:00Z' or Unix timestamp. If a relative format is used (e.g., '2 days ago'), the full date is available via a tooltip or aria-label"
+        },
+        {
+          "step": 2,
+          "action": "If timestamps use a relative format (e.g., '3 hours ago'), hover over or focus on the timestamp to check for a tooltip with the absolute date",
+          "expectedResult": "A tooltip or title attribute shows the full absolute date and time. The aria-label on the element provides the full date for screen readers (e.g., aria-label='January 15, 2024 at 2:30 PM Eastern Time')"
+        },
+        {
+          "step": 3,
+          "action": "Check the Key Account Events section timestamps with the screen reader",
+          "expectedResult": "Event timestamps are announced in the same accessible, human-readable format. Consistency is maintained between the history and events sections"
+        },
+        {
+          "step": 4,
+          "action": "Verify that the datetime element uses the <time> HTML element with a machine-readable datetime attribute",
+          "expectedResult": "Timestamps use <time datetime='2024-01-15T14:30:00'> or equivalent semantic markup, allowing assistive technologies and search engines to parse the date correctly"
+        },
+        {
+          "step": 5,
+          "action": "Check that timezone information is either displayed or consistently applied",
+          "expectedResult": "Timestamps either include timezone indication (e.g., 'EST', 'UTC') or a note on the page indicates the timezone used. Screen readers announce this context"
+        }
+      ],
+      "postconditions": [
+        "All timestamps are announced in human-readable format by screen readers",
+        "Semantic <time> elements are used for machine-readable date parsing",
+        "Timezone context is available to all users including screen reader users"
+      ]
+    },
+    {
+      "id": "TC-ACCE-008",
+      "title": "Error states in account detail view are accessible and announced to screen readers",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "Network conditions can be simulated (e.g., via browser DevTools throttling)",
+        "Screen reader is active",
+        "Agent is attempting to load an account detail view"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Simulate a network failure (set browser to offline mode) and attempt to load an account detail view",
+          "expectedResult": "An error message is displayed on screen. The error message container has role='alert' or aria-live='assertive' so the screen reader immediately announces the error without requiring the user to navigate to it"
+        },
+        {
+          "step": 2,
+          "action": "Listen to the screen reader announcement of the error",
+          "expectedResult": "The screen reader announces the full error message text (e.g., 'Error: Unable to load account details. Please check your connection and try again.'). The announcement is clear and actionable"
+        },
+        {
+          "step": 3,
+          "action": "Verify the error message is not conveyed by color alone (e.g., red text only)",
+          "expectedResult": "The error message includes an error icon with alt text, a text prefix like 'Error:' or 'Warning:', and/or is contained in a visually distinct container. The error is identifiable without relying on color perception"
+        },
+        {
+          "step": 4,
+          "action": "If a 'Retry' button is present in the error state, verify it is keyboard accessible",
+          "expectedResult": "The 'Retry' button receives keyboard focus via Tab and can be activated with Enter or Space. The button has an accessible name (e.g., 'Retry loading account details')"
+        },
+        {
+          "step": 5,
+          "action": "Activate the 'Retry' button and observe focus management after successful load",
+          "expectedResult": "After successful retry, focus moves to the main content area or the status badge. An aria-live announcement confirms success (e.g., 'Account details loaded successfully'). The error message is removed from the DOM or hidden with aria-hidden='true'"
+        }
+      ],
+      "postconditions": [
+        "Error states are announced immediately to screen reader users via ARIA live regions",
+        "Error messages are perceivable without relying on color alone",
+        "Recovery actions (Retry) are keyboard accessible with proper focus management"
+      ]
+    },
+    {
+      "id": "TC-ACCE-009",
+      "title": "Mobile touch accessibility for account status and history viewing",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in on a mobile device (iOS or Android) or mobile emulator",
+        "VoiceOver (iOS) or TalkBack (Android) screen reader is enabled",
+        "A test account with status changes and events is available",
+        "Device is in portrait orientation"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the account detail view and swipe right through the page elements using VoiceOver/TalkBack gestures",
+          "expectedResult": "The screen reader navigates through elements in a logical order: account header, status badge, history section heading, history entries, events section heading, event entries. Each element is announced with its role and content"
+        },
+        {
+          "step": 2,
+          "action": "Double-tap on any interactive element (e.g., expand button, pagination control) identified by the screen reader",
+          "expectedResult": "The interactive element is activated. The action is confirmed by a screen reader announcement. Touch target is at least 44x44 CSS pixels (WCAG 2.5.5)"
+        },
+        {
+          "step": 3,
+          "action": "Verify the status badge is accessible via touch - tap on it with VoiceOver/TalkBack active",
+          "expectedResult": "The screen reader announces the status text and any additional context (e.g., 'Active, status badge'). The touch target for the badge is large enough to be easily tapped"
+        },
+        {
+          "step": 4,
+          "action": "Rotate the device to landscape orientation and verify the layout adapts",
+          "expectedResult": "The account detail view adapts to landscape orientation. All content remains accessible. No content is cut off or overlapping. Screen reader navigation order remains logical"
+        },
+        {
+          "step": 5,
+          "action": "Pinch-to-zoom on the account history section",
+          "expectedResult": "Zoom is not disabled (no maximum-scale=1.0 or user-scalable=no in viewport meta tag per WCAG 1.4.4). Content can be zoomed and remains readable"
+        }
+      ],
+      "postconditions": [
+        "All account status and history content is accessible via mobile screen readers",
+        "Touch targets meet minimum size requirements (44x44 CSS pixels)",
+        "Pinch-to-zoom is not disabled, allowing users to magnify content"
+      ]
+    },
+    {
+      "id": "TC-ACCE-010",
+      "title": "Account history list supports reduced motion preferences",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "Operating system is configured with 'Reduce Motion' / 'Reduce Animations' accessibility setting enabled",
+        "A test account with status changes is open in the detail view",
+        "The account detail view includes animations (e.g., fade-in of history entries, slide transitions for pagination, loading spinner animations)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "With 'Reduce Motion' enabled in OS settings, load the account detail view and observe any animations",
+          "expectedResult": "Animations are either removed entirely or replaced with simple opacity transitions. No sliding, bouncing, or parallax effects occur. The CSS respects prefers-reduced-motion: reduce media query"
+        },
+        {
+          "step": 2,
+          "action": "If pagination exists, navigate to the next page and observe the transition",
+          "expectedResult": "The page content changes without animated transitions. New content appears immediately or with a simple fade. No sliding or scrolling animations occur"
+        },
+        {
+          "step": 3,
+          "action": "Observe the loading spinner/indicator behavior",
+          "expectedResult": "If a loading spinner is used, it is either replaced with a static 'Loading...' text indicator or uses a very subtle animation. Rapidly spinning or flashing indicators are avoided"
+        },
+        {
+          "step": 4,
+          "action": "Disable 'Reduce Motion' in OS settings and reload the page",
+          "expectedResult": "Normal animations resume (if any were designed). The page correctly detects the change in motion preference"
+        }
+      ],
+      "postconditions": [
+        "The application respects the prefers-reduced-motion media query",
+        "Users with vestibular disorders or motion sensitivity can use the feature comfortably",
+        "All functionality remains available regardless of motion preference setting"
+      ]
+    }
+  ],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": true,
+    "negative": true,
+    "accessibility": true,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-14125",
+    "title": "As Insurance Agent, I want to perform account status and history viewing to achieve understanding of the account's current standing and lifecycle events",
+    "description": "CONTEXT & BACKGROUND:\nAgents need to see the current account status (active, suspended, cancelled, etc.) along with a chronological history of status changes and key account events for context during customer interactions.\n\nCURRENT STATE:\nManual or incomplete process today.\n\nDESIRED STATE:\nSystem supports the capability end-to-end.\n\nKEY FUNCTIONALITY:\n• Implement core logic and validation\n• Expose API and UI\n• Handle errors and edge cases\n• Ensure data persistence and retrieval\n\nUSER INTERACTION FLOW:\n1. User accesses the feature\n2. User performs the required action\n3. System processes the request\n4. System displays results or confirmation\n5. User verifies the outcome\n\nTECHNICAL CONSIDERATIONS:\n• Data source: application database\n• Security: authentication and input validation\n• Performance: meet SLA requirements\n\nOUT OF SCOPE:\n• Advanced customization (future story)\n\nSUCCESS METRICS:\n• Feature works per acceptance criteria\n• No critical defects in production\n\n**Persona:** Insurance Agent\n\n**Acceptance Criteria:**\n1. Current account status is prominently displayed with visual indicator (color-coded badge) at the top of the detail view\n2. Account history section shows chronological list of status changes with date, previous status, new status, and reason\n3. Key account events such as creation, endorsements, cancellations, and reinstatements are listed with timestamps and actor information\n4. System handles the operation correctly and returns expected results for scenario 4\n5. System handles the operation correctly and returns expected results for scenario 5\n",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "14125",
+    "externalId": "MYPRO-1573",
+    "state": "New",
+    "assignedTo": "devxnous2k25@gmail.com",
+    "createdDate": "2026-04-17T11:43:19.398Z",
+    "priority": "medium",
+    "storyPoints": 5,
+    "tags": "",
+    "epicId": "epic-MYPRO-1105",
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net//browse/MYPRO-1573"
+  }
+}
