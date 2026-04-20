@@ -1,0 +1,2137 @@
+{
+  "storyId": "ado-21864",
+  "storyTitle": "Develop UI components and integration",
+  "testCases": [],
+  "functional": [
+    {
+      "id": "TC-FUNC-001",
+      "title": "Verify all primary UI components render correctly on initial page load",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is authenticated and logged into the application with a valid session",
+        "The application is deployed to the test environment with the latest build containing UI component changes",
+        "Browser is a supported version (Chrome 120+, Firefox 115+, Safari 17+, Edge 120+)",
+        "Network connectivity is stable with no throttling applied"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the main application URL and wait for the page to fully load",
+          "expectedResult": "The page loads within 3 seconds, all primary UI components (header, navigation, main content area, footer) are visible without layout shifts or broken elements"
+        },
+        {
+          "step": 2,
+          "action": "Inspect the header section for logo, navigation menu items, and user profile icon",
+          "expectedResult": "Header displays the application logo on the left, navigation menu items are horizontally aligned, and the user profile avatar/icon appears on the right side of the header"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the main content area for all expected UI widgets, cards, or data display components",
+          "expectedResult": "All UI components render with correct styling, proper spacing, consistent font sizes, and no overlapping elements. Placeholder or loading states are shown for data-dependent components"
+        },
+        {
+          "step": 4,
+          "action": "Scroll down the page to verify all below-the-fold components render correctly",
+          "expectedResult": "All components below the fold render as the user scrolls, with smooth scrolling behavior and no flickering or layout jumps"
+        },
+        {
+          "step": 5,
+          "action": "Resize the browser window to 1024x768 resolution",
+          "expectedResult": "All UI components adapt responsively, maintaining readability and usability without horizontal scrollbars or content overflow"
+        },
+        {
+          "step": 6,
+          "action": "Resize the browser window to 375x667 (mobile viewport)",
+          "expectedResult": "Components stack vertically in a mobile-friendly layout, navigation collapses into a hamburger menu, and all interactive elements remain tappable with adequate touch target sizes (minimum 44x44px)"
+        }
+      ],
+      "postconditions": [
+        "All UI components are rendered correctly across tested viewport sizes",
+        "No JavaScript console errors related to component rendering are present",
+        "User remains authenticated and on the correct page"
+      ]
+    },
+    {
+      "id": "TC-FUNC-002",
+      "title": "Verify navigation between UI components and page routing works correctly",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with standard user role permissions",
+        "Application is fully loaded on the main dashboard/landing page",
+        "Browser history is clear to ensure clean navigation state"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the first navigation menu item in the top navigation bar",
+          "expectedResult": "The application navigates to the corresponding page/view, the URL updates to reflect the new route, and the clicked menu item shows an active/selected state (highlighted or underlined)"
+        },
+        {
+          "step": 2,
+          "action": "Click on the second navigation menu item",
+          "expectedResult": "The application transitions smoothly to the second page/view without a full page reload, the URL updates, and the previously active menu item loses its active state while the new one gains it"
+        },
+        {
+          "step": 3,
+          "action": "Click the browser's Back button",
+          "expectedResult": "The application navigates back to the first page/view, the URL reverts, and the correct menu item shows the active state"
+        },
+        {
+          "step": 4,
+          "action": "Click the browser's Forward button",
+          "expectedResult": "The application navigates forward to the second page/view, maintaining all previously loaded state and data"
+        },
+        {
+          "step": 5,
+          "action": "Click on the application logo in the header",
+          "expectedResult": "The application navigates back to the main dashboard/home page"
+        },
+        {
+          "step": 6,
+          "action": "Manually type a valid application route in the browser address bar and press Enter",
+          "expectedResult": "The application loads the correct page for the manually entered route with all components properly initialized"
+        }
+      ],
+      "postconditions": [
+        "Browser history contains all navigated routes in correct order",
+        "No broken links or 404 errors encountered during navigation",
+        "User session remains active throughout all navigation actions"
+      ]
+    },
+    {
+      "id": "TC-FUNC-003",
+      "title": "Verify form UI components accept valid input and submit data successfully",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with permissions to create/edit data",
+        "User has navigated to a page containing a form with input fields (text, dropdown, date picker, checkbox, etc.)",
+        "No pre-existing validation errors are displayed on the form",
+        "Backend API services are running and accessible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the first text input field and enter a valid value such as 'Test Component Name'",
+          "expectedResult": "The text input field accepts the typed value, displays it correctly, and shows no validation error. The field border may change to indicate focus state (e.g., blue border)"
+        },
+        {
+          "step": 2,
+          "action": "Click on a dropdown/select component and select an option from the list",
+          "expectedResult": "The dropdown opens showing all available options, the selected option is highlighted, and upon selection the dropdown closes displaying the chosen value"
+        },
+        {
+          "step": 3,
+          "action": "Click on a date picker component and select a valid date (e.g., today's date)",
+          "expectedResult": "The date picker calendar opens, today's date is highlighted, clicking the date populates the field with the formatted date (e.g., 'MM/DD/YYYY'), and the calendar closes"
+        },
+        {
+          "step": 4,
+          "action": "Toggle a checkbox or switch component to the 'on' state",
+          "expectedResult": "The checkbox shows a checkmark or the toggle switch slides to the 'on' position with appropriate visual feedback (color change, animation)"
+        },
+        {
+          "step": 5,
+          "action": "Fill in all remaining required fields with valid data",
+          "expectedResult": "All required fields are populated, no validation errors are shown, and the 'Submit' or 'Save' button becomes enabled (if it was previously disabled)"
+        },
+        {
+          "step": 6,
+          "action": "Click the 'Submit' or 'Save' button",
+          "expectedResult": "A loading indicator appears on the button or form, the form data is submitted to the backend API, and a success notification/toast message appears (e.g., 'Data saved successfully' in a green banner)"
+        },
+        {
+          "step": 7,
+          "action": "Verify the submitted data appears in the corresponding list or detail view",
+          "expectedResult": "The newly submitted data is visible in the data list/table or detail view with all field values matching what was entered"
+        }
+      ],
+      "postconditions": [
+        "Data is persisted in the backend database with correct field values",
+        "Success notification was displayed and auto-dismissed after a few seconds",
+        "User is redirected to the appropriate page (list view or confirmation page)",
+        "Form fields are cleared or the form is no longer in edit mode"
+      ]
+    },
+    {
+      "id": "TC-FUNC-004",
+      "title": "Verify data integration - UI components correctly fetch and display data from backend API",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is authenticated with valid credentials and appropriate role",
+        "Backend API is running and contains at least 5 records of test data",
+        "Network DevTools panel is open to monitor API calls",
+        "Application is on the main page before navigating to the data view"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the page/view that displays data fetched from the backend API (e.g., a data table, list, or dashboard widget)",
+          "expectedResult": "A loading spinner or skeleton loader is displayed while data is being fetched from the API"
+        },
+        {
+          "step": 2,
+          "action": "Wait for the data to load completely and observe the UI components",
+          "expectedResult": "The loading indicator disappears and is replaced by the actual data. The data table/list shows records with correct column headers and properly formatted data values"
+        },
+        {
+          "step": 3,
+          "action": "Verify the number of records displayed matches the expected count from the API response (check Network tab)",
+          "expectedResult": "The number of rows/items displayed in the UI matches the total count returned by the API. If pagination is present, the total count indicator shows the correct number"
+        },
+        {
+          "step": 4,
+          "action": "Compare at least 3 individual data records between the UI display and the raw API response in the Network tab",
+          "expectedResult": "All field values (names, dates, numbers, statuses) displayed in the UI exactly match the corresponding values in the API JSON response, with proper formatting applied (e.g., dates formatted, currency symbols added)"
+        },
+        {
+          "step": 5,
+          "action": "Click on a specific record/row to view its detail page or expanded view",
+          "expectedResult": "The detail view opens showing all fields for the selected record, including any additional fields not shown in the list view. An additional API call may be made for detailed data"
+        },
+        {
+          "step": 6,
+          "action": "Verify the API request headers include proper authentication tokens (check Network tab)",
+          "expectedResult": "The API request includes an Authorization header with a valid Bearer token, and the Content-Type header is set to 'application/json'"
+        }
+      ],
+      "postconditions": [
+        "All data displayed in UI components accurately reflects the backend data",
+        "No data transformation errors or missing fields observed",
+        "API calls completed with 200 status codes and appropriate response times (under 2 seconds)"
+      ]
+    },
+    {
+      "id": "TC-FUNC-005",
+      "title": "Verify interactive UI components - buttons, modals, tooltips, and action menus function correctly",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on a page containing interactive UI components",
+        "Page has fully loaded with no pending API calls",
+        "At least one data record exists for interaction testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Hover over a button component (e.g., 'Add New', 'Edit', or 'Delete')",
+          "expectedResult": "The button shows a hover state with visual feedback (color change, shadow, cursor changes to pointer). If a tooltip is configured, it appears after a brief delay showing descriptive text"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Add New' or equivalent primary action button",
+          "expectedResult": "A modal dialog or new form view opens with a smooth animation. The modal has a clear title, form fields, and action buttons ('Save'/'Cancel'). The background is dimmed with an overlay"
+        },
+        {
+          "step": 3,
+          "action": "Click the 'Cancel' button or the 'X' close icon on the modal",
+          "expectedResult": "The modal closes with a smooth animation, the background overlay is removed, and no data changes are made. Focus returns to the element that triggered the modal"
+        },
+        {
+          "step": 4,
+          "action": "Right-click or click the three-dot menu (kebab menu) on a data record row",
+          "expectedResult": "A context menu or action dropdown appears with options such as 'View', 'Edit', 'Delete', 'Duplicate'. Menu items are clearly labeled with appropriate icons"
+        },
+        {
+          "step": 5,
+          "action": "Click outside the action menu to dismiss it",
+          "expectedResult": "The action menu closes and no action is performed"
+        },
+        {
+          "step": 6,
+          "action": "Hover over an element that has a tooltip (e.g., an info icon or truncated text)",
+          "expectedResult": "A tooltip appears within 300ms showing the full text or helpful information. The tooltip is positioned correctly (not clipped by viewport edges) and disappears when the mouse moves away"
+        }
+      ],
+      "postconditions": [
+        "All interactive components return to their default state after interaction",
+        "No unintended side effects or data modifications occurred",
+        "UI remains responsive and functional after multiple interactions"
+      ]
+    },
+    {
+      "id": "TC-FUNC-006",
+      "title": "Verify search, filter, and sort functionality on data display components",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on a page with a data table or list component",
+        "At least 10 data records exist with varied values for testing search, filter, and sort",
+        "Search bar, filter controls, and sortable column headers are visible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the search input field and type a known value that exists in the data (e.g., 'Alpha Project')",
+          "expectedResult": "The data list/table filters in real-time (or after pressing Enter) to show only records matching the search term. A result count indicator updates to reflect the filtered number of records"
+        },
+        {
+          "step": 2,
+          "action": "Clear the search field by clicking the 'X' clear button or selecting all text and deleting",
+          "expectedResult": "The full unfiltered dataset is restored and displayed. The result count returns to the original total"
+        },
+        {
+          "step": 3,
+          "action": "Click on a filter dropdown (e.g., 'Status') and select a specific filter value (e.g., 'Active')",
+          "expectedResult": "The data list updates to show only records matching the selected filter. A filter tag/chip appears indicating the active filter. Records not matching the filter are hidden"
+        },
+        {
+          "step": 4,
+          "action": "Click on a sortable column header (e.g., 'Name' or 'Date Created')",
+          "expectedResult": "The data is sorted in ascending order by the clicked column. A sort indicator arrow (▲) appears next to the column header"
+        },
+        {
+          "step": 5,
+          "action": "Click the same column header again",
+          "expectedResult": "The sort order toggles to descending. The sort indicator arrow changes direction (▼). Data is reordered accordingly"
+        },
+        {
+          "step": 6,
+          "action": "Apply a filter and a search term simultaneously",
+          "expectedResult": "Both filter and search criteria are applied together (AND logic). Only records matching both the filter value and search term are displayed"
+        },
+        {
+          "step": 7,
+          "action": "Click a 'Clear All Filters' or 'Reset' button if available",
+          "expectedResult": "All active filters, search terms, and sort orders are cleared. The data returns to its default unfiltered, unsorted state"
+        }
+      ],
+      "postconditions": [
+        "Data display returns to default state after clearing all filters",
+        "No data was modified during search, filter, or sort operations",
+        "Performance remained acceptable (results updated within 1 second)"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Verify UI components handle loading states and empty states gracefully",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is authenticated and has access to the application",
+        "Test environment can be configured to simulate slow API responses or empty datasets",
+        "Browser DevTools Network tab is accessible for throttling"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open browser DevTools, go to Network tab, and set throttling to 'Slow 3G' to simulate slow network",
+          "expectedResult": "Network throttling is applied successfully"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to a page that fetches data from the backend API",
+          "expectedResult": "Loading indicators (spinners, skeleton loaders, or progress bars) are displayed in place of data components while the API call is in progress. The UI does not show broken layouts or raw JSON"
+        },
+        {
+          "step": 3,
+          "action": "Wait for the data to eventually load",
+          "expectedResult": "Loading indicators are replaced by actual data components once the API response is received. The transition is smooth without layout shifts"
+        },
+        {
+          "step": 4,
+          "action": "Remove network throttling and navigate to a view/page where no data records exist (empty dataset)",
+          "expectedResult": "An empty state illustration or message is displayed (e.g., 'No records found' with an icon). A call-to-action button such as 'Create your first record' may be present"
+        },
+        {
+          "step": 5,
+          "action": "If a 'Create your first record' or similar CTA button is present, click it",
+          "expectedResult": "The application navigates to the creation form or opens a modal to add a new record"
+        }
+      ],
+      "postconditions": [
+        "Loading states were displayed appropriately during data fetching",
+        "Empty states provided clear messaging and actionable next steps",
+        "No unhandled errors or broken UI elements observed"
+      ]
+    },
+    {
+      "id": "TC-FUNC-008",
+      "title": "Verify UI component state persistence across page refresh and browser session",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with an active session",
+        "User has made some UI state changes (e.g., selected filters, toggled settings, expanded sections)",
+        "Application supports state persistence via URL parameters, local storage, or session storage"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Apply a filter on a data table (e.g., select 'Status: Active') and note the current URL",
+          "expectedResult": "The filter is applied and the URL may update with query parameters reflecting the filter state (e.g., '?status=active')"
+        },
+        {
+          "step": 2,
+          "action": "Press F5 or click the browser refresh button to reload the page",
+          "expectedResult": "After page reload, the previously applied filter is still active. The data table shows the same filtered results. The filter UI control shows the selected filter value"
+        },
+        {
+          "step": 3,
+          "action": "Copy the current URL with filter parameters and open it in a new browser tab",
+          "expectedResult": "The new tab loads the page with the same filter applied, showing identical filtered results"
+        },
+        {
+          "step": 4,
+          "action": "Navigate away from the page to a different section of the application, then navigate back using the browser Back button",
+          "expectedResult": "The page loads with the previously applied UI state (filters, sort order, scroll position if applicable)"
+        },
+        {
+          "step": 5,
+          "action": "Check browser local storage or session storage in DevTools for any persisted UI state",
+          "expectedResult": "Relevant UI state data is stored in local/session storage with appropriate keys and valid JSON values"
+        }
+      ],
+      "postconditions": [
+        "UI state is correctly persisted and restored across page refreshes",
+        "Shareable URLs with state parameters work correctly in new tabs",
+        "No stale or corrupted state data in browser storage"
+      ]
+    },
+    {
+      "id": "TC-FUNC-009",
+      "title": "Verify UI components render correctly with different user roles and permissions",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Test accounts exist for at least two different roles: Admin and Standard User (or Viewer)",
+        "Role-based access control is configured in the backend",
+        "Both accounts have valid credentials and active sessions available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Log in with the Admin role account and navigate to the main application page",
+          "expectedResult": "All UI components are visible including admin-specific elements such as 'Settings', 'User Management', 'Delete' buttons, and configuration panels"
+        },
+        {
+          "step": 2,
+          "action": "Verify that action buttons like 'Create', 'Edit', 'Delete' are visible and enabled for the Admin user",
+          "expectedResult": "All CRUD action buttons are present, enabled, and clickable. Admin-only menu items appear in the navigation"
+        },
+        {
+          "step": 3,
+          "action": "Log out of the Admin account",
+          "expectedResult": "User is logged out and redirected to the login page"
+        },
+        {
+          "step": 4,
+          "action": "Log in with the Standard User (or Viewer) role account and navigate to the same page",
+          "expectedResult": "The page loads but admin-specific UI components are hidden or disabled. For example, 'Delete' buttons may be absent, 'Settings' menu item may not appear, and 'Edit' buttons may be replaced with 'View' buttons"
+        },
+        {
+          "step": 5,
+          "action": "Attempt to access an admin-only page by directly entering its URL in the browser address bar",
+          "expectedResult": "The application either redirects the user to an 'Access Denied' page with a clear message, or redirects to the dashboard with an error notification such as 'You do not have permission to access this page'"
+        },
+        {
+          "step": 6,
+          "action": "Verify that data visible to the Standard User is appropriately scoped (e.g., only their own records or public records)",
+          "expectedResult": "The data displayed is limited to what the Standard User role is authorized to see. No admin-only or restricted data is visible"
+        }
+      ],
+      "postconditions": [
+        "Admin UI components are only visible to Admin role users",
+        "Standard Users cannot access restricted pages or actions",
+        "Role-based rendering is consistent across all pages and components"
+      ]
+    },
+    {
+      "id": "TC-FUNC-010",
+      "title": "Verify real-time data updates and component refresh behavior",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and viewing a data display component (table/list/dashboard)",
+        "A second browser session or API tool (e.g., Postman) is available to modify backend data",
+        "The application supports real-time updates via WebSocket, polling, or manual refresh"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Note the current data displayed in the UI component (record count and specific values)",
+          "expectedResult": "Current data state is documented for comparison"
+        },
+        {
+          "step": 2,
+          "action": "Using a second browser session or Postman, create a new record via the API or through the application",
+          "expectedResult": "A new record is successfully created in the backend"
+        },
+        {
+          "step": 3,
+          "action": "Return to the first browser session and click a 'Refresh' button or wait for auto-refresh interval (if applicable)",
+          "expectedResult": "The UI component updates to show the newly created record. The record count increases by one. If real-time updates are supported, the new record appears automatically without manual refresh"
+        },
+        {
+          "step": 4,
+          "action": "Using the second session, update an existing record's value",
+          "expectedResult": "The record is updated in the backend"
+        },
+        {
+          "step": 5,
+          "action": "Refresh or wait for the first session to update and verify the changed value",
+          "expectedResult": "The updated value is reflected in the UI component without requiring a full page reload"
+        }
+      ],
+      "postconditions": [
+        "UI components accurately reflect the current state of backend data",
+        "No stale data is displayed after refresh operations",
+        "Data synchronization between frontend and backend is verified"
+      ]
+    },
+    {
+      "id": "TC-FUNC-011",
+      "title": "Verify pagination component works correctly with large datasets",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on a page with a paginated data table/list",
+        "Backend contains at least 50 records to enable multiple pages",
+        "Default page size is set (e.g., 10 or 25 records per page)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Observe the pagination controls at the bottom of the data table",
+          "expectedResult": "Pagination controls are visible showing current page (1), total pages, and navigation buttons (Previous, Next, page numbers). The 'Previous' button is disabled on the first page"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Next' button or page number '2'",
+          "expectedResult": "The table updates to show the second page of records. The page indicator updates to show page 2. The 'Previous' button becomes enabled"
+        },
+        {
+          "step": 3,
+          "action": "Click the last page number in the pagination",
+          "expectedResult": "The table shows the last page of records. The 'Next' button is disabled. The record count on the last page may be less than the page size"
+        },
+        {
+          "step": 4,
+          "action": "Change the page size selector (e.g., from 10 to 25 records per page)",
+          "expectedResult": "The table reloads showing 25 records per page. The total number of pages decreases accordingly. The user is returned to page 1"
+        },
+        {
+          "step": 5,
+          "action": "Click the 'Previous' button from page 2",
+          "expectedResult": "The table navigates back to page 1 with the correct records displayed"
+        }
+      ],
+      "postconditions": [
+        "All pages display the correct number of records based on page size",
+        "Total record count remains consistent across pagination actions",
+        "No duplicate records appear across different pages"
+      ]
+    },
+    {
+      "id": "TC-FUNC-012",
+      "title": "Verify notification and toast message components display correctly for user actions",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with permissions to perform CRUD operations",
+        "User is on a page where actions trigger notifications (e.g., form submission, record deletion)",
+        "No existing notifications are displayed on the screen"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Perform a successful action such as saving a new record by filling out a form and clicking 'Save'",
+          "expectedResult": "A success toast notification appears (typically green) with a message like 'Record saved successfully'. The toast appears at the top-right or top-center of the screen"
+        },
+        {
+          "step": 2,
+          "action": "Wait for the toast notification to auto-dismiss (typically 3-5 seconds)",
+          "expectedResult": "The toast notification fades out or slides away automatically after the configured duration"
+        },
+        {
+          "step": 3,
+          "action": "Perform another successful action and immediately click the 'X' close button on the toast notification",
+          "expectedResult": "The toast notification is dismissed immediately upon clicking the close button, before the auto-dismiss timer expires"
+        },
+        {
+          "step": 4,
+          "action": "Trigger a warning scenario (e.g., attempt to navigate away from an unsaved form)",
+          "expectedResult": "A warning notification or confirmation dialog appears (typically yellow/amber) with a message like 'You have unsaved changes. Are you sure you want to leave?'"
+        },
+        {
+          "step": 5,
+          "action": "Perform multiple rapid actions that each trigger notifications",
+          "expectedResult": "Multiple toast notifications stack vertically without overlapping. Each notification is independently dismissible and auto-dismisses on its own timer"
+        }
+      ],
+      "postconditions": [
+        "All notifications displayed with correct type (success/warning/error) and appropriate colors",
+        "Notifications did not block user interaction with the underlying page",
+        "No notification remained permanently stuck on screen"
+      ]
+    }
+  ],
+  "negative": [
+    {
+      "id": "TC-NEGA-001",
+      "title": "Verify form validation rejects empty required fields on submission",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on a page with a form containing required fields",
+        "All form fields are empty (no pre-populated data)",
+        "The 'Submit' or 'Save' button is visible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Without entering any data, click the 'Submit' or 'Save' button",
+          "expectedResult": "The form is NOT submitted. Validation error messages appear next to each required field (e.g., 'This field is required' in red text). The 'Submit' button may remain enabled but the form submission is blocked"
+        },
+        {
+          "step": 2,
+          "action": "Observe the visual indicators on required fields",
+          "expectedResult": "Required fields are highlighted with red borders or red error icons. Error messages are displayed directly below or beside each empty required field"
+        },
+        {
+          "step": 3,
+          "action": "Check the browser Network tab for any API calls",
+          "expectedResult": "No API call was made to the backend. The validation was performed entirely on the client side"
+        },
+        {
+          "step": 4,
+          "action": "Fill in one required field with valid data and click 'Submit' again, leaving other required fields empty",
+          "expectedResult": "The filled field no longer shows an error, but the remaining empty required fields still display validation errors. The form is still not submitted"
+        },
+        {
+          "step": 5,
+          "action": "Verify that focus is moved to the first field with a validation error",
+          "expectedResult": "The cursor/focus jumps to the first required field that has an error, or the page scrolls to make the first error visible"
+        }
+      ],
+      "postconditions": [
+        "No data was submitted to the backend",
+        "All validation error messages are clearly visible and descriptive",
+        "Form remains in its current state with user-entered data preserved in filled fields"
+      ]
+    },
+    {
+      "id": "TC-NEGA-002",
+      "title": "Verify form fields reject invalid input formats (special characters, SQL injection, XSS)",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on a page with a form containing text input fields",
+        "Form fields have defined input validation rules",
+        "Backend API has input sanitization enabled"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter a SQL injection string in a text field: ' OR '1'='1'; DROP TABLE users; --",
+          "expectedResult": "The input is either rejected with a validation error message (e.g., 'Invalid characters detected') or the input is accepted but sanitized. No SQL execution occurs on the backend"
+        },
+        {
+          "step": 2,
+          "action": "Enter an XSS attack string in a text field: <script>alert('XSS')</script>",
+          "expectedResult": "The input is either rejected with a validation error, or if accepted, the script tags are escaped/sanitized and rendered as plain text. No JavaScript alert dialog appears"
+        },
+        {
+          "step": 3,
+          "action": "Enter HTML injection in a text field: <img src=x onerror=alert('hacked')>",
+          "expectedResult": "The HTML is escaped and displayed as plain text. No image element is rendered and no JavaScript executes"
+        },
+        {
+          "step": 4,
+          "action": "Enter excessively long text (e.g., paste 10,000 characters) into a field with a character limit",
+          "expectedResult": "The field either truncates the input at the maximum allowed length, or displays a validation error such as 'Maximum 255 characters allowed'. A character counter may show the limit"
+        },
+        {
+          "step": 5,
+          "action": "Enter only whitespace characters (spaces, tabs) in a required text field and submit",
+          "expectedResult": "The form treats whitespace-only input as empty and displays a validation error for the required field"
+        },
+        {
+          "step": 6,
+          "action": "Submit the form and check the API request payload in the Network tab",
+          "expectedResult": "If the form was submitted, the payload shows sanitized/escaped values. No raw script tags or SQL commands are present in the request body"
+        }
+      ],
+      "postconditions": [
+        "No malicious code was executed in the browser or on the server",
+        "All dangerous input was properly sanitized or rejected",
+        "Application remains functional and secure after attempted attacks"
+      ]
+    },
+    {
+      "id": "TC-NEGA-003",
+      "title": "Verify UI handles API server errors (500 Internal Server Error) gracefully",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on a page that makes API calls",
+        "Backend API can be configured to return 500 errors (via mock, feature flag, or by stopping a dependent service)",
+        "Browser DevTools Network tab is open"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Configure the backend to return a 500 Internal Server Error for the next API call (or use browser DevTools to block the API endpoint)",
+          "expectedResult": "The API endpoint is configured to fail"
+        },
+        {
+          "step": 2,
+          "action": "Trigger an action that makes an API call (e.g., navigate to a data page or submit a form)",
+          "expectedResult": "The UI displays a user-friendly error message such as 'Something went wrong. Please try again later.' instead of showing raw error details, stack traces, or a blank page"
+        },
+        {
+          "step": 3,
+          "action": "Verify that no sensitive error information is exposed in the UI",
+          "expectedResult": "No stack traces, server paths, database names, or internal error codes are visible to the user. Only a generic, user-friendly error message is shown"
+        },
+        {
+          "step": 4,
+          "action": "Check if a 'Retry' button is available and click it",
+          "expectedResult": "If a 'Retry' button is present, clicking it re-attempts the failed API call. If the server is still returning errors, the same user-friendly error message is displayed again"
+        },
+        {
+          "step": 5,
+          "action": "Restore the backend to normal operation and click 'Retry' or refresh the page",
+          "expectedResult": "The page loads successfully with data displayed correctly. The error message disappears and normal functionality is restored"
+        }
+      ],
+      "postconditions": [
+        "User was never exposed to raw technical error details",
+        "Application recovered gracefully once the server error was resolved",
+        "No data corruption occurred due to the server error"
+      ]
+    },
+    {
+      "id": "TC-NEGA-004",
+      "title": "Verify UI handles network disconnection and timeout scenarios",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on a page with data loaded",
+        "Browser DevTools is open with ability to simulate offline mode",
+        "User has unsaved work or is about to perform an action"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "In browser DevTools Network tab, check the 'Offline' checkbox to simulate network disconnection",
+          "expectedResult": "The browser is now in offline mode"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to perform an action that requires an API call (e.g., click 'Save' on a form)",
+          "expectedResult": "The UI displays a network error message such as 'No internet connection. Please check your network and try again.' The action is not completed. A visual indicator (e.g., offline banner) may appear"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to navigate to a different page within the application",
+          "expectedResult": "If the page requires API data, an error or offline message is displayed. If the page is cached/available offline, it loads from cache with a warning about stale data"
+        },
+        {
+          "step": 4,
+          "action": "Uncheck the 'Offline' checkbox to restore network connectivity",
+          "expectedResult": "Network connectivity is restored"
+        },
+        {
+          "step": 5,
+          "action": "Retry the previously failed action (click 'Save' again or refresh the page)",
+          "expectedResult": "The action completes successfully. Data is saved/loaded correctly. Any offline indicators are removed. Previously entered form data is preserved and submitted"
+        },
+        {
+          "step": 6,
+          "action": "Set network throttling to 'Slow 3G' and trigger an API call that may timeout",
+          "expectedResult": "If the request times out, a timeout error message is displayed (e.g., 'Request timed out. Please try again.'). The UI does not hang or become unresponsive"
+        }
+      ],
+      "postconditions": [
+        "No data was lost during network disconnection",
+        "Application recovered fully when network was restored",
+        "User-entered data was preserved through the offline period"
+      ]
+    },
+    {
+      "id": "TC-NEGA-005",
+      "title": "Verify UI handles expired session and authentication token expiry",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with a valid session",
+        "Session/token expiry time is known or can be manipulated (e.g., via DevTools Application tab)",
+        "User is on a page with active data and forms"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open browser DevTools, go to Application tab > Cookies or Local Storage, and manually delete or modify the authentication token to make it invalid",
+          "expectedResult": "The authentication token is now invalid/expired"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to perform an action that requires authentication (e.g., click 'Save', navigate to a protected page)",
+          "expectedResult": "The API returns a 401 Unauthorized response. The UI displays a session expiry message such as 'Your session has expired. Please log in again.'"
+        },
+        {
+          "step": 3,
+          "action": "Verify the user is redirected to the login page",
+          "expectedResult": "The application redirects the user to the login page automatically, or displays a modal with a 'Log In' button. The protected content is no longer accessible"
+        },
+        {
+          "step": 4,
+          "action": "Log in again with valid credentials",
+          "expectedResult": "The user is authenticated successfully and redirected to the main application page or the page they were previously on"
+        },
+        {
+          "step": 5,
+          "action": "Verify that no sensitive data from the previous session is leaked or cached inappropriately",
+          "expectedResult": "The new session starts fresh. If the user was redirected back to their previous page, data is re-fetched from the API with the new valid token"
+        }
+      ],
+      "postconditions": [
+        "Expired session was handled securely without exposing protected data",
+        "User was able to re-authenticate and resume work",
+        "No stale authentication tokens remain in browser storage"
+      ]
+    },
+    {
+      "id": "TC-NEGA-006",
+      "title": "Verify form fields reject invalid data types (letters in numeric fields, invalid email format, invalid dates)",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on a page with a form containing typed fields (numeric, email, date, phone)",
+        "Form validation rules are active for each field type",
+        "All fields are currently empty"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter alphabetic text 'abcdef' in a numeric-only field (e.g., 'Quantity', 'Amount', or 'Phone Number')",
+          "expectedResult": "The field either prevents non-numeric input from being typed, or displays a validation error such as 'Please enter a valid number'"
+        },
+        {
+          "step": 2,
+          "action": "Enter an invalid email format 'notanemail@' in an email field",
+          "expectedResult": "A validation error appears: 'Please enter a valid email address'. The field is highlighted with a red border"
+        },
+        {
+          "step": 3,
+          "action": "Enter another invalid email format 'user@.com' in the email field",
+          "expectedResult": "The same validation error appears, rejecting the malformed email domain"
+        },
+        {
+          "step": 4,
+          "action": "Enter an invalid date '13/32/2024' (invalid month and day) in a date field, or type it manually if the date picker allows text input",
+          "expectedResult": "A validation error appears: 'Please enter a valid date'. The date picker does not accept the invalid date"
+        },
+        {
+          "step": 5,
+          "action": "Enter a negative number '-5' in a field that only accepts positive values (e.g., 'Quantity')",
+          "expectedResult": "A validation error appears: 'Value must be greater than 0' or the field prevents negative input"
+        },
+        {
+          "step": 6,
+          "action": "Enter '0' in a field that requires a minimum value of 1",
+          "expectedResult": "A validation error appears indicating the minimum allowed value"
+        },
+        {
+          "step": 7,
+          "action": "Attempt to submit the form with all invalid values",
+          "expectedResult": "The form is not submitted. All validation errors remain visible. No API call is made to the backend"
+        }
+      ],
+      "postconditions": [
+        "No invalid data was submitted to the backend",
+        "All validation messages are specific and helpful for each field type",
+        "Form retains the invalid values so the user can correct them"
+      ]
+    },
+    {
+      "id": "TC-NEGA-007",
+      "title": "Verify UI handles API returning empty or malformed JSON responses",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on a page that displays API data",
+        "Backend API can be mocked to return malformed responses",
+        "Browser DevTools is open for monitoring"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Configure the API mock to return an empty response body with a 200 status code",
+          "expectedResult": "The UI handles the empty response gracefully, displaying an empty state message such as 'No data available' rather than crashing or showing a blank page"
+        },
+        {
+          "step": 2,
+          "action": "Configure the API mock to return malformed JSON (e.g., '{invalid json}')",
+          "expectedResult": "The UI catches the JSON parse error and displays a user-friendly error message. No unhandled exception or white screen of death occurs"
+        },
+        {
+          "step": 3,
+          "action": "Configure the API mock to return a valid JSON but with unexpected data structure (e.g., array instead of object, missing required fields)",
+          "expectedResult": "The UI handles the unexpected structure gracefully, either showing default/fallback values or displaying an appropriate error message. No undefined errors or broken layouts"
+        },
+        {
+          "step": 4,
+          "action": "Configure the API mock to return null values for fields that the UI expects to be non-null",
+          "expectedResult": "The UI displays fallback text (e.g., 'N/A', '-', or empty string) for null values instead of showing 'null' or 'undefined' as text"
+        },
+        {
+          "step": 5,
+          "action": "Check the browser console for any unhandled JavaScript errors",
+          "expectedResult": "No unhandled exceptions or uncaught promise rejections appear in the console. All errors are caught and handled gracefully"
+        }
+      ],
+      "postconditions": [
+        "Application remained stable and functional despite malformed API responses",
+        "No sensitive error information was exposed to the user",
+        "UI components degraded gracefully with appropriate fallback displays"
+      ]
+    },
+    {
+      "id": "TC-NEGA-008",
+      "title": "Verify concurrent/duplicate form submissions are prevented",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on a page with a form ready for submission",
+        "All required fields are filled with valid data",
+        "Network can be throttled to slow down API response time"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Set network throttling to 'Slow 3G' in DevTools to slow down the API response",
+          "expectedResult": "Network throttling is applied"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Submit' or 'Save' button",
+          "expectedResult": "The button shows a loading state (spinner, disabled state, or text changes to 'Saving...'). The button becomes unclickable"
+        },
+        {
+          "step": 3,
+          "action": "Rapidly click the 'Submit' button multiple times while it is in the loading state",
+          "expectedResult": "Additional clicks are ignored. The button remains disabled/loading. Only one API request is sent to the backend (verify in Network tab)"
+        },
+        {
+          "step": 4,
+          "action": "Check the Network tab for the number of API requests made",
+          "expectedResult": "Only ONE POST/PUT request was sent to the backend, not multiple duplicate requests"
+        },
+        {
+          "step": 5,
+          "action": "Wait for the submission to complete and verify the result",
+          "expectedResult": "Only one record is created/updated. The success message appears once. The button returns to its normal enabled state"
+        },
+        {
+          "step": 6,
+          "action": "Remove network throttling and verify the data in the list/table view",
+          "expectedResult": "Only one instance of the submitted record exists. No duplicate entries were created"
+        }
+      ],
+      "postconditions": [
+        "Only one record was created despite multiple click attempts",
+        "No duplicate data exists in the backend",
+        "Submit button properly re-enabled after completion"
+      ]
+    },
+    {
+      "id": "TC-NEGA-009",
+      "title": "Verify UI handles 403 Forbidden responses when user lacks permissions for specific actions",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with a restricted role (e.g., Viewer or Read-Only)",
+        "The application has endpoints that require elevated permissions",
+        "Browser DevTools is open for monitoring API responses"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "If any action buttons are visible (due to a UI bug), attempt to click an 'Edit' or 'Delete' button",
+          "expectedResult": "Either the button is not rendered for this role, or clicking it results in a 403 Forbidden API response with a user-friendly message such as 'You do not have permission to perform this action'"
+        },
+        {
+          "step": 2,
+          "action": "Using browser DevTools Console, attempt to manually call a restricted API endpoint using fetch() with the current user's token",
+          "expectedResult": "The API returns a 403 Forbidden status code with an appropriate error message in the response body"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to access an admin-only URL directly by typing it in the address bar (e.g., '/admin/settings')",
+          "expectedResult": "The application displays an 'Access Denied' page or redirects the user to the dashboard with an error notification. No admin content is visible"
+        },
+        {
+          "step": 4,
+          "action": "Attempt to manipulate hidden form fields or DOM elements via DevTools to bypass client-side permission checks and submit data",
+          "expectedResult": "The backend rejects the request with a 403 Forbidden response. Client-side permission checks are backed by server-side validation"
+        },
+        {
+          "step": 5,
+          "action": "Verify no restricted data or admin-only information is present in the page source or API responses",
+          "expectedResult": "Viewing page source and API responses shows no admin-only data, hidden fields with sensitive information, or restricted content"
+        }
+      ],
+      "postconditions": [
+        "No unauthorized actions were successfully performed",
+        "All permission checks are enforced on both client and server side",
+        "User received clear feedback about permission restrictions"
+      ]
+    },
+    {
+      "id": "TC-NEGA-010",
+      "title": "Verify UI handles 404 Not Found for deleted or non-existent resources",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with valid credentials",
+        "A record ID that does not exist or has been deleted is known (e.g., ID '99999')",
+        "Application has detail/edit pages accessible via URL with record ID"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to a detail page URL with a non-existent record ID (e.g., '/records/99999')",
+          "expectedResult": "The application displays a 404 Not Found page or a user-friendly message such as 'The requested record was not found'. A 'Go Back' or 'Return to Home' link is provided"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to a completely invalid URL path (e.g., '/this-page-does-not-exist')",
+          "expectedResult": "A custom 404 page is displayed with the application's branding, a helpful message, and navigation options to return to valid pages"
+        },
+        {
+          "step": 3,
+          "action": "Open a bookmarked link to a record that has since been deleted by another user",
+          "expectedResult": "The application shows a clear message that the record no longer exists, rather than showing a blank page or generic error"
+        },
+        {
+          "step": 4,
+          "action": "Click the 'Go Back' or 'Return to Home' link on the 404 page",
+          "expectedResult": "The user is navigated to the home/dashboard page successfully"
+        },
+        {
+          "step": 5,
+          "action": "Use the browser Back button from the 404 page",
+          "expectedResult": "The browser navigates back to the previous valid page without issues"
+        }
+      ],
+      "postconditions": [
+        "Custom 404 pages are displayed for all not-found scenarios",
+        "No raw error pages or server default 404 pages are shown",
+        "User can easily navigate back to valid application pages"
+      ]
+    },
+    {
+      "id": "TC-NEGA-011",
+      "title": "Verify delete confirmation prevents accidental data deletion",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with delete permissions",
+        "At least one record exists in the data table/list",
+        "User is on the page displaying the records"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the 'Delete' button or icon on a data record",
+          "expectedResult": "A confirmation dialog/modal appears with a warning message such as 'Are you sure you want to delete this record? This action cannot be undone.' with 'Confirm' and 'Cancel' buttons"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Cancel' button on the confirmation dialog",
+          "expectedResult": "The confirmation dialog closes. The record is NOT deleted. The data table remains unchanged with the record still present"
+        },
+        {
+          "step": 3,
+          "action": "Click the 'Delete' button again and press the Escape key on the keyboard",
+          "expectedResult": "The confirmation dialog closes without deleting the record, same as clicking 'Cancel'"
+        },
+        {
+          "step": 4,
+          "action": "Click the 'Delete' button again and click outside the confirmation dialog (on the overlay/backdrop)",
+          "expectedResult": "The dialog either closes without deleting (if configured to dismiss on backdrop click) or remains open requiring explicit user action"
+        },
+        {
+          "step": 5,
+          "action": "Verify the record still exists in the data table after all cancellation attempts",
+          "expectedResult": "The record is still present in the data table with all its original data intact. No API DELETE call was made (verify in Network tab)"
+        }
+      ],
+      "postconditions": [
+        "No data was deleted during the test",
+        "Confirmation dialog properly prevents accidental deletions",
+        "Record remains intact in both the UI and backend database"
+      ]
+    },
+    {
+      "id": "TC-NEGA-012",
+      "title": "Verify UI handles rapid user interactions without crashing (stress test)",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on a page with multiple interactive components",
+        "Page is fully loaded with data displayed",
+        "Browser performance monitor is open (DevTools Performance tab)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Rapidly click between multiple navigation menu items (10+ clicks in quick succession)",
+          "expectedResult": "The application navigates to the final clicked page without crashing. No race conditions cause incorrect page content to display. Only the last navigation request is honored"
+        },
+        {
+          "step": 2,
+          "action": "Rapidly open and close a modal dialog 10 times in quick succession",
+          "expectedResult": "The modal opens and closes correctly each time. No duplicate modals appear. No memory leaks cause the page to slow down. The final state (open or closed) is correct"
+        },
+        {
+          "step": 3,
+          "action": "Rapidly type in a search field that triggers real-time filtering (type and delete text repeatedly)",
+          "expectedResult": "The search results update correctly based on the final input value. No stale results from intermediate searches are displayed. Input debouncing prevents excessive API calls"
+        },
+        {
+          "step": 4,
+          "action": "Rapidly toggle a switch/checkbox on and off 20 times",
+          "expectedResult": "The final state of the toggle is correct (matches the last user action). No visual glitches or stuck states occur"
+        },
+        {
+          "step": 5,
+          "action": "Check the browser console for any JavaScript errors after all rapid interactions",
+          "expectedResult": "No unhandled exceptions, memory warnings, or performance degradation messages appear in the console"
+        },
+        {
+          "step": 6,
+          "action": "Check browser memory usage in the Performance tab",
+          "expectedResult": "Memory usage remains within acceptable bounds (no significant memory leaks). The page remains responsive with no noticeable lag"
+        }
+      ],
+      "postconditions": [
+        "Application remains stable and responsive after stress testing",
+        "No JavaScript errors or memory leaks detected",
+        "All UI components are in their correct final state"
+      ]
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "TC-EDGE-001",
+      "title": "Verify UI components render correctly with extremely long text content",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with a valid account and has access to the application",
+        "The UI components page is fully loaded and all integrated components are visible",
+        "Browser is set to default zoom level (100%)",
+        "Test data includes strings of 5000+ characters for all text input fields"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the main UI component view where integrated components are displayed",
+          "expectedResult": "Page loads successfully with all UI components rendered in their default state"
+        },
+        {
+          "step": 2,
+          "action": "Enter a string of 5000 characters (including alphanumeric, spaces, and punctuation) into each text input field available on the page",
+          "expectedResult": "Input fields either accept the text up to a defined character limit with a visible counter or truncate gracefully without breaking layout"
+        },
+        {
+          "step": 3,
+          "action": "Submit the form or trigger the action associated with the input fields by clicking the primary action button (e.g., 'Submit' or 'Save')",
+          "expectedResult": "The system either processes the input correctly or displays a clear validation error message such as 'Maximum character limit of X exceeded' near the offending field"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the rendered output of any display components (labels, cards, lists) that show the long text",
+          "expectedResult": "Text is properly truncated with ellipsis ('...') or wrapped within the component boundaries without overflowing or breaking adjacent UI elements"
+        },
+        {
+          "step": 5,
+          "action": "Resize the browser window to 320px width and verify the same long text display",
+          "expectedResult": "Components remain responsive; text wraps or truncates appropriately without horizontal scrollbar appearing on the main content area"
+        }
+      ],
+      "postconditions": [
+        "No UI layout breakage or overlapping elements observed",
+        "All components remain interactive and functional after handling long text",
+        "No JavaScript console errors related to rendering or overflow"
+      ]
+    },
+    {
+      "id": "TC-EDGE-002",
+      "title": "Verify UI components handle special characters, Unicode, and emoji input",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the page containing the integrated UI components",
+        "All input fields and interactive components are visible and enabled",
+        "Test data prepared: Unicode strings (Chinese: 你好世界, Arabic: مرحبا, Japanese: こんにちは), emojis (🎉🔥💯👨‍👩‍👧‍👦), special characters (<script>alert('xss')</script>, &amp;, ©, ™, €, £, ¥)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter the Unicode string '你好世界 مرحبا こんにちは' into the first available text input field",
+          "expectedResult": "The input field accepts and correctly displays all Unicode characters without garbling, question marks, or encoding errors"
+        },
+        {
+          "step": 2,
+          "action": "Enter the emoji string '🎉🔥💯👨‍👩‍👧‍👦🏳️‍🌈' into a text input field",
+          "expectedResult": "Emojis are displayed correctly in the input field with proper rendering; compound emojis (family, flag) display as single glyphs"
+        },
+        {
+          "step": 3,
+          "action": "Enter the XSS test string '<script>alert(\"xss\")</script><img onerror=alert(1) src=x>' into a text input field and submit",
+          "expectedResult": "The input is sanitized and displayed as plain text; no script execution occurs; the literal text '<script>alert(\"xss\")</script>' is shown if displayed back to the user"
+        },
+        {
+          "step": 4,
+          "action": "Enter HTML entities and special symbols '&amp; &lt; &gt; © ™ ® € £ ¥ ½ ¼ ¾' into an input field",
+          "expectedResult": "Characters are accepted and rendered correctly as their visual representations, not as raw HTML entities"
+        },
+        {
+          "step": 5,
+          "action": "Enter a mixed string combining all types: 'Hello 你好 🌍 <b>bold</b> © 2024' and trigger the save/display action",
+          "expectedResult": "The entire mixed string is preserved accurately; HTML tags are escaped and shown as text; Unicode and emojis render correctly"
+        },
+        {
+          "step": 6,
+          "action": "Open browser developer tools and check the Network tab for the submitted payload",
+          "expectedResult": "The payload is properly encoded (UTF-8) and special characters are escaped appropriately in the request body"
+        }
+      ],
+      "postconditions": [
+        "No XSS vulnerabilities exploited; all script tags rendered as plain text",
+        "Data integrity maintained for all Unicode and emoji characters in storage",
+        "UI components remain stable and no rendering errors in the console"
+      ]
+    },
+    {
+      "id": "TC-EDGE-003",
+      "title": "Verify UI components handle empty data sets and null/undefined responses",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with valid credentials",
+        "Backend API is configured or mocked to return empty arrays [], null values, or 204 No Content responses for data endpoints",
+        "The UI components page that fetches and displays integrated data is accessible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the UI component view that displays a list or table of data items when the API returns an empty array []",
+          "expectedResult": "The component renders an appropriate empty state message such as 'No items found' or 'No data available' with an optional illustration or icon; no blank white space or broken layout"
+        },
+        {
+          "step": 2,
+          "action": "Trigger a data refresh by clicking a 'Refresh' button or performing a pull-to-refresh action",
+          "expectedResult": "A loading indicator appears briefly, then the empty state message is displayed again consistently"
+        },
+        {
+          "step": 3,
+          "action": "Configure the API mock to return null for a specific data field that a component depends on (e.g., user name is null)",
+          "expectedResult": "The component handles the null gracefully by displaying a fallback value such as 'N/A', '--', or 'Unknown' instead of showing 'null', 'undefined', or crashing"
+        },
+        {
+          "step": 4,
+          "action": "Configure the API mock to return undefined for an entire response object",
+          "expectedResult": "The UI displays a user-friendly error state or empty state; no unhandled JavaScript exceptions appear in the console"
+        },
+        {
+          "step": 5,
+          "action": "Check all interactive elements (buttons, links, filters) on the page while in the empty state",
+          "expectedResult": "All interactive elements remain functional; filter dropdowns still open, navigation still works, and no elements are disabled unexpectedly due to empty data"
+        }
+      ],
+      "postconditions": [
+        "No JavaScript runtime errors (TypeError, Cannot read property of null/undefined) in the browser console",
+        "Empty state UI is visually consistent with the application's design system",
+        "User can navigate away from and back to the page without issues"
+      ]
+    },
+    {
+      "id": "TC-EDGE-004",
+      "title": "Verify UI components handle rapid repeated user interactions without breaking",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the page with integrated UI components",
+        "All interactive components (buttons, toggles, dropdowns, tabs) are visible and enabled",
+        "Network connection is stable",
+        "Browser developer tools are open to monitor network requests and console errors"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Rapidly click the primary action button (e.g., 'Save', 'Submit', or 'Load') 10 times in quick succession within 2 seconds",
+          "expectedResult": "The button is debounced or disabled after the first click; only one API request is sent (verified in Network tab); no duplicate submissions occur"
+        },
+        {
+          "step": 2,
+          "action": "Rapidly toggle a switch or checkbox component on and off 15 times within 3 seconds",
+          "expectedResult": "The toggle settles on the correct final state; the UI state matches the actual data state; no visual flickering or stuck intermediate states"
+        },
+        {
+          "step": 3,
+          "action": "Rapidly switch between tabs or navigation items 10 times within 2 seconds",
+          "expectedResult": "The final tab's content is displayed correctly; no content from intermediate tabs bleeds through; no race condition causes wrong content to display"
+        },
+        {
+          "step": 4,
+          "action": "Open and close a dropdown menu or modal dialog 10 times rapidly",
+          "expectedResult": "The dropdown/modal opens and closes cleanly each time; no orphaned overlays, backdrops, or z-index issues remain after the final close"
+        },
+        {
+          "step": 5,
+          "action": "Type rapidly in a search/filter input field (e.g., type 'testing rapid input' character by character as fast as possible)",
+          "expectedResult": "The input captures all characters correctly; if the field triggers API calls, they are debounced (only 1-2 requests sent, not one per keystroke); results update to match the final input value"
+        },
+        {
+          "step": 6,
+          "action": "Check the browser console for any errors after all rapid interactions",
+          "expectedResult": "No JavaScript errors, memory leak warnings, or unhandled promise rejections in the console"
+        }
+      ],
+      "postconditions": [
+        "All UI components remain in a consistent and correct state",
+        "No duplicate data submissions or API calls beyond expected debounce behavior",
+        "Page performance remains responsive with no noticeable lag or freezing",
+        "Browser memory usage has not increased significantly (no memory leaks)"
+      ]
+    },
+    {
+      "id": "TC-EDGE-005",
+      "title": "Verify UI components handle network failure and slow API responses gracefully",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the page with integrated UI components",
+        "Browser developer tools are open with Network tab accessible",
+        "Ability to throttle network (use Chrome DevTools 'Slow 3G' preset) or simulate offline mode"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Set the browser network to 'Offline' mode using DevTools, then trigger a data-fetching action (e.g., click 'Load Data' or navigate to a data-dependent view)",
+          "expectedResult": "A clear error message is displayed such as 'Unable to connect. Please check your internet connection and try again.' with a 'Retry' button; no infinite loading spinner"
+        },
+        {
+          "step": 2,
+          "action": "Re-enable the network connection and click the 'Retry' button",
+          "expectedResult": "The data loads successfully; the error message disappears and is replaced with the correct content; loading indicator shows during the fetch"
+        },
+        {
+          "step": 3,
+          "action": "Set the network to 'Slow 3G' throttling and trigger a data-fetching action",
+          "expectedResult": "A loading indicator (spinner, skeleton screen, or progress bar) is displayed immediately; the UI does not appear frozen or unresponsive"
+        },
+        {
+          "step": 4,
+          "action": "While data is loading on Slow 3G, attempt to interact with other UI components on the page (click buttons, open menus)",
+          "expectedResult": "Other UI components remain interactive and responsive; the loading state does not block the entire page"
+        },
+        {
+          "step": 5,
+          "action": "Simulate a 500 Internal Server Error response from the API (using DevTools request blocking or mock)",
+          "expectedResult": "A user-friendly error message is displayed such as 'Something went wrong. Please try again later.' without exposing technical details like stack traces or error codes to the user"
+        },
+        {
+          "step": 6,
+          "action": "Simulate a 408 Request Timeout response and observe the UI behavior",
+          "expectedResult": "A timeout-specific message is shown such as 'Request timed out. Please try again.' with a retry option; the component does not remain in a perpetual loading state"
+        }
+      ],
+      "postconditions": [
+        "UI recovers gracefully from all network failure scenarios",
+        "No sensitive error details (stack traces, API URLs, tokens) exposed to the user",
+        "Components return to a usable state after network recovery",
+        "No orphaned loading indicators remain on the page"
+      ]
+    },
+    {
+      "id": "TC-EDGE-006",
+      "title": "Verify UI components render correctly at extreme browser zoom levels (25% to 500%)",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the page with integrated UI components",
+        "Browser supports zoom functionality (Chrome, Firefox, Edge)",
+        "All UI components are visible at default 100% zoom"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Set browser zoom to 25% using Ctrl+- (Cmd+- on Mac) and inspect all UI components",
+          "expectedResult": "All components are visible and maintain their relative positioning; text remains readable though small; no components disappear or overlap"
+        },
+        {
+          "step": 2,
+          "action": "Set browser zoom to 50% and interact with buttons, inputs, and dropdowns",
+          "expectedResult": "All interactive elements are clickable and functional; click targets align with visual elements (no offset issues)"
+        },
+        {
+          "step": 3,
+          "action": "Set browser zoom to 200% and verify the layout of all UI components",
+          "expectedResult": "Layout adapts responsively; components reflow as needed; no horizontal scrollbar on the main content unless by design; all text remains readable"
+        },
+        {
+          "step": 4,
+          "action": "Set browser zoom to 400% and attempt to complete a primary workflow (e.g., fill a form and submit)",
+          "expectedResult": "The workflow is completable; all form fields are accessible by scrolling; submit button is reachable; success/error messages are visible"
+        },
+        {
+          "step": 5,
+          "action": "Set browser zoom to 500% and check for any component overflow or clipping issues",
+          "expectedResult": "Content is accessible via scrolling; no critical UI elements are clipped or hidden behind other elements; modal dialogs remain usable"
+        },
+        {
+          "step": 6,
+          "action": "Return to 100% zoom and verify all components return to their original layout",
+          "expectedResult": "All components render identically to their initial state; no persistent layout shifts or rendering artifacts"
+        }
+      ],
+      "postconditions": [
+        "No permanent layout damage from zoom level changes",
+        "All interactive elements remain functional across all tested zoom levels",
+        "No JavaScript errors triggered by zoom level changes"
+      ]
+    },
+    {
+      "id": "TC-EDGE-007",
+      "title": "Verify UI components handle very large data sets without performance degradation",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the page with integrated UI components",
+        "Backend API or mock is configured to return a large data set (10,000+ items for lists/tables)",
+        "Browser developer tools Performance tab is accessible",
+        "System has standard hardware resources (not artificially constrained)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the component view that displays a list or table and trigger loading of 10,000 items",
+          "expectedResult": "The component implements virtualization/pagination and does not attempt to render all 10,000 items in the DOM simultaneously; initial render completes within 3 seconds"
+        },
+        {
+          "step": 2,
+          "action": "Scroll through the list/table rapidly from top to bottom",
+          "expectedResult": "Scrolling is smooth (60fps or near); no visible jank, blank rows, or flickering; items render as they come into the viewport"
+        },
+        {
+          "step": 3,
+          "action": "Apply a filter or search within the large data set by typing a search term",
+          "expectedResult": "Filtering completes within 1-2 seconds; the UI remains responsive during filtering; results are accurate"
+        },
+        {
+          "step": 4,
+          "action": "Sort the large data set by clicking a column header or sort control",
+          "expectedResult": "Sorting completes within 2 seconds; the sorted order is correct; no UI freeze during the sort operation"
+        },
+        {
+          "step": 5,
+          "action": "Select all items (if a 'Select All' checkbox exists) in the large data set",
+          "expectedResult": "Selection completes without freezing the browser; a count indicator shows '10,000 selected' or similar; the UI remains responsive"
+        },
+        {
+          "step": 6,
+          "action": "Open the browser Performance tab and record a 10-second interaction session with the large data set, then analyze the recording",
+          "expectedResult": "No long tasks exceeding 100ms; memory usage remains stable (no continuous growth indicating a memory leak); frame rate stays above 30fps"
+        }
+      ],
+      "postconditions": [
+        "Browser tab memory usage remains under 500MB for the large data set",
+        "All component interactions remain responsive after large data set operations",
+        "No browser tab crashes or 'Page Unresponsive' dialogs encountered"
+      ]
+    },
+    {
+      "id": "TC-EDGE-008",
+      "title": "Verify UI components handle concurrent browser tab usage and session consistency",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with a valid session",
+        "The application page with integrated UI components is open in Tab A",
+        "A second browser tab (Tab B) is opened with the same application page",
+        "Both tabs are fully loaded and displaying the same view"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "In Tab A, make a data change (e.g., update a form field value to 'Updated from Tab A' and click 'Save')",
+          "expectedResult": "The save operation completes successfully in Tab A with a confirmation message"
+        },
+        {
+          "step": 2,
+          "action": "Switch to Tab B and refresh the page or trigger a data reload",
+          "expectedResult": "Tab B displays the updated data ('Updated from Tab A') reflecting the change made in Tab A"
+        },
+        {
+          "step": 3,
+          "action": "In Tab B, make a conflicting change to the same data (e.g., update the same field to 'Updated from Tab B' and click 'Save')",
+          "expectedResult": "The save either succeeds (last-write-wins) or displays a conflict resolution message such as 'This record has been modified. Please review the latest changes.'"
+        },
+        {
+          "step": 4,
+          "action": "In Tab A, log out of the application by clicking the 'Logout' button",
+          "expectedResult": "Tab A redirects to the login page"
+        },
+        {
+          "step": 5,
+          "action": "Switch to Tab B and attempt to perform an action that requires authentication (e.g., click 'Save' or navigate to a protected route)",
+          "expectedResult": "Tab B detects the expired/invalidated session and redirects to the login page or displays a message such as 'Your session has expired. Please log in again.'"
+        }
+      ],
+      "postconditions": [
+        "Session state is consistent across tabs after logout",
+        "No data corruption from concurrent tab operations",
+        "User is properly redirected to login when session is invalidated in any tab"
+      ]
+    },
+    {
+      "id": "TC-EDGE-009",
+      "title": "Verify UI components handle browser back/forward navigation correctly",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the main application page",
+        "Browser history is clean (no prior navigation within the app)",
+        "The page contains multiple navigable views or routes with integrated UI components"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate from the main page to a sub-page or detail view by clicking a navigation link or list item",
+          "expectedResult": "The sub-page loads correctly with all UI components rendered; the browser URL updates to reflect the new route"
+        },
+        {
+          "step": 2,
+          "action": "Make a change on the sub-page (e.g., enter text in a form field but do NOT save)",
+          "expectedResult": "The unsaved change is visible in the form field"
+        },
+        {
+          "step": 3,
+          "action": "Click the browser's Back button",
+          "expectedResult": "Either the browser navigates back to the main page (if no unsaved changes protection) or a confirmation dialog appears asking 'You have unsaved changes. Are you sure you want to leave?'"
+        },
+        {
+          "step": 4,
+          "action": "If a confirmation dialog appeared, click 'Stay' or 'Cancel' to remain on the page",
+          "expectedResult": "The user remains on the sub-page with their unsaved changes intact"
+        },
+        {
+          "step": 5,
+          "action": "Click the browser's Back button again and confirm leaving (click 'Leave' if prompted)",
+          "expectedResult": "The browser navigates back to the main page; all components on the main page render correctly"
+        },
+        {
+          "step": 6,
+          "action": "Click the browser's Forward button to return to the sub-page",
+          "expectedResult": "The sub-page loads in its default/clean state (unsaved changes are not persisted); all UI components render correctly without stale data"
+        },
+        {
+          "step": 7,
+          "action": "Rapidly click Back and Forward buttons 5 times in quick succession",
+          "expectedResult": "The application settles on the correct page matching the final browser history position; no blank pages, errors, or component rendering issues"
+        }
+      ],
+      "postconditions": [
+        "Browser history stack is consistent with the navigation performed",
+        "No orphaned event listeners or memory leaks from navigation",
+        "All pages render correctly after back/forward navigation"
+      ]
+    },
+    {
+      "id": "TC-EDGE-010",
+      "title": "Verify UI components handle copy-paste of rich text and formatted content",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the page with integrated UI components containing text input fields",
+        "A source document is open with rich formatted text (bold, italic, colored text, tables, images from a Word document or web page)",
+        "Clipboard is accessible and not blocked by browser permissions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Copy a block of rich text from a Word document or web page that includes bold text, colored text, hyperlinks, and an embedded image",
+          "expectedResult": "Content is copied to the clipboard successfully"
+        },
+        {
+          "step": 2,
+          "action": "Paste the copied content into a plain text input field using Ctrl+V (Cmd+V on Mac)",
+          "expectedResult": "Only plain text is pasted; all formatting (bold, colors, links) is stripped; no HTML tags appear as visible text; no images are inserted"
+        },
+        {
+          "step": 3,
+          "action": "If a rich text editor component exists, paste the same content into it",
+          "expectedResult": "The rich text editor preserves appropriate formatting (bold, italic, links) while sanitizing potentially dangerous content (scripts, iframes); images are either embedded or stripped based on component design"
+        },
+        {
+          "step": 4,
+          "action": "Copy a large block of text (50,000+ characters) from a text file and paste it into an input field",
+          "expectedResult": "The paste operation completes without freezing the browser; if a character limit exists, the text is truncated with a clear indication of the limit"
+        },
+        {
+          "step": 5,
+          "action": "Paste content containing zero-width characters (U+200B, U+FEFF) and right-to-left override characters (U+202E) into an input field",
+          "expectedResult": "The input field handles invisible characters gracefully; they are either stripped or do not cause display issues; RTL override does not corrupt the layout of surrounding text"
+        }
+      ],
+      "postconditions": [
+        "No XSS or injection vulnerabilities from pasted content",
+        "Input fields display pasted content correctly without layout corruption",
+        "No browser performance issues from large paste operations"
+      ]
+    }
+  ],
+  "accessibility": [
+    {
+      "id": "TC-ACCE-001",
+      "title": "Verify complete keyboard navigation through all UI components using Tab and Shift+Tab",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the page with integrated UI components",
+        "No mouse or pointing device is connected or mouse is deliberately not used",
+        "Browser is Chrome, Firefox, or Edge (latest version)",
+        "All UI components are fully loaded and visible on the page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Press the Tab key starting from the browser address bar to move focus into the page content",
+          "expectedResult": "Focus moves to the first focusable element on the page (typically a skip navigation link or the first interactive element in the header); a visible focus indicator (outline, ring, or highlight) is clearly visible"
+        },
+        {
+          "step": 2,
+          "action": "Continue pressing Tab to navigate through all interactive elements on the page (buttons, links, inputs, dropdowns, toggles, checkboxes)",
+          "expectedResult": "Focus moves in a logical, left-to-right, top-to-bottom order matching the visual layout; every interactive element receives focus; no elements are skipped; the focus indicator is visible on each element"
+        },
+        {
+          "step": 3,
+          "action": "Press Shift+Tab to navigate backwards through the same elements",
+          "expectedResult": "Focus moves in reverse order through all the same interactive elements; the focus indicator remains visible on each element"
+        },
+        {
+          "step": 4,
+          "action": "Tab to a button element and press Enter to activate it",
+          "expectedResult": "The button action is triggered (same as a mouse click); the expected result of the button action occurs (e.g., form submission, modal opening, navigation)"
+        },
+        {
+          "step": 5,
+          "action": "Tab to a button element and press Space to activate it",
+          "expectedResult": "The button action is triggered identically to pressing Enter; both Enter and Space activate buttons per WCAG guidelines"
+        },
+        {
+          "step": 6,
+          "action": "Continue tabbing until focus cycles through all elements and returns to the beginning of the page or browser chrome",
+          "expectedResult": "Focus completes a full cycle without getting trapped on any element; all interactive elements were reachable via keyboard alone"
+        },
+        {
+          "step": 7,
+          "action": "Count the total number of Tab stops and compare with the number of visible interactive elements",
+          "expectedResult": "The number of Tab stops matches the number of visible interactive elements; no hidden or off-screen elements receive focus unexpectedly"
+        }
+      ],
+      "postconditions": [
+        "All interactive UI components are reachable via keyboard Tab navigation",
+        "Focus order is logical and matches the visual layout",
+        "No keyboard traps exist anywhere on the page",
+        "All actions performable by mouse are also performable by keyboard"
+      ]
+    },
+    {
+      "id": "TC-ACCE-002",
+      "title": "Verify screen reader announces all UI components with proper labels and roles",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Screen reader is active (NVDA on Windows, VoiceOver on macOS, or JAWS)",
+        "User is logged in and on the page with integrated UI components",
+        "Screen reader verbosity is set to default/medium level",
+        "Browser is compatible with the screen reader (Chrome with NVDA, Safari with VoiceOver)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Activate the screen reader and navigate to the page; listen to the page title announcement",
+          "expectedResult": "The screen reader announces the page title accurately (e.g., 'Dashboard - Application Name') matching the <title> tag"
+        },
+        {
+          "step": 2,
+          "action": "Use the screen reader's landmark navigation (e.g., 'D' key in NVDA browse mode) to navigate through page landmarks",
+          "expectedResult": "Screen reader identifies and announces landmarks: 'banner' (header), 'navigation' (nav), 'main' (main content), 'contentinfo' (footer); all major page sections have appropriate landmark roles"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to each form input field using Tab and listen to the screen reader announcement",
+          "expectedResult": "Each input field is announced with its label (e.g., 'Email address, edit text, required'), its type (text, password, email, number), and its required/optional state"
+        },
+        {
+          "step": 4,
+          "action": "Navigate to each button and listen to the screen reader announcement",
+          "expectedResult": "Each button is announced with its accessible name and role (e.g., 'Save, button', 'Close dialog, button', 'Delete item, button'); icon-only buttons have descriptive aria-label text"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to any data table and listen to the screen reader announcement",
+          "expectedResult": "The table is announced with its caption/summary, number of rows and columns (e.g., 'Data table, 5 columns, 10 rows'); column headers are announced when navigating cells"
+        },
+        {
+          "step": 6,
+          "action": "Trigger a dynamic content update (e.g., submit a form, apply a filter) and listen for the screen reader announcement",
+          "expectedResult": "The screen reader announces the dynamic change via an ARIA live region (e.g., 'Success: Form saved successfully' or '5 results found'); the user is not left in silence after the action"
+        },
+        {
+          "step": 7,
+          "action": "Navigate to any images or icons on the page",
+          "expectedResult": "Meaningful images have descriptive alt text announced by the screen reader; decorative images are hidden from the screen reader (aria-hidden=\"true\" or empty alt=\"\")"
+        }
+      ],
+      "postconditions": [
+        "All interactive elements have accessible names announced by the screen reader",
+        "All form fields have associated labels that are announced",
+        "Dynamic content changes are announced via ARIA live regions",
+        "No unlabeled or ambiguous elements encountered during navigation"
+      ]
+    },
+    {
+      "id": "TC-ACCE-003",
+      "title": "Verify focus management in modal dialogs and overlay components",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the page with integrated UI components",
+        "The page contains at least one trigger that opens a modal dialog or overlay (e.g., 'Add New', 'Edit', 'Confirm Delete' button)",
+        "Keyboard is the primary input method",
+        "Screen reader is optionally active for announcement verification"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Tab to the button that triggers a modal dialog and press Enter to open it",
+          "expectedResult": "The modal dialog opens and focus is automatically moved to the first focusable element inside the modal (e.g., close button, first input field, or the modal heading)"
+        },
+        {
+          "step": 2,
+          "action": "Press Tab repeatedly to navigate through all focusable elements inside the modal",
+          "expectedResult": "Focus is trapped within the modal; after the last focusable element, Tab returns focus to the first focusable element in the modal; focus never escapes to the background page content"
+        },
+        {
+          "step": 3,
+          "action": "Press Shift+Tab from the first focusable element in the modal",
+          "expectedResult": "Focus wraps to the last focusable element in the modal; focus remains trapped within the modal boundaries"
+        },
+        {
+          "step": 4,
+          "action": "Press the Escape key while the modal is open",
+          "expectedResult": "The modal closes and focus returns to the element that originally triggered the modal (the button that was pressed in step 1)"
+        },
+        {
+          "step": 5,
+          "action": "Reopen the modal and verify that background content is inert",
+          "expectedResult": "Background content behind the modal overlay cannot be interacted with via keyboard or mouse; the background has aria-hidden=\"true\" or the modal uses the native <dialog> element with proper inert behavior"
+        },
+        {
+          "step": 6,
+          "action": "If the modal contains a form, fill it out using keyboard only and submit by pressing Enter on the submit button",
+          "expectedResult": "The form submits successfully; the modal closes; focus returns to an appropriate element on the page; a success message is announced if a screen reader is active"
+        }
+      ],
+      "postconditions": [
+        "Focus is properly managed: trapped in modal when open, returned to trigger when closed",
+        "No focus leaks to background content while modal is open",
+        "Escape key consistently closes the modal from any position within it",
+        "Screen reader announces the modal's role and title when opened"
+      ]
+    },
+    {
+      "id": "TC-ACCE-004",
+      "title": "Verify sufficient color contrast ratios for all text and interactive elements",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is on the page with integrated UI components",
+        "Browser extension for contrast checking is installed (e.g., axe DevTools, WAVE, or Colour Contrast Analyser)",
+        "Page is displayed at default zoom (100%) with default browser settings",
+        "Both light mode and dark mode (if available) are testable"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Run an automated accessibility audit using axe DevTools or WAVE browser extension on the full page",
+          "expectedResult": "No color contrast violations are reported; all text meets WCAG 2.1 AA minimum contrast ratios (4.5:1 for normal text, 3:1 for large text 18px+ or 14px+ bold)"
+        },
+        {
+          "step": 2,
+          "action": "Manually inspect body text, headings, and paragraph text using the Colour Contrast Analyser tool by sampling foreground and background colors",
+          "expectedResult": "All body text (under 18px) has a contrast ratio of at least 4.5:1; all large text (18px+ or 14px+ bold) has a contrast ratio of at least 3:1"
+        },
+        {
+          "step": 3,
+          "action": "Inspect interactive elements (buttons, links, form inputs) for their contrast against adjacent colors in all states: default, hover, focus, active, disabled",
+          "expectedResult": "All interactive element boundaries and text meet a minimum 3:1 contrast ratio against adjacent colors per WCAG 2.1 AA non-text contrast requirements"
+        },
+        {
+          "step": 4,
+          "action": "Inspect form field borders and placeholder text for contrast compliance",
+          "expectedResult": "Form field borders have at least 3:1 contrast against the background; placeholder text has at least 4.5:1 contrast (or is not relied upon as the only label)"
+        },
+        {
+          "step": 5,
+          "action": "Verify that no information is conveyed by color alone (e.g., error states, status indicators, required fields)",
+          "expectedResult": "All color-coded information has an additional non-color indicator: icons, text labels, patterns, or underlines (e.g., error fields have both red color AND an error icon/text message)"
+        },
+        {
+          "step": 6,
+          "action": "If dark mode is available, switch to dark mode and repeat steps 1-5",
+          "expectedResult": "All contrast requirements are met in dark mode as well; no text becomes invisible or hard to read against dark backgrounds"
+        }
+      ],
+      "postconditions": [
+        "All text content meets WCAG 2.1 AA contrast requirements",
+        "All interactive elements meet non-text contrast requirements",
+        "No information is conveyed by color alone",
+        "Both light and dark modes (if applicable) pass contrast checks"
+      ]
+    },
+    {
+      "id": "TC-ACCE-005",
+      "title": "Verify UI components are usable at 200% text zoom and browser zoom",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the page with integrated UI components",
+        "Browser is set to default zoom (100%) and default text size",
+        "Operating system text scaling is set to 100% (default)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Increase browser zoom to 200% using Ctrl++ (Cmd++ on Mac)",
+          "expectedResult": "All UI components reflow to fit the viewport; text is larger and readable; no content is cut off or hidden; no horizontal scrollbar appears on the main content area (single-column reflow is acceptable)"
+        },
+        {
+          "step": 2,
+          "action": "At 200% zoom, verify all text content is readable and not truncated",
+          "expectedResult": "No text is clipped by container boundaries; text that was previously truncated with ellipsis now either wraps or can be accessed via scrolling within its container"
+        },
+        {
+          "step": 3,
+          "action": "At 200% zoom, attempt to complete a primary user workflow (e.g., fill out a form, navigate between pages, interact with a table)",
+          "expectedResult": "The entire workflow is completable; all form fields are visible and fillable; all buttons are clickable; navigation works correctly"
+        },
+        {
+          "step": 4,
+          "action": "Change only the browser's text size to 200% (in Firefox: Settings > Language and Appearance > Fonts > Size, or use 'text-only zoom' in about:config)",
+          "expectedResult": "Text scales to 200% while images and layout containers maintain their size; text does not overflow containers in a way that makes it unreadable; no text overlaps other text"
+        },
+        {
+          "step": 5,
+          "action": "At 200% text zoom, verify that interactive elements maintain adequate touch/click target sizes",
+          "expectedResult": "All buttons and interactive elements remain at least 44x44 CSS pixels in size; elements do not overlap each other; spacing between interactive elements prevents accidental activation of adjacent elements"
+        },
+        {
+          "step": 6,
+          "action": "Verify that no content or functionality is lost at 200% zoom by comparing with the 100% zoom view",
+          "expectedResult": "All content visible at 100% is accessible at 200% (via scrolling if necessary); no features are hidden or disabled due to zoom level; tooltips and popovers still appear correctly"
+        }
+      ],
+      "postconditions": [
+        "All content and functionality is accessible at 200% zoom per WCAG 1.4.4 (Resize Text)",
+        "No horizontal scrolling required for single-column content at 200% zoom per WCAG 1.4.10 (Reflow)",
+        "Text remains readable and does not overlap at increased sizes",
+        "All interactive elements remain usable at increased zoom levels"
+      ]
+    },
+    {
+      "id": "TC-ACCE-006",
+      "title": "Verify ARIA attributes are correctly implemented on custom UI components",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is on the page with integrated UI components",
+        "Browser developer tools are open (Elements/Inspector tab)",
+        "Screen reader is active (NVDA, VoiceOver, or JAWS)",
+        "Page contains custom components (custom dropdowns, tabs, accordions, sliders, or toggle switches)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Inspect a custom dropdown/select component in the DOM and verify its ARIA attributes",
+          "expectedResult": "The dropdown trigger has role=\"combobox\" or role=\"listbox\" with aria-expanded=\"false\" (when closed) and aria-haspopup=\"listbox\"; the dropdown list has role=\"listbox\" and each option has role=\"option\""
+        },
+        {
+          "step": 2,
+          "action": "Open the custom dropdown and inspect the ARIA state changes",
+          "expectedResult": "aria-expanded changes to \"true\" when opened; the active/selected option has aria-selected=\"true\"; aria-activedescendant points to the currently highlighted option's ID"
+        },
+        {
+          "step": 3,
+          "action": "Inspect a custom tab component and verify its ARIA attributes",
+          "expectedResult": "The tab list container has role=\"tablist\"; each tab has role=\"tab\" with aria-selected=\"true\" for the active tab and aria-selected=\"false\" for inactive tabs; each tab panel has role=\"tabpanel\" with aria-labelledby pointing to its corresponding tab"
+        },
+        {
+          "step": 4,
+          "action": "Navigate the custom tabs using Arrow keys (Left/Right for horizontal tabs, Up/Down for vertical tabs)",
+          "expectedResult": "Arrow keys move focus between tabs; the newly focused tab becomes active (or activates on Enter/Space depending on implementation); the corresponding tab panel content updates"
+        },
+        {
+          "step": 5,
+          "action": "Inspect any toggle/switch components for proper ARIA implementation",
+          "expectedResult": "Toggle has role=\"switch\" with aria-checked=\"true\" or \"false\" reflecting its state; it has an accessible label via aria-label or aria-labelledby; state changes are announced by the screen reader when toggled"
+        },
+        {
+          "step": 6,
+          "action": "Inspect any accordion components for proper ARIA implementation",
+          "expectedResult": "Accordion headers have role=\"button\" (or are <button> elements) with aria-expanded=\"true\" or \"false\"; accordion panels have role=\"region\" with aria-labelledby pointing to their header; only expanded panels are visible in the accessibility tree"
+        },
+        {
+          "step": 7,
+          "action": "Run axe DevTools or Lighthouse accessibility audit and check for ARIA-related violations",
+          "expectedResult": "No ARIA-related violations reported; no 'required ARIA attributes missing', 'ARIA roles used incorrectly', or 'ARIA hidden element contains focusable elements' errors"
+        }
+      ],
+      "postconditions": [
+        "All custom components have correct ARIA roles, states, and properties",
+        "ARIA states update dynamically as components change state",
+        "Screen reader announces component types, states, and changes correctly",
+        "No ARIA violations detected by automated accessibility tools"
+      ]
+    },
+    {
+      "id": "TC-ACCE-007",
+      "title": "Verify error messages and form validation are accessible to screen readers",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on a page containing a form with validation rules (required fields, format validation, etc.)",
+        "Screen reader is active (NVDA, VoiceOver, or JAWS)",
+        "Form fields are empty or in their default state",
+        "The form has at least one required field and one field with format validation (e.g., email)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Tab to the form's submit button without filling in any required fields and press Enter",
+          "expectedResult": "Validation errors appear for all required fields; the screen reader announces the error summary or the first error message (e.g., 'Error: 3 fields require attention' or 'Email address is required')"
+        },
+        {
+          "step": 2,
+          "action": "Verify that focus moves to the first field with an error or to an error summary at the top of the form",
+          "expectedResult": "Focus is programmatically moved to either the error summary region (with role=\"alert\" or aria-live=\"assertive\") or to the first invalid form field"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to each form field with an error using Tab and listen to the screen reader announcement",
+          "expectedResult": "Each invalid field is announced with its label, its type, AND its error message (e.g., 'Email address, edit text, required, Error: Please enter a valid email address'); the field has aria-invalid=\"true\" and aria-describedby pointing to the error message element"
+        },
+        {
+          "step": 4,
+          "action": "Enter an invalid email format (e.g., 'notanemail') in the email field and Tab away or trigger inline validation",
+          "expectedResult": "An inline error message appears (e.g., 'Please enter a valid email address'); the screen reader announces the error via aria-live region or when the field is re-focused; the error message is visually associated with the field"
+        },
+        {
+          "step": 5,
+          "action": "Correct the email field to a valid format (e.g., 'user@example.com') and Tab away",
+          "expectedResult": "The error message disappears; aria-invalid is removed or set to \"false\"; the screen reader does not continue to announce the old error; optionally a success indicator is announced"
+        },
+        {
+          "step": 6,
+          "action": "Fill in all required fields correctly and submit the form",
+          "expectedResult": "A success message is announced by the screen reader (e.g., 'Form submitted successfully') via an aria-live region; focus moves to an appropriate location (success message, next page, or top of form)"
+        }
+      ],
+      "postconditions": [
+        "All error messages are programmatically associated with their form fields via aria-describedby",
+        "Error states are conveyed via aria-invalid attribute on invalid fields",
+        "Dynamic error/success messages are announced by screen readers via ARIA live regions",
+        "Focus management guides the user to errors and success states appropriately"
+      ]
+    },
+    {
+      "id": "TC-ACCE-008",
+      "title": "Verify mobile accessibility with touch targets and gesture support",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "The application is accessed on a mobile device (iOS Safari or Android Chrome) or via browser DevTools mobile emulation",
+        "User is logged in and on the page with integrated UI components",
+        "Device accessibility features are available (VoiceOver on iOS, TalkBack on Android)",
+        "Screen orientation is set to portrait mode"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Inspect all interactive elements (buttons, links, form inputs, checkboxes, toggles) for touch target size",
+          "expectedResult": "All interactive elements have a minimum touch target size of 44x44 CSS pixels per WCAG 2.5.5 (Target Size); elements that are smaller have sufficient spacing (at least 24px) from adjacent targets"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to tap each interactive element with a finger (or simulated touch in DevTools)",
+          "expectedResult": "Each element is easily tappable without accidentally activating adjacent elements; no precision tapping required"
+        },
+        {
+          "step": 3,
+          "action": "Enable VoiceOver (iOS) or TalkBack (Android) and swipe right to navigate through all elements on the page",
+          "expectedResult": "The mobile screen reader navigates through all elements in a logical order; each element is announced with its label, role, and state"
+        },
+        {
+          "step": 4,
+          "action": "With the mobile screen reader active, double-tap to activate buttons and links",
+          "expectedResult": "All interactive elements respond to the double-tap gesture; the expected action is performed (navigation, form submission, toggle state change)"
+        },
+        {
+          "step": 5,
+          "action": "Rotate the device to landscape orientation and verify all UI components adapt",
+          "expectedResult": "All components reflow to landscape layout; no content is cut off or inaccessible; touch targets remain adequately sized; the page does not force portrait-only orientation (WCAG 1.3.4 Orientation)"
+        },
+        {
+          "step": 6,
+          "action": "Test pinch-to-zoom on the page",
+          "expectedResult": "Pinch-to-zoom is not disabled (no maximum-scale=1 or user-scalable=no in the viewport meta tag); the user can zoom in to at least 200% to read content more easily"
+        }
+      ],
+      "postconditions": [
+        "All touch targets meet minimum size requirements",
+        "Mobile screen readers can navigate and interact with all components",
+        "Page works in both portrait and landscape orientations",
+        "Pinch-to-zoom is not restricted, allowing users to magnify content"
+      ]
+    },
+    {
+      "id": "TC-ACCE-009",
+      "title": "Verify visible focus indicators meet WCAG requirements on all interactive elements",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the page with integrated UI components",
+        "Browser default focus styles have not been overridden to be invisible (outline: none without replacement)",
+        "Keyboard is the primary input method",
+        "Browser is Chrome, Firefox, or Edge (latest version)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Press Tab to move focus to the first interactive element on the page and visually inspect the focus indicator",
+          "expectedResult": "A clearly visible focus indicator is present; it has a minimum 2px solid outline or equivalent visual treatment; the focus indicator has at least 3:1 contrast ratio against the adjacent background colors"
+        },
+        {
+          "step": 2,
+          "action": "Continue tabbing through all interactive elements (buttons, links, inputs, checkboxes, radio buttons, dropdowns, tabs) and inspect each focus indicator",
+          "expectedResult": "Every interactive element displays a visible focus indicator when focused; no element has focus without a visible indicator; the indicator style is consistent across similar element types"
+        },
+        {
+          "step": 3,
+          "action": "Tab to a button with a colored background (e.g., a primary blue button) and inspect the focus indicator visibility",
+          "expectedResult": "The focus indicator is visible against the button's background color; it is not obscured by the button's own styling; the indicator extends outside the button boundary or uses an inset style with sufficient contrast"
+        },
+        {
+          "step": 4,
+          "action": "Tab to elements within a dark-themed section (if applicable) and inspect focus indicator visibility",
+          "expectedResult": "Focus indicators are visible against dark backgrounds; they use a light-colored outline or a high-contrast treatment that works on dark surfaces"
+        },
+        {
+          "step": 5,
+          "action": "Click on an interactive element with the mouse, then press Tab to move focus to the next element",
+          "expectedResult": "Focus indicator appears on the next element after Tab press; the previously clicked element does not retain a distracting focus ring (focus-visible behavior is implemented to show focus only on keyboard navigation)"
+        },
+        {
+          "step": 6,
+          "action": "Inspect the CSS of focus indicators using browser DevTools to verify they meet WCAG 2.4.11 (Focus Appearance) minimum area requirements",
+          "expectedResult": "Focus indicators have an area of at least a 2px perimeter around the component; the contrasting area between focused and unfocused states has at least 3:1 contrast ratio"
+        }
+      ],
+      "postconditions": [
+        "All interactive elements have visible focus indicators that meet WCAG 2.4.7 (Focus Visible)",
+        "Focus indicators have sufficient contrast against all background colors",
+        "Focus-visible behavior is implemented to avoid unnecessary focus rings on mouse interaction",
+        "Focus indicator styling is consistent across the application"
+      ]
+    },
+    {
+      "id": "TC-ACCE-010",
+      "title": "Verify skip navigation link and heading structure for efficient screen reader navigation",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "User is on the page with integrated UI components",
+        "Screen reader is active (NVDA, VoiceOver, or JAWS)",
+        "Keyboard is the primary input method",
+        "Page has a header/navigation area and main content area"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Press Tab once from the top of the page (after page load or after pressing Ctrl+Home)",
+          "expectedResult": "A 'Skip to main content' link becomes visible (it may be visually hidden until focused); the screen reader announces 'Skip to main content, link'"
+        },
+        {
+          "step": 2,
+          "action": "Press Enter on the 'Skip to main content' link",
+          "expectedResult": "Focus jumps to the main content area, bypassing the header and navigation; the screen reader announces the first element in the main content area; the user does not have to Tab through all navigation items"
+        },
+        {
+          "step": 3,
+          "action": "Use the screen reader's heading navigation shortcut (H key in NVDA/JAWS browse mode, or VO+Cmd+H in VoiceOver) to navigate through all headings on the page",
+          "expectedResult": "Headings are announced in a logical hierarchical order: one H1 for the page title, followed by H2s for major sections, H3s for subsections, etc.; no heading levels are skipped (e.g., no H1 followed directly by H3)"
+        },
+        {
+          "step": 4,
+          "action": "Use the screen reader's heading list feature (NVDA: Insert+F7 > Headings tab; VoiceOver: VO+U > Headings rotor) to view all headings on the page",
+          "expectedResult": "The heading list shows a complete and logical outline of the page content; heading text is descriptive and meaningful (not generic like 'Section 1' or empty headings)"
+        },
+        {
+          "step": 5,
+          "action": "Verify the page has proper HTML5 semantic structure by inspecting the DOM",
+          "expectedResult": "The page uses semantic HTML elements: <header>, <nav>, <main>, <section>, <article>, <aside>, <footer> as appropriate; these create implicit ARIA landmarks that screen readers can navigate"
+        },
+        {
+          "step": 6,
+          "action": "Use the screen reader's landmark navigation (D key in NVDA, or VO+U > Landmarks in VoiceOver) to jump between page regions",
+          "expectedResult": "Screen reader identifies distinct landmarks: banner (header), navigation, main, complementary (sidebar if present), contentinfo (footer); each landmark has a descriptive label if there are multiple of the same type (e.g., 'Primary navigation', 'Footer navigation')"
+        }
+      ],
+      "postconditions": [
+        "Skip navigation link is present and functional",
+        "Heading hierarchy is logical and complete with no skipped levels",
+        "Page landmarks are properly defined and labeled",
+        "Screen reader users can efficiently navigate the page structure without traversing every element sequentially"
+      ]
+    }
+  ],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": true,
+    "negative": true,
+    "accessibility": true,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-21864",
+    "title": "Develop UI components and integration",
+    "description": "Task generated from workflow for story ABCDEF-2127\n",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "21864",
+    "externalId": "ABCDEF-2139",
+    "state": "New",
+    "assignedTo": "devxnous2k25@gmail.com",
+    "createdDate": "2026-04-20T06:46:52.470Z",
+    "priority": "medium",
+    "storyPoints": null,
+    "tags": "",
+    "epicId": null,
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net//browse/ABCDEF-2139"
+  }
+}
