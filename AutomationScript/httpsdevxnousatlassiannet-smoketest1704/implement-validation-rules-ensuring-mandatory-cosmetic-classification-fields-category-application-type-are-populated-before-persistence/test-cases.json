@@ -10,20 +10,20 @@
       "priority": "High",
       "preconditions": [
         "User is logged in with a role that has permission to create/edit cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "The system has predefined category and application type dropdown options available",
-        "No unsaved changes exist on the form"
+        "User is on the Cosmetic Classification form page",
+        "The 'Category' dropdown is loaded with valid options (e.g., 'Skin Care', 'Hair Care', 'Oral Hygiene')",
+        "The 'Application Type' dropdown is loaded with valid options (e.g., 'Leave-on', 'Rinse-off')"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Select a valid category from the 'Category' dropdown field (e.g., 'Skin Care')",
-          "expectedResult": "The 'Category' dropdown displays the selected value 'Skin Care' and no validation error is shown"
+          "action": "Select a value from the 'Category' dropdown (e.g., select 'Skin Care')",
+          "expectedResult": "'Skin Care' is displayed as the selected value in the Category field"
         },
         {
           "step": 2,
-          "action": "Select a valid application type from the 'Application Type' dropdown field (e.g., 'Leave-on')",
-          "expectedResult": "The 'Application Type' dropdown displays the selected value 'Leave-on' and no validation error is shown"
+          "action": "Select a value from the 'Application Type' dropdown (e.g., select 'Leave-on')",
+          "expectedResult": "'Leave-on' is displayed as the selected value in the Application Type field"
         },
         {
           "step": 3,
@@ -33,503 +33,457 @@
         {
           "step": 4,
           "action": "Click the 'Save' button to persist the cosmetic classification record",
-          "expectedResult": "The record is saved successfully. A success message such as 'Cosmetic classification saved successfully' is displayed. No validation errors appear."
+          "expectedResult": "The record is saved successfully. A success notification message (e.g., 'Cosmetic classification saved successfully') is displayed. No validation errors appear."
         },
         {
           "step": 5,
-          "action": "Navigate to the saved record or refresh the page to verify persistence",
-          "expectedResult": "The saved record displays 'Skin Care' as the category and 'Leave-on' as the application type, confirming data was persisted correctly"
+          "action": "Navigate to the saved record or list view and locate the newly created record",
+          "expectedResult": "The record is visible in the list/detail view with 'Category' = 'Skin Care' and 'Application Type' = 'Leave-on'"
         }
       ],
       "postconditions": [
-        "The cosmetic classification record is persisted in the database with category = 'Skin Care' and application type = 'Leave-on'",
-        "User remains on the confirmation or detail view page",
+        "The cosmetic classification record is persisted in the database with Category = 'Skin Care' and Application Type = 'Leave-on'",
+        "User remains on the confirmation or detail page after successful save",
         "An audit trail entry is created for the new record creation"
       ]
     },
     {
       "id": "TC-FUNC-002",
-      "title": "Validation error displayed when attempting to save without selecting category",
+      "title": "Validation error displayed when attempting to save with Category field empty",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "The 'Category' field is empty/not selected",
-        "The 'Application Type' field has a valid selection"
+        "User is logged in with permission to create/edit cosmetic classifications",
+        "User is on the Cosmetic Classification form page",
+        "The 'Category' field is empty (no selection made)",
+        "The 'Application Type' dropdown has valid options available"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Leave the 'Category' dropdown field unselected (default empty/placeholder state)",
-          "expectedResult": "The 'Category' field shows placeholder text such as 'Select Category' or remains empty"
+          "action": "Leave the 'Category' dropdown unselected (default/blank state)",
+          "expectedResult": "The Category field shows the default placeholder (e.g., '-- Select Category --') with no value selected"
         },
         {
           "step": 2,
-          "action": "Select a valid application type from the 'Application Type' dropdown (e.g., 'Rinse-off')",
-          "expectedResult": "The 'Application Type' field displays 'Rinse-off'"
+          "action": "Select a valid value from the 'Application Type' dropdown (e.g., 'Rinse-off')",
+          "expectedResult": "'Rinse-off' is displayed as the selected value in the Application Type field"
         },
         {
           "step": 3,
-          "action": "Click the 'Save' button to attempt persistence",
-          "expectedResult": "The save operation is blocked. A validation error message is displayed near the 'Category' field stating 'Category is required' or similar mandatory field message"
+          "action": "Click the 'Save' button",
+          "expectedResult": "The save operation is blocked. A validation error message is displayed near the Category field (e.g., 'Category is required') in red text. The record is NOT persisted."
         },
         {
           "step": 4,
-          "action": "Observe the form state and UI indicators",
-          "expectedResult": "The 'Category' field is highlighted in red or with an error indicator. The form remains in edit mode. No data is persisted to the database."
+          "action": "Observe the form state and focus behavior",
+          "expectedResult": "The Category field is highlighted with a red border or error indicator. Focus is moved to or near the Category field to guide the user."
         }
       ],
       "postconditions": [
         "No record is saved to the database",
-        "User remains on the form page with the validation error visible",
-        "The 'Application Type' selection is preserved so user does not lose their input"
+        "User remains on the form page with all previously entered data intact",
+        "The validation error message remains visible until the user corrects the field"
       ]
     },
     {
       "id": "TC-FUNC-003",
-      "title": "Validation error displayed when attempting to save without selecting application type",
+      "title": "Validation error displayed when attempting to save with Application Type field empty",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "The 'Application Type' field is empty/not selected",
-        "The 'Category' field has a valid selection"
+        "User is logged in with permission to create/edit cosmetic classifications",
+        "User is on the Cosmetic Classification form page",
+        "The 'Category' dropdown has valid options available",
+        "The 'Application Type' field is empty (no selection made)"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Select a valid category from the 'Category' dropdown (e.g., 'Hair Care')",
-          "expectedResult": "The 'Category' field displays 'Hair Care'"
+          "action": "Select a valid value from the 'Category' dropdown (e.g., 'Hair Care')",
+          "expectedResult": "'Hair Care' is displayed as the selected value in the Category field"
         },
         {
           "step": 2,
-          "action": "Leave the 'Application Type' dropdown field unselected (default empty/placeholder state)",
-          "expectedResult": "The 'Application Type' field shows placeholder text such as 'Select Application Type' or remains empty"
+          "action": "Leave the 'Application Type' dropdown unselected (default/blank state)",
+          "expectedResult": "The Application Type field shows the default placeholder (e.g., '-- Select Application Type --') with no value selected"
         },
         {
           "step": 3,
-          "action": "Click the 'Save' button to attempt persistence",
-          "expectedResult": "The save operation is blocked. A validation error message is displayed near the 'Application Type' field stating 'Application Type is required' or similar mandatory field message"
+          "action": "Click the 'Save' button",
+          "expectedResult": "The save operation is blocked. A validation error message is displayed near the Application Type field (e.g., 'Application Type is required') in red text. The record is NOT persisted."
         },
         {
           "step": 4,
-          "action": "Observe the form state and UI indicators",
-          "expectedResult": "The 'Application Type' field is highlighted in red or with an error indicator. The form remains in edit mode. No data is persisted to the database."
+          "action": "Observe the form state and focus behavior",
+          "expectedResult": "The Application Type field is highlighted with a red border or error indicator. Focus is moved to or near the Application Type field."
         }
       ],
       "postconditions": [
         "No record is saved to the database",
-        "User remains on the form page with the validation error visible",
-        "The 'Category' selection is preserved so user does not lose their input"
+        "User remains on the form page with the Category selection ('Hair Care') still intact",
+        "The validation error message remains visible until the user corrects the field"
       ]
     },
     {
       "id": "TC-FUNC-004",
-      "title": "Validation errors displayed for both mandatory fields when neither is populated",
+      "title": "Validation errors displayed when both Category and Application Type fields are empty",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "Both 'Category' and 'Application Type' fields are empty/not selected"
+        "User is logged in with permission to create/edit cosmetic classifications",
+        "User is on the Cosmetic Classification form page",
+        "Both 'Category' and 'Application Type' fields are in their default empty/unselected state"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Leave the 'Category' dropdown field unselected",
-          "expectedResult": "The 'Category' field remains in its default empty state"
+          "action": "Leave the 'Category' dropdown unselected",
+          "expectedResult": "Category field shows default placeholder with no value selected"
         },
         {
           "step": 2,
-          "action": "Leave the 'Application Type' dropdown field unselected",
-          "expectedResult": "The 'Application Type' field remains in its default empty state"
+          "action": "Leave the 'Application Type' dropdown unselected",
+          "expectedResult": "Application Type field shows default placeholder with no value selected"
         },
         {
           "step": 3,
-          "action": "Click the 'Save' button to attempt persistence",
-          "expectedResult": "The save operation is blocked. Validation error messages are displayed for both fields: 'Category is required' and 'Application Type is required'"
+          "action": "Click the 'Save' button",
+          "expectedResult": "The save operation is blocked. Validation error messages are displayed for BOTH fields: 'Category is required' near the Category field and 'Application Type is required' near the Application Type field. Both messages are displayed simultaneously."
         },
         {
           "step": 4,
-          "action": "Verify both fields are visually marked as invalid",
-          "expectedResult": "Both 'Category' and 'Application Type' fields are highlighted with error indicators (red border, error icon, or similar visual cue)"
+          "action": "Observe the overall form error summary (if applicable)",
+          "expectedResult": "A summary error banner or message at the top of the form indicates that there are validation errors (e.g., 'Please correct the errors below before saving')"
         }
       ],
       "postconditions": [
         "No record is saved to the database",
         "User remains on the form page with both validation errors visible",
-        "Form is still in editable state allowing user to correct the errors"
+        "Both fields are highlighted with error indicators (red borders or icons)"
       ]
     },
     {
       "id": "TC-FUNC-005",
-      "title": "Validation error clears after populating the mandatory category field",
+      "title": "Validation error clears after populating the missing mandatory field and re-saving",
       "category": "Functional",
-      "priority": "Medium",
+      "priority": "High",
       "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "A validation error for 'Category' field is currently displayed after a failed save attempt"
+        "User is logged in with permission to create/edit cosmetic classifications",
+        "User is on the Cosmetic Classification form page",
+        "A validation error for 'Category is required' is currently displayed after a failed save attempt",
+        "Application Type is already populated with a valid value"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Confirm the validation error 'Category is required' is visible next to the Category field",
-          "expectedResult": "The error message is displayed and the field is highlighted as invalid"
+          "action": "Confirm the validation error 'Category is required' is visible on the form",
+          "expectedResult": "The error message 'Category is required' is displayed near the Category field with a red border/indicator"
         },
         {
           "step": 2,
-          "action": "Select a valid category from the 'Category' dropdown (e.g., 'Oral Care')",
-          "expectedResult": "The 'Category' field displays 'Oral Care'"
+          "action": "Select a valid value from the 'Category' dropdown (e.g., 'Oral Hygiene')",
+          "expectedResult": "'Oral Hygiene' is displayed as the selected value. The validation error message for Category clears immediately or upon the next interaction."
         },
         {
           "step": 3,
-          "action": "Observe the validation error state for the 'Category' field",
-          "expectedResult": "The validation error message 'Category is required' disappears and the field error highlighting is removed either immediately on selection or upon next save attempt"
+          "action": "Click the 'Save' button",
+          "expectedResult": "The record is saved successfully. A success notification is displayed. No validation errors remain on the form."
+        },
+        {
+          "step": 4,
+          "action": "Verify the saved record in the database or detail view",
+          "expectedResult": "The record exists with the correct Category and Application Type values"
         }
       ],
       "postconditions": [
-        "The category validation error is no longer displayed",
-        "The form is ready for submission if all other mandatory fields are also populated",
-        "User remains on the form page"
+        "The cosmetic classification record is persisted in the database",
+        "All validation error messages and indicators are cleared from the form",
+        "User is redirected to the detail/list view or shown a success confirmation"
       ]
     },
     {
       "id": "TC-FUNC-006",
-      "title": "Validation error clears after populating the mandatory application type field",
-      "category": "Functional",
-      "priority": "Medium",
-      "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "A validation error for 'Application Type' field is currently displayed after a failed save attempt"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Confirm the validation error 'Application Type is required' is visible next to the Application Type field",
-          "expectedResult": "The error message is displayed and the field is highlighted as invalid"
-        },
-        {
-          "step": 2,
-          "action": "Select a valid application type from the 'Application Type' dropdown (e.g., 'Leave-on')",
-          "expectedResult": "The 'Application Type' field displays 'Leave-on'"
-        },
-        {
-          "step": 3,
-          "action": "Observe the validation error state for the 'Application Type' field",
-          "expectedResult": "The validation error message 'Application Type is required' disappears and the field error highlighting is removed either immediately on selection or upon next save attempt"
-        }
-      ],
-      "postconditions": [
-        "The application type validation error is no longer displayed",
-        "The form is ready for submission if all other mandatory fields are also populated",
-        "User remains on the form page"
-      ]
-    },
-    {
-      "id": "TC-FUNC-007",
-      "title": "Successfully update an existing cosmetic classification record with both mandatory fields populated",
+      "title": "Validation applies correctly when editing an existing cosmetic classification record",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
         "User is logged in with permission to edit cosmetic classifications",
-        "An existing cosmetic classification record exists with category = 'Skin Care' and application type = 'Leave-on'",
-        "User has navigated to the edit form for the existing record"
+        "An existing cosmetic classification record exists with Category = 'Skin Care' and Application Type = 'Leave-on'",
+        "User has navigated to the edit form for this existing record"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Verify the existing values are pre-populated: Category = 'Skin Care', Application Type = 'Leave-on'",
-          "expectedResult": "Both fields display their current saved values"
+          "action": "Verify that the existing values are pre-populated: Category = 'Skin Care', Application Type = 'Leave-on'",
+          "expectedResult": "Both fields display their current saved values correctly"
         },
         {
           "step": 2,
-          "action": "Change the 'Category' dropdown to a different valid value (e.g., 'Hair Care')",
-          "expectedResult": "The 'Category' field now displays 'Hair Care'"
+          "action": "Clear the 'Category' field by selecting the blank/default option (e.g., '-- Select Category --') or clearing the selection",
+          "expectedResult": "The Category field is now empty/unselected"
         },
         {
           "step": 3,
-          "action": "Change the 'Application Type' dropdown to a different valid value (e.g., 'Rinse-off')",
-          "expectedResult": "The 'Application Type' field now displays 'Rinse-off'"
+          "action": "Click the 'Save' button",
+          "expectedResult": "The save operation is blocked. A validation error 'Category is required' is displayed. The existing record is NOT updated with a blank Category."
         },
         {
           "step": 4,
-          "action": "Click the 'Save' button to persist the changes",
-          "expectedResult": "The record is updated successfully. A success message such as 'Cosmetic classification updated successfully' is displayed."
+          "action": "Re-select a valid Category value (e.g., 'Hair Care')",
+          "expectedResult": "'Hair Care' is displayed as the selected value and the validation error clears"
         },
         {
           "step": 5,
-          "action": "Reload the record to verify persistence",
-          "expectedResult": "The record displays the updated values: Category = 'Hair Care' and Application Type = 'Rinse-off'"
+          "action": "Click the 'Save' button again",
+          "expectedResult": "The record is updated successfully with Category = 'Hair Care' and Application Type = 'Leave-on'. A success message is displayed."
         }
       ],
       "postconditions": [
-        "The cosmetic classification record is updated in the database with the new category and application type values",
-        "An audit trail entry is created for the record update",
-        "User is on the record detail or confirmation page"
+        "The existing record is updated in the database with the new Category value",
+        "The original Application Type value remains unchanged",
+        "An audit trail entry is created for the record update"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Validation works correctly with all valid Category and Application Type combinations",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with permission to create cosmetic classifications",
+        "User is on the Cosmetic Classification form page",
+        "Multiple Category options are available (e.g., 'Skin Care', 'Hair Care', 'Oral Hygiene', 'Nail Care', 'Perfumery')",
+        "Multiple Application Type options are available (e.g., 'Leave-on', 'Rinse-off', 'Oral', 'Spray')"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Select 'Hair Care' from the Category dropdown",
+          "expectedResult": "'Hair Care' is selected and displayed"
+        },
+        {
+          "step": 2,
+          "action": "Select 'Rinse-off' from the Application Type dropdown",
+          "expectedResult": "'Rinse-off' is selected and displayed"
+        },
+        {
+          "step": 3,
+          "action": "Click the 'Save' button",
+          "expectedResult": "The record is saved successfully with Category = 'Hair Care' and Application Type = 'Rinse-off'. No validation errors."
+        },
+        {
+          "step": 4,
+          "action": "Create a new record and select 'Nail Care' from Category and 'Leave-on' from Application Type",
+          "expectedResult": "Both values are accepted and displayed correctly"
+        },
+        {
+          "step": 5,
+          "action": "Click the 'Save' button",
+          "expectedResult": "The record is saved successfully. Both combinations are valid and persisted without validation errors."
+        }
+      ],
+      "postconditions": [
+        "Both records are persisted in the database with their respective Category and Application Type values",
+        "No validation errors were triggered for any valid combination",
+        "User can view both records in the list view"
       ]
     },
     {
       "id": "TC-FUNC-008",
-      "title": "Mandatory field indicators are visually displayed for category and application type",
+      "title": "Mandatory field indicators are visually displayed for Category and Application Type",
       "category": "Functional",
       "priority": "Medium",
       "preconditions": [
         "User is logged in with permission to create/edit cosmetic classifications",
-        "User navigates to the cosmetic classification form page (new or edit)"
+        "User is on the Cosmetic Classification form page",
+        "The form has loaded completely with all fields visible"
       ],
       "steps": [
         {
           "step": 1,
           "action": "Observe the 'Category' field label on the form",
-          "expectedResult": "The 'Category' field label displays a mandatory indicator (e.g., red asterisk '*') indicating it is a required field"
+          "expectedResult": "The Category field label displays a mandatory indicator (e.g., red asterisk '*' next to the label text)"
         },
         {
           "step": 2,
           "action": "Observe the 'Application Type' field label on the form",
-          "expectedResult": "The 'Application Type' field label displays a mandatory indicator (e.g., red asterisk '*') indicating it is a required field"
+          "expectedResult": "The Application Type field label displays a mandatory indicator (e.g., red asterisk '*' next to the label text)"
         },
         {
           "step": 3,
-          "action": "Compare with optional fields on the same form",
-          "expectedResult": "Optional fields do not have the mandatory indicator, clearly distinguishing required from optional fields"
+          "action": "Compare with any optional fields on the form",
+          "expectedResult": "Optional fields do NOT have the mandatory indicator, clearly distinguishing them from the required Category and Application Type fields"
+        },
+        {
+          "step": 4,
+          "action": "Hover over or inspect the mandatory indicator for tooltip or aria-label",
+          "expectedResult": "The indicator provides context such as a tooltip 'This field is required' or appropriate ARIA attributes"
         }
       ],
       "postconditions": [
-        "User can clearly identify which fields are mandatory before attempting to save",
-        "The form remains in its current state without any changes"
+        "Both mandatory fields are clearly marked as required on the form",
+        "The visual indicators are consistent with the application's design system",
+        "No changes to data have been made (read-only observation)"
       ]
     },
     {
       "id": "TC-FUNC-009",
-      "title": "Validation occurs on form submission not on field blur for mandatory fields",
-      "category": "Functional",
-      "priority": "Medium",
-      "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page with both mandatory fields empty"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Click into the 'Category' dropdown field and then click away without selecting a value (trigger blur event)",
-          "expectedResult": "Observe whether validation error appears immediately on blur or not (document actual behavior)"
-        },
-        {
-          "step": 2,
-          "action": "Click into the 'Application Type' dropdown field and then click away without selecting a value (trigger blur event)",
-          "expectedResult": "Observe whether validation error appears immediately on blur or not (document actual behavior)"
-        },
-        {
-          "step": 3,
-          "action": "Click the 'Save' button without populating either mandatory field",
-          "expectedResult": "Validation errors are displayed for both mandatory fields, confirming validation triggers on save attempt"
-        },
-        {
-          "step": 4,
-          "action": "Document the validation trigger behavior (on blur vs on submit)",
-          "expectedResult": "The validation behavior is consistent and predictable for the user"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted to the database",
-        "Validation behavior is documented for consistency verification",
-        "User remains on the form page"
-      ]
-    },
-    {
-      "id": "TC-FUNC-010",
       "title": "Server-side validation prevents persistence even if client-side validation is bypassed",
       "category": "Functional",
       "priority": "High",
       "preconditions": [
         "User is logged in with permission to create cosmetic classifications",
         "User has access to browser developer tools",
-        "User is on the cosmetic classification form page"
+        "User is on the Cosmetic Classification form page",
+        "The API endpoint for saving cosmetic classifications is known"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Open browser developer tools and navigate to the Network tab",
-          "expectedResult": "Developer tools are open and network requests are being captured"
+          "action": "Open browser developer tools (F12) and navigate to the Network tab",
+          "expectedResult": "Developer tools are open and the Network tab is active"
         },
         {
           "step": 2,
-          "action": "Using developer tools, remove the 'required' attribute or disable client-side validation on the 'Category' and 'Application Type' fields",
-          "expectedResult": "Client-side validation is disabled for both fields"
+          "action": "Using the Console or a tool like Postman, submit a POST/PUT request to the cosmetic classification API endpoint with an empty 'category' field and a valid 'applicationType' field",
+          "expectedResult": "The API returns an HTTP 400 (Bad Request) or 422 (Unprocessable Entity) response"
         },
         {
           "step": 3,
-          "action": "Leave both 'Category' and 'Application Type' fields empty and click 'Save'",
-          "expectedResult": "The form submits the request to the server without client-side validation blocking it"
+          "action": "Inspect the response body of the failed API call",
+          "expectedResult": "The response body contains a validation error message indicating 'Category is required' or similar structured error"
         },
         {
           "step": 4,
-          "action": "Observe the server response in the Network tab",
-          "expectedResult": "The server returns a validation error response (e.g., HTTP 400 or 422) with error messages indicating 'Category is required' and 'Application Type is required'"
+          "action": "Submit another request with a valid 'category' but empty 'applicationType'",
+          "expectedResult": "The API returns an HTTP 400 or 422 response with a validation error for Application Type"
         },
         {
           "step": 5,
-          "action": "Verify the UI displays the server-side validation errors",
-          "expectedResult": "Error messages are displayed to the user indicating the mandatory fields must be populated"
+          "action": "Submit a request with both 'category' and 'applicationType' empty",
+          "expectedResult": "The API returns an HTTP 400 or 422 response with validation errors for both fields"
         }
       ],
       "postconditions": [
-        "No record is persisted to the database despite bypassing client-side validation",
-        "Server-side validation correctly enforces mandatory field rules",
-        "User is informed of the validation failure"
+        "No records were persisted in the database from any of the invalid requests",
+        "Server-side validation is confirmed to be active and independent of client-side validation",
+        "API error responses follow a consistent error format"
       ]
     },
     {
-      "id": "TC-FUNC-011",
-      "title": "Successful save with all valid combinations of category and application type",
+      "id": "TC-FUNC-010",
+      "title": "Validation does not block save when only optional fields are left empty",
       "category": "Functional",
       "priority": "Medium",
       "preconditions": [
         "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "Multiple valid category options exist (e.g., 'Skin Care', 'Hair Care', 'Oral Care', 'Nail Care')",
-        "Multiple valid application type options exist (e.g., 'Leave-on', 'Rinse-off')"
+        "User is on the Cosmetic Classification form page",
+        "The form contains optional fields in addition to the mandatory Category and Application Type fields (e.g., 'Description', 'Notes', 'Sub-category')"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Select 'Nail Care' from the 'Category' dropdown",
-          "expectedResult": "The 'Category' field displays 'Nail Care'"
+          "action": "Select 'Skin Care' from the 'Category' dropdown",
+          "expectedResult": "'Skin Care' is selected"
         },
         {
           "step": 2,
-          "action": "Select 'Rinse-off' from the 'Application Type' dropdown",
-          "expectedResult": "The 'Application Type' field displays 'Rinse-off'"
+          "action": "Select 'Leave-on' from the 'Application Type' dropdown",
+          "expectedResult": "'Leave-on' is selected"
         },
         {
           "step": 3,
-          "action": "Fill in any other required fields with valid data",
-          "expectedResult": "All fields accept the data without errors"
+          "action": "Leave all optional fields (e.g., 'Description', 'Notes') empty",
+          "expectedResult": "Optional fields remain blank with no validation indicators"
         },
         {
           "step": 4,
           "action": "Click the 'Save' button",
-          "expectedResult": "The record is saved successfully with category = 'Nail Care' and application type = 'Rinse-off'. Success confirmation is displayed."
-        },
-        {
-          "step": 5,
-          "action": "Verify the record in the database or by reloading the detail view",
-          "expectedResult": "The persisted record correctly shows 'Nail Care' as category and 'Rinse-off' as application type"
+          "expectedResult": "The record is saved successfully. No validation errors are triggered for the empty optional fields. A success message is displayed."
         }
       ],
       "postconditions": [
-        "A new cosmetic classification record is persisted with the selected combination",
-        "The system accepts any valid combination of category and application type",
-        "User receives confirmation of successful save"
+        "The record is persisted with Category = 'Skin Care', Application Type = 'Leave-on', and null/empty values for optional fields",
+        "No validation errors were raised for optional fields",
+        "User is shown a success confirmation"
+      ]
+    },
+    {
+      "id": "TC-FUNC-011",
+      "title": "Inline validation triggers on field blur before clicking Save",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with permission to create cosmetic classifications",
+        "User is on the Cosmetic Classification form page",
+        "Both Category and Application Type fields are in their default empty state"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the 'Category' dropdown to open it",
+          "expectedResult": "The Category dropdown opens showing available options"
+        },
+        {
+          "step": 2,
+          "action": "Click away from the dropdown without selecting a value (trigger blur event)",
+          "expectedResult": "An inline validation message appears near the Category field (e.g., 'Category is required') indicating the field must be populated"
+        },
+        {
+          "step": 3,
+          "action": "Click on the 'Application Type' dropdown to open it",
+          "expectedResult": "The Application Type dropdown opens showing available options"
+        },
+        {
+          "step": 4,
+          "action": "Click away from the dropdown without selecting a value (trigger blur event)",
+          "expectedResult": "An inline validation message appears near the Application Type field (e.g., 'Application Type is required')"
+        },
+        {
+          "step": 5,
+          "action": "Select 'Skin Care' from the Category dropdown",
+          "expectedResult": "The Category validation error clears immediately upon selection"
+        },
+        {
+          "step": 6,
+          "action": "Select 'Rinse-off' from the Application Type dropdown",
+          "expectedResult": "The Application Type validation error clears immediately upon selection"
+        }
+      ],
+      "postconditions": [
+        "Both validation errors are cleared after valid selections are made",
+        "No data has been saved yet (user has not clicked Save)",
+        "The form is in a valid state ready for submission"
       ]
     }
   ],
   "negative": [
     {
       "id": "TC-NEGA-001",
-      "title": "Attempt to save with category field set to empty string value",
+      "title": "Reject save when Category is null and Application Type is null via API",
       "category": "Negative",
       "priority": "High",
       "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "The category dropdown has a default empty/placeholder option"
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client (e.g., Postman) or browser dev tools are available"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "If the 'Category' dropdown has a blank/placeholder option (e.g., '-- Select --' with empty value), select it explicitly",
-          "expectedResult": "The 'Category' field shows the placeholder text with no actual value selected"
-        },
-        {
-          "step": 2,
-          "action": "Select a valid 'Application Type' (e.g., 'Leave-on')",
-          "expectedResult": "The 'Application Type' field displays 'Leave-on'"
-        },
-        {
-          "step": 3,
-          "action": "Click the 'Save' button",
-          "expectedResult": "Validation fails. An error message 'Category is required' is displayed. The record is not saved."
-        },
-        {
-          "step": 4,
-          "action": "Check the database to confirm no record was created",
-          "expectedResult": "No new record exists in the cosmetic classification table"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted to the database",
-        "Validation error is clearly visible to the user",
-        "Form remains in editable state"
-      ]
-    },
-    {
-      "id": "TC-NEGA-002",
-      "title": "Attempt to save with application type field set to empty string value",
-      "category": "Negative",
-      "priority": "High",
-      "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "The application type dropdown has a default empty/placeholder option"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Select a valid 'Category' (e.g., 'Skin Care')",
-          "expectedResult": "The 'Category' field displays 'Skin Care'"
-        },
-        {
-          "step": 2,
-          "action": "If the 'Application Type' dropdown has a blank/placeholder option (e.g., '-- Select --' with empty value), select it explicitly or leave it unselected",
-          "expectedResult": "The 'Application Type' field shows the placeholder text with no actual value selected"
-        },
-        {
-          "step": 3,
-          "action": "Click the 'Save' button",
-          "expectedResult": "Validation fails. An error message 'Application Type is required' is displayed. The record is not saved."
-        },
-        {
-          "step": 4,
-          "action": "Check the database to confirm no record was created",
-          "expectedResult": "No new record exists in the cosmetic classification table"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted to the database",
-        "Validation error is clearly visible to the user",
-        "Form remains in editable state"
-      ]
-    },
-    {
-      "id": "TC-NEGA-003",
-      "title": "API request with null category value is rejected by server-side validation",
-      "category": "Negative",
-      "priority": "High",
-      "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "User has tools to send direct API requests (e.g., Postman, curl)"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Construct a POST/PUT request to the cosmetic classification API endpoint with the request body containing category: null and applicationType: 'Leave-on'",
+          "action": "Construct a POST request to the cosmetic classification endpoint with JSON body: {\"category\": null, \"applicationType\": null}",
           "expectedResult": "Request is constructed and ready to send"
         },
         {
           "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request and performs validation"
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
         },
         {
           "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 (Bad Request) or 422 (Unprocessable Entity) with an error response body containing a message like 'Category is required' or 'Category must not be null'"
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains validation errors for both fields: 'Category is required' and 'Application Type is required'"
         },
         {
           "step": 4,
@@ -538,1654 +492,1640 @@
         }
       ],
       "postconditions": [
-        "No record is persisted to the database",
-        "Server returned appropriate error status code and message",
+        "No record was persisted in the database",
+        "The API returned appropriate error codes and messages",
         "System integrity is maintained"
       ]
     },
     {
-      "id": "TC-NEGA-004",
-      "title": "API request with null application type value is rejected by server-side validation",
+      "id": "TC-NEGA-002",
+      "title": "Reject save when Category is an empty string",
       "category": "Negative",
       "priority": "High",
       "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "User has tools to send direct API requests"
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Construct a POST/PUT request to the cosmetic classification API endpoint with the request body containing category: 'Skin Care' and applicationType: null",
-          "expectedResult": "Request is constructed and ready to send"
+          "action": "Construct a POST request with JSON body: {\"category\": \"\", \"applicationType\": \"Leave-on\"}",
+          "expectedResult": "Request is constructed with empty string for category"
         },
         {
           "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request and performs validation"
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
         },
         {
           "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with an error response body containing a message like 'Application Type is required' or 'Application Type must not be null'"
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error: 'Category is required' or 'Category cannot be empty'"
         },
         {
           "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists in the cosmetic classification table"
+          "action": "Query the database to confirm no record was created",
+          "expectedResult": "No new record exists with an empty category value"
         }
       ],
       "postconditions": [
-        "No record is persisted to the database",
-        "Server returned appropriate error status code and message",
+        "No record was persisted with an empty category",
+        "The validation correctly treats empty strings as invalid",
+        "Application Type value was not partially saved"
+      ]
+    },
+    {
+      "id": "TC-NEGA-003",
+      "title": "Reject save when Application Type is an empty string",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Construct a POST request with JSON body: {\"category\": \"Skin Care\", \"applicationType\": \"\"}",
+          "expectedResult": "Request is constructed with empty string for applicationType"
+        },
+        {
+          "step": 2,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error: 'Application Type is required' or 'Application Type cannot be empty'"
+        },
+        {
+          "step": 4,
+          "action": "Query the database to confirm no record was created",
+          "expectedResult": "No new record exists with an empty application type value"
+        }
+      ],
+      "postconditions": [
+        "No record was persisted with an empty application type",
+        "The validation correctly treats empty strings as invalid",
+        "Category value was not partially saved"
+      ]
+    },
+    {
+      "id": "TC-NEGA-004",
+      "title": "Reject save when Category contains only whitespace characters",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Construct a POST request with JSON body: {\"category\": \"   \", \"applicationType\": \"Leave-on\"}",
+          "expectedResult": "Request is constructed with whitespace-only category"
+        },
+        {
+          "step": 2,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error indicating category is required or invalid"
+        },
+        {
+          "step": 4,
+          "action": "Query the database to confirm no record was created with whitespace category",
+          "expectedResult": "No record exists with a whitespace-only category value"
+        }
+      ],
+      "postconditions": [
+        "No record was persisted with whitespace-only category",
+        "Server-side validation trims and validates the input",
         "System integrity is maintained"
       ]
     },
     {
       "id": "TC-NEGA-005",
-      "title": "API request with both mandatory fields as null is rejected",
+      "title": "Reject save when Application Type contains only whitespace characters",
       "category": "Negative",
-      "priority": "High",
+      "priority": "Medium",
       "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "User has tools to send direct API requests"
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Construct a POST/PUT request to the cosmetic classification API endpoint with the request body containing category: null and applicationType: null",
-          "expectedResult": "Request is constructed and ready to send"
+          "action": "Construct a POST request with JSON body: {\"category\": \"Hair Care\", \"applicationType\": \"   \"}",
+          "expectedResult": "Request is constructed with whitespace-only applicationType"
         },
         {
           "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request and performs validation"
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
         },
         {
           "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with error messages for both fields: 'Category is required' and 'Application Type is required'"
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error indicating application type is required or invalid"
         },
         {
           "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists in the cosmetic classification table"
+          "action": "Query the database to confirm no record was created",
+          "expectedResult": "No record exists with a whitespace-only application type value"
         }
       ],
       "postconditions": [
-        "No record is persisted to the database",
-        "Both validation errors are returned in the response",
+        "No record was persisted with whitespace-only application type",
+        "Server-side validation trims and validates the input",
         "System integrity is maintained"
       ]
     },
     {
       "id": "TC-NEGA-006",
-      "title": "API request with empty string category value is rejected",
+      "title": "Reject save when Category contains SQL injection attempt",
       "category": "Negative",
       "priority": "High",
       "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "User has tools to send direct API requests"
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Construct a POST/PUT request with category: '' (empty string) and applicationType: 'Leave-on'",
-          "expectedResult": "Request is constructed with empty string for category"
-        },
-        {
-          "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request and performs validation"
-        },
-        {
-          "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with an error message indicating category cannot be empty"
-        },
-        {
-          "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists with an empty category value"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted with empty string category",
-        "Server correctly treats empty string as invalid for mandatory field",
-        "Appropriate error message returned"
-      ]
-    },
-    {
-      "id": "TC-NEGA-007",
-      "title": "API request with whitespace-only category value is rejected",
-      "category": "Negative",
-      "priority": "Medium",
-      "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "User has tools to send direct API requests"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Construct a POST/PUT request with category: '   ' (whitespace only) and applicationType: 'Leave-on'",
-          "expectedResult": "Request is constructed with whitespace-only string for category"
-        },
-        {
-          "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request and performs validation"
-        },
-        {
-          "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with an error message indicating category is required or cannot be blank"
-        },
-        {
-          "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists with a whitespace-only category value"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted with whitespace-only category",
-        "Server correctly trims and validates the field",
-        "Appropriate error message returned"
-      ]
-    },
-    {
-      "id": "TC-NEGA-008",
-      "title": "API request with whitespace-only application type value is rejected",
-      "category": "Negative",
-      "priority": "Medium",
-      "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "User has tools to send direct API requests"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Construct a POST/PUT request with category: 'Skin Care' and applicationType: '   ' (whitespace only)",
-          "expectedResult": "Request is constructed with whitespace-only string for application type"
-        },
-        {
-          "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request and performs validation"
-        },
-        {
-          "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with an error message indicating application type is required or cannot be blank"
-        },
-        {
-          "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists with a whitespace-only application type value"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted with whitespace-only application type",
-        "Server correctly trims and validates the field",
-        "Appropriate error message returned"
-      ]
-    },
-    {
-      "id": "TC-NEGA-009",
-      "title": "API request with invalid/non-existent category value is rejected",
-      "category": "Negative",
-      "priority": "Medium",
-      "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "Valid categories are limited to a predefined list (e.g., 'Skin Care', 'Hair Care', 'Oral Care')"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Construct a POST/PUT request with category: 'InvalidCategory123' (a value not in the predefined list) and applicationType: 'Leave-on'",
-          "expectedResult": "Request is constructed with an invalid category value"
-        },
-        {
-          "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request and performs validation"
-        },
-        {
-          "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with an error message indicating the category value is invalid or not recognized"
-        },
-        {
-          "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists with the invalid category value"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted with an invalid category value",
-        "Server validates against allowed category values",
-        "Appropriate error message returned"
-      ]
-    },
-    {
-      "id": "TC-NEGA-010",
-      "title": "API request with invalid/non-existent application type value is rejected",
-      "category": "Negative",
-      "priority": "Medium",
-      "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "Valid application types are limited to a predefined list (e.g., 'Leave-on', 'Rinse-off')"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Construct a POST/PUT request with category: 'Skin Care' and applicationType: 'InvalidType456' (a value not in the predefined list)",
-          "expectedResult": "Request is constructed with an invalid application type value"
-        },
-        {
-          "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request and performs validation"
-        },
-        {
-          "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with an error message indicating the application type value is invalid or not recognized"
-        },
-        {
-          "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists with the invalid application type value"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted with an invalid application type value",
-        "Server validates against allowed application type values",
-        "Appropriate error message returned"
-      ]
-    },
-    {
-      "id": "TC-NEGA-011",
-      "title": "API request with SQL injection in category field is rejected and does not corrupt data",
-      "category": "Negative",
-      "priority": "High",
-      "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "Database is in a known good state"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Construct a POST/PUT request with category: \"'; DROP TABLE cosmetic_classifications; --\" and applicationType: 'Leave-on'",
+          "action": "Construct a POST request with JSON body: {\"category\": \"'; DROP TABLE cosmetic_classifications; --\", \"applicationType\": \"Leave-on\"}",
           "expectedResult": "Request is constructed with SQL injection payload in category"
         },
         {
           "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request safely"
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code, rejecting the invalid category value"
         },
         {
           "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with a validation error (invalid category value) or sanitizes the input. No SQL injection is executed."
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error. No SQL execution evidence in the response."
         },
         {
           "step": 4,
-          "action": "Verify the database tables are intact and no data corruption occurred",
-          "expectedResult": "All database tables exist and contain their expected data. No tables were dropped or modified."
+          "action": "Query the database to verify the cosmetic_classifications table still exists and no data corruption occurred",
+          "expectedResult": "The table and all existing data are intact. No new record was created with the injection payload."
         }
       ],
       "postconditions": [
-        "Database integrity is maintained - no tables dropped or data corrupted",
-        "No record is persisted with the malicious payload",
-        "System remains operational and secure"
+        "No SQL injection was executed against the database",
+        "The database schema and data remain intact",
+        "No record was persisted with the malicious payload"
       ]
     },
     {
-      "id": "TC-NEGA-012",
-      "title": "API request with special characters and script injection in application type field is handled safely",
-      "category": "Negative",
-      "priority": "Medium",
-      "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "Database is in a known good state"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Construct a POST/PUT request with category: 'Skin Care' and applicationType: '<script>alert(\"XSS\")</script>'",
-          "expectedResult": "Request is constructed with XSS payload in application type"
-        },
-        {
-          "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request safely"
-        },
-        {
-          "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with a validation error (invalid application type value), or the input is sanitized/escaped before storage"
-        },
-        {
-          "step": 4,
-          "action": "If any record was created, view it in the UI and verify no script execution occurs",
-          "expectedResult": "No JavaScript alert or script execution occurs. The value is either rejected or safely escaped/encoded."
-        }
-      ],
-      "postconditions": [
-        "No XSS vulnerability exists in the system",
-        "Either no record is created or the stored value is safely escaped",
-        "System remains secure"
-      ]
-    },
-    {
-      "id": "TC-NEGA-013",
-      "title": "Attempt to clear a previously saved mandatory category field and save",
+      "id": "TC-NEGA-007",
+      "title": "Reject save when Category contains XSS script injection",
       "category": "Negative",
       "priority": "High",
       "preconditions": [
-        "User is logged in with permission to edit cosmetic classifications",
-        "An existing cosmetic classification record exists with category = 'Skin Care' and application type = 'Leave-on'",
-        "User has navigated to the edit form for the existing record"
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Verify the 'Category' field displays the current value 'Skin Care'",
-          "expectedResult": "The field shows 'Skin Care' as the current selection"
+          "action": "Construct a POST request with JSON body: {\"category\": \"<script>alert('XSS')</script>\", \"applicationType\": \"Leave-on\"}",
+          "expectedResult": "Request is constructed with XSS payload in category"
         },
         {
           "step": 2,
-          "action": "Clear the 'Category' field by selecting the empty/placeholder option (e.g., '-- Select --') or deselecting the current value",
-          "expectedResult": "The 'Category' field is now empty or shows the placeholder"
+          "action": "Send the request to the API",
+          "expectedResult": "The API either rejects the request with HTTP 400/422 or sanitizes the input before persistence"
         },
         {
           "step": 3,
-          "action": "Click the 'Save' button to attempt to persist the change",
-          "expectedResult": "Validation fails. An error message 'Category is required' is displayed. The update is not saved."
+          "action": "If the request was accepted, navigate to the record detail view in the UI",
+          "expectedResult": "No JavaScript alert is triggered. The script tags are either stripped, escaped, or the record was rejected entirely."
         },
         {
           "step": 4,
-          "action": "Reload the record from the database",
-          "expectedResult": "The original value 'Skin Care' is still persisted - the record was not updated with an empty category"
+          "action": "Inspect the stored value in the database",
+          "expectedResult": "The value is either not stored, or stored in a sanitized/escaped form that cannot execute as script"
         }
       ],
       "postconditions": [
-        "The original record retains its category value 'Skin Care'",
-        "No data loss occurred",
-        "Validation prevented clearing a mandatory field"
-      ]
-    },
-    {
-      "id": "TC-NEGA-014",
-      "title": "Attempt to clear a previously saved mandatory application type field and save",
-      "category": "Negative",
-      "priority": "High",
-      "preconditions": [
-        "User is logged in with permission to edit cosmetic classifications",
-        "An existing cosmetic classification record exists with category = 'Skin Care' and application type = 'Leave-on'",
-        "User has navigated to the edit form for the existing record"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Verify the 'Application Type' field displays the current value 'Leave-on'",
-          "expectedResult": "The field shows 'Leave-on' as the current selection"
-        },
-        {
-          "step": 2,
-          "action": "Clear the 'Application Type' field by selecting the empty/placeholder option or deselecting the current value",
-          "expectedResult": "The 'Application Type' field is now empty or shows the placeholder"
-        },
-        {
-          "step": 3,
-          "action": "Click the 'Save' button to attempt to persist the change",
-          "expectedResult": "Validation fails. An error message 'Application Type is required' is displayed. The update is not saved."
-        },
-        {
-          "step": 4,
-          "action": "Reload the record from the database",
-          "expectedResult": "The original value 'Leave-on' is still persisted - the record was not updated with an empty application type"
-        }
-      ],
-      "postconditions": [
-        "The original record retains its application type value 'Leave-on'",
-        "No data loss occurred",
-        "Validation prevented clearing a mandatory field"
-      ]
-    },
-    {
-      "id": "TC-NEGA-015",
-      "title": "Unauthorized user cannot bypass validation by directly calling the API",
-      "category": "Negative",
-      "priority": "High",
-      "preconditions": [
-        "No valid authentication token/session is available (user is not logged in)",
-        "API endpoint for creating cosmetic classification is known"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Construct a POST/PUT request to the cosmetic classification API endpoint with valid data (category: 'Skin Care', applicationType: 'Leave-on') but without authentication headers",
-          "expectedResult": "Request is constructed without authentication"
-        },
-        {
-          "step": 2,
-          "action": "Send the API request",
-          "expectedResult": "The server rejects the request"
-        },
-        {
-          "step": 3,
-          "action": "Observe the HTTP response status code",
-          "expectedResult": "The server returns HTTP 401 (Unauthorized) or 403 (Forbidden)"
-        },
-        {
-          "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists in the cosmetic classification table"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted to the database",
-        "Authentication/authorization is enforced before validation logic",
+        "No XSS vulnerability is exploitable through the Category field",
+        "If stored, the value is properly sanitized/escaped",
         "System security is maintained"
       ]
     },
     {
-      "id": "TC-NEGA-016",
-      "title": "API request with missing category field entirely in request body is rejected",
+      "id": "TC-NEGA-008",
+      "title": "Reject save when Category value is not in the allowed list of valid categories",
       "category": "Negative",
       "priority": "High",
       "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "User has tools to send direct API requests"
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "The valid categories are a predefined list (e.g., 'Skin Care', 'Hair Care', 'Oral Hygiene', 'Nail Care', 'Perfumery')",
+        "A REST client is available for direct API testing"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Construct a POST/PUT request with a JSON body that completely omits the 'category' field: {\"applicationType\": \"Leave-on\"}",
-          "expectedResult": "Request is constructed without the category field in the body"
+          "action": "Construct a POST request with JSON body: {\"category\": \"InvalidCategory123\", \"applicationType\": \"Leave-on\"}",
+          "expectedResult": "Request is constructed with an invalid category value not in the allowed list"
         },
         {
           "step": 2,
-          "action": "Send the API request with valid authentication headers and Content-Type: application/json",
-          "expectedResult": "The server processes the request and performs validation"
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
         },
         {
           "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with an error message indicating 'Category is required' or 'Category field is missing'"
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error such as 'Invalid category value' or 'Category must be one of the allowed values'"
         },
         {
           "step": 4,
-          "action": "Query the database to verify no record was created",
+          "action": "Query the database to confirm no record was created",
+          "expectedResult": "No record exists with category = 'InvalidCategory123'"
+        }
+      ],
+      "postconditions": [
+        "No record was persisted with an invalid category value",
+        "The validation enforces the allowed list of categories",
+        "System data integrity is maintained"
+      ]
+    },
+    {
+      "id": "TC-NEGA-009",
+      "title": "Reject save when Application Type value is not in the allowed list",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "The valid application types are a predefined list (e.g., 'Leave-on', 'Rinse-off')",
+        "A REST client is available for direct API testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Construct a POST request with JSON body: {\"category\": \"Skin Care\", \"applicationType\": \"FakeType\"}",
+          "expectedResult": "Request is constructed with an invalid application type value"
+        },
+        {
+          "step": 2,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error such as 'Invalid application type' or 'Application Type must be one of the allowed values'"
+        },
+        {
+          "step": 4,
+          "action": "Query the database to confirm no record was created",
+          "expectedResult": "No record exists with applicationType = 'FakeType'"
+        }
+      ],
+      "postconditions": [
+        "No record was persisted with an invalid application type",
+        "The validation enforces the allowed list of application types",
+        "System data integrity is maintained"
+      ]
+    },
+    {
+      "id": "TC-NEGA-010",
+      "title": "Reject save when Category field is sent as a numeric value instead of string",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Construct a POST request with JSON body: {\"category\": 12345, \"applicationType\": \"Leave-on\"}",
+          "expectedResult": "Request is constructed with a numeric value for category"
+        },
+        {
+          "step": 2,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code indicating type mismatch or invalid value"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error indicating the category value is invalid or of wrong type"
+        },
+        {
+          "step": 4,
+          "action": "Query the database to confirm no record was created",
+          "expectedResult": "No record exists with a numeric category value"
+        }
+      ],
+      "postconditions": [
+        "No record was persisted with a numeric category",
+        "Type validation is enforced on the server side",
+        "System integrity is maintained"
+      ]
+    },
+    {
+      "id": "TC-NEGA-011",
+      "title": "Reject save when mandatory fields are missing entirely from the request payload",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Construct a POST request with JSON body: {} (empty object with no category or applicationType fields)",
+          "expectedResult": "Request is constructed with missing mandatory fields"
+        },
+        {
+          "step": 2,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains validation errors for both missing fields: 'Category is required' and 'Application Type is required'"
+        },
+        {
+          "step": 4,
+          "action": "Construct another request with only optional fields: {\"description\": \"Test\"}",
+          "expectedResult": "The API returns HTTP 400 or 422 with the same mandatory field validation errors"
+        }
+      ],
+      "postconditions": [
+        "No records were persisted in the database",
+        "Validation correctly identifies missing fields vs. empty fields",
+        "Error messages clearly indicate which fields are required"
+      ]
+    },
+    {
+      "id": "TC-NEGA-012",
+      "title": "Reject save when Category contains excessively long string value",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing",
+        "The maximum allowed length for Category field is known (e.g., 255 characters)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Construct a POST request with a category value of 1000 characters (e.g., 'A' repeated 1000 times) and a valid applicationType",
+          "expectedResult": "Request is constructed with an excessively long category value"
+        },
+        {
+          "step": 2,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error such as 'Category exceeds maximum length' or 'Category must be at most 255 characters'"
+        },
+        {
+          "step": 4,
+          "action": "Query the database to confirm no record was created",
+          "expectedResult": "No record exists with the excessively long category value"
+        }
+      ],
+      "postconditions": [
+        "No record was persisted with an oversized category value",
+        "Length validation is enforced on the server side",
+        "No database truncation errors occurred"
+      ]
+    },
+    {
+      "id": "TC-NEGA-013",
+      "title": "Unauthorized user cannot bypass validation by directly calling the API",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "No valid authentication token/session is available",
+        "The cosmetic classification API endpoint URL is known",
+        "A REST client is available for direct API testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Construct a POST request to the cosmetic classification endpoint with valid data: {\"category\": \"Skin Care\", \"applicationType\": \"Leave-on\"} but WITHOUT an authentication token/header",
+          "expectedResult": "Request is constructed without authentication"
+        },
+        {
+          "step": 2,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 401 (Unauthorized) or 403 (Forbidden) status code"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains an authentication/authorization error message, NOT validation errors"
+        },
+        {
+          "step": 4,
+          "action": "Query the database to confirm no record was created",
           "expectedResult": "No new record exists in the cosmetic classification table"
         }
       ],
       "postconditions": [
-        "No record is persisted to the database",
-        "Server handles missing fields gracefully with appropriate error messages",
-        "System remains stable"
+        "No record was persisted by an unauthenticated request",
+        "Authentication check occurs before validation logic",
+        "System security is maintained"
+      ]
+    },
+    {
+      "id": "TC-NEGA-014",
+      "title": "Reject save when Category field is sent as a boolean value",
+      "category": "Negative",
+      "priority": "Low",
+      "preconditions": [
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Construct a POST request with JSON body: {\"category\": true, \"applicationType\": \"Leave-on\"}",
+          "expectedResult": "Request is constructed with a boolean value for category"
+        },
+        {
+          "step": 2,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error indicating the category value is invalid or of wrong type"
+        },
+        {
+          "step": 4,
+          "action": "Repeat with JSON body: {\"category\": \"Skin Care\", \"applicationType\": false}",
+          "expectedResult": "The API returns HTTP 400 or 422 with a validation error for applicationType"
+        }
+      ],
+      "postconditions": [
+        "No records were persisted with boolean values in mandatory fields",
+        "Type validation is enforced for both fields",
+        "System handles unexpected data types gracefully"
+      ]
+    },
+    {
+      "id": "TC-NEGA-015",
+      "title": "Reject save when Category field is sent as an array or object",
+      "category": "Negative",
+      "priority": "Low",
+      "preconditions": [
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Construct a POST request with JSON body: {\"category\": [\"Skin Care\", \"Hair Care\"], \"applicationType\": \"Leave-on\"}",
+          "expectedResult": "Request is constructed with an array value for category"
+        },
+        {
+          "step": 2,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code"
+        },
+        {
+          "step": 3,
+          "action": "Construct another POST request with JSON body: {\"category\": {\"name\": \"Skin Care\"}, \"applicationType\": \"Leave-on\"}",
+          "expectedResult": "Request is constructed with an object value for category"
+        },
+        {
+          "step": 4,
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code with a validation error indicating invalid data type"
+        }
+      ],
+      "postconditions": [
+        "No records were persisted with array or object values in the category field",
+        "The API handles unexpected data structures gracefully without crashing",
+        "Appropriate error messages are returned"
+      ]
+    },
+    {
+      "id": "TC-NEGA-016",
+      "title": "Validation prevents clearing mandatory fields during concurrent edit sessions",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User A and User B are both logged in with edit permissions",
+        "An existing cosmetic classification record exists with Category = 'Skin Care' and Application Type = 'Leave-on'",
+        "Both users have the same record open in edit mode in separate browser sessions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "In User A's session, change the Category to 'Hair Care' and click 'Save'",
+          "expectedResult": "User A's change is saved successfully. Category is now 'Hair Care'."
+        },
+        {
+          "step": 2,
+          "action": "In User B's session (which still shows the old data), clear the Category field (set to blank/default)",
+          "expectedResult": "User B's form now shows an empty Category field"
+        },
+        {
+          "step": 3,
+          "action": "In User B's session, click 'Save'",
+          "expectedResult": "The save is blocked with a validation error 'Category is required'. The record is NOT updated with a blank category."
+        },
+        {
+          "step": 4,
+          "action": "Verify the record in the database",
+          "expectedResult": "The record retains Category = 'Hair Care' (User A's valid update). User B's invalid update was rejected."
+        }
+      ],
+      "postconditions": [
+        "The record maintains data integrity with Category = 'Hair Care'",
+        "Validation rules are enforced regardless of concurrent access patterns",
+        "No data corruption occurred from the concurrent edit scenario"
       ]
     },
     {
       "id": "TC-NEGA-017",
-      "title": "API request with missing application type field entirely in request body is rejected",
+      "title": "Reject save when Category contains special characters that could cause encoding issues",
       "category": "Negative",
-      "priority": "High",
+      "priority": "Medium",
       "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "User has tools to send direct API requests"
+        "User is authenticated with valid API credentials",
+        "The cosmetic classification API endpoint is accessible",
+        "A REST client is available for direct API testing"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Construct a POST/PUT request with a JSON body that completely omits the 'applicationType' field: {\"category\": \"Skin Care\"}",
-          "expectedResult": "Request is constructed without the applicationType field in the body"
+          "action": "Construct a POST request with JSON body: {\"category\": \"\\u0000\\u0001\\u0002\", \"applicationType\": \"Leave-on\"} (null bytes and control characters)",
+          "expectedResult": "Request is constructed with control characters in category"
         },
         {
           "step": 2,
-          "action": "Send the API request with valid authentication headers and Content-Type: application/json",
-          "expectedResult": "The server processes the request and performs validation"
+          "action": "Send the request to the API",
+          "expectedResult": "The API returns HTTP 400 or 422 status code, or sanitizes the input"
         },
         {
           "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with an error message indicating 'Application Type is required' or 'Application Type field is missing'"
+          "action": "Inspect the response body",
+          "expectedResult": "Response contains a validation error or the input is sanitized. No server error (500) occurs."
         },
         {
           "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists in the cosmetic classification table"
+          "action": "Query the database to confirm no record was created with control characters",
+          "expectedResult": "No record exists with control characters in the category field"
         }
       ],
       "postconditions": [
-        "No record is persisted to the database",
-        "Server handles missing fields gracefully with appropriate error messages",
-        "System remains stable"
+        "No record was persisted with control characters",
+        "The server handled the malformed input gracefully without crashing",
+        "No 500 Internal Server Error was returned"
       ]
     },
     {
       "id": "TC-NEGA-018",
-      "title": "Concurrent save attempts with missing mandatory fields do not create partial records",
+      "title": "Read-only user cannot save cosmetic classification even with valid mandatory fields",
       "category": "Negative",
-      "priority": "Medium",
+      "priority": "High",
       "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "Both mandatory fields are empty"
+        "User is logged in with a read-only role that does NOT have create/edit permissions for cosmetic classifications",
+        "User is viewing the cosmetic classification section of the application",
+        "The form or API endpoint is accessible"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Rapidly click the 'Save' button multiple times (3-5 times) in quick succession with both mandatory fields empty",
-          "expectedResult": "The system handles multiple rapid submissions gracefully"
+          "action": "Attempt to navigate to the cosmetic classification creation form",
+          "expectedResult": "Either the 'Create' button is not visible/disabled, or the user is redirected to a read-only view"
         },
         {
           "step": 2,
-          "action": "Observe the UI response",
-          "expectedResult": "Validation error messages are displayed. The save button may be disabled after first click to prevent duplicate submissions, or each attempt shows the same validation error."
+          "action": "If the form is accessible, attempt to select 'Skin Care' from Category and 'Leave-on' from Application Type",
+          "expectedResult": "Fields may be disabled/read-only, or if editable, the save action should be restricted"
         },
         {
           "step": 3,
-          "action": "Check the database for any partial or duplicate records",
-          "expectedResult": "No records were created in the database. No partial records exist."
+          "action": "Attempt to click the 'Save' button (if visible)",
+          "expectedResult": "The save action is blocked. An error message such as 'You do not have permission to perform this action' is displayed, or the button is disabled/hidden."
         },
         {
           "step": 4,
-          "action": "Verify the form is still in a usable state",
-          "expectedResult": "The form is still editable and responsive. No UI freezing or errors occurred."
+          "action": "Attempt to directly call the API with valid data using the read-only user's credentials",
+          "expectedResult": "The API returns HTTP 403 (Forbidden) status code"
         }
       ],
       "postconditions": [
-        "No partial or duplicate records exist in the database",
-        "UI remains responsive and functional",
-        "Validation was consistently enforced across all attempts"
-      ]
-    },
-    {
-      "id": "TC-NEGA-019",
-      "title": "API request with numeric values for category and application type fields is rejected",
-      "category": "Negative",
-      "priority": "Low",
-      "preconditions": [
-        "User has valid authentication token/session",
-        "API endpoint for creating cosmetic classification is accessible",
-        "User has tools to send direct API requests"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Construct a POST/PUT request with category: 12345 (numeric) and applicationType: 67890 (numeric) instead of string values",
-          "expectedResult": "Request is constructed with numeric values for string fields"
-        },
-        {
-          "step": 2,
-          "action": "Send the API request with valid authentication headers",
-          "expectedResult": "The server processes the request and performs type/validation checking"
-        },
-        {
-          "step": 3,
-          "action": "Observe the HTTP response status code and body",
-          "expectedResult": "The server returns HTTP 400 or 422 with an error indicating invalid data type or invalid category/application type values"
-        },
-        {
-          "step": 4,
-          "action": "Query the database to verify no record was created",
-          "expectedResult": "No new record exists with numeric category or application type values"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted with invalid data types",
-        "Server validates data types appropriately",
-        "Appropriate error message returned to the client"
-      ]
-    },
-    {
-      "id": "TC-NEGA-020",
-      "title": "Validation prevents save when user selects category then deselects it before saving",
-      "category": "Negative",
-      "priority": "Medium",
-      "preconditions": [
-        "User is logged in with permission to create cosmetic classifications",
-        "User is on the cosmetic classification form page",
-        "Both mandatory fields are initially empty"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Select 'Skin Care' from the 'Category' dropdown",
-          "expectedResult": "The 'Category' field displays 'Skin Care'"
-        },
-        {
-          "step": 2,
-          "action": "Select 'Leave-on' from the 'Application Type' dropdown",
-          "expectedResult": "The 'Application Type' field displays 'Leave-on'"
-        },
-        {
-          "step": 3,
-          "action": "Go back to the 'Category' dropdown and change it to the empty/placeholder option (deselect)",
-          "expectedResult": "The 'Category' field is now empty/shows placeholder"
-        },
-        {
-          "step": 4,
-          "action": "Click the 'Save' button",
-          "expectedResult": "Validation fails. An error message 'Category is required' is displayed. The record is not saved."
-        },
-        {
-          "step": 5,
-          "action": "Verify no record was created in the database",
-          "expectedResult": "No new record exists in the cosmetic classification table"
-        }
-      ],
-      "postconditions": [
-        "No record is persisted to the database",
-        "Validation correctly detects the deselected mandatory field",
-        "User is informed of the error and can correct it"
+        "No record was created by the read-only user",
+        "Permission checks are enforced at both UI and API levels",
+        "The read-only user's session remains active and valid for read operations"
       ]
     }
   ],
   "edgeCases": [
     {
       "id": "TC-EDGE-001",
-      "title": "Attempt to save with category field containing only whitespace characters",
+      "title": "Attempt to save record with category selected but application type cleared after initial selection",
       "category": "Edge Cases",
       "priority": "High",
       "preconditions": [
         "User is logged in with permissions to create/edit cosmetic classification records",
         "User is on the cosmetic classification form page",
-        "No prior classification data exists for the current product",
-        "Browser is Chrome latest version"
+        "Both 'Category' and 'Application Type' dropdown fields are visible and enabled",
+        "At least one valid category and one valid application type exist in the system"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Navigate to the cosmetic classification form by clicking 'New Classification' button",
-          "expectedResult": "Classification form loads with empty category and application type fields"
+          "action": "Select a valid value (e.g., 'Skin Care') from the 'Category' dropdown field",
+          "expectedResult": "'Skin Care' is displayed as the selected value in the Category dropdown"
         },
         {
           "step": 2,
-          "action": "In the 'Category' field, enter multiple whitespace characters: '     ' (5 spaces)",
-          "expectedResult": "The field appears to have content visually"
+          "action": "Select a valid value (e.g., 'Leave-on') from the 'Application Type' dropdown field",
+          "expectedResult": "'Leave-on' is displayed as the selected value in the Application Type dropdown"
         },
         {
           "step": 3,
-          "action": "Select a valid 'Application Type' from the dropdown (e.g., 'Leave-on')",
-          "expectedResult": "Application Type field shows 'Leave-on' as selected"
+          "action": "Return to the 'Application Type' dropdown and clear the selection by selecting the blank/placeholder option (e.g., '-- Select --') or clicking a clear button if available",
+          "expectedResult": "The Application Type field reverts to its empty/placeholder state"
         },
         {
           "step": 4,
-          "action": "Click the 'Save' button to persist the record",
-          "expectedResult": "Validation error is displayed indicating 'Category is required' - whitespace-only values are not accepted as valid input"
+          "action": "Click the 'Save' button to attempt persistence of the record",
+          "expectedResult": "Validation error is displayed indicating 'Application Type is required' or equivalent message. The record is NOT saved to the database."
         },
         {
           "step": 5,
-          "action": "Inspect the validation error message placement and content",
-          "expectedResult": "Error message appears adjacent to the Category field, clearly stating the field must be populated with a non-whitespace value"
+          "action": "Verify the form remains on the same page with all previously entered data intact (Category still shows 'Skin Care')",
+          "expectedResult": "Form is not cleared; Category field still shows 'Skin Care' and Application Type field is highlighted with a validation error indicator (red border, error icon, or inline message)"
         }
       ],
       "postconditions": [
-        "No record is persisted to the database",
-        "User remains on the classification form with entered data preserved",
-        "Validation error is visible and the Category field is highlighted as invalid"
+        "No record is persisted in the database",
+        "User remains on the cosmetic classification form page with validation errors displayed",
+        "Category field retains its previously selected value"
       ]
     },
     {
       "id": "TC-EDGE-002",
-      "title": "Save classification with category containing special characters and Unicode",
+      "title": "Attempt to save with both mandatory fields empty while optional fields are fully populated",
       "category": "Edge Cases",
-      "priority": "Medium",
+      "priority": "High",
       "preconditions": [
-        "User is logged in with edit permissions for cosmetic classification",
+        "User is logged in with create/edit permissions for cosmetic classification records",
         "User is on the cosmetic classification form page",
-        "Category field accepts free-text input (if applicable) or has options with special characters"
+        "The form contains optional fields (e.g., description, notes, brand name) in addition to mandatory Category and Application Type fields"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Navigate to the cosmetic classification form",
-          "expectedResult": "Form loads with all mandatory fields empty"
+          "action": "Leave the 'Category' dropdown in its default empty/placeholder state",
+          "expectedResult": "Category field shows placeholder text such as '-- Select Category --'"
         },
         {
           "step": 2,
-          "action": "Enter a category value containing special characters: 'Catégorie / Skincare & Beauté (日本語)'",
-          "expectedResult": "The field accepts the Unicode and special character input without truncation"
+          "action": "Leave the 'Application Type' dropdown in its default empty/placeholder state",
+          "expectedResult": "Application Type field shows placeholder text such as '-- Select Application Type --'"
         },
         {
           "step": 3,
-          "action": "Select 'Rinse-off' as the Application Type",
-          "expectedResult": "Application Type field displays 'Rinse-off'"
+          "action": "Fill in all optional fields with valid data (e.g., enter 'Test Product Alpha' in Description, 'Premium Brand' in Brand Name, 'Internal notes for testing' in Notes)",
+          "expectedResult": "All optional fields accept and display the entered data"
         },
         {
           "step": 4,
-          "action": "Click 'Save' button",
-          "expectedResult": "If category is a free-text field, record saves successfully with the special characters preserved. If category is a dropdown, the validation rejects invalid selection"
+          "action": "Click the 'Save' button",
+          "expectedResult": "Validation errors are displayed for BOTH Category and Application Type fields simultaneously. Messages such as 'Category is required' and 'Application Type is required' appear. The record is NOT persisted."
         },
         {
           "step": 5,
-          "action": "Reload the page and verify the saved record",
-          "expectedResult": "The category value displays correctly with all special characters and Unicode intact, no encoding issues"
+          "action": "Verify that both mandatory field errors are shown at the same time, not sequentially",
+          "expectedResult": "Both validation error messages are visible concurrently, either inline next to each field or in a summary error panel at the top of the form"
         }
       ],
       "postconditions": [
-        "Record is persisted with correct character encoding",
-        "No data corruption in the stored category value",
-        "Audit trail (if applicable) records the creation event"
+        "No record is persisted in the database despite optional fields being populated",
+        "User remains on the form page with both validation errors visible",
+        "All optional field data entered by the user is retained on the form"
       ]
     },
     {
       "id": "TC-EDGE-003",
-      "title": "Rapid double-click on Save button with both mandatory fields populated",
+      "title": "Rapid double-click on Save button with mandatory fields empty to test duplicate submission prevention",
       "category": "Edge Cases",
       "priority": "High",
       "preconditions": [
-        "User is logged in with create permissions for cosmetic classification",
-        "User is on the cosmetic classification form with both Category and Application Type fields available",
-        "Network latency is normal (no throttling)",
-        "No existing duplicate records in the system"
+        "User is logged in with permissions to create cosmetic classification records",
+        "User is on the cosmetic classification form page",
+        "Category and Application Type fields are both empty/unselected",
+        "Network connection is stable"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Fill in 'Category' field with a valid value (e.g., 'Skin Care')",
-          "expectedResult": "Category field displays 'Skin Care'"
+          "action": "Leave both 'Category' and 'Application Type' fields empty",
+          "expectedResult": "Both fields remain in their default unselected state"
         },
         {
           "step": 2,
-          "action": "Select 'Leave-on' from the Application Type dropdown",
-          "expectedResult": "Application Type shows 'Leave-on'"
+          "action": "Rapidly double-click the 'Save' button within 200ms",
+          "expectedResult": "Validation fires and prevents persistence. Only one set of validation error messages is displayed (not duplicated). The Save button is either disabled after the first click or the system debounces the second click."
         },
         {
           "step": 3,
-          "action": "Rapidly double-click the 'Save' button within 100ms",
-          "expectedResult": "System prevents duplicate submission - either the button is disabled after first click or only one record is created"
+          "action": "Inspect the validation error messages displayed on the form",
+          "expectedResult": "Exactly one instance of each validation error message appears: 'Category is required' and 'Application Type is required'. No duplicate error messages are shown."
         },
         {
           "step": 4,
-          "action": "Check the database or record list for duplicate entries",
-          "expectedResult": "Only one classification record exists with the entered data, no duplicates created"
+          "action": "Check the browser console for any JavaScript errors",
+          "expectedResult": "No unhandled exceptions or JavaScript errors are logged in the console"
         }
       ],
       "postconditions": [
-        "Exactly one record is persisted in the database",
-        "User is redirected to the confirmation/detail page or shown a single success message",
-        "No duplicate records exist in the system"
+        "No record is persisted in the database",
+        "No duplicate API calls were made to the server",
+        "User remains on the form with a single set of validation errors displayed"
       ]
     },
     {
       "id": "TC-EDGE-004",
-      "title": "Clear mandatory fields after initial population and attempt save",
+      "title": "Validate persistence blocked when category contains only whitespace via API manipulation",
       "category": "Edge Cases",
-      "priority": "High",
+      "priority": "Medium",
       "preconditions": [
-        "User is logged in with edit permissions",
-        "User is on the cosmetic classification form",
-        "Both Category and Application Type fields support clearing/deselecting values"
+        "User has access to API testing tools (e.g., Postman, browser DevTools network tab)",
+        "User is authenticated with a valid session token",
+        "The API endpoint for saving cosmetic classification records is known"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Select 'Hair Care' from the Category dropdown",
-          "expectedResult": "Category field shows 'Hair Care'"
+          "action": "Construct a POST/PUT request to the cosmetic classification save endpoint with the 'category' field set to '   ' (three whitespace characters) and 'applicationType' set to a valid value (e.g., 'Rinse-off')",
+          "expectedResult": "Request is constructed and ready to send"
         },
         {
           "step": 2,
-          "action": "Select 'Rinse-off' from the Application Type dropdown",
-          "expectedResult": "Application Type shows 'Rinse-off'"
+          "action": "Send the API request to the server",
+          "expectedResult": "Server responds with HTTP 400 Bad Request or 422 Unprocessable Entity status code"
         },
         {
           "step": 3,
-          "action": "Clear the Category field by clicking the 'X' clear button or selecting the blank/placeholder option",
-          "expectedResult": "Category field returns to empty/placeholder state"
+          "action": "Inspect the response body for validation error details",
+          "expectedResult": "Response body contains a validation error message indicating that 'Category' is required or cannot be blank/whitespace-only"
         },
         {
           "step": 4,
-          "action": "Clear the Application Type field by clicking the 'X' clear button or selecting the blank/placeholder option",
-          "expectedResult": "Application Type field returns to empty/placeholder state"
-        },
-        {
-          "step": 5,
-          "action": "Click the 'Save' button",
-          "expectedResult": "Validation errors appear for both fields: 'Category is required' and 'Application Type is required'"
-        },
-        {
-          "step": 6,
-          "action": "Verify both error messages are displayed simultaneously",
-          "expectedResult": "Both validation messages are visible at the same time, not just the first encountered error"
+          "action": "Query the database to confirm no record was created with a whitespace-only category",
+          "expectedResult": "No new record exists in the cosmetic classification table with a whitespace-only category value"
         }
       ],
       "postconditions": [
-        "No record is persisted to the database",
-        "User remains on the form page",
-        "Both fields are highlighted with error indicators",
-        "Form data is not lost - user can correct and resubmit"
+        "No record with whitespace-only category is persisted in the database",
+        "Server-side validation correctly trims and rejects whitespace-only values",
+        "API returns appropriate error response with meaningful message"
       ]
     },
     {
       "id": "TC-EDGE-005",
-      "title": "Submit form with category populated but application type null/undefined via API bypass",
+      "title": "Validate persistence blocked when application type is set to null via direct payload manipulation",
       "category": "Edge Cases",
-      "priority": "High",
+      "priority": "Medium",
       "preconditions": [
-        "User has access to API testing tools (e.g., Postman, curl)",
-        "Valid authentication token is available",
-        "API endpoint for cosmetic classification persistence is known",
-        "Server-side validation is expected to enforce mandatory fields"
+        "User has access to browser DevTools or API testing tools",
+        "User is authenticated with valid credentials",
+        "The cosmetic classification form is loaded in the browser"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Construct a POST/PUT request to the classification API endpoint with body: {\"category\": \"Skin Care\", \"applicationType\": null}",
-          "expectedResult": "Request is prepared with category populated and applicationType explicitly set to null"
+          "action": "Open browser DevTools and navigate to the Network tab",
+          "expectedResult": "DevTools Network tab is open and recording requests"
         },
         {
           "step": 2,
-          "action": "Send the request with valid authentication headers",
-          "expectedResult": "Server returns HTTP 400 or 422 status code with validation error response"
+          "action": "Select a valid 'Category' value (e.g., 'Hair Care') from the dropdown on the form",
+          "expectedResult": "'Hair Care' is selected in the Category field"
         },
         {
           "step": 3,
-          "action": "Inspect the response body for error details",
-          "expectedResult": "Response contains a clear error message: 'Application Type is required' or similar validation failure message"
+          "action": "Select a valid 'Application Type' value (e.g., 'Leave-on') from the dropdown",
+          "expectedResult": "'Leave-on' is selected in the Application Type field"
         },
         {
           "step": 4,
-          "action": "Send another request with body: {\"category\": \"Skin Care\", \"applicationType\": \"\"} (empty string)",
-          "expectedResult": "Server returns HTTP 400 or 422 with validation error - empty string is not accepted as valid"
+          "action": "Using DevTools, intercept the save request and modify the payload to set 'applicationType' to null before it reaches the server",
+          "expectedResult": "The modified request with null applicationType is sent to the server"
         },
         {
           "step": 5,
-          "action": "Verify no record was created in the database",
-          "expectedResult": "Database query confirms no new classification record exists with the submitted data"
+          "action": "Observe the server response in the Network tab",
+          "expectedResult": "Server returns a 400 or 422 error response with a validation message indicating Application Type is required. The record is NOT persisted."
+        },
+        {
+          "step": 6,
+          "action": "Verify in the database that no record was created with a null application type",
+          "expectedResult": "No record exists with a null application_type value for this submission"
         }
       ],
       "postconditions": [
-        "No invalid records exist in the database",
-        "Server-side validation correctly rejects incomplete data",
-        "API returns appropriate HTTP status codes and error messages"
+        "Server-side validation rejects null values for mandatory fields",
+        "No record with null application type exists in the database",
+        "The system demonstrates defense-in-depth with both client and server validation"
       ]
     },
     {
       "id": "TC-EDGE-006",
-      "title": "Submit form with application type populated but category as empty string via API",
+      "title": "Select category, navigate away from page without saving, return and verify form state",
       "category": "Edge Cases",
-      "priority": "High",
+      "priority": "Medium",
       "preconditions": [
-        "User has access to API testing tools",
-        "Valid authentication token is available",
-        "API endpoint for cosmetic classification persistence is known"
+        "User is logged in with permissions to create cosmetic classification records",
+        "User is on the cosmetic classification form page",
+        "Browser supports standard navigation (back/forward buttons)"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Construct a POST/PUT request with body: {\"category\": \"\", \"applicationType\": \"Leave-on\"}",
-          "expectedResult": "Request is prepared with empty category and valid applicationType"
+          "action": "Select 'Oral Care' from the 'Category' dropdown field",
+          "expectedResult": "'Oral Care' is displayed as the selected category"
         },
         {
           "step": 2,
-          "action": "Send the request with valid authentication headers",
-          "expectedResult": "Server returns HTTP 400 or 422 status code"
+          "action": "Leave the 'Application Type' field empty/unselected",
+          "expectedResult": "Application Type remains in its default placeholder state"
         },
         {
           "step": 3,
-          "action": "Inspect the response body",
-          "expectedResult": "Response contains validation error: 'Category is required'"
+          "action": "Click a navigation link to leave the page (e.g., click 'Home' or 'Dashboard' in the main navigation)",
+          "expectedResult": "A confirmation dialog appears warning about unsaved changes (e.g., 'You have unsaved changes. Are you sure you want to leave?') OR the user is navigated away"
         },
         {
           "step": 4,
-          "action": "Send request with body: {\"applicationType\": \"Leave-on\"} (category field omitted entirely)",
-          "expectedResult": "Server returns HTTP 400 or 422 with validation error for missing category field"
+          "action": "If a confirmation dialog appeared, click 'Stay' or 'Cancel' to remain on the page. If no dialog appeared, use the browser Back button to return to the form.",
+          "expectedResult": "User returns to the cosmetic classification form page"
         },
         {
           "step": 5,
-          "action": "Verify database state",
-          "expectedResult": "No incomplete records persisted"
+          "action": "Verify the state of the Category and Application Type fields",
+          "expectedResult": "If the form supports unsaved state retention, Category shows 'Oral Care' and Application Type is still empty. If the form resets, both fields are in their default empty state."
+        },
+        {
+          "step": 6,
+          "action": "Click the 'Save' button without populating Application Type (if Category was retained) or without populating either field (if form was reset)",
+          "expectedResult": "Validation error(s) are displayed for the unpopulated mandatory field(s). The record is NOT persisted."
         }
       ],
       "postconditions": [
-        "No records with empty/missing category exist in the database",
-        "Server-side validation is enforced regardless of client-side validation",
-        "Appropriate error responses are returned"
+        "No incomplete record is persisted in the database",
+        "Validation rules are enforced regardless of navigation history",
+        "Form state is consistent with the application's expected behavior for unsaved data"
       ]
     },
     {
       "id": "TC-EDGE-007",
-      "title": "Attempt to save when both mandatory fields contain only newline and tab characters",
+      "title": "Attempt to save when category dropdown options list is empty due to failed data load",
       "category": "Edge Cases",
       "priority": "Medium",
       "preconditions": [
-        "User is logged in with create permissions",
-        "User is on the cosmetic classification form",
-        "Category field accepts text input (not strictly dropdown)"
+        "User is logged in with permissions to create cosmetic classification records",
+        "Browser DevTools is open to simulate network failures",
+        "The cosmetic classification form page is about to be loaded"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "In the Category field, paste a value containing only tab and newline characters: '\\t\\n\\r'",
-          "expectedResult": "Field may appear empty or show whitespace"
+          "action": "In browser DevTools Network tab, set up a request block or throttle rule to block the API call that loads category dropdown options (e.g., block requests to '/api/categories' or equivalent endpoint)",
+          "expectedResult": "The block rule is active and will intercept the category data request"
         },
         {
           "step": 2,
-          "action": "In the Application Type field, if text input is possible, paste '\\t\\n'",
-          "expectedResult": "Field may appear empty or show whitespace"
+          "action": "Navigate to the cosmetic classification form page",
+          "expectedResult": "The form loads but the 'Category' dropdown is either empty, shows an error state, or displays a loading indicator that never resolves"
         },
         {
           "step": 3,
-          "action": "Click the 'Save' button",
-          "expectedResult": "Validation errors appear for both fields - control characters and whitespace-only values are rejected"
+          "action": "Attempt to select a value from the 'Category' dropdown",
+          "expectedResult": "No options are available to select, or the dropdown shows an error message like 'Failed to load categories'"
         },
         {
           "step": 4,
-          "action": "Verify the error messages clearly indicate the fields are required",
-          "expectedResult": "Error messages state 'Category is required' and 'Application Type is required'"
+          "action": "Select a valid value from the 'Application Type' dropdown (if it loaded successfully)",
+          "expectedResult": "Application Type value is selected (or it also failed to load)"
+        },
+        {
+          "step": 5,
+          "action": "Click the 'Save' button",
+          "expectedResult": "Validation error is displayed indicating 'Category is required'. The system does not attempt to save a record without a valid category. No unhandled errors occur."
         }
       ],
       "postconditions": [
-        "No record is persisted with whitespace/control character-only values",
-        "User remains on the form with errors displayed",
-        "System correctly trims and validates input"
+        "No record is persisted with an empty or invalid category",
+        "The system gracefully handles the failed data load scenario",
+        "User is informed about the issue and can retry after the data load issue is resolved"
       ]
     },
     {
       "id": "TC-EDGE-008",
-      "title": "Network disconnection during save with both mandatory fields populated",
+      "title": "Validate behavior when category value is programmatically removed from DOM after selection",
       "category": "Edge Cases",
-      "priority": "Medium",
+      "priority": "Low",
       "preconditions": [
-        "User is logged in with create permissions",
-        "User is on the cosmetic classification form",
-        "Browser DevTools Network tab is accessible for simulating offline mode"
+        "User is logged in with permissions to create cosmetic classification records",
+        "User is on the cosmetic classification form page",
+        "Browser DevTools is accessible"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Fill in 'Category' with 'Oral Care'",
-          "expectedResult": "Category field displays 'Oral Care'"
+          "action": "Select 'Nail Care' from the 'Category' dropdown",
+          "expectedResult": "'Nail Care' is displayed as the selected category"
         },
         {
           "step": 2,
-          "action": "Select 'Rinse-off' from Application Type dropdown",
-          "expectedResult": "Application Type shows 'Rinse-off'"
+          "action": "Select 'Leave-on' from the 'Application Type' dropdown",
+          "expectedResult": "'Leave-on' is displayed as the selected application type"
         },
         {
           "step": 3,
-          "action": "Open browser DevTools, go to Network tab, and check 'Offline' to simulate network disconnection",
-          "expectedResult": "Browser is now in offline mode"
+          "action": "Open browser DevTools Elements panel, locate the Category select/input element, and manually delete or clear its value attribute or the selected option from the DOM",
+          "expectedResult": "The Category field visually appears empty or shows no selection in the UI"
         },
         {
           "step": 4,
           "action": "Click the 'Save' button",
-          "expectedResult": "System displays a network error or timeout message rather than a validation error - user is informed the save could not be completed due to connectivity"
-        },
-        {
-          "step": 5,
-          "action": "Restore network connection by unchecking 'Offline' in DevTools",
-          "expectedResult": "Network is restored"
-        },
-        {
-          "step": 6,
-          "action": "Click 'Save' again (or retry if retry mechanism exists)",
-          "expectedResult": "Record saves successfully with both mandatory fields intact"
+          "expectedResult": "Validation catches the missing category value. An error message 'Category is required' is displayed. The record is NOT persisted. The system does not crash or throw an unhandled error."
         }
       ],
       "postconditions": [
-        "Record is eventually persisted after network restoration",
-        "No partial or corrupted data in the database",
-        "User received appropriate feedback during the network failure"
+        "No record is persisted with a missing category due to DOM manipulation",
+        "Server-side validation acts as a safety net even if client-side state is corrupted",
+        "No unhandled JavaScript errors occur"
       ]
     },
     {
       "id": "TC-EDGE-009",
-      "title": "Concurrent editing - two users saving same classification record simultaneously",
+      "title": "Submit form with category and application type containing special characters if free-text input is possible",
       "category": "Edge Cases",
       "priority": "Medium",
       "preconditions": [
-        "Two separate browser sessions are open with different users (User A and User B)",
-        "Both users have edit permissions for cosmetic classification",
-        "An existing classification record is loaded in both sessions",
-        "Both users are viewing the same record's edit form"
+        "User is logged in with permissions to create cosmetic classification records",
+        "User is on the cosmetic classification form page",
+        "If fields are dropdowns, this test applies to any free-text or combo-box variant; if strictly dropdowns, test via API"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "User A changes Category from 'Skin Care' to 'Hair Care'",
-          "expectedResult": "User A's form shows 'Hair Care' in Category field"
+          "action": "Via API or form (if free-text is allowed), submit a category value containing special characters: 'Skin <Care> & \"Beauty\" / Cosmétique 日本語 🧴'",
+          "expectedResult": "If the field is a strict dropdown, the value is rejected as it does not match any valid option. If free-text is allowed, the system either accepts and properly encodes the value or rejects it with a clear validation message."
         },
         {
           "step": 2,
-          "action": "User B changes Application Type from 'Leave-on' to 'Rinse-off'",
-          "expectedResult": "User B's form shows 'Rinse-off' in Application Type field"
+          "action": "Set the application type to a valid value (e.g., 'Rinse-off')",
+          "expectedResult": "Application type is accepted"
         },
         {
           "step": 3,
-          "action": "User A clicks 'Save' button",
-          "expectedResult": "User A's changes are saved successfully - record now has Category='Hair Care'"
+          "action": "Attempt to save the record",
+          "expectedResult": "If special characters are not allowed, a validation error is displayed. If they are allowed, the record is saved with properly escaped/encoded values. No XSS vulnerability, SQL injection, or encoding errors occur."
         },
         {
           "step": 4,
-          "action": "User B clicks 'Save' button within seconds of User A",
-          "expectedResult": "System either shows a conflict warning (optimistic locking) or saves User B's changes. Validation still ensures both mandatory fields are populated in the final state"
-        },
-        {
-          "step": 5,
-          "action": "Verify the final state of the record in the database",
-          "expectedResult": "Record has valid values for both Category and Application Type - no mandatory field is null or empty regardless of concurrency"
+          "action": "If the record was saved, retrieve it and verify the stored values display correctly",
+          "expectedResult": "All special characters, Unicode, and emoji are rendered correctly without corruption or encoding artifacts"
         }
       ],
       "postconditions": [
-        "Record maintains data integrity with both mandatory fields populated",
-        "No data loss or corruption from concurrent edits",
-        "Audit trail shows both edit attempts if applicable"
+        "No XSS or injection vulnerabilities are introduced",
+        "Data integrity is maintained for any accepted special characters",
+        "Validation messages are clear if special characters are rejected"
       ]
     },
     {
       "id": "TC-EDGE-010",
-      "title": "Browser back button after successful save and re-submission of stale form",
+      "title": "Concurrent editing: Two users attempt to save the same record with one leaving mandatory fields empty",
       "category": "Edge Cases",
       "priority": "Medium",
       "preconditions": [
-        "User is logged in with create permissions",
-        "User is on the cosmetic classification form",
-        "Browser caching is enabled (default settings)"
+        "Two separate browser sessions are open, each logged in as different users (User A and User B) with edit permissions",
+        "Both users have navigated to the same existing cosmetic classification record in edit mode",
+        "The record currently has valid Category ('Body Care') and Application Type ('Leave-on') values"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Fill in Category with 'Skin Care' and Application Type with 'Leave-on'",
-          "expectedResult": "Both fields are populated"
+          "action": "User A changes the 'Category' field to 'Hair Care' and keeps 'Application Type' as 'Leave-on'",
+          "expectedResult": "User A's form shows Category as 'Hair Care' and Application Type as 'Leave-on'"
         },
         {
           "step": 2,
-          "action": "Click 'Save' button",
-          "expectedResult": "Record saves successfully and user is redirected to confirmation/list page"
+          "action": "User B clears the 'Application Type' field (sets it to empty/placeholder) and keeps Category as 'Body Care'",
+          "expectedResult": "User B's form shows Category as 'Body Care' and Application Type as empty"
         },
         {
           "step": 3,
-          "action": "Click the browser's Back button",
-          "expectedResult": "Browser navigates back to the form page - may show cached form data"
+          "action": "User A clicks 'Save' first",
+          "expectedResult": "User A's changes are saved successfully. Record now has Category 'Hair Care' and Application Type 'Leave-on'."
         },
         {
           "step": 4,
-          "action": "Clear the Application Type field (if form is editable)",
-          "expectedResult": "Application Type is now empty"
+          "action": "User B clicks 'Save' immediately after",
+          "expectedResult": "User B receives a validation error for the empty Application Type field. The record is NOT updated with User B's changes. Optionally, a concurrency conflict warning may also appear."
         },
         {
           "step": 5,
-          "action": "Click 'Save' button again",
-          "expectedResult": "Validation error appears: 'Application Type is required' - system does not allow saving without mandatory field even on cached/stale form"
-        },
-        {
-          "step": 6,
-          "action": "Alternatively, if form resubmits with original data, verify no duplicate record is created",
-          "expectedResult": "System either prevents duplicate creation or shows appropriate warning"
+          "action": "Verify the record in the database",
+          "expectedResult": "The record reflects User A's valid save: Category is 'Hair Care' and Application Type is 'Leave-on'. User B's attempt to clear Application Type was blocked by validation."
         }
       ],
       "postconditions": [
-        "Validation rules are enforced even on browser-cached form pages",
-        "No invalid records are persisted",
-        "No unintended duplicate records are created"
+        "Database record maintains data integrity with both mandatory fields populated",
+        "User B is informed of the validation failure and can correct the form",
+        "No partial or corrupted data is persisted from the concurrent edit scenario"
       ]
     },
     {
       "id": "TC-EDGE-011",
-      "title": "Maximum length boundary for category field value",
+      "title": "Validate behavior when application type depends on category (cascading dropdown) and category is changed after application type selection",
       "category": "Edge Cases",
-      "priority": "Medium",
+      "priority": "High",
       "preconditions": [
-        "User is logged in with create permissions",
-        "User is on the cosmetic classification form",
-        "Maximum character limit for Category field is known (e.g., 255 characters)",
-        "Category field accepts free-text input"
+        "User is logged in with permissions to create cosmetic classification records",
+        "User is on the cosmetic classification form page",
+        "Application Type options may be filtered based on the selected Category (cascading dependency)"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Enter exactly the maximum allowed characters in the Category field (e.g., 255 characters of 'A' repeated)",
-          "expectedResult": "Field accepts all characters up to the maximum limit"
+          "action": "Select 'Skin Care' from the 'Category' dropdown",
+          "expectedResult": "'Skin Care' is selected and Application Type dropdown is populated with relevant options (e.g., 'Leave-on', 'Rinse-off')"
         },
         {
           "step": 2,
-          "action": "Select a valid Application Type (e.g., 'Leave-on')",
-          "expectedResult": "Application Type is populated"
+          "action": "Select 'Leave-on' from the 'Application Type' dropdown",
+          "expectedResult": "'Leave-on' is displayed as the selected application type"
         },
         {
           "step": 3,
-          "action": "Click 'Save' button",
-          "expectedResult": "Record saves successfully with the full-length category value"
+          "action": "Change the 'Category' dropdown to a different value (e.g., 'Oral Care')",
+          "expectedResult": "Application Type dropdown is either reset to empty/placeholder (since the previously selected value may not apply to the new category) or retains the value if it is valid for the new category"
         },
         {
           "step": 4,
-          "action": "Now create a new record and enter one character beyond the maximum (e.g., 256 characters)",
-          "expectedResult": "Either the field truncates input at the maximum, or a validation error appears on save indicating the value exceeds the maximum length"
+          "action": "Without re-selecting an Application Type value, click the 'Save' button",
+          "expectedResult": "If Application Type was reset to empty due to the category change, a validation error 'Application Type is required' is displayed and the record is NOT saved. If the value was retained and is valid for the new category, the record saves successfully."
         },
         {
           "step": 5,
-          "action": "Verify the persisted record's category value length",
-          "expectedResult": "Stored value does not exceed the database column's maximum length"
+          "action": "If validation error appeared, select a valid Application Type for 'Oral Care' and click 'Save' again",
+          "expectedResult": "Record saves successfully with the new Category and valid Application Type"
         }
       ],
       "postconditions": [
-        "Records with maximum-length values are stored correctly",
-        "No database truncation errors occur",
-        "Validation prevents exceeding field length limits"
+        "No record is persisted with an invalid or orphaned application type that does not correspond to the selected category",
+        "Cascading validation ensures data consistency between dependent fields",
+        "User is guided to correct any invalidated selections"
       ]
     },
     {
       "id": "TC-EDGE-012",
-      "title": "Form submission with JavaScript disabled - server-side validation enforcement",
+      "title": "Attempt to bypass client-side validation by disabling JavaScript and submitting the form",
       "category": "Edge Cases",
       "priority": "High",
       "preconditions": [
-        "User is logged in with create permissions",
-        "User is on the cosmetic classification form",
-        "JavaScript is disabled in browser settings",
-        "Form can still be submitted via standard HTML form submission"
+        "User is logged in with permissions to create cosmetic classification records",
+        "User is on the cosmetic classification form page",
+        "Browser allows disabling JavaScript (e.g., via DevTools or browser settings)"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Disable JavaScript in browser settings (Chrome: Settings > Site Settings > JavaScript > Blocked)",
-          "expectedResult": "JavaScript is disabled for the current site"
+          "action": "Open browser DevTools, go to Settings, and disable JavaScript execution",
+          "expectedResult": "JavaScript is disabled in the browser"
         },
         {
           "step": 2,
-          "action": "Navigate to the cosmetic classification form",
-          "expectedResult": "Form loads (may have reduced functionality without JS)"
+          "action": "Leave both 'Category' and 'Application Type' fields empty on the form",
+          "expectedResult": "Both fields remain in their default unselected state; no client-side validation fires since JS is disabled"
         },
         {
           "step": 3,
-          "action": "Leave both Category and Application Type fields empty",
-          "expectedResult": "Fields remain empty with no client-side validation triggered"
+          "action": "Submit the form by clicking the 'Save' button or pressing Enter (if the form supports native HTML submission)",
+          "expectedResult": "If the form relies solely on JavaScript for submission, the Save button does nothing. If the form submits via native HTML, the server receives the request."
         },
         {
           "step": 4,
-          "action": "Submit the form (click Save or press Enter)",
-          "expectedResult": "Server-side validation catches the missing mandatory fields and returns error response with messages for both fields"
+          "action": "If the request reached the server, observe the server response",
+          "expectedResult": "Server-side validation rejects the request with appropriate error messages for both missing mandatory fields. HTTP 400 or 422 status is returned. No record is persisted."
         },
         {
           "step": 5,
-          "action": "Verify the error page/response clearly indicates which fields are missing",
-          "expectedResult": "Error messages clearly state 'Category is required' and 'Application Type is required'"
+          "action": "Re-enable JavaScript and verify the form returns to normal functioning",
+          "expectedResult": "Client-side validation resumes working correctly after JavaScript is re-enabled"
         }
       ],
       "postconditions": [
-        "No record is persisted without mandatory fields regardless of client-side validation state",
-        "Server-side validation acts as the final enforcement layer",
-        "User receives clear feedback about validation failures"
+        "Server-side validation prevents persistence of records with missing mandatory fields regardless of client-side state",
+        "No record with empty Category or Application Type exists in the database",
+        "Defense-in-depth validation strategy is confirmed"
       ]
     }
   ],
   "accessibility": [
     {
       "id": "TC-ACCE-001",
-      "title": "Keyboard navigation through mandatory classification fields using Tab key",
+      "title": "Keyboard navigation through Category and Application Type mandatory fields using Tab and Shift+Tab",
       "category": "Accessibility",
       "priority": "High",
       "preconditions": [
-        "User is logged in with create permissions",
-        "User is on the cosmetic classification form page",
-        "No assistive technology is active (testing pure keyboard navigation)",
-        "Browser is Chrome or Firefox latest version"
+        "User is logged in and on the cosmetic classification form page",
+        "No assistive technology is required for this test (keyboard-only testing)",
+        "Browser is a modern version of Chrome, Firefox, Edge, or Safari"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Press Tab key from the page header/navigation area to move focus into the form",
-          "expectedResult": "Focus moves to the first interactive element in the form in logical order"
+          "action": "Click on the first focusable element on the page (or press Tab from the browser address bar) to begin keyboard navigation",
+          "expectedResult": "Focus moves to the first interactive element on the form page, indicated by a visible focus ring/outline"
         },
         {
           "step": 2,
-          "action": "Continue pressing Tab to reach the 'Category' field",
-          "expectedResult": "Category field receives visible focus indicator (outline, border highlight, or glow) - focus ring is clearly visible"
+          "action": "Press Tab repeatedly to navigate through form fields until focus reaches the 'Category' dropdown",
+          "expectedResult": "Focus lands on the 'Category' dropdown with a clearly visible focus indicator (e.g., blue outline, highlighted border). The field label 'Category' is associated with the control."
         },
         {
           "step": 3,
-          "action": "Press Tab again to move to the 'Application Type' field",
-          "expectedResult": "Application Type field receives visible focus indicator, Category field loses focus"
+          "action": "Press Space or Enter to open the 'Category' dropdown, then use Arrow Down/Up keys to navigate options",
+          "expectedResult": "Dropdown opens and options are navigable via arrow keys. Each option is highlighted as it receives focus. The currently highlighted option is announced if a screen reader is active."
         },
         {
           "step": 4,
-          "action": "Press Tab to move to the 'Save' button",
-          "expectedResult": "Save button receives visible focus indicator"
+          "action": "Press Enter or Space to select an option (e.g., 'Skin Care'), then press Tab to move to the next field",
+          "expectedResult": "'Skin Care' is selected and displayed in the Category field. Focus moves to the 'Application Type' dropdown with a visible focus indicator."
         },
         {
           "step": 5,
-          "action": "Press Shift+Tab to move backwards through the form",
-          "expectedResult": "Focus moves back through Application Type, then Category in reverse order"
+          "action": "Press Shift+Tab to move focus back to the 'Category' dropdown",
+          "expectedResult": "Focus returns to the 'Category' dropdown, which still shows 'Skin Care' as selected. Focus indicator is clearly visible."
         },
         {
           "step": 6,
-          "action": "Verify no focus traps exist - Tab eventually moves past the form",
-          "expectedResult": "Focus can leave the form area and reach other page elements (footer, navigation)"
+          "action": "Press Tab to return to 'Application Type', open it with Space/Enter, select a value using arrow keys and Enter, then Tab to the 'Save' button",
+          "expectedResult": "Application Type value is selected. Focus moves to the 'Save' button with a visible focus indicator."
+        },
+        {
+          "step": 7,
+          "action": "Press Enter to activate the 'Save' button",
+          "expectedResult": "The form is submitted. If all mandatory fields are populated, the record is saved successfully. The Save action is triggered by keyboard alone."
         }
       ],
       "postconditions": [
-        "All interactive form elements are reachable via keyboard",
-        "Tab order follows logical reading order (top to bottom, left to right)",
-        "No focus traps prevent users from navigating away from the form"
+        "All form fields and the Save button are reachable and operable via keyboard alone",
+        "No keyboard traps exist in the form navigation flow",
+        "Record is saved successfully when all mandatory fields are populated via keyboard interaction"
       ]
     },
     {
       "id": "TC-ACCE-002",
-      "title": "Screen reader announces mandatory field labels and required status",
+      "title": "Screen reader announces validation errors for empty mandatory fields with proper ARIA attributes",
       "category": "Accessibility",
       "priority": "High",
       "preconditions": [
-        "NVDA or JAWS screen reader is active",
-        "User is logged in and on the cosmetic classification form",
-        "Screen reader verbosity is set to default/medium",
-        "Browser is Firefox (for NVDA) or Chrome (for JAWS)"
+        "User is logged in and on the cosmetic classification form page",
+        "Screen reader is active (NVDA on Windows, VoiceOver on macOS, or JAWS)",
+        "Both Category and Application Type fields are empty/unselected"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Navigate to the Category field using Tab key with screen reader active",
-          "expectedResult": "Screen reader announces: field label 'Category', field type (e.g., 'combo box' or 'edit'), and required status (e.g., 'required')"
+          "action": "Using keyboard navigation (Tab), move focus to the 'Save' button without selecting any values in Category or Application Type",
+          "expectedResult": "Focus reaches the Save button. Screen reader announces the button label (e.g., 'Save, button')"
         },
         {
           "step": 2,
-          "action": "Navigate to the Application Type field using Tab key",
-          "expectedResult": "Screen reader announces: field label 'Application Type', field type, and required status ('required')"
+          "action": "Press Enter to activate the 'Save' button",
+          "expectedResult": "Validation errors appear for both mandatory fields. Screen reader announces the validation errors, either via an aria-live region announcement (e.g., 'Error: Category is required. Error: Application Type is required.') or focus is moved to the first error."
         },
         {
           "step": 3,
-          "action": "Attempt to save with empty fields by pressing Enter on the Save button",
-          "expectedResult": "Screen reader announces the validation error messages - either via aria-live region announcement or focus moving to error summary"
+          "action": "If focus was moved to an error summary, navigate through the error messages using Tab or arrow keys",
+          "expectedResult": "Each error message is announced by the screen reader with clear text (e.g., 'Category is required'). Error messages are linked to their respective fields."
         },
         {
           "step": 4,
-          "action": "Verify the error messages are associated with their respective fields",
-          "expectedResult": "When navigating back to Category field, screen reader announces the error message (e.g., 'Category is required, error') via aria-describedby or aria-errormessage"
+          "action": "Navigate to the 'Category' field using Tab or by clicking the error link",
+          "expectedResult": "Screen reader announces the field label, its required state (e.g., 'Category, required, combobox, collapsed'), and the associated error message (e.g., 'Category is required')"
         },
         {
           "step": 5,
-          "action": "Navigate to Application Type field after validation failure",
-          "expectedResult": "Screen reader announces the Application Type error message associated with the field"
+          "action": "Navigate to the 'Application Type' field",
+          "expectedResult": "Screen reader announces 'Application Type, required, combobox, collapsed' along with the error message 'Application Type is required'"
+        },
+        {
+          "step": 6,
+          "action": "Inspect the HTML source for proper ARIA attributes on both fields",
+          "expectedResult": "Both fields have aria-required=\"true\", aria-invalid=\"true\" (when in error state), and aria-describedby pointing to the error message element. Error messages use role=\"alert\" or aria-live=\"assertive\" for dynamic announcements."
         }
       ],
       "postconditions": [
-        "All mandatory fields are programmatically identified as required (aria-required='true' or HTML required attribute)",
-        "Error messages are programmatically associated with their fields",
-        "Screen reader users receive equivalent information to sighted users"
+        "All validation errors are announced by the screen reader without requiring visual inspection",
+        "ARIA attributes correctly reflect the required and invalid states of the fields",
+        "Users relying on screen readers can identify and resolve validation errors independently"
       ]
     },
     {
       "id": "TC-ACCE-003",
-      "title": "Validation error messages have sufficient color contrast ratio",
+      "title": "Visible focus indicators meet WCAG 2.1 contrast requirements on all form controls",
       "category": "Accessibility",
       "priority": "High",
       "preconditions": [
-        "User is on the cosmetic classification form",
-        "Browser DevTools or contrast checking tool (e.g., axe DevTools, Colour Contrast Analyser) is available",
-        "Form has been submitted with empty mandatory fields to trigger validation errors"
+        "User is logged in and on the cosmetic classification form page",
+        "A color contrast analyzer tool is available (e.g., browser extension, DevTools)",
+        "Browser is set to default zoom (100%)"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Submit the form with both Category and Application Type fields empty to trigger validation errors",
-          "expectedResult": "Validation error messages appear on the form"
+          "action": "Press Tab to move focus to the 'Category' dropdown field",
+          "expectedResult": "A visible focus indicator (outline, border, or shadow) appears around the Category field"
         },
         {
           "step": 2,
-          "action": "Use a color contrast analyzer tool to measure the contrast ratio of the error message text against its background",
-          "expectedResult": "Error message text has a contrast ratio of at least 4.5:1 for normal text (or 3:1 for large text) per WCAG 2.1 AA"
+          "action": "Using a color contrast analyzer, measure the contrast ratio of the focus indicator against the background",
+          "expectedResult": "The focus indicator has a contrast ratio of at least 3:1 against the adjacent background color, meeting WCAG 2.1 Level AA (Success Criterion 2.4.7 and 1.4.11)"
         },
         {
           "step": 3,
-          "action": "Check the contrast ratio of the error field border/highlight against the surrounding background",
-          "expectedResult": "Error indicators (red borders, icons) have at least 3:1 contrast ratio against adjacent colors"
+          "action": "Press Tab to move focus to the 'Application Type' dropdown field and measure its focus indicator contrast",
+          "expectedResult": "The focus indicator on Application Type also meets the 3:1 minimum contrast ratio"
         },
         {
           "step": 4,
-          "action": "Verify that error state is not communicated by color alone",
-          "expectedResult": "Error messages include text descriptions, icons, or other non-color indicators in addition to any red coloring"
+          "action": "Press Tab to move focus to the 'Save' button and measure its focus indicator contrast",
+          "expectedResult": "The Save button's focus indicator meets the 3:1 minimum contrast ratio against its background"
         },
         {
           "step": 5,
-          "action": "Check the required field indicator (asterisk or text) contrast",
-          "expectedResult": "Required field indicators have at least 4.5:1 contrast ratio"
+          "action": "Trigger validation errors by saving with empty fields, then Tab to the error-state fields and verify focus indicators are still visible and distinguishable from the error styling",
+          "expectedResult": "Focus indicators remain clearly visible even when fields are in an error state (red border). The focus indicator is distinguishable from the error border (e.g., different color, additional outline, or thicker border)."
         }
       ],
       "postconditions": [
-        "All error messages meet WCAG 2.1 AA contrast requirements",
-        "Error states are perceivable without relying solely on color",
-        "Users with color vision deficiencies can identify validation errors"
+        "All interactive elements on the form have visible focus indicators meeting WCAG 2.1 contrast requirements",
+        "Focus indicators are distinguishable from error state styling",
+        "Keyboard-only users can always identify which element currently has focus"
       ]
     },
     {
       "id": "TC-ACCE-004",
-      "title": "Focus management after validation error - focus moves to first error",
+      "title": "Form labels are programmatically associated with their respective input controls",
       "category": "Accessibility",
       "priority": "High",
       "preconditions": [
-        "User is logged in and on the cosmetic classification form",
-        "Both Category and Application Type fields are empty",
-        "User has navigated to the Save button via keyboard"
+        "User is logged in and on the cosmetic classification form page",
+        "Browser DevTools is accessible for HTML inspection",
+        "Screen reader is available for verification"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "With focus on the 'Save' button, press Enter or Space to submit the form",
-          "expectedResult": "Form submission is attempted and validation fails"
+          "action": "Right-click on the 'Category' label text and select 'Inspect Element' in browser DevTools",
+          "expectedResult": "The HTML source shows a <label> element with a 'for' attribute matching the 'id' of the Category input/select element, OR the input is wrapped inside the <label> element, OR aria-labelledby is used to associate the label"
         },
         {
           "step": 2,
-          "action": "Observe where keyboard focus moves after validation failure",
-          "expectedResult": "Focus moves to either: (a) an error summary at the top of the form, or (b) the first field with a validation error (Category field)"
+          "action": "Click on the 'Category' label text in the UI",
+          "expectedResult": "Focus moves to the Category dropdown/input control, confirming the programmatic association between label and control"
         },
         {
           "step": 3,
-          "action": "If focus moved to error summary, press Tab or click the first error link",
-          "expectedResult": "Focus moves to the Category field (first invalid field)"
+          "action": "Right-click on the 'Application Type' label text and inspect the HTML",
+          "expectedResult": "The HTML shows proper label association via 'for'/'id' pairing, nesting, or aria-labelledby for the Application Type control"
         },
         {
           "step": 4,
-          "action": "Verify the focused element has a visible focus indicator",
-          "expectedResult": "The focused field/error summary has a clearly visible focus ring or highlight"
+          "action": "Click on the 'Application Type' label text in the UI",
+          "expectedResult": "Focus moves to the Application Type dropdown/input control"
         },
         {
           "step": 5,
-          "action": "If using a screen reader, verify the error context is announced",
-          "expectedResult": "Screen reader announces the error message or error summary content when focus arrives"
+          "action": "Using a screen reader, Tab to the Category field and listen to the announcement",
+          "expectedResult": "Screen reader announces the full label 'Category' (and 'required' if applicable) when the field receives focus, confirming the programmatic association"
+        },
+        {
+          "step": 6,
+          "action": "Tab to the Application Type field and listen to the screen reader announcement",
+          "expectedResult": "Screen reader announces 'Application Type' (and 'required' if applicable) when the field receives focus"
         }
       ],
       "postconditions": [
-        "Focus is managed programmatically after validation failure",
-        "Users are not left at the Save button wondering what happened",
-        "Keyboard and screen reader users can immediately identify and correct errors"
+        "All mandatory fields have programmatically associated labels per WCAG 2.1 SC 1.3.1 and 4.1.2",
+        "Clicking labels moves focus to the associated controls",
+        "Screen readers correctly announce field labels when controls receive focus"
       ]
     },
     {
       "id": "TC-ACCE-005",
-      "title": "Form works correctly at 200% browser zoom level",
+      "title": "Validation error messages do not rely solely on color to convey information",
       "category": "Accessibility",
-      "priority": "Medium",
+      "priority": "High",
       "preconditions": [
-        "User is logged in and on the cosmetic classification form",
-        "Browser zoom is set to 100% initially",
-        "Screen resolution is 1920x1080 or standard desktop resolution"
+        "User is logged in and on the cosmetic classification form page",
+        "Both Category and Application Type fields are empty",
+        "A color blindness simulation tool is available (e.g., browser extension or DevTools rendering emulation)"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Zoom browser to 200% using Ctrl+'+' (or Cmd+'+' on Mac) multiple times",
-          "expectedResult": "Page zooms to 200% - form content reflows and remains usable"
+          "action": "Leave both 'Category' and 'Application Type' fields empty and click the 'Save' button",
+          "expectedResult": "Validation errors appear for both fields"
         },
         {
           "step": 2,
-          "action": "Verify the Category field label and input are fully visible without horizontal scrolling",
-          "expectedResult": "Category label and field are visible, text is not truncated, and no horizontal scrollbar appears for the form content"
+          "action": "Observe the validation error indicators on the form",
+          "expectedResult": "Errors are conveyed through MULTIPLE means: text message (e.g., 'Category is required'), an icon (e.g., exclamation mark or error icon), AND color (e.g., red border). Color is NOT the sole indicator."
         },
         {
           "step": 3,
-          "action": "Verify the Application Type field label and dropdown are fully visible",
-          "expectedResult": "Application Type label and dropdown are visible and functional"
+          "action": "Enable a color blindness simulation (e.g., Protanopia, Deuteranopia) in browser DevTools under Rendering > Emulate vision deficiencies",
+          "expectedResult": "Even with color blindness simulation active, the validation errors are still identifiable through text messages and/or icons. The error state is not lost when red is indistinguishable."
         },
         {
           "step": 4,
-          "action": "Attempt to interact with the Category field - click and enter/select a value",
-          "expectedResult": "Field is clickable, dropdown options (if applicable) are visible and selectable at 200% zoom"
+          "action": "Switch to grayscale simulation to verify errors are identifiable without any color",
+          "expectedResult": "Error messages and icons remain visible and meaningful in grayscale. Text clearly states what the error is."
         },
         {
           "step": 5,
-          "action": "Click 'Save' with empty mandatory fields",
-          "expectedResult": "Validation error messages are fully visible, not truncated, and readable at 200% zoom"
-        },
-        {
-          "step": 6,
-          "action": "Verify error messages do not overlap other content",
-          "expectedResult": "Error messages are properly positioned without overlapping labels, fields, or other UI elements"
+          "action": "Verify that the error text messages have sufficient contrast against their background (minimum 4.5:1 for normal text, 3:1 for large text)",
+          "expectedResult": "Error message text meets WCAG 2.1 AA contrast requirements"
         }
       ],
       "postconditions": [
-        "Form is fully functional at 200% zoom",
-        "No content is lost or hidden due to zoom",
-        "All text remains readable and all interactive elements remain usable"
+        "Validation errors are perceivable by users with color vision deficiencies per WCAG 2.1 SC 1.4.1 (Use of Color)",
+        "Multiple visual cues (text, icons, color) are used to convey error states",
+        "Error text meets minimum contrast ratio requirements"
       ]
     },
     {
       "id": "TC-ACCE-006",
-      "title": "ARIA live region announces validation errors dynamically",
+      "title": "Form is fully usable at 200% browser zoom level",
       "category": "Accessibility",
       "priority": "High",
       "preconditions": [
-        "NVDA or VoiceOver screen reader is active",
-        "User is logged in and on the cosmetic classification form",
-        "Both mandatory fields are empty",
-        "Browser DevTools is available to inspect ARIA attributes"
+        "User is logged in and on the cosmetic classification form page",
+        "Browser zoom is set to 100% initially",
+        "Screen resolution is at least 1280x1024"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Inspect the form HTML for aria-live regions using browser DevTools (Elements panel)",
-          "expectedResult": "An element with aria-live='polite' or aria-live='assertive' exists in the form area for error announcements, or role='alert' is used for error containers"
+          "action": "Increase browser zoom to 200% using Ctrl+'+' (Cmd+'+' on macOS) or browser zoom settings",
+          "expectedResult": "Page content scales to 200%. The cosmetic classification form is still visible and usable."
         },
         {
           "step": 2,
-          "action": "With screen reader active, click the 'Save' button to trigger validation",
-          "expectedResult": "Screen reader automatically announces the validation errors without requiring the user to navigate to them - this is triggered by aria-live region or role='alert'"
+          "action": "Verify that the 'Category' label and dropdown are fully visible without horizontal scrolling",
+          "expectedResult": "Category label and dropdown are fully visible. Text is not truncated or overlapping other elements. The dropdown is operable."
         },
         {
           "step": 3,
-          "action": "Verify the announcement includes specific field names",
-          "expectedResult": "Screen reader announces something like 'Error: Category is required. Application Type is required.' or equivalent descriptive message"
+          "action": "Verify that the 'Application Type' label and dropdown are fully visible without horizontal scrolling",
+          "expectedResult": "Application Type label and dropdown are fully visible and operable. No content is cut off or hidden behind other elements."
         },
         {
           "step": 4,
-          "action": "Fill in the Category field with a valid value and click Save again",
-          "expectedResult": "Screen reader announces only the remaining error: 'Application Type is required' - previous error is no longer announced"
+          "action": "Leave both fields empty and click the 'Save' button",
+          "expectedResult": "Validation error messages are fully visible at 200% zoom. Error text is not truncated, overlapping, or hidden. Messages are readable and associated with their respective fields."
         },
         {
           "step": 5,
-          "action": "Fill in Application Type and click Save",
-          "expectedResult": "Screen reader announces success message (e.g., 'Classification saved successfully') or navigates to confirmation page with appropriate announcement"
+          "action": "Select values in both dropdowns at 200% zoom and verify the dropdown options are readable and selectable",
+          "expectedResult": "Dropdown options are fully visible, not truncated, and can be selected. Selected values display correctly in the fields."
+        },
+        {
+          "step": 6,
+          "action": "Click 'Save' with both fields populated at 200% zoom",
+          "expectedResult": "Record saves successfully. Success confirmation is visible and readable at 200% zoom."
         }
       ],
       "postconditions": [
-        "Dynamic content changes are announced to screen reader users",
-        "Error announcements are timely and descriptive",
-        "Success state is also communicated via screen reader"
+        "All form functionality works correctly at 200% zoom per WCAG 2.1 SC 1.4.4 (Resize Text)",
+        "No content is lost, truncated, or requires horizontal scrolling at 200% zoom",
+        "Validation messages and success confirmations are fully visible at 200% zoom"
       ]
     },
     {
       "id": "TC-ACCE-007",
-      "title": "Dropdown/select fields are operable with keyboard arrow keys",
+      "title": "Focus management after validation error: focus moves to first error field or error summary",
       "category": "Accessibility",
       "priority": "High",
       "preconditions": [
-        "User is logged in and on the cosmetic classification form",
-        "Category and/or Application Type fields are dropdown/select elements",
-        "Keyboard is the only input device being used"
+        "User is logged in and on the cosmetic classification form page",
+        "Both Category and Application Type fields are empty",
+        "Screen reader is active (NVDA, VoiceOver, or JAWS)"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Tab to the Category dropdown field",
-          "expectedResult": "Category dropdown receives focus with visible focus indicator"
+          "action": "Using keyboard, Tab to the 'Save' button and press Enter to submit the form with empty mandatory fields",
+          "expectedResult": "Validation errors are triggered for both Category and Application Type fields"
         },
         {
           "step": 2,
-          "action": "Press Space or Enter to open the dropdown",
-          "expectedResult": "Dropdown options list opens and is visible"
+          "action": "Observe where focus is placed after the validation errors appear",
+          "expectedResult": "Focus is programmatically moved to either: (a) an error summary region at the top of the form listing all errors, OR (b) the first field with a validation error (Category). Focus does NOT remain on the Save button."
         },
         {
           "step": 3,
-          "action": "Press Down Arrow key to navigate through options",
-          "expectedResult": "Focus/highlight moves to each option sequentially, screen reader announces each option"
+          "action": "If focus moved to an error summary, verify the summary contains links to each errored field",
+          "expectedResult": "Error summary lists each error (e.g., 'Category is required', 'Application Type is required') as clickable links. Screen reader announces the error summary content."
         },
         {
           "step": 4,
-          "action": "Press Up Arrow key to navigate backwards",
-          "expectedResult": "Focus/highlight moves to previous option"
+          "action": "If error summary links exist, activate the first error link (press Enter)",
+          "expectedResult": "Focus moves directly to the Category field. Screen reader announces the field label and error message."
         },
         {
           "step": 5,
-          "action": "Press Enter or Space to select the highlighted option",
-          "expectedResult": "Option is selected, dropdown closes, and the selected value is displayed in the field"
-        },
-        {
-          "step": 6,
-          "action": "Press Escape while dropdown is open (open it again first)",
-          "expectedResult": "Dropdown closes without changing the selection, focus returns to the dropdown trigger"
-        },
-        {
-          "step": 7,
-          "action": "Repeat steps 1-6 for the Application Type dropdown",
-          "expectedResult": "Application Type dropdown behaves identically with full keyboard support"
+          "action": "Select a valid Category value, then Tab to Application Type, select a valid value, and Tab to Save. Press Enter.",
+          "expectedResult": "Record saves successfully. Focus moves to a success confirmation or the next logical element. Previous error indicators are cleared."
         }
       ],
       "postconditions": [
-        "All dropdown fields are fully operable via keyboard",
-        "Standard keyboard patterns (arrows, Enter, Escape) work as expected",
-        "No mouse interaction is required to select values"
+        "Focus is managed programmatically after validation errors per WCAG 2.1 SC 3.3.1 (Error Identification)",
+        "Screen reader users are immediately informed of validation errors without needing to search the page",
+        "Error indicators are cleared after successful correction and submission"
       ]
     },
     {
       "id": "TC-ACCE-008",
-      "title": "Required field indicators are accessible and not relying on color alone",
+      "title": "Mandatory field indicators are conveyed to screen readers via aria-required and visual indicators",
       "category": "Accessibility",
-      "priority": "Medium",
+      "priority": "High",
       "preconditions": [
-        "User is on the cosmetic classification form",
-        "Form displays required field indicators (asterisks, text, or other markers)",
-        "Screen reader is available for testing"
+        "User is logged in and on the cosmetic classification form page",
+        "Screen reader is active",
+        "Browser DevTools is accessible"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Visually inspect the Category field label for a required indicator",
-          "expectedResult": "A visible indicator exists (e.g., red asterisk '*', text '(required)', or similar) that is not solely communicated through color"
+          "action": "Visually inspect the 'Category' and 'Application Type' field labels for a required indicator (e.g., asterisk '*', text '(required)', or other visual marker)",
+          "expectedResult": "Both fields have a visible required indicator. If an asterisk is used, there is a legend or note explaining that '*' indicates required fields."
         },
         {
           "step": 2,
-          "action": "Visually inspect the Application Type field label for a required indicator",
-          "expectedResult": "Same required indicator pattern is used consistently"
+          "action": "Inspect the HTML of the 'Category' field in DevTools",
+          "expectedResult": "The Category input/select element has either the HTML5 'required' attribute or aria-required=\"true\" attribute set"
         },
         {
           "step": 3,
-          "action": "If asterisks are used, check for a legend/note explaining the asterisk meaning (e.g., '* indicates required field')",
-          "expectedResult": "A legend or explanatory text exists at the top of the form explaining the required field convention"
+          "action": "Inspect the HTML of the 'Application Type' field in DevTools",
+          "expectedResult": "The Application Type input/select element has either the HTML5 'required' attribute or aria-required=\"true\" attribute set"
         },
         {
           "step": 4,
-          "action": "Using screen reader, navigate to Category field and listen for required status announcement",
-          "expectedResult": "Screen reader announces 'required' as part of the field description (via aria-required='true' or HTML required attribute)"
+          "action": "Using the screen reader, Tab to the 'Category' field and listen to the announcement",
+          "expectedResult": "Screen reader announces the field as required (e.g., 'Category, required, combobox' or 'Category, star, combobox, required')"
         },
         {
           "step": 5,
-          "action": "Inspect the HTML to confirm aria-required='true' or required attribute is present on both mandatory fields",
-          "expectedResult": "Both Category and Application Type inputs have programmatic required indicators in the HTML"
+          "action": "Tab to the 'Application Type' field and listen to the screen reader announcement",
+          "expectedResult": "Screen reader announces the field as required (e.g., 'Application Type, required, combobox')"
+        },
+        {
+          "step": 6,
+          "action": "If asterisks are used as visual required indicators, verify they are not announced as 'star' without context by the screen reader",
+          "expectedResult": "Asterisks are either hidden from screen readers (aria-hidden=\"true\") with the required state conveyed via aria-required, or the asterisk is accompanied by accessible text explaining its meaning"
         }
       ],
       "postconditions": [
-        "Required status is communicated through multiple channels (visual indicator + programmatic attribute)",
-        "Color is not the sole means of indicating required status",
-        "Screen reader users are informed of required fields before attempting submission"
+        "Both mandatory fields are identified as required to both sighted users and screen reader users",
+        "The required state is conveyed programmatically via aria-required or the HTML5 required attribute",
+        "Visual required indicators have accessible alternatives per WCAG 2.1 SC 3.3.2 (Labels or Instructions)"
       ]
     },
     {
       "id": "TC-ACCE-009",
-      "title": "Touch target size for mobile accessibility on mandatory fields",
+      "title": "Escape key closes dropdown without losing selection and returns focus appropriately",
       "category": "Accessibility",
       "priority": "Medium",
       "preconditions": [
-        "User is accessing the cosmetic classification form on a mobile device or using browser responsive mode",
-        "Device is set to a mobile viewport (e.g., 375x667 iPhone SE)",
+        "User is logged in and on the cosmetic classification form page",
+        "Keyboard is the primary input method",
+        "Category and Application Type dropdowns are functional"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Tab to the 'Category' dropdown and press Space or Enter to open it",
+          "expectedResult": "Category dropdown opens showing available options"
+        },
+        {
+          "step": 2,
+          "action": "Use Arrow Down to highlight an option (e.g., 'Hair Care') but do NOT press Enter to select it",
+          "expectedResult": "'Hair Care' is highlighted/focused within the dropdown list"
+        },
+        {
+          "step": 3,
+          "action": "Press the Escape key",
+          "expectedResult": "The dropdown closes WITHOUT selecting 'Hair Care'. The Category field retains its previous value (empty or previously selected value). Focus returns to the Category dropdown trigger/button."
+        },
+        {
+          "step": 4,
+          "action": "Press Space or Enter to reopen the Category dropdown, navigate to 'Skin Care' with arrow keys, and press Enter to select it",
+          "expectedResult": "'Skin Care' is selected and the dropdown closes. The Category field displays 'Skin Care'. Focus remains on the Category field."
+        },
+        {
+          "step": 5,
+          "action": "Press Space or Enter to open the dropdown again, then press Escape",
+          "expectedResult": "Dropdown closes. 'Skin Care' remains as the selected value (Escape does not clear a previously confirmed selection). Focus returns to the Category dropdown."
+        },
+        {
+          "step": 6,
+          "action": "Repeat steps 1-5 for the 'Application Type' dropdown",
+          "expectedResult": "Application Type dropdown behaves identically: Escape closes without selecting, Enter confirms selection, and focus management is consistent"
+        }
+      ],
+      "postconditions": [
+        "Escape key consistently closes dropdowns without unintended side effects",
+        "Focus is properly managed and returns to the dropdown trigger after closing",
+        "Previously confirmed selections are not lost when Escape is pressed"
+      ]
+    },
+    {
+      "id": "TC-ACCE-010",
+      "title": "Touch target sizes for dropdown fields and Save button meet minimum 44x44px requirement on mobile",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the cosmetic classification form page",
+        "Testing is performed on a mobile device or using browser DevTools mobile emulation (e.g., iPhone 12, Samsung Galaxy S21)",
         "Touch interaction is the primary input method"
       ],
       "steps": [
         {
           "step": 1,
-          "action": "Open browser DevTools and switch to responsive/mobile view (375x667)",
-          "expectedResult": "Form renders in mobile layout"
+          "action": "Open the cosmetic classification form on a mobile device or in mobile emulation mode",
+          "expectedResult": "The form renders in a mobile-responsive layout"
         },
         {
           "step": 2,
-          "action": "Measure the touch target size of the Category field/dropdown using DevTools element inspector",
-          "expectedResult": "Touch target is at least 44x44 CSS pixels (WCAG 2.5.5) or minimum 24x24 pixels with sufficient spacing (WCAG 2.5.8)"
+          "action": "Using DevTools, inspect the 'Category' dropdown element and measure its rendered touch target size (height and width)",
+          "expectedResult": "The Category dropdown touch target is at least 44x44 CSS pixels (per WCAG 2.1 SC 2.5.5 Target Size)"
         },
         {
           "step": 3,
-          "action": "Measure the touch target size of the Application Type field/dropdown",
-          "expectedResult": "Touch target meets minimum size requirements (44x44px recommended)"
+          "action": "Inspect the 'Application Type' dropdown element and measure its touch target size",
+          "expectedResult": "The Application Type dropdown touch target is at least 44x44 CSS pixels"
         },
         {
           "step": 4,
-          "action": "Measure the touch target size of the Save button",
-          "expectedResult": "Save button touch target is at least 44x44 CSS pixels"
+          "action": "Inspect the 'Save' button and measure its touch target size",
+          "expectedResult": "The Save button touch target is at least 44x44 CSS pixels"
         },
         {
           "step": 5,
-          "action": "Verify adequate spacing between interactive elements (no overlapping touch targets)",
-          "expectedResult": "At least 8px spacing exists between adjacent interactive elements to prevent accidental activation"
+          "action": "Attempt to tap each control (Category, Application Type, Save) on the mobile device to verify they are easily activatable without accidental taps on adjacent elements",
+          "expectedResult": "Each control activates on the first tap without accidentally triggering adjacent controls. Sufficient spacing exists between interactive elements."
         },
         {
           "step": 6,
-          "action": "Tap the Category field to interact with it",
-          "expectedResult": "Field activates on first tap without requiring precise targeting"
+          "action": "Trigger validation errors on mobile by tapping Save with empty fields, and verify error messages are readable and tappable (if they contain links)",
+          "expectedResult": "Validation error messages are displayed in a readable font size and any interactive error links have touch targets of at least 44x44 CSS pixels"
         }
       ],
       "postconditions": [
-        "All interactive elements meet minimum touch target size requirements",
-        "Users with motor impairments can accurately tap form elements",
-        "No accidental activations due to cramped touch targets"
-      ]
-    },
-    {
-      "id": "TC-ACCE-010",
-      "title": "Error messages are programmatically associated with form fields via aria-describedby",
-      "category": "Accessibility",
-      "priority": "High",
-      "preconditions": [
-        "User is on the cosmetic classification form",
-        "Browser DevTools is open to inspect HTML attributes",
-        "Form has been submitted with empty mandatory fields to trigger validation errors"
-      ],
-      "steps": [
-        {
-          "step": 1,
-          "action": "Submit the form with empty Category and Application Type fields",
-          "expectedResult": "Validation errors appear for both fields"
-        },
-        {
-          "step": 2,
-          "action": "Right-click the Category input field and select 'Inspect' in DevTools",
-          "expectedResult": "HTML element for Category input is highlighted in Elements panel"
-        },
-        {
-          "step": 3,
-          "action": "Check for aria-describedby or aria-errormessage attribute on the Category input",
-          "expectedResult": "The input has aria-describedby (or aria-errormessage) pointing to the ID of the error message element"
-        },
-        {
-          "step": 4,
-          "action": "Verify the referenced error message element exists and contains the correct text",
-          "expectedResult": "Element with the referenced ID exists and contains text like 'Category is required'"
-        },
-        {
-          "step": 5,
-          "action": "Check the aria-invalid attribute on the Category input",
-          "expectedResult": "aria-invalid='true' is set on the input when validation fails"
-        },
-        {
-          "step": 6,
-          "action": "Repeat steps 2-5 for the Application Type field",
-          "expectedResult": "Application Type input also has aria-describedby/aria-errormessage and aria-invalid='true' attributes properly set"
-        }
-      ],
-      "postconditions": [
-        "Error messages are programmatically linked to their respective form fields",
-        "aria-invalid attribute correctly reflects field validation state",
-        "Screen readers can announce errors in context when users navigate to the fields"
+        "All interactive elements meet minimum touch target size requirements for mobile accessibility",
+        "The form is fully operable via touch on mobile devices",
+        "Validation errors are accessible and readable on mobile screens"
       ]
     }
   ],
