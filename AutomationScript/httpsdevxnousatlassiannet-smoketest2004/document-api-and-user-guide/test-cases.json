@@ -1,0 +1,1961 @@
+{
+  "storyId": "ado-21866",
+  "storyTitle": "Document API and user guide",
+  "testCases": [],
+  "functional": [
+    {
+      "id": "TC-FUNC-001",
+      "title": "Verify API documentation page loads successfully with all sections visible",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with a valid account that has documentation access permissions",
+        "API documentation has been published and is in 'Active' status",
+        "User is on the main application dashboard",
+        "Browser is a supported version (Chrome 90+, Firefox 88+, Edge 90+, Safari 14+)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the documentation section by clicking 'Documentation' in the main navigation menu",
+          "expectedResult": "Documentation landing page loads within 3 seconds, displaying a list of available documentation resources"
+        },
+        {
+          "step": 2,
+          "action": "Click on the 'API Documentation' link or card from the documentation landing page",
+          "expectedResult": "API Documentation page loads successfully showing the table of contents on the left sidebar and the main content area on the right"
+        },
+        {
+          "step": 3,
+          "action": "Verify the presence of all major API documentation sections: Overview, Authentication, Endpoints, Request/Response Formats, Error Codes, Rate Limiting, and Versioning",
+          "expectedResult": "All seven major sections are listed in the table of contents and each section heading is visible when scrolling through the page"
+        },
+        {
+          "step": 4,
+          "action": "Click on the 'Endpoints' section in the table of contents",
+          "expectedResult": "Page scrolls smoothly to the Endpoints section, and the section is highlighted in the table of contents as the active section"
+        },
+        {
+          "step": 5,
+          "action": "Verify that each endpoint entry includes HTTP method, URL path, description, request parameters, and example response",
+          "expectedResult": "Each endpoint is fully documented with HTTP method (GET, POST, PUT, DELETE) displayed in a colored badge, URL path, description text, parameter table, and a formatted JSON example response"
+        }
+      ],
+      "postconditions": [
+        "API documentation page remains loaded and fully navigable",
+        "User session is still active and authenticated",
+        "No console errors or broken resource links are present in the browser developer tools"
+      ]
+    },
+    {
+      "id": "TC-FUNC-002",
+      "title": "Verify User Guide page loads successfully with all chapters and subsections",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with a valid account",
+        "User guide content has been published and is in 'Active' status",
+        "User is on the documentation landing page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the 'User Guide' link or card from the documentation landing page",
+          "expectedResult": "User Guide page loads successfully displaying a structured table of contents with chapters and subsections"
+        },
+        {
+          "step": 2,
+          "action": "Verify the User Guide contains the following chapters: Getting Started, Account Setup, Core Features, Advanced Features, Troubleshooting, and FAQ",
+          "expectedResult": "All six chapters are listed in the table of contents with expandable subsections under each chapter"
+        },
+        {
+          "step": 3,
+          "action": "Click on the 'Getting Started' chapter to expand its subsections",
+          "expectedResult": "Subsections such as 'System Requirements', 'Installation', 'First Login', and 'Dashboard Overview' are displayed beneath the chapter heading"
+        },
+        {
+          "step": 4,
+          "action": "Click on the 'First Login' subsection",
+          "expectedResult": "Page navigates to or scrolls to the 'First Login' content area, displaying step-by-step instructions with screenshots or illustrations"
+        },
+        {
+          "step": 5,
+          "action": "Verify that images, diagrams, and screenshots within the content are loading correctly",
+          "expectedResult": "All visual assets render properly with appropriate alt text, no broken image icons are displayed, and images are appropriately sized for the content area"
+        }
+      ],
+      "postconditions": [
+        "User Guide page is fully rendered with all content sections accessible",
+        "Navigation between chapters and subsections works correctly",
+        "User remains on the User Guide page with session intact"
+      ]
+    },
+    {
+      "id": "TC-FUNC-003",
+      "title": "Verify search functionality within API documentation returns accurate results",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "API documentation contains multiple endpoints and sections with varied content",
+        "Search functionality is enabled on the documentation page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate the search bar at the top of the API Documentation page",
+          "expectedResult": "Search bar is visible with placeholder text such as 'Search API documentation...'"
+        },
+        {
+          "step": 2,
+          "action": "Type 'authentication' into the search bar",
+          "expectedResult": "Search results begin to appear in a dropdown or results panel as the user types, showing matching sections and endpoints related to authentication"
+        },
+        {
+          "step": 3,
+          "action": "Press Enter or click the search icon to execute the full search",
+          "expectedResult": "A results page or filtered view displays all documentation sections containing the term 'authentication', with the search term highlighted in the results"
+        },
+        {
+          "step": 4,
+          "action": "Click on the first search result item",
+          "expectedResult": "User is navigated directly to the relevant section of the API documentation with the search term highlighted or the section scrolled into view"
+        },
+        {
+          "step": 5,
+          "action": "Clear the search bar and type an endpoint path such as '/api/v1/users'",
+          "expectedResult": "Search results display the specific endpoint documentation for '/api/v1/users' including its HTTP methods and description"
+        }
+      ],
+      "postconditions": [
+        "Search results accurately reflect the content of the API documentation",
+        "User can navigate back to the full documentation view by clearing the search",
+        "Search history or recent searches may be stored for the session"
+      ]
+    },
+    {
+      "id": "TC-FUNC-004",
+      "title": "Verify search functionality within User Guide returns accurate results",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the User Guide page",
+        "User Guide contains multiple chapters with varied content",
+        "Search functionality is enabled on the documentation page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate the search bar at the top of the User Guide page",
+          "expectedResult": "Search bar is visible with placeholder text such as 'Search user guide...'"
+        },
+        {
+          "step": 2,
+          "action": "Type 'account setup' into the search bar",
+          "expectedResult": "Search results appear showing matching chapters and subsections related to account setup"
+        },
+        {
+          "step": 3,
+          "action": "Click on a result that matches the 'Account Setup' chapter",
+          "expectedResult": "User is navigated to the Account Setup chapter with relevant content displayed"
+        },
+        {
+          "step": 4,
+          "action": "Clear the search and type a specific term like 'password reset'",
+          "expectedResult": "Results display all sections mentioning password reset, including Troubleshooting and Account Setup sections"
+        }
+      ],
+      "postconditions": [
+        "Search results are accurate and relevant to the query",
+        "User can seamlessly navigate between search results and full guide content",
+        "No errors occur during search operations"
+      ]
+    },
+    {
+      "id": "TC-FUNC-005",
+      "title": "Verify API documentation code examples can be copied to clipboard",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and viewing the API Documentation page",
+        "API documentation contains code examples (cURL, JSON request/response bodies, SDK snippets)",
+        "Browser supports clipboard API"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to an endpoint section that contains a code example, such as a cURL request example for the 'GET /api/v1/users' endpoint",
+          "expectedResult": "Code example is displayed in a formatted code block with syntax highlighting and a 'Copy' button visible in the top-right corner of the code block"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Copy' button on the code example block",
+          "expectedResult": "A tooltip or notification appears confirming 'Copied to clipboard' or the button text changes to 'Copied!' temporarily"
+        },
+        {
+          "step": 3,
+          "action": "Open a text editor or paste area and press Ctrl+V (or Cmd+V on Mac) to paste the copied content",
+          "expectedResult": "The exact code from the documentation code block is pasted, preserving formatting, indentation, and all characters"
+        },
+        {
+          "step": 4,
+          "action": "Navigate to a different endpoint and repeat the copy action for a JSON response example",
+          "expectedResult": "The JSON response example is copied successfully and pastes as valid, properly formatted JSON"
+        }
+      ],
+      "postconditions": [
+        "Clipboard contains the most recently copied code example",
+        "Code examples remain unchanged on the documentation page after copying",
+        "Copy functionality works consistently across all code blocks on the page"
+      ]
+    },
+    {
+      "id": "TC-FUNC-006",
+      "title": "Verify documentation version selector allows switching between API versions",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "Multiple API versions are documented (e.g., v1, v2, v3-beta)",
+        "A version selector dropdown or toggle is available on the page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate the version selector dropdown at the top of the API Documentation page",
+          "expectedResult": "Version selector is visible showing the current version (e.g., 'v2 - Current') with a dropdown arrow"
+        },
+        {
+          "step": 2,
+          "action": "Click on the version selector dropdown",
+          "expectedResult": "A dropdown menu appears listing all available API versions (e.g., 'v1', 'v2 - Current', 'v3 - Beta') with the current version highlighted or checked"
+        },
+        {
+          "step": 3,
+          "action": "Select 'v1' from the dropdown",
+          "expectedResult": "The documentation content updates to display API v1 endpoints, parameters, and examples. A banner or indicator shows 'You are viewing API v1 documentation'"
+        },
+        {
+          "step": 4,
+          "action": "Verify that the endpoints listed are specific to v1 and differ from v2 where applicable",
+          "expectedResult": "Endpoint list reflects v1-specific endpoints, deprecated endpoints are marked, and any v2-only endpoints are not shown"
+        },
+        {
+          "step": 5,
+          "action": "Switch back to 'v2 - Current' using the version selector",
+          "expectedResult": "Documentation reverts to v2 content, the version indicator updates, and the URL may reflect the version change (e.g., /docs/api/v2)"
+        }
+      ],
+      "postconditions": [
+        "Documentation displays the correct version content after switching",
+        "URL reflects the selected version for bookmarking purposes",
+        "User's version preference may be remembered for the session"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Verify User Guide PDF/print export functionality",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the User Guide page",
+        "Export/download functionality is available on the documentation page",
+        "Browser allows file downloads and pop-ups for print dialogs"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate the 'Download PDF' or 'Export' button on the User Guide page, typically in the top-right area or in a toolbar",
+          "expectedResult": "An export button is visible with an icon (e.g., download arrow or printer icon) and label such as 'Download PDF' or 'Export'"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Download PDF' button",
+          "expectedResult": "A PDF file begins downloading or a print preview dialog opens. A loading indicator may appear briefly during PDF generation"
+        },
+        {
+          "step": 3,
+          "action": "Open the downloaded PDF file",
+          "expectedResult": "PDF opens successfully containing the complete User Guide content with proper formatting, images, table of contents, page numbers, and headers/footers"
+        },
+        {
+          "step": 4,
+          "action": "Verify that all chapters, subsections, images, and code examples are present in the PDF",
+          "expectedResult": "All content from the online User Guide is accurately represented in the PDF, with no missing sections, broken images, or formatting issues"
+        },
+        {
+          "step": 5,
+          "action": "Check that hyperlinks within the PDF (internal cross-references and external links) are functional",
+          "expectedResult": "Internal links navigate to the correct page within the PDF, and external links open in the default browser"
+        }
+      ],
+      "postconditions": [
+        "PDF file is saved to the user's default download directory",
+        "PDF file size is reasonable (not excessively large or suspiciously small)",
+        "User remains on the User Guide page after the download completes"
+      ]
+    },
+    {
+      "id": "TC-FUNC-008",
+      "title": "Verify breadcrumb navigation works correctly across documentation pages",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the documentation section",
+        "Breadcrumb navigation is implemented on documentation pages",
+        "User has navigated to a deep subsection within the User Guide"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to User Guide > Core Features > Data Import subsection",
+          "expectedResult": "Breadcrumb trail displays: Home > Documentation > User Guide > Core Features > Data Import"
+        },
+        {
+          "step": 2,
+          "action": "Click on 'User Guide' in the breadcrumb trail",
+          "expectedResult": "User is navigated back to the User Guide main page showing the table of contents for all chapters"
+        },
+        {
+          "step": 3,
+          "action": "Navigate back to a deep subsection and click on 'Documentation' in the breadcrumb",
+          "expectedResult": "User is navigated to the Documentation landing page showing both API Documentation and User Guide options"
+        },
+        {
+          "step": 4,
+          "action": "Click on 'Home' in the breadcrumb trail",
+          "expectedResult": "User is navigated to the main application dashboard/home page"
+        }
+      ],
+      "postconditions": [
+        "Each breadcrumb link navigates to the correct page",
+        "Browser back button correctly returns to the previous page in the navigation history",
+        "Breadcrumb trail updates dynamically based on the current page location"
+      ]
+    },
+    {
+      "id": "TC-FUNC-009",
+      "title": "Verify API documentation interactive 'Try It Out' feature for endpoints",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with valid API credentials or an active API key",
+        "API documentation includes an interactive 'Try It Out' or 'Test API' feature (e.g., Swagger UI style)",
+        "User is on the API Documentation page viewing a specific endpoint such as 'GET /api/v1/users'",
+        "A sandbox or test environment is available for API calls"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the 'GET /api/v1/users' endpoint documentation section",
+          "expectedResult": "Endpoint details are displayed including method, URL, description, parameters, and a 'Try It Out' button"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Try It Out' button",
+          "expectedResult": "The parameter fields become editable, and an 'Execute' button appears. Input fields for query parameters (e.g., 'page', 'limit') are shown"
+        },
+        {
+          "step": 3,
+          "action": "Enter '1' in the 'page' parameter field and '10' in the 'limit' parameter field",
+          "expectedResult": "Values are accepted in the input fields without validation errors"
+        },
+        {
+          "step": 4,
+          "action": "Click the 'Execute' button",
+          "expectedResult": "A loading spinner appears briefly, then the response section displays the HTTP status code (e.g., 200), response headers, and the JSON response body with actual data from the sandbox environment"
+        },
+        {
+          "step": 5,
+          "action": "Verify the response body contains a valid JSON array of user objects with expected fields",
+          "expectedResult": "Response body shows a JSON array with user objects containing fields like 'id', 'name', 'email', formatted with syntax highlighting"
+        },
+        {
+          "step": 6,
+          "action": "Click the 'Cancel' or 'Reset' button to exit the Try It Out mode",
+          "expectedResult": "The endpoint section returns to its read-only documentation view with parameter fields no longer editable"
+        }
+      ],
+      "postconditions": [
+        "API call was executed against the sandbox environment, not production",
+        "Response data is displayed correctly and can be copied",
+        "The cURL command equivalent is shown for the executed request"
+      ]
+    },
+    {
+      "id": "TC-FUNC-010",
+      "title": "Verify documentation page renders correctly on mobile devices",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in on a mobile device or using browser responsive mode (viewport width 375px)",
+        "Documentation pages are designed to be responsive",
+        "User is accessing the API Documentation or User Guide page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open the API Documentation page on a mobile device (or set browser to 375px width using developer tools)",
+          "expectedResult": "Page renders in a mobile-friendly layout with a hamburger menu or collapsible sidebar for the table of contents"
+        },
+        {
+          "step": 2,
+          "action": "Tap the hamburger menu icon or 'Table of Contents' toggle",
+          "expectedResult": "The table of contents slides in from the left or expands as an overlay, showing all sections and subsections"
+        },
+        {
+          "step": 3,
+          "action": "Tap on an endpoint section in the table of contents",
+          "expectedResult": "The table of contents closes/collapses and the page scrolls to the selected endpoint section"
+        },
+        {
+          "step": 4,
+          "action": "Verify that code examples are horizontally scrollable within their containers",
+          "expectedResult": "Code blocks have horizontal scroll capability, text does not overflow outside the viewport, and the code is readable"
+        },
+        {
+          "step": 5,
+          "action": "Verify that all interactive elements (buttons, dropdowns, links) are tappable with adequate touch target size",
+          "expectedResult": "All interactive elements have a minimum touch target of 44x44 pixels and respond correctly to tap gestures"
+        }
+      ],
+      "postconditions": [
+        "Documentation is fully readable and navigable on mobile viewport",
+        "No horizontal page overflow occurs outside of code blocks",
+        "All functionality available on desktop is accessible on mobile"
+      ]
+    },
+    {
+      "id": "TC-FUNC-011",
+      "title": "Verify documentation deep linking and URL sharing for specific sections",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "Documentation sections have anchor links or unique URLs",
+        "A second browser tab or window is available for testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to a specific section such as 'Authentication' in the API Documentation",
+          "expectedResult": "The URL in the browser address bar updates to include an anchor or path segment (e.g., /docs/api#authentication or /docs/api/authentication)"
+        },
+        {
+          "step": 2,
+          "action": "Hover over the section heading 'Authentication' to reveal a link icon or anchor link",
+          "expectedResult": "A link/chain icon appears next to the heading, indicating a direct link to this section is available"
+        },
+        {
+          "step": 3,
+          "action": "Click the link icon or right-click and select 'Copy link address'",
+          "expectedResult": "The direct URL to the Authentication section is copied to the clipboard"
+        },
+        {
+          "step": 4,
+          "action": "Open a new browser tab and paste the copied URL into the address bar, then press Enter",
+          "expectedResult": "The new tab loads the API Documentation page and automatically scrolls to or focuses on the 'Authentication' section"
+        },
+        {
+          "step": 5,
+          "action": "Share the URL with another logged-in user (or open in an incognito window while logged in) and verify it loads correctly",
+          "expectedResult": "The shared URL loads the documentation page at the exact same section for the other user"
+        }
+      ],
+      "postconditions": [
+        "Deep links are stable and do not break when documentation is updated",
+        "URL accurately reflects the current section being viewed",
+        "Bookmarking the URL allows returning to the exact section later"
+      ]
+    },
+    {
+      "id": "TC-FUNC-012",
+      "title": "Verify role-based access to documentation - Admin user sees all documentation",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with an 'Admin' role",
+        "Documentation includes both public and restricted/internal sections",
+        "Admin role has full documentation access permissions configured"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the Documentation landing page",
+          "expectedResult": "Documentation landing page displays all available documentation including API Documentation, User Guide, and any Admin/Internal documentation sections"
+        },
+        {
+          "step": 2,
+          "action": "Open the API Documentation page",
+          "expectedResult": "All API endpoints are visible including admin-only endpoints (e.g., 'DELETE /api/v1/users/{id}', 'POST /api/v1/admin/settings')"
+        },
+        {
+          "step": 3,
+          "action": "Open the User Guide page",
+          "expectedResult": "All chapters are visible including admin-specific chapters such as 'System Administration', 'User Management', and 'Configuration'"
+        },
+        {
+          "step": 4,
+          "action": "Verify that internal/restricted documentation sections are accessible and display content",
+          "expectedResult": "Internal documentation sections load fully with content, no 'Access Denied' or 'Restricted' messages appear"
+        }
+      ],
+      "postconditions": [
+        "Admin user has unrestricted access to all documentation sections",
+        "No permission errors are logged for the admin user's documentation access",
+        "All documentation content renders completely for the admin role"
+      ]
+    },
+    {
+      "id": "TC-FUNC-013",
+      "title": "Verify role-based access to documentation - Standard user sees only permitted sections",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with a 'Standard' or 'Viewer' role",
+        "Documentation includes both public and restricted/internal sections",
+        "Standard role has limited documentation access permissions configured"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the Documentation landing page",
+          "expectedResult": "Documentation landing page displays only the documentation sections the standard user has access to (e.g., API Documentation and User Guide, but not Internal/Admin docs)"
+        },
+        {
+          "step": 2,
+          "action": "Open the API Documentation page",
+          "expectedResult": "Only public API endpoints are visible. Admin-only endpoints are either hidden or marked as 'Requires Admin Access'"
+        },
+        {
+          "step": 3,
+          "action": "Open the User Guide page",
+          "expectedResult": "Standard user chapters are visible (Getting Started, Core Features, Troubleshooting, FAQ) but admin-specific chapters (System Administration, User Management) are hidden or inaccessible"
+        },
+        {
+          "step": 4,
+          "action": "Attempt to directly navigate to an admin-only documentation URL by typing it in the address bar",
+          "expectedResult": "User is shown an 'Access Denied' message or is redirected to the documentation landing page with a notification that they do not have permission to view that section"
+        }
+      ],
+      "postconditions": [
+        "Standard user cannot access restricted documentation sections",
+        "No sensitive admin documentation content is leaked to the standard user",
+        "Access denial is logged in the system audit trail"
+      ]
+    },
+    {
+      "id": "TC-FUNC-014",
+      "title": "Verify API documentation displays correct HTTP status codes and error response examples",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "API documentation includes error code reference section",
+        "Multiple endpoints are documented with various error responses"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the 'Error Codes' section of the API Documentation",
+          "expectedResult": "A comprehensive table or list of HTTP status codes is displayed including 400, 401, 403, 404, 409, 422, 429, 500, and 503 with descriptions for each"
+        },
+        {
+          "step": 2,
+          "action": "Verify that each error code entry includes: status code, status text, description, and example response body",
+          "expectedResult": "Each error code has a complete entry with numeric code, text (e.g., 'Bad Request'), a human-readable description of when this error occurs, and a JSON example response body"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to a specific endpoint (e.g., 'POST /api/v1/users') and scroll to its 'Responses' section",
+          "expectedResult": "The endpoint's response section lists all possible response codes (e.g., 201 Created, 400 Bad Request, 401 Unauthorized, 409 Conflict) with example response bodies for each"
+        },
+        {
+          "step": 4,
+          "action": "Click on the '400 Bad Request' response example to expand it",
+          "expectedResult": "The expanded section shows a detailed JSON error response example with fields like 'error', 'message', 'details', and 'timestamp'"
+        }
+      ],
+      "postconditions": [
+        "All documented error codes match the actual API behavior",
+        "Error response examples are valid JSON and accurately represent real error responses",
+        "Error code documentation is consistent across all endpoint sections"
+      ]
+    },
+    {
+      "id": "TC-FUNC-015",
+      "title": "Verify User Guide includes working internal cross-references between sections",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the User Guide page",
+        "User Guide content contains cross-references (e.g., 'See Account Setup for more details')",
+        "Multiple chapters and subsections are published"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the 'Troubleshooting' chapter of the User Guide",
+          "expectedResult": "Troubleshooting chapter loads with content that includes cross-reference links to other sections"
+        },
+        {
+          "step": 2,
+          "action": "Locate a cross-reference link within the text, such as 'For initial setup instructions, see Getting Started > First Login'",
+          "expectedResult": "The cross-reference text is displayed as a clickable hyperlink, visually distinct from regular text (e.g., underlined, colored)"
+        },
+        {
+          "step": 3,
+          "action": "Click on the cross-reference link 'Getting Started > First Login'",
+          "expectedResult": "User is navigated to the 'First Login' subsection within the 'Getting Started' chapter, with the content scrolled into view"
+        },
+        {
+          "step": 4,
+          "action": "Use the browser back button to return to the Troubleshooting chapter",
+          "expectedResult": "User is returned to the exact position in the Troubleshooting chapter where they clicked the cross-reference link"
+        }
+      ],
+      "postconditions": [
+        "All cross-reference links navigate to the correct target sections",
+        "Browser navigation history correctly tracks cross-reference navigation",
+        "No broken or dead cross-reference links exist in the User Guide"
+      ]
+    }
+  ],
+  "negative": [
+    {
+      "id": "TC-NEGA-001",
+      "title": "Verify documentation page returns appropriate error when accessed by unauthenticated user",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is NOT logged in (no active session)",
+        "Documentation pages require authentication to access",
+        "Browser has no cached authentication tokens or cookies"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open a browser and navigate directly to the API Documentation URL (e.g., https://app.example.com/docs/api)",
+          "expectedResult": "User is redirected to the login page with a message such as 'Please log in to access documentation' or a 401 Unauthorized response is returned"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to navigate directly to the User Guide URL (e.g., https://app.example.com/docs/user-guide)",
+          "expectedResult": "User is redirected to the login page or receives a 401 Unauthorized response, no documentation content is visible"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to access a deep-linked documentation section URL (e.g., https://app.example.com/docs/api#authentication)",
+          "expectedResult": "User is redirected to the login page. After logging in, user should be redirected back to the originally requested documentation section"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the page source and network responses to ensure no documentation content is leaked in the HTML or API responses",
+          "expectedResult": "No documentation content, endpoint details, or sensitive information is present in the page source or network responses for unauthenticated requests"
+        }
+      ],
+      "postconditions": [
+        "No documentation content is exposed to unauthenticated users",
+        "Unauthorized access attempts are logged in the security audit trail",
+        "Login redirect preserves the original requested URL for post-login navigation"
+      ]
+    },
+    {
+      "id": "TC-NEGA-002",
+      "title": "Verify search returns appropriate message for no matching results",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the API Documentation or User Guide page",
+        "Search functionality is available and operational",
+        "Documentation content does not contain the test search terms"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the search bar and type a nonsensical string 'xyzzy12345qwerty' that does not exist in any documentation",
+          "expectedResult": "Search executes and displays a 'No results found' message or 'No matching documentation found for \"xyzzy12345qwerty\"'"
+        },
+        {
+          "step": 2,
+          "action": "Verify the 'No results' state includes helpful suggestions such as 'Try different keywords' or 'Browse the table of contents'",
+          "expectedResult": "A helpful message is displayed with suggestions for alternative actions, and optionally links to popular documentation sections"
+        },
+        {
+          "step": 3,
+          "action": "Clear the search bar completely and press Enter",
+          "expectedResult": "Either the full documentation view is restored, or a validation message appears indicating 'Please enter a search term'"
+        },
+        {
+          "step": 4,
+          "action": "Type a single character 'a' and verify search behavior",
+          "expectedResult": "Search either returns results matching 'a' or displays a message like 'Please enter at least 3 characters to search'"
+        }
+      ],
+      "postconditions": [
+        "No error pages or application crashes occur for empty or no-result searches",
+        "User can easily return to the full documentation view after a failed search",
+        "Search input is cleared or easily clearable after a no-result search"
+      ]
+    },
+    {
+      "id": "TC-NEGA-003",
+      "title": "Verify search input handles special characters and potential XSS injection safely",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "Search functionality is available",
+        "Application has XSS protection mechanisms in place"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Type '<script>alert(\"XSS\")</script>' into the search bar and press Enter",
+          "expectedResult": "The script tag is NOT executed. The search either sanitizes the input and shows 'No results found' or displays the escaped text as a literal string in the results. No JavaScript alert dialog appears"
+        },
+        {
+          "step": 2,
+          "action": "Type '<img src=x onerror=alert(1)>' into the search bar and press Enter",
+          "expectedResult": "The malicious HTML is not rendered. No image element is created and no JavaScript executes. Input is sanitized or escaped"
+        },
+        {
+          "step": 3,
+          "action": "Type '\" OR 1=1 --' (SQL injection attempt) into the search bar and press Enter",
+          "expectedResult": "The input is treated as a literal search string. No SQL injection occurs. Results show 'No results found' or the literal string is searched safely"
+        },
+        {
+          "step": 4,
+          "action": "Type '{{constructor.constructor(\"return this\")()}}' (template injection) into the search bar and press Enter",
+          "expectedResult": "The template injection attempt is not executed. Input is safely handled and no server-side template rendering occurs"
+        },
+        {
+          "step": 5,
+          "action": "Inspect the page source to verify the search input is properly HTML-encoded in any displayed results",
+          "expectedResult": "Special characters are HTML-encoded (e.g., '<' becomes '&lt;', '\"' becomes '&quot;') in the rendered page source"
+        }
+      ],
+      "postconditions": [
+        "No XSS, SQL injection, or template injection vulnerabilities are exploitable through the search functionality",
+        "Application remains stable and functional after malicious input attempts",
+        "Security events may be logged for suspicious input patterns"
+      ]
+    },
+    {
+      "id": "TC-NEGA-004",
+      "title": "Verify documentation page handles network disconnection gracefully",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "Documentation page has fully loaded",
+        "Browser developer tools are available to simulate network conditions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open browser developer tools and go to the Network tab. Set the network throttling to 'Offline' to simulate a network disconnection",
+          "expectedResult": "Network is now simulated as offline"
+        },
+        {
+          "step": 2,
+          "action": "Click on a different section in the table of contents that requires loading new content from the server",
+          "expectedResult": "An appropriate error message is displayed such as 'Unable to load content. Please check your internet connection and try again.' or previously cached content is shown"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to use the search functionality while offline",
+          "expectedResult": "Search either works with cached/local data or displays a message like 'Search is unavailable offline. Please reconnect to the internet.'"
+        },
+        {
+          "step": 4,
+          "action": "Re-enable the network connection by setting throttling back to 'No throttling'",
+          "expectedResult": "A 'Reconnected' notification may appear, and the user can resume normal documentation browsing without needing to refresh the page"
+        },
+        {
+          "step": 5,
+          "action": "Click on the section that previously failed to load",
+          "expectedResult": "The section content loads successfully now that the network connection is restored"
+        }
+      ],
+      "postconditions": [
+        "No unhandled JavaScript errors or application crashes occurred during offline state",
+        "User data and session are preserved after reconnection",
+        "Application recovers gracefully without requiring a full page reload"
+      ]
+    },
+    {
+      "id": "TC-NEGA-005",
+      "title": "Verify documentation page handles expired session correctly",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "Session timeout is configured (e.g., 30 minutes of inactivity)",
+        "User has been inactive long enough for the session to expire, or session can be manually invalidated"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Wait for the session to expire (or manually delete the session cookie/token from browser developer tools to simulate expiration)",
+          "expectedResult": "Session is now invalid on the server side"
+        },
+        {
+          "step": 2,
+          "action": "Click on a navigation link within the documentation (e.g., click on a different section in the table of contents)",
+          "expectedResult": "User is redirected to the login page with a message such as 'Your session has expired. Please log in again.' or a modal dialog appears prompting re-authentication"
+        },
+        {
+          "step": 3,
+          "action": "Log in again with valid credentials",
+          "expectedResult": "User is authenticated and redirected back to the documentation page they were previously viewing, or to the documentation landing page"
+        },
+        {
+          "step": 4,
+          "action": "Verify that the documentation page loads correctly after re-authentication",
+          "expectedResult": "Documentation content is fully accessible and functional after re-login, with no stale data or broken state"
+        }
+      ],
+      "postconditions": [
+        "Expired session is handled gracefully without data loss or application errors",
+        "User is informed about the session expiration with a clear message",
+        "Re-authentication restores full documentation access"
+      ]
+    },
+    {
+      "id": "TC-NEGA-006",
+      "title": "Verify accessing a non-existent documentation page returns a proper 404 error",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with valid credentials",
+        "Documentation section is accessible",
+        "The URL being tested does not correspond to any existing documentation page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to a non-existent documentation URL by typing 'https://app.example.com/docs/api/nonexistent-endpoint-xyz' in the browser address bar",
+          "expectedResult": "A custom 404 'Page Not Found' error page is displayed with a user-friendly message such as 'The documentation page you are looking for does not exist'"
+        },
+        {
+          "step": 2,
+          "action": "Verify the 404 page includes helpful navigation options",
+          "expectedResult": "The 404 page includes links to 'API Documentation Home', 'User Guide', 'Search Documentation', and a 'Go Back' button"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to 'https://app.example.com/docs/user-guide/chapter-999' (non-existent chapter)",
+          "expectedResult": "The same custom 404 page is displayed, not a raw server error page or a blank white page"
+        },
+        {
+          "step": 4,
+          "action": "Click the 'API Documentation Home' link on the 404 page",
+          "expectedResult": "User is navigated to the API Documentation landing page successfully"
+        }
+      ],
+      "postconditions": [
+        "Custom 404 page is displayed instead of a default server error page",
+        "No sensitive server information (stack traces, file paths) is exposed on the error page",
+        "User can easily navigate back to valid documentation from the 404 page"
+      ]
+    },
+    {
+      "id": "TC-NEGA-007",
+      "title": "Verify documentation handles extremely long search queries without crashing",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "Search functionality is available",
+        "A text string of 10,000+ characters is prepared for testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the search bar and paste a string of 10,000 characters (e.g., repeated 'a' characters)",
+          "expectedResult": "The search bar either accepts the input with a character limit truncation, or displays a validation message such as 'Search query is too long. Maximum 500 characters allowed.'"
+        },
+        {
+          "step": 2,
+          "action": "Press Enter to execute the search with the long query",
+          "expectedResult": "The application does not crash, freeze, or become unresponsive. Either a 'No results found' message is shown, or a validation error about query length is displayed"
+        },
+        {
+          "step": 3,
+          "action": "Check the browser console for any JavaScript errors",
+          "expectedResult": "No unhandled JavaScript errors or memory-related warnings appear in the console"
+        },
+        {
+          "step": 4,
+          "action": "Clear the search bar and perform a normal search with a valid term like 'users'",
+          "expectedResult": "Normal search functionality works correctly after the long query attempt, returning relevant results"
+        }
+      ],
+      "postconditions": [
+        "Application remains stable and responsive after processing an extremely long search query",
+        "No server-side errors or timeouts are triggered by the long query",
+        "Search functionality continues to work normally after the test"
+      ]
+    },
+    {
+      "id": "TC-NEGA-008",
+      "title": "Verify API 'Try It Out' feature handles invalid parameter inputs gracefully",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "Interactive 'Try It Out' feature is available for endpoints",
+        "User is viewing an endpoint that accepts parameters (e.g., 'GET /api/v1/users/{id}')"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Try It Out' on the 'GET /api/v1/users/{id}' endpoint",
+          "expectedResult": "Parameter input fields become editable"
+        },
+        {
+          "step": 2,
+          "action": "Enter 'abc' (non-numeric string) in the 'id' path parameter field and click 'Execute'",
+          "expectedResult": "Either client-side validation prevents execution with a message like 'ID must be a numeric value', or the API returns a 400 Bad Request response with a clear error message"
+        },
+        {
+          "step": 3,
+          "action": "Enter '-1' (negative number) in the 'id' field and click 'Execute'",
+          "expectedResult": "API returns a 400 Bad Request or 404 Not Found response with an appropriate error message such as 'Invalid user ID'"
+        },
+        {
+          "step": 4,
+          "action": "Leave the required 'id' field empty and click 'Execute'",
+          "expectedResult": "Client-side validation highlights the empty required field with a message like 'This field is required', or the API returns a 400 Bad Request response"
+        },
+        {
+          "step": 5,
+          "action": "Enter '<script>alert(1)</script>' in the 'id' field and click 'Execute'",
+          "expectedResult": "The script is not executed. Input is sanitized and the API returns a 400 Bad Request response. No XSS vulnerability is triggered"
+        },
+        {
+          "step": 6,
+          "action": "Enter a very large number '99999999999999999999' in the 'id' field and click 'Execute'",
+          "expectedResult": "API returns a 404 Not Found or 400 Bad Request response without causing a server error or integer overflow"
+        }
+      ],
+      "postconditions": [
+        "Application remains stable after all invalid input attempts",
+        "Error responses are clearly displayed in the response section of the Try It Out interface",
+        "No sensitive server information is exposed in error responses"
+      ]
+    },
+    {
+      "id": "TC-NEGA-009",
+      "title": "Verify documentation page handles server error (500) gracefully when API documentation fails to load",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the documentation landing page",
+        "Server-side documentation service can be simulated to return a 500 error (via test environment configuration or network interception)",
+        "Browser developer tools are available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Using browser developer tools or a proxy tool, intercept the API call that loads documentation content and configure it to return a 500 Internal Server Error response",
+          "expectedResult": "The interception is configured and ready to trigger on the next documentation load request"
+        },
+        {
+          "step": 2,
+          "action": "Click on 'API Documentation' from the documentation landing page",
+          "expectedResult": "A user-friendly error page or message is displayed such as 'We are experiencing technical difficulties. Please try again later.' instead of a raw error or blank page"
+        },
+        {
+          "step": 3,
+          "action": "Verify the error page includes a 'Retry' or 'Try Again' button",
+          "expectedResult": "A 'Retry' button is present and clearly visible on the error page"
+        },
+        {
+          "step": 4,
+          "action": "Remove the network interception (allow normal responses) and click the 'Retry' button",
+          "expectedResult": "The documentation page loads successfully on retry, displaying all content correctly"
+        },
+        {
+          "step": 5,
+          "action": "Check the browser console for error handling",
+          "expectedResult": "Errors are caught and handled gracefully. No unhandled promise rejections or uncaught exceptions appear in the console"
+        }
+      ],
+      "postconditions": [
+        "User is never shown raw server error details or stack traces",
+        "Application recovers gracefully when the server becomes available again",
+        "Error events are logged server-side for monitoring and alerting"
+      ]
+    },
+    {
+      "id": "TC-NEGA-010",
+      "title": "Verify documentation PDF export handles failure gracefully when content is too large or service is unavailable",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the User Guide page",
+        "PDF export functionality is available",
+        "PDF generation service can be simulated to fail or timeout"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Simulate a PDF generation service failure (e.g., by intercepting the export API call to return a 503 Service Unavailable)",
+          "expectedResult": "Service failure is configured"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Download PDF' button on the User Guide page",
+          "expectedResult": "A loading indicator appears briefly, then an error message is displayed such as 'PDF generation failed. Please try again later.' instead of downloading a corrupted or empty file"
+        },
+        {
+          "step": 3,
+          "action": "Verify that no corrupted or empty PDF file was downloaded to the user's device",
+          "expectedResult": "No file is downloaded to the downloads folder. The error is handled before any file is served to the user"
+        },
+        {
+          "step": 4,
+          "action": "Restore the PDF generation service and click 'Download PDF' again",
+          "expectedResult": "PDF downloads successfully after the service is restored"
+        }
+      ],
+      "postconditions": [
+        "No corrupted files are delivered to the user",
+        "Error message clearly communicates the issue and suggests retrying",
+        "User can continue browsing documentation normally despite the export failure"
+      ]
+    },
+    {
+      "id": "TC-NEGA-011",
+      "title": "Verify documentation handles concurrent access and rapid navigation without race conditions",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the API Documentation page",
+        "Documentation has multiple sections that load content dynamically",
+        "Network is set to a slow 3G simulation to exaggerate timing issues"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Set network throttling to 'Slow 3G' in browser developer tools",
+          "expectedResult": "Network is throttled to simulate slow connection"
+        },
+        {
+          "step": 2,
+          "action": "Rapidly click on 5 different sections in the table of contents in quick succession (e.g., Authentication, Endpoints, Error Codes, Rate Limiting, Versioning)",
+          "expectedResult": "The application does not crash, freeze, or display content from the wrong section. Only the last clicked section's content is displayed when loading completes"
+        },
+        {
+          "step": 3,
+          "action": "While a section is still loading (spinner visible), click on a different section",
+          "expectedResult": "The previous loading request is cancelled or superseded, and the newly requested section begins loading. No stale content from the first request appears"
+        },
+        {
+          "step": 4,
+          "action": "Verify the final displayed content matches the last section that was clicked",
+          "expectedResult": "The content area shows the correct section corresponding to the last navigation action, with no mixed or overlapping content"
+        },
+        {
+          "step": 5,
+          "action": "Reset network throttling to 'No throttling' and verify normal operation",
+          "expectedResult": "Documentation navigation works normally at full speed"
+        }
+      ],
+      "postconditions": [
+        "No race conditions result in displaying incorrect section content",
+        "Application remains responsive during rapid navigation",
+        "No JavaScript errors related to cancelled or conflicting requests appear in the console"
+      ]
+    },
+    {
+      "id": "TC-NEGA-012",
+      "title": "Verify documentation handles missing or broken images gracefully",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the User Guide page",
+        "Some documentation images have been intentionally removed or their URLs are broken (test environment setup)",
+        "User Guide sections contain inline images, screenshots, and diagrams"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to a User Guide section that contains images where some image URLs have been broken",
+          "expectedResult": "The page loads without crashing. Broken images display a placeholder or fallback image instead of the browser's default broken image icon"
+        },
+        {
+          "step": 2,
+          "action": "Verify that alt text is displayed for broken images",
+          "expectedResult": "Each broken image shows its alt text description (e.g., 'Screenshot of the dashboard settings page') so users understand what the image was supposed to show"
+        },
+        {
+          "step": 3,
+          "action": "Verify that the page layout is not broken by missing images",
+          "expectedResult": "The page layout remains intact. Text content flows properly around the image placeholders, and no large empty gaps or layout shifts occur"
+        },
+        {
+          "step": 4,
+          "action": "Check the browser console for image loading errors",
+          "expectedResult": "404 errors for missing images are logged but do not cause cascading JavaScript errors or affect other page functionality"
+        }
+      ],
+      "postconditions": [
+        "Documentation remains readable and navigable despite missing images",
+        "Alt text provides context for what the missing images should display",
+        "Page layout and other content are not adversely affected by broken images"
+      ]
+    },
+    {
+      "id": "TC-NEGA-013",
+      "title": "Verify documentation URL manipulation does not expose unauthorized content or cause errors",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with a 'Standard' role (non-admin)",
+        "Documentation has role-restricted sections",
+        "User knows or guesses URL patterns for restricted documentation"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Manually modify the URL to access an admin-only documentation section (e.g., change '/docs/user-guide/getting-started' to '/docs/admin-guide/system-configuration')",
+          "expectedResult": "User receives a 403 Forbidden response or is shown an 'Access Denied' page. No admin documentation content is displayed"
+        },
+        {
+          "step": 2,
+          "action": "Attempt path traversal by modifying the URL to '/docs/../../etc/passwd' or '/docs/api/../admin/internal'",
+          "expectedResult": "The application returns a 404 Not Found or 400 Bad Request response. No file system content or internal paths are exposed"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to access documentation with URL-encoded special characters (e.g., '/docs/api/%2e%2e/admin')",
+          "expectedResult": "URL encoding is properly decoded and the path traversal attempt is blocked. A 404 or 403 response is returned"
+        },
+        {
+          "step": 4,
+          "action": "Attempt to access documentation API endpoints directly (e.g., '/api/docs/content?section=admin-settings') by guessing the internal API structure",
+          "expectedResult": "The API enforces authentication and authorization. A 401 or 403 response is returned with no content data"
+        }
+      ],
+      "postconditions": [
+        "No unauthorized content is exposed through URL manipulation",
+        "All path traversal and URL manipulation attempts are blocked",
+        "Security events are logged for suspicious URL access patterns"
+      ]
+    },
+    {
+      "id": "TC-NEGA-014",
+      "title": "Verify 'Try It Out' feature handles API timeout gracefully",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the API Documentation page with 'Try It Out' feature",
+        "The sandbox API can be configured to simulate a timeout (or network can be throttled to cause timeout)",
+        "User is viewing an endpoint with the 'Try It Out' interface active"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Try It Out' on any endpoint and fill in valid parameters",
+          "expectedResult": "Parameters are entered and the 'Execute' button is ready"
+        },
+        {
+          "step": 2,
+          "action": "Configure the network to simulate extreme latency (e.g., set a 60-second delay) or block the sandbox API endpoint",
+          "expectedResult": "Network condition is configured to cause a timeout"
+        },
+        {
+          "step": 3,
+          "action": "Click the 'Execute' button",
+          "expectedResult": "A loading spinner appears. After a reasonable timeout period (e.g., 30 seconds), an error message is displayed such as 'Request timed out. The API server did not respond in time. Please try again.'"
+        },
+        {
+          "step": 4,
+          "action": "Verify that a 'Cancel' button is available during the loading state to abort the request",
+          "expectedResult": "A 'Cancel' button is visible during the loading state, and clicking it stops the request and returns the interface to its ready state"
+        },
+        {
+          "step": 5,
+          "action": "Restore normal network conditions and click 'Execute' again",
+          "expectedResult": "The API call succeeds and the response is displayed normally"
+        }
+      ],
+      "postconditions": [
+        "Application does not hang or become unresponsive during API timeouts",
+        "User is clearly informed about the timeout with an actionable error message",
+        "The 'Try It Out' interface is fully functional after a timeout event"
+      ]
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "TC-EDGE-001",
+      "title": "Verify API documentation page renders with extremely long endpoint descriptions",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with a role that has access to the API documentation section",
+        "API documentation page is accessible at the expected URL (e.g., /docs/api)",
+        "At least one API endpoint entry exists with a description exceeding 10,000 characters",
+        "Browser is Google Chrome latest version"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the API documentation page by clicking 'Documentation' in the main navigation menu",
+          "expectedResult": "The API documentation page loads successfully without timeout or rendering errors"
+        },
+        {
+          "step": 2,
+          "action": "Scroll to the endpoint entry that contains a description exceeding 10,000 characters",
+          "expectedResult": "The long description is fully rendered without truncation, layout overflow, or horizontal scrollbar appearing on the main content area"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the page layout to verify that the long description does not overlap adjacent UI elements such as sidebar navigation, code examples, or parameter tables",
+          "expectedResult": "All UI elements remain properly positioned; no overlapping or z-index issues are observed"
+        },
+        {
+          "step": 4,
+          "action": "Use the browser's 'Find in Page' (Ctrl+F) feature and search for a unique word near the end of the 10,000-character description",
+          "expectedResult": "The browser find feature locates the word and scrolls to it within the documentation content area"
+        },
+        {
+          "step": 5,
+          "action": "Resize the browser window to 768px width to simulate a tablet viewport",
+          "expectedResult": "The long description reflows correctly within the responsive layout without breaking the page structure"
+        }
+      ],
+      "postconditions": [
+        "API documentation page remains fully functional and navigable after viewing the long description",
+        "No JavaScript console errors related to rendering or memory are present",
+        "Page performance remains acceptable (no visible lag or freezing)"
+      ]
+    },
+    {
+      "id": "TC-EDGE-002",
+      "title": "Verify API documentation handles special characters and Unicode in endpoint names and parameters",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as an administrator with documentation editing permissions",
+        "The documentation system supports creating or editing API endpoint entries",
+        "A test API endpoint entry is available for editing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the API documentation editor and open the test endpoint entry for editing",
+          "expectedResult": "The endpoint editor loads with all fields editable"
+        },
+        {
+          "step": 2,
+          "action": "Enter the following endpoint name: '/api/v1/données-utilisateur/获取/🚀'",
+          "expectedResult": "The field accepts the mixed Latin, Chinese, and emoji characters without stripping or encoding errors"
+        },
+        {
+          "step": 3,
+          "action": "In the 'Parameters' section, add a query parameter with name 'filtré_по_дате' and description containing '日本語テスト — \"quoted\" & <tagged> value'",
+          "expectedResult": "All special characters including CJK, Cyrillic, em dash, escaped quotes, ampersand, and angle brackets are accepted and displayed correctly"
+        },
+        {
+          "step": 4,
+          "action": "Click the 'Save' or 'Publish' button to save the documentation changes",
+          "expectedResult": "The documentation saves successfully with a confirmation message such as 'Documentation updated successfully'"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to the published API documentation page and locate the edited endpoint",
+          "expectedResult": "The endpoint name, parameter name, and description render correctly with all Unicode characters, emojis, and special characters displayed as entered without HTML entity encoding visible to the user"
+        },
+        {
+          "step": 6,
+          "action": "View the page source or inspect the HTML to verify that angle brackets and quotes are properly HTML-escaped to prevent XSS",
+          "expectedResult": "The characters '<' and '>' are rendered as '&lt;' and '&gt;' in the HTML source, and quotes are properly escaped, preventing any script injection"
+        }
+      ],
+      "postconditions": [
+        "The documentation entry is saved with all Unicode and special characters intact in the database",
+        "The published documentation page displays all characters correctly",
+        "No XSS vulnerabilities are introduced by the special character content"
+      ]
+    },
+    {
+      "id": "TC-EDGE-003",
+      "title": "Verify user guide table of contents handles an extremely large number of sections",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with documentation access permissions",
+        "The user guide contains at least 200 sections/subsections to simulate a very large document",
+        "The table of contents (TOC) component is enabled on the user guide page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the user guide page by clicking 'User Guide' in the documentation navigation",
+          "expectedResult": "The user guide page loads within 5 seconds despite the large number of sections"
+        },
+        {
+          "step": 2,
+          "action": "Observe the table of contents sidebar or panel",
+          "expectedResult": "All 200+ sections are listed in the TOC with proper hierarchical indentation and without any sections being cut off or missing"
+        },
+        {
+          "step": 3,
+          "action": "Scroll the TOC to the very last entry (section 200+)",
+          "expectedResult": "The TOC is scrollable independently of the main content, and the last section entry is fully visible and clickable"
+        },
+        {
+          "step": 4,
+          "action": "Click on the last section link in the TOC",
+          "expectedResult": "The main content area scrolls smoothly to the corresponding section, and the TOC highlights the active section"
+        },
+        {
+          "step": 5,
+          "action": "Use the browser's back button after navigating to the section via TOC anchor link",
+          "expectedResult": "The browser navigates back to the previous scroll position or page state without errors"
+        },
+        {
+          "step": 6,
+          "action": "Check browser memory usage in the Task Manager",
+          "expectedResult": "Memory usage remains within reasonable bounds (under 500MB) and does not indicate a memory leak"
+        }
+      ],
+      "postconditions": [
+        "The user guide page remains responsive and navigable",
+        "All TOC links correctly correspond to their respective sections",
+        "No performance degradation is observed after interacting with the large TOC"
+      ]
+    },
+    {
+      "id": "TC-EDGE-004",
+      "title": "Verify API documentation search with empty query, single character, and very long search strings",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API documentation page",
+        "A search/filter feature is available on the documentation page",
+        "Multiple API endpoints are documented (at least 20 entries)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the search input field in the API documentation page and press Enter without typing anything (empty query)",
+          "expectedResult": "Either all endpoints remain displayed or a helpful message such as 'Please enter a search term' is shown; no error or crash occurs"
+        },
+        {
+          "step": 2,
+          "action": "Type a single character 'a' into the search field",
+          "expectedResult": "Search results update to show all endpoints containing the letter 'a' in their name, path, or description; results are displayed without delay"
+        },
+        {
+          "step": 3,
+          "action": "Clear the search field and paste a 5,000-character string into the search input",
+          "expectedResult": "The search input either truncates the string to a maximum allowed length with a visual indicator, or accepts it and returns zero results gracefully without causing a server error or UI freeze"
+        },
+        {
+          "step": 4,
+          "action": "Clear the search field and enter '<script>alert(1)</script>'",
+          "expectedResult": "The search treats the input as plain text, no JavaScript executes, and the search returns zero results or displays the sanitized search term"
+        },
+        {
+          "step": 5,
+          "action": "Clear the search field and enter '   ' (only whitespace characters)",
+          "expectedResult": "The search either trims the whitespace and treats it as an empty query or displays a message indicating no results found; no server error occurs"
+        },
+        {
+          "step": 6,
+          "action": "Enter a valid search term and rapidly clear and re-enter different terms 10 times within 5 seconds",
+          "expectedResult": "The search debounces correctly, only the final search term's results are displayed, and no race condition causes incorrect results to appear"
+        }
+      ],
+      "postconditions": [
+        "The search feature remains functional after all edge case inputs",
+        "No JavaScript errors are logged in the browser console",
+        "The documentation page state is not corrupted by any of the search inputs"
+      ]
+    },
+    {
+      "id": "TC-EDGE-005",
+      "title": "Verify documentation page behavior when loaded with no content or empty API specification",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with documentation access permissions",
+        "A test environment is configured where the API specification source is empty or returns an empty JSON/YAML object",
+        "The documentation rendering engine is active"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the API documentation page that is configured to load from the empty specification source",
+          "expectedResult": "The page loads without crashing and displays a meaningful empty state message such as 'No API endpoints documented yet' or 'Documentation is being prepared'"
+        },
+        {
+          "step": 2,
+          "action": "Check that the page layout (header, footer, navigation sidebar) still renders correctly despite no content",
+          "expectedResult": "All structural page elements render correctly; the empty state is confined to the main content area only"
+        },
+        {
+          "step": 3,
+          "action": "If a search feature exists, attempt to use it on the empty documentation page",
+          "expectedResult": "The search either is disabled/hidden or returns a message like 'No content available to search' without errors"
+        },
+        {
+          "step": 4,
+          "action": "Check the browser console for JavaScript errors",
+          "expectedResult": "No unhandled exceptions or critical errors are logged; at most, informational warnings about empty data may appear"
+        }
+      ],
+      "postconditions": [
+        "The empty documentation page is stable and does not continuously reload or throw errors",
+        "Navigation to other parts of the application from the empty documentation page works correctly",
+        "The page is ready to display content once the API specification is populated"
+      ]
+    },
+    {
+      "id": "TC-EDGE-006",
+      "title": "Verify documentation renders correctly when API spec contains deeply nested object schemas (10+ levels)",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in with documentation access permissions",
+        "An API endpoint is documented with a request/response schema containing objects nested 10+ levels deep",
+        "The documentation page uses a schema viewer or expandable tree component"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the API documentation page and locate the endpoint with the deeply nested schema",
+          "expectedResult": "The endpoint entry loads and the schema section is visible"
+        },
+        {
+          "step": 2,
+          "action": "Expand all nested levels of the schema by clicking expand/toggle controls at each level",
+          "expectedResult": "Each nested level expands correctly, showing property names, types, and descriptions at every depth level without UI breakage"
+        },
+        {
+          "step": 3,
+          "action": "Verify that indentation or visual hierarchy is maintained at the 10th+ nesting level",
+          "expectedResult": "The visual indentation remains clear and does not overflow the container horizontally; if it does, a horizontal scrollbar appears within the schema viewer only"
+        },
+        {
+          "step": 4,
+          "action": "Collapse all levels by clicking a 'Collapse All' button or collapsing from the top level",
+          "expectedResult": "All nested levels collapse smoothly without leaving orphaned expanded sections"
+        },
+        {
+          "step": 5,
+          "action": "On a mobile viewport (375px width), repeat the expansion of the deeply nested schema",
+          "expectedResult": "The schema viewer adapts to the narrow viewport, possibly using horizontal scroll or alternative layout, without breaking the page layout"
+        }
+      ],
+      "postconditions": [
+        "The deeply nested schema is fully viewable and navigable at all nesting levels",
+        "No performance issues or rendering glitches are observed",
+        "The page remains responsive after expanding and collapsing the deep schema"
+      ]
+    },
+    {
+      "id": "TC-EDGE-007",
+      "title": "Verify concurrent users editing the same documentation page simultaneously",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Two separate browser sessions are open, each logged in as different users with documentation editing permissions (User A and User B)",
+        "Both users have navigated to the same documentation page/section for editing",
+        "The documentation system has a save/publish mechanism"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "User A clicks 'Edit' on the documentation section and begins modifying the introduction paragraph to read 'Updated by User A'",
+          "expectedResult": "User A enters edit mode and can modify the content"
+        },
+        {
+          "step": 2,
+          "action": "User B (in a separate browser) clicks 'Edit' on the same documentation section and begins modifying the same introduction paragraph to read 'Updated by User B'",
+          "expectedResult": "User B either enters edit mode with a warning that another user is editing, or is allowed to edit with optimistic concurrency control"
+        },
+        {
+          "step": 3,
+          "action": "User A clicks 'Save' to publish their changes",
+          "expectedResult": "User A's changes are saved successfully with a confirmation message"
+        },
+        {
+          "step": 4,
+          "action": "User B clicks 'Save' to publish their changes (which were based on the original content, not User A's update)",
+          "expectedResult": "User B receives a conflict notification such as 'This content has been modified by another user. Please review the latest version before saving.' OR User B's changes overwrite User A's with a clear audit trail"
+        },
+        {
+          "step": 5,
+          "action": "If a conflict resolution mechanism exists, User B reviews the diff and resolves the conflict",
+          "expectedResult": "The conflict resolution UI shows both versions clearly and allows User B to merge or choose one version"
+        }
+      ],
+      "postconditions": [
+        "The final saved documentation content is consistent and not corrupted",
+        "An audit trail or version history records both users' edit attempts",
+        "No data loss occurs from the concurrent editing scenario"
+      ]
+    },
+    {
+      "id": "TC-EDGE-008",
+      "title": "Verify documentation page handles network interruption during content loading",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and about to navigate to the API documentation page",
+        "Browser developer tools are open with the Network tab accessible",
+        "The documentation content is loaded via an API call or dynamic fetch"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "In the browser developer tools Network tab, enable 'Offline' mode to simulate network disconnection",
+          "expectedResult": "The browser is now in offline simulation mode"
+        },
+        {
+          "step": 2,
+          "action": "Click on the 'API Documentation' link in the navigation menu",
+          "expectedResult": "The page attempts to load and displays a user-friendly error message such as 'Unable to load documentation. Please check your internet connection and try again.' with a 'Retry' button"
+        },
+        {
+          "step": 3,
+          "action": "Disable 'Offline' mode in the developer tools to restore network connectivity",
+          "expectedResult": "Network connectivity is restored"
+        },
+        {
+          "step": 4,
+          "action": "Click the 'Retry' button on the error message",
+          "expectedResult": "The documentation page loads successfully with all content displayed correctly"
+        },
+        {
+          "step": 5,
+          "action": "While viewing the loaded documentation, enable 'Offline' mode again and attempt to navigate to a different section within the documentation",
+          "expectedResult": "If the section was previously loaded/cached, it displays correctly; if not, a clear offline error message is shown without crashing the already-loaded content"
+        }
+      ],
+      "postconditions": [
+        "The documentation page recovers gracefully from network interruptions",
+        "Previously loaded content remains accessible where possible",
+        "No unhandled errors or blank white screens are displayed to the user"
+      ]
+    }
+  ],
+  "accessibility": [
+    {
+      "id": "TC-ACCE-001",
+      "title": "Verify complete keyboard navigation through API documentation page structure",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API documentation page",
+        "Multiple API endpoint sections are visible with expandable/collapsible details",
+        "No mouse or pointing device is being used; keyboard only",
+        "Screen reader is turned off for this keyboard-only test"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Press Tab key repeatedly starting from the top of the API documentation page",
+          "expectedResult": "Focus moves sequentially through all interactive elements: skip navigation link, main navigation items, search input, TOC links, endpoint expand/collapse toggles, 'Try it' buttons, and code copy buttons in a logical top-to-bottom, left-to-right order"
+        },
+        {
+          "step": 2,
+          "action": "When focus reaches an expandable API endpoint section (e.g., 'GET /api/users'), press Enter or Space to expand it",
+          "expectedResult": "The endpoint section expands to reveal parameters, request/response schemas, and example code; focus remains on the toggle element or moves to the first child element within the expanded section"
+        },
+        {
+          "step": 3,
+          "action": "Press Escape while inside an expanded endpoint section",
+          "expectedResult": "The endpoint section collapses and focus returns to the expand/collapse toggle for that section"
+        },
+        {
+          "step": 4,
+          "action": "Press Shift+Tab to navigate backwards through the interactive elements",
+          "expectedResult": "Focus moves in reverse order through all previously focused elements without skipping any or getting trapped"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to the table of contents sidebar using Tab and use Arrow Up/Arrow Down keys to move between TOC items",
+          "expectedResult": "Arrow keys allow navigation between TOC items if implemented as a list/menu pattern; each item receives visible focus"
+        },
+        {
+          "step": 6,
+          "action": "Press Enter on a TOC item to navigate to the corresponding section",
+          "expectedResult": "The main content scrolls to the selected section, and focus moves to the section heading or the beginning of the section content"
+        },
+        {
+          "step": 7,
+          "action": "Navigate to a code example block and press Tab to reach the 'Copy' button, then press Enter",
+          "expectedResult": "The code is copied to the clipboard and a visual confirmation such as 'Copied!' appears; the confirmation is also announced if aria-live is implemented"
+        }
+      ],
+      "postconditions": [
+        "All interactive elements on the API documentation page are reachable via keyboard",
+        "No keyboard traps exist anywhere on the page",
+        "Focus order follows a logical reading sequence matching the visual layout"
+      ]
+    },
+    {
+      "id": "TC-ACCE-002",
+      "title": "Verify screen reader announces API documentation structure, landmarks, and content correctly",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API documentation page",
+        "NVDA (Windows) or VoiceOver (macOS) screen reader is active",
+        "The documentation page contains at least 3 API endpoint sections with parameters and response schemas",
+        "Browser is Firefox (for NVDA) or Safari (for VoiceOver)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Use the screen reader's landmark navigation shortcut (NVDA: D key in browse mode; VoiceOver: rotor > landmarks) to list all page landmarks",
+          "expectedResult": "Screen reader announces distinct landmarks: 'banner' (header), 'navigation' (main nav and/or TOC), 'main' (documentation content), and 'contentinfo' (footer)"
+        },
+        {
+          "step": 2,
+          "action": "Use heading navigation (NVDA: H key; VoiceOver: rotor > headings) to navigate through all headings on the page",
+          "expectedResult": "Screen reader announces headings in a logical hierarchy: H1 for the page title (e.g., 'API Documentation'), H2 for major sections (e.g., 'Authentication', 'Users', 'Orders'), and H3+ for subsections and individual endpoints"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to an API endpoint section and listen to the screen reader announcement",
+          "expectedResult": "The screen reader announces the HTTP method and path (e.g., 'GET /api/v1/users'), the endpoint description, and indicates if the section is expandable (e.g., 'collapsed' or 'expanded' state)"
+        },
+        {
+          "step": 4,
+          "action": "Expand an endpoint section and navigate to the parameters table",
+          "expectedResult": "The screen reader announces 'table' with the number of rows and columns, and each cell is read with its column header context (e.g., 'Parameter: userId, Type: string, Required: yes, Description: The unique user identifier')"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to a code example block within the documentation",
+          "expectedResult": "The screen reader announces the code block with an appropriate label such as 'code example' or 'Request example', and reads the code content; the code block is identified as a distinct region"
+        },
+        {
+          "step": 6,
+          "action": "Use the screen reader to navigate to the search input field",
+          "expectedResult": "The screen reader announces the field label (e.g., 'Search API documentation'), its role ('edit text' or 'search'), and any placeholder text or instructions"
+        }
+      ],
+      "postconditions": [
+        "All documentation content is accessible and understandable via screen reader",
+        "Page structure is conveyed through proper semantic HTML and ARIA attributes",
+        "No content is hidden from or inaccessible to the screen reader"
+      ]
+    },
+    {
+      "id": "TC-ACCE-003",
+      "title": "Verify visible focus indicators on all interactive elements throughout the documentation",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API documentation or user guide page",
+        "Browser default focus styles have not been overridden to be invisible",
+        "The page contains links, buttons, form inputs, expandable sections, and code copy buttons"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Press Tab to focus on the first interactive element on the page (likely a skip-to-content link or navigation item)",
+          "expectedResult": "A clearly visible focus indicator appears around the element with a contrast ratio of at least 3:1 against the background; the indicator is not just a color change but includes an outline, border, or shadow"
+        },
+        {
+          "step": 2,
+          "action": "Continue pressing Tab through navigation links, search input, TOC links, and endpoint toggle buttons",
+          "expectedResult": "Every interactive element displays a visible focus indicator when focused; no element appears focused without a visual cue"
+        },
+        {
+          "step": 3,
+          "action": "Tab to a text input field (e.g., search box or API key input in a 'Try it' panel)",
+          "expectedResult": "The input field shows a distinct focus state (e.g., highlighted border, glow effect) that is clearly different from its unfocused state"
+        },
+        {
+          "step": 4,
+          "action": "Tab to a button element (e.g., 'Copy Code', 'Try it', or 'Send Request' button)",
+          "expectedResult": "The button displays a visible focus ring or outline that meets WCAG 2.1 Level AA focus indicator requirements"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to an inline link within documentation text content",
+          "expectedResult": "The link shows a visible focus indicator that distinguishes it from surrounding text, beyond just color change (e.g., outline or underline change)"
+        },
+        {
+          "step": 6,
+          "action": "Use Windows High Contrast Mode or macOS Increase Contrast setting and repeat Tab navigation",
+          "expectedResult": "Focus indicators remain visible and clear in high contrast mode; they are not lost due to custom CSS that conflicts with system contrast settings"
+        }
+      ],
+      "postconditions": [
+        "All interactive elements have visible, high-contrast focus indicators",
+        "Focus indicators work across different browser and OS contrast settings",
+        "No interactive element is visually indistinguishable when focused vs. unfocused"
+      ]
+    },
+    {
+      "id": "TC-ACCE-004",
+      "title": "Verify documentation page meets color contrast requirements (WCAG 2.1 AA)",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is on the API documentation page with various content types: headings, body text, code blocks, parameter tables, status badges (GET, POST, DELETE), and links",
+        "A color contrast analysis tool is available (e.g., axe DevTools, WAVE, or browser DevTools accessibility inspector)",
+        "The page is viewed in both light and dark themes if available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Run the axe DevTools accessibility scanner on the API documentation page",
+          "expectedResult": "No color contrast violations are reported; all text elements meet the minimum contrast ratio of 4.5:1 for normal text and 3:1 for large text (18px+ or 14px+ bold)"
+        },
+        {
+          "step": 2,
+          "action": "Manually inspect the HTTP method badges (e.g., green 'GET', blue 'POST', red 'DELETE') using the browser's color picker tool to check foreground text against badge background color",
+          "expectedResult": "Each badge's text color against its background color meets at least 4.5:1 contrast ratio; for example, white text on a green badge must have sufficient contrast"
+        },
+        {
+          "step": 3,
+          "action": "Inspect code example blocks: check the syntax-highlighted code text colors against the code block background",
+          "expectedResult": "All syntax-highlighted text (keywords, strings, comments, variables) meets at least 4.5:1 contrast ratio against the code block background color"
+        },
+        {
+          "step": 4,
+          "action": "Check that links within documentation text are distinguishable from surrounding text by more than just color (e.g., underline, bold, or icon)",
+          "expectedResult": "Links are identifiable by at least one non-color visual cue in addition to color difference; the color difference between link text and surrounding text is at least 3:1"
+        },
+        {
+          "step": 5,
+          "action": "If a dark theme is available, switch to dark theme and repeat the contrast checks on headings, body text, code blocks, and badges",
+          "expectedResult": "All contrast ratios meet WCAG 2.1 AA requirements in dark theme as well; no text becomes unreadable against dark backgrounds"
+        }
+      ],
+      "postconditions": [
+        "All text content on the documentation page meets WCAG 2.1 AA contrast requirements",
+        "Information is not conveyed by color alone anywhere on the page",
+        "Both light and dark themes (if available) pass contrast checks"
+      ]
+    },
+    {
+      "id": "TC-ACCE-005",
+      "title": "Verify documentation page is usable at 200% browser zoom and with large text settings",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API documentation page",
+        "Browser zoom is set to 100% initially",
+        "The page contains navigation, TOC sidebar, main content with tables, code blocks, and interactive elements"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Increase browser zoom to 200% using Ctrl+'+' (Cmd+'+' on macOS)",
+          "expectedResult": "The page layout adapts responsively; content reflows to fit the viewport without horizontal scrolling on the main content area; the sidebar TOC either collapses into a hamburger menu or stacks above/below the main content"
+        },
+        {
+          "step": 2,
+          "action": "Read the API endpoint descriptions and parameter tables at 200% zoom",
+          "expectedResult": "All text is readable without overlapping; tables either reflow into a card/list layout or provide a horizontal scroll within the table container only; no text is clipped or hidden"
+        },
+        {
+          "step": 3,
+          "action": "Interact with expandable endpoint sections at 200% zoom by clicking the expand/collapse toggles",
+          "expectedResult": "Toggle buttons are large enough to click (at least 44x44 CSS pixels effective touch target), and expanded content displays correctly without layout breakage"
+        },
+        {
+          "step": 4,
+          "action": "Use the search feature at 200% zoom: click the search input, type a query, and review results",
+          "expectedResult": "The search input is fully visible and usable; search results dropdown or list does not overflow off-screen; all result text is readable"
+        },
+        {
+          "step": 5,
+          "action": "Increase zoom to 400% and verify that critical content and navigation remain accessible",
+          "expectedResult": "At 400% zoom, the page presents a single-column layout; all navigation is accessible (possibly through a menu button); primary content is readable and interactive elements are usable"
+        },
+        {
+          "step": 6,
+          "action": "Set the browser's minimum font size to 24px in browser settings and reload the documentation page",
+          "expectedResult": "The page respects the larger font size setting; text scales up without breaking layout containers; no text is cut off by fixed-height containers"
+        }
+      ],
+      "postconditions": [
+        "The documentation page is fully usable at 200% and 400% zoom levels",
+        "No content is lost or inaccessible at any tested zoom level",
+        "Text reflows properly and does not require horizontal scrolling for reading"
+      ]
+    },
+    {
+      "id": "TC-ACCE-006",
+      "title": "Verify proper ARIA attributes on expandable sections, live regions, and dynamic content",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in and on the API documentation page",
+        "Browser developer tools are open for inspecting DOM elements",
+        "The page contains expandable/collapsible endpoint sections, a search feature with dynamic results, and interactive 'Try it' panels"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Inspect the expand/collapse toggle button for an API endpoint section using browser developer tools",
+          "expectedResult": "The button has 'aria-expanded=\"false\"' when collapsed and 'aria-expanded=\"true\"' when expanded; it has an 'aria-controls' attribute pointing to the ID of the expandable content panel"
+        },
+        {
+          "step": 2,
+          "action": "Click the expand toggle and re-inspect the ARIA attributes",
+          "expectedResult": "The 'aria-expanded' attribute changes from 'false' to 'true'; the controlled panel becomes visible and has 'role=\"region\"' or appropriate role with an 'aria-labelledby' referencing the toggle button or section heading"
+        },
+        {
+          "step": 3,
+          "action": "Type a search query in the documentation search field and inspect the search results container",
+          "expectedResult": "The search results container has 'aria-live=\"polite\"' or 'role=\"status\"' so that screen readers announce the number of results found (e.g., '5 results found for \"users\"')"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the navigation sidebar/TOC for proper ARIA roles",
+          "expectedResult": "The TOC has 'role=\"navigation\"' and an 'aria-label' such as 'Table of contents' or 'Documentation navigation'; nested lists use proper 'ul'/'li' semantic markup"
+        },
+        {
+          "step": 5,
+          "action": "If a 'Try it' or interactive API testing panel exists, inspect its form elements",
+          "expectedResult": "All form inputs have associated labels via 'for'/'id' pairing or 'aria-label'; required fields have 'aria-required=\"true\"'; error messages are associated via 'aria-describedby'"
+        },
+        {
+          "step": 6,
+          "action": "Trigger an error state (e.g., submit the 'Try it' form with missing required fields) and inspect the error message",
+          "expectedResult": "Error messages appear with 'role=\"alert\"' or within an 'aria-live=\"assertive\"' region; the invalid field has 'aria-invalid=\"true\"' and 'aria-describedby' pointing to the error message element"
+        }
+      ],
+      "postconditions": [
+        "All dynamic content changes are properly communicated via ARIA live regions",
+        "Expandable sections correctly toggle aria-expanded state",
+        "Form elements have proper labels, descriptions, and error associations"
+      ]
+    },
+    {
+      "id": "TC-ACCE-007",
+      "title": "Verify skip navigation link and logical heading structure in user guide",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in and on the user guide page",
+        "The user guide contains multiple sections with a header, navigation, sidebar TOC, and main content",
+        "Keyboard is the primary input device"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Load the user guide page and immediately press the Tab key once",
+          "expectedResult": "A 'Skip to main content' link becomes visible (it may be visually hidden until focused) and receives keyboard focus"
+        },
+        {
+          "step": 2,
+          "action": "Press Enter on the 'Skip to main content' link",
+          "expectedResult": "Focus jumps directly to the main content area, bypassing the header navigation and sidebar TOC; the next Tab press focuses the first interactive element within the main content"
+        },
+        {
+          "step": 3,
+          "action": "Use a heading analysis tool (e.g., WAVE or HeadingsMap browser extension) to inspect the heading hierarchy",
+          "expectedResult": "There is exactly one H1 element (the page title); H2 elements represent major sections; H3 elements represent subsections; no heading levels are skipped (e.g., no H2 followed directly by H4)"
+        },
+        {
+          "step": 4,
+          "action": "Verify that all content sections have appropriate heading elements and are not styled text masquerading as headings",
+          "expectedResult": "All visually prominent section titles use proper heading tags (h1-h6) rather than styled div, span, or p elements; the heading hierarchy accurately represents the document structure"
+        },
+        {
+          "step": 5,
+          "action": "Check that the main content area has a 'main' landmark role and the TOC sidebar has a 'navigation' landmark with a descriptive aria-label",
+          "expectedResult": "The main content is wrapped in a <main> element; the TOC sidebar is wrapped in a <nav> element with aria-label='User guide navigation' or similar descriptive label"
+        }
+      ],
+      "postconditions": [
+        "Skip navigation link successfully bypasses repetitive navigation content",
+        "Heading hierarchy is logical and complete with no skipped levels",
+        "Page landmarks are properly defined for assistive technology navigation"
+      ]
+    },
+    {
+      "id": "TC-ACCE-008",
+      "title": "Verify mobile accessibility: touch targets, gestures, and responsive documentation layout",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "User is accessing the API documentation page on a mobile device (iOS Safari or Android Chrome) or using browser device emulation",
+        "Screen size is set to 375x812 (iPhone X equivalent)",
+        "VoiceOver (iOS) or TalkBack (Android) is available for testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Load the API documentation page on the mobile device and visually inspect all interactive elements (buttons, links, toggles)",
+          "expectedResult": "All interactive elements have a minimum touch target size of 44x44 CSS pixels; elements are not placed so close together that accidental taps on adjacent elements are likely"
+        },
+        {
+          "step": 2,
+          "action": "Tap on an expandable API endpoint section header to expand it",
+          "expectedResult": "The section expands on a single tap; no double-tap or complex gesture is required; the expanded content is visible without requiring horizontal scrolling"
+        },
+        {
+          "step": 3,
+          "action": "Enable VoiceOver (iOS) or TalkBack (Android) and swipe right through the documentation page elements",
+          "expectedResult": "The screen reader navigates through all elements in a logical order; each element is announced with its role, name, and state; no content is skipped or unreachable"
+        },
+        {
+          "step": 4,
+          "action": "With the screen reader active, double-tap on an expandable section to activate it",
+          "expectedResult": "The section expands and the screen reader announces the state change (e.g., 'expanded')"
+        },
+        {
+          "step": 5,
+          "action": "Rotate the device from portrait to landscape orientation",
+          "expectedResult": "The documentation page adapts to the landscape layout without losing content, breaking layout, or resetting the user's scroll position; all content remains accessible"
+        },
+        {
+          "step": 6,
+          "action": "Attempt to pinch-to-zoom on the documentation page",
+          "expectedResult": "Pinch-to-zoom is not disabled (the viewport meta tag does not include 'user-scalable=no' or 'maximum-scale=1'); the user can zoom in to read small text"
+        }
+      ],
+      "postconditions": [
+        "All documentation content is accessible on mobile devices with assistive technologies",
+        "Touch targets meet minimum size requirements for accessibility",
+        "Zoom is not restricted, allowing users to enlarge content as needed"
+      ]
+    }
+  ],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": true,
+    "negative": true,
+    "accessibility": true,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-21866",
+    "title": "Document API and user guide",
+    "description": "Task generated from workflow for story ABCDEF-2121\n",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "21866",
+    "externalId": "ABCDEF-2140",
+    "state": "New",
+    "assignedTo": "devxnous2k25@gmail.com",
+    "createdDate": "2026-04-20T06:46:52.634Z",
+    "priority": "medium",
+    "storyPoints": null,
+    "tags": "",
+    "epicId": null,
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net//browse/ABCDEF-2140"
+  }
+}
