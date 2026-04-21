@@ -1,0 +1,2379 @@
+{
+  "storyId": "ado-27238",
+  "storyTitle": "As Insurance Agent, I want to perform new policy creation through a guided wizard to achieve error-free submissions with minimal steps",
+  "testCases": [],
+  "functional": [
+    {
+      "id": "TC-FUNC-001",
+      "title": "Verify wizard launches successfully and displays first step with relevant fields for selected line of business",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent user is authenticated and logged into the application",
+        "Agent has 'Policy Creation' permission assigned to their role",
+        "At least one active line of business (e.g., 'Personal Auto') and product type (e.g., 'Standard Auto') exist in the system",
+        "Agent is on the main dashboard or policy management page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the 'Create New Policy' button on the policy management page",
+          "expectedResult": "Policy creation wizard opens and displays the first step (e.g., 'Select Line of Business & Product Type') with a clear heading and instructions"
+        },
+        {
+          "step": 2,
+          "action": "Select 'Personal Auto' from the 'Line of Business' dropdown",
+          "expectedResult": "The dropdown accepts the selection and the 'Product Type' dropdown is filtered to show only product types relevant to Personal Auto (e.g., 'Standard Auto', 'Preferred Auto')"
+        },
+        {
+          "step": 3,
+          "action": "Select 'Standard Auto' from the 'Product Type' dropdown",
+          "expectedResult": "The wizard dynamically updates to confirm the selection. Only fields relevant to Personal Auto - Standard Auto are queued for subsequent steps (e.g., Vehicle Information, Driver Information, Auto Coverage Options)"
+        },
+        {
+          "step": 4,
+          "action": "Click the 'Next' button to proceed to Step 2",
+          "expectedResult": "Wizard advances to Step 2 which displays only the fields relevant to the selected line of business and product type. Irrelevant fields (e.g., property-related fields like 'Dwelling Type') are not shown"
+        },
+        {
+          "step": 5,
+          "action": "Verify the fields displayed on Step 2 match the Personal Auto - Standard Auto configuration",
+          "expectedResult": "Step 2 shows fields such as 'Vehicle Year', 'Vehicle Make', 'Vehicle Model', 'VIN', and 'Usage Type' — all specific to auto insurance policy creation"
+        }
+      ],
+      "postconditions": [
+        "Wizard is on Step 2 with only Personal Auto relevant fields displayed",
+        "No data has been persisted to the database yet as the wizard is still in progress",
+        "User session remains active and authenticated"
+      ]
+    },
+    {
+      "id": "TC-FUNC-002",
+      "title": "Verify progress indicator accurately reflects current step, completed steps, and remaining steps with estimated time",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and has launched the policy creation wizard",
+        "Line of business 'Homeowners' and product type 'Standard Homeowners' have been selected",
+        "The wizard configuration for this product has 5 steps total"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Observe the progress indicator at the top of the wizard on Step 1",
+          "expectedResult": "Progress indicator shows Step 1 as the current step (highlighted/active), Steps 2-5 as remaining steps (greyed out or outlined), and displays an estimated time to completion (e.g., 'Estimated time: 8 minutes')"
+        },
+        {
+          "step": 2,
+          "action": "Complete all required fields on Step 1 and click 'Next' to advance to Step 2",
+          "expectedResult": "Progress indicator updates: Step 1 is now marked as completed (e.g., green checkmark), Step 2 is highlighted as the current step, Steps 3-5 remain as remaining steps. Estimated time updates (e.g., 'Estimated time: 6 minutes')"
+        },
+        {
+          "step": 3,
+          "action": "Complete all required fields on Step 2 and click 'Next' to advance to Step 3",
+          "expectedResult": "Progress indicator updates: Steps 1 and 2 are marked as completed with checkmarks, Step 3 is highlighted as current, Steps 4-5 are remaining. Estimated time updates accordingly"
+        },
+        {
+          "step": 4,
+          "action": "Click the 'Back' button to return to Step 2",
+          "expectedResult": "Wizard navigates back to Step 2. Progress indicator shows Step 2 as current again, Step 1 remains completed, Steps 3-5 show as remaining. Previously entered data on Step 2 is preserved"
+        },
+        {
+          "step": 5,
+          "action": "Click 'Next' again to return to Step 3 and continue through Steps 3, 4, and 5 completing all required fields",
+          "expectedResult": "At each step, the progress indicator correctly reflects the current step, all previously completed steps retain their completed status, and the estimated time decreases as the agent progresses"
+        },
+        {
+          "step": 6,
+          "action": "On the final step (Step 5), observe the progress indicator before submission",
+          "expectedResult": "Steps 1-4 are all marked as completed, Step 5 is highlighted as the current/final step, estimated time shows '~1 minute' or similar, and a 'Submit' or 'Create Policy' button is visible"
+        }
+      ],
+      "postconditions": [
+        "Progress indicator has accurately tracked all 5 steps throughout the wizard flow",
+        "All step labels are visible and correctly named in the progress indicator",
+        "Estimated time was displayed and updated at each step transition"
+      ]
+    },
+    {
+      "id": "TC-FUNC-003",
+      "title": "Verify smart defaults pre-populate agent code, effective date, and standard coverage options",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent 'John Smith' with agent code 'AGT-12345' is authenticated and logged in",
+        "Today's date is 2025-01-15",
+        "Standard coverage options for 'Personal Auto - Standard Auto' are configured in the system (e.g., Liability: $100K/$300K, Collision Deductible: $500, Comprehensive Deductible: $500)",
+        "Agent has launched the policy creation wizard and selected 'Personal Auto' line of business and 'Standard Auto' product type"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the step in the wizard that contains the 'Agent Code' field",
+          "expectedResult": "The 'Agent Code' field is pre-populated with 'AGT-12345' matching the logged-in agent's code. The field is either read-only or editable with the default value filled in"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the step containing the 'Policy Effective Date' field",
+          "expectedResult": "The 'Policy Effective Date' field is pre-populated with today's date '01/15/2025' or the next business day. The agent can modify this date if needed"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to the step containing coverage options",
+          "expectedResult": "Standard coverage options are pre-populated: Bodily Injury Liability shows '$100,000/$300,000', Property Damage Liability shows '$50,000', Collision Deductible shows '$500', Comprehensive Deductible shows '$500'. All values match the configured defaults for Standard Auto"
+        },
+        {
+          "step": 4,
+          "action": "Count the total number of fields in the wizard and identify which ones are pre-populated vs. which require manual entry",
+          "expectedResult": "At least 40% of the total fields across all wizard steps are pre-populated with smart defaults, reducing the agent's manual data entry effort significantly"
+        },
+        {
+          "step": 5,
+          "action": "Modify the pre-populated 'Policy Effective Date' from '01/15/2025' to '02/01/2025'",
+          "expectedResult": "The system accepts the modified date. The 'Policy Expiration Date' (if present) automatically recalculates based on the new effective date (e.g., updates to '02/01/2026' for a 12-month term)"
+        },
+        {
+          "step": 6,
+          "action": "Modify the Collision Deductible from the default '$500' to '$1,000'",
+          "expectedResult": "The system accepts the modified deductible value. Any premium estimate or related fields update accordingly to reflect the higher deductible"
+        }
+      ],
+      "postconditions": [
+        "Agent code, effective date, and standard coverage options were all pre-populated with correct smart defaults",
+        "Modified values are retained and reflected in the wizard state",
+        "Manual entry reduction of at least 40% is achieved through smart defaults"
+      ]
+    },
+    {
+      "id": "TC-FUNC-004",
+      "title": "Verify complete end-to-end policy creation wizard submission and data persistence",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated with valid credentials and has 'Policy Creation' permission",
+        "All reference data (lines of business, product types, coverage options, rating tables) are loaded in the system",
+        "Agent is on the policy management page",
+        "Database is accessible and writable"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Create New Policy' and select 'Personal Auto' line of business and 'Standard Auto' product type, then click 'Next'",
+          "expectedResult": "Wizard advances to the policyholder information step with relevant fields displayed"
+        },
+        {
+          "step": 2,
+          "action": "Enter policyholder details: First Name: 'Jane', Last Name: 'Doe', Date of Birth: '03/15/1985', Address: '123 Main St, Springfield, IL 62701', Phone: '(217) 555-0100', Email: 'jane.doe@email.com'. Click 'Next'",
+          "expectedResult": "All fields pass validation. Wizard advances to the vehicle/risk information step"
+        },
+        {
+          "step": 3,
+          "action": "Enter vehicle details: Year: '2023', Make: 'Toyota', Model: 'Camry', VIN: '4T1BF1FK5CU123456', Usage: 'Commute'. Click 'Next'",
+          "expectedResult": "Vehicle information is validated (VIN format check passes). Wizard advances to the coverage selection step"
+        },
+        {
+          "step": 4,
+          "action": "Review pre-populated coverage defaults and accept them as-is. Click 'Next'",
+          "expectedResult": "Coverage selections are confirmed. Wizard advances to the review/summary step"
+        },
+        {
+          "step": 5,
+          "action": "Review the complete policy summary on the final step, verifying all entered and pre-populated data is displayed correctly",
+          "expectedResult": "Summary page displays all data: policyholder info, vehicle info, coverage selections, agent code, effective date, and estimated premium. All values match what was entered or defaulted"
+        },
+        {
+          "step": 6,
+          "action": "Click the 'Submit Policy' button on the review/summary step",
+          "expectedResult": "System processes the submission. A success confirmation message appears (e.g., 'Policy PL-2025-00001 has been created successfully'). A unique policy number is generated and displayed"
+        },
+        {
+          "step": 7,
+          "action": "Navigate to the policy search page and search for the newly created policy number 'PL-2025-00001'",
+          "expectedResult": "The policy is found in the search results. Clicking on it displays all the details that were entered during the wizard, confirming data persistence to the database"
+        },
+        {
+          "step": 8,
+          "action": "Verify the policy status in the system",
+          "expectedResult": "The policy status shows as 'Active' or 'Pending Review' depending on business rules. All fields including agent code, effective date, policyholder info, vehicle info, and coverages are correctly stored"
+        }
+      ],
+      "postconditions": [
+        "New policy record is persisted in the application database with a unique policy number",
+        "All entered and defaulted data is accurately stored and retrievable",
+        "Agent is redirected to the policy confirmation or policy detail page",
+        "Audit trail records the policy creation event with agent ID and timestamp"
+      ]
+    },
+    {
+      "id": "TC-FUNC-005",
+      "title": "Verify wizard displays different relevant fields when switching between different lines of business",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and on the policy creation wizard",
+        "System has at least two different lines of business configured: 'Personal Auto' and 'Homeowners'",
+        "Each line of business has distinct field configurations in the system"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "On Step 1 of the wizard, select 'Personal Auto' from the Line of Business dropdown and 'Standard Auto' from the Product Type dropdown. Note the steps and fields shown in the progress indicator",
+          "expectedResult": "Wizard configures steps relevant to Personal Auto: steps may include Policyholder Info, Vehicle Information, Driver Information, Coverage Selection, Review. Auto-specific fields like VIN, Vehicle Make/Model, Driver License Number are expected"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Back' or restart the wizard. Select 'Homeowners' from the Line of Business dropdown and 'Standard Homeowners' from the Product Type dropdown",
+          "expectedResult": "Wizard reconfigures to show steps relevant to Homeowners: steps may include Policyholder Info, Property Information, Dwelling Details, Coverage Selection, Review. Property-specific fields like 'Dwelling Type', 'Year Built', 'Square Footage', 'Roof Type' are displayed instead of auto fields"
+        },
+        {
+          "step": 3,
+          "action": "Advance through the Homeowners wizard steps and verify that no auto-specific fields appear",
+          "expectedResult": "No fields related to vehicles (VIN, Make, Model) or drivers (License Number, Driving Record) appear anywhere in the Homeowners wizard flow"
+        },
+        {
+          "step": 4,
+          "action": "Verify that coverage options on the coverage step are specific to Homeowners",
+          "expectedResult": "Coverage options show Homeowners-specific coverages such as 'Dwelling Coverage', 'Personal Property Coverage', 'Liability Coverage', 'Loss of Use' rather than auto coverages like 'Collision' or 'Comprehensive'"
+        }
+      ],
+      "postconditions": [
+        "Wizard correctly adapts field display based on the selected line of business",
+        "No cross-contamination of fields between different lines of business",
+        "Progress indicator step count and labels adjust per line of business"
+      ]
+    },
+    {
+      "id": "TC-FUNC-006",
+      "title": "Verify wizard navigation - Back button preserves previously entered data",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and has started the policy creation wizard",
+        "Line of business 'Personal Auto' and product type 'Standard Auto' are selected",
+        "Agent has advanced to Step 3 of the wizard with data entered on Steps 1 and 2"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "On Step 3 (e.g., Coverage Selection), note the current field values. Click the 'Back' button",
+          "expectedResult": "Wizard navigates back to Step 2. All previously entered data on Step 2 (e.g., Vehicle Year: '2023', Make: 'Toyota', Model: 'Camry') is preserved and displayed in the fields"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Back' button again to return to Step 1",
+          "expectedResult": "Wizard navigates back to Step 1. All previously entered data on Step 1 (e.g., policyholder name, address) is preserved and displayed"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Next' to advance back to Step 2",
+          "expectedResult": "Step 2 displays with all previously entered data intact. No data loss occurred during backward navigation"
+        },
+        {
+          "step": 4,
+          "action": "Click 'Next' again to advance to Step 3",
+          "expectedResult": "Step 3 displays with all previously entered or selected data intact. The entire wizard state is preserved through forward and backward navigation"
+        }
+      ],
+      "postconditions": [
+        "All data entered across all wizard steps is preserved after multiple back-and-forth navigations",
+        "No data loss or field reset occurred during navigation",
+        "Progress indicator correctly reflects the current step after navigation"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Verify wizard step validation prevents advancing with missing required fields",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and on Step 2 of the policy creation wizard",
+        "Step 2 contains required fields such as 'First Name', 'Last Name', and 'Date of Birth'",
+        "No data has been entered on Step 2 yet"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Leave all required fields on Step 2 blank and click the 'Next' button",
+          "expectedResult": "The wizard does not advance to Step 3. Validation error messages appear next to each required field (e.g., 'First Name is required', 'Last Name is required', 'Date of Birth is required'). Error messages are displayed in red text"
+        },
+        {
+          "step": 2,
+          "action": "Enter 'Jane' in the 'First Name' field but leave 'Last Name' and 'Date of Birth' blank. Click 'Next'",
+          "expectedResult": "The wizard still does not advance. Validation error clears for 'First Name' but remains for 'Last Name' and 'Date of Birth'"
+        },
+        {
+          "step": 3,
+          "action": "Fill in all remaining required fields: Last Name: 'Doe', Date of Birth: '03/15/1985'. Click 'Next'",
+          "expectedResult": "All validation errors clear. The wizard successfully advances to Step 3"
+        },
+        {
+          "step": 4,
+          "action": "Verify the progress indicator updates after successful advancement",
+          "expectedResult": "Step 2 is marked as completed in the progress indicator and Step 3 is highlighted as the current step"
+        }
+      ],
+      "postconditions": [
+        "Wizard enforces required field validation at each step before allowing progression",
+        "Validation error messages are clear and specific to each field",
+        "Successfully validated steps are marked as completed in the progress indicator"
+      ]
+    },
+    {
+      "id": "TC-FUNC-008",
+      "title": "Verify system correctly processes and returns expected results for policy creation (Scenario 4 - successful processing)",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated with valid credentials",
+        "All wizard steps have been completed with valid data",
+        "Agent is on the review/summary step of the wizard",
+        "Backend API and database services are operational"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Review all policy details on the summary step and confirm accuracy of policyholder information, risk details, and coverage selections",
+          "expectedResult": "All data displayed on the summary matches what was entered in previous steps. No discrepancies are found"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Submit Policy' button",
+          "expectedResult": "System processes the policy creation request. A loading indicator or spinner is displayed during processing"
+        },
+        {
+          "step": 3,
+          "action": "Wait for the system to complete processing",
+          "expectedResult": "System returns a success response. Confirmation screen displays with the generated policy number, effective date, and a summary of the created policy. A success message such as 'Policy created successfully' is shown"
+        },
+        {
+          "step": 4,
+          "action": "Verify the policy details via the API or by navigating to the policy detail page",
+          "expectedResult": "The API returns the correct policy data with all fields matching the submitted values. Policy status is set appropriately (e.g., 'Active' or 'Bound'). All coverage amounts, deductibles, and limits are correctly stored"
+        },
+        {
+          "step": 5,
+          "action": "Check that the system response time for the submission was within acceptable SLA limits",
+          "expectedResult": "Policy creation completes within the defined SLA (e.g., under 5 seconds). No timeout or performance degradation is observed"
+        }
+      ],
+      "postconditions": [
+        "Policy is successfully created and persisted in the database with correct data",
+        "System returned expected results including policy number and confirmation",
+        "Response time met SLA requirements",
+        "Audit log entry created for the policy creation event"
+      ]
+    },
+    {
+      "id": "TC-FUNC-009",
+      "title": "Verify system handles operation correctly and returns expected results (Scenario 5 - retrieval after creation)",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "A policy has been successfully created through the wizard in a previous test",
+        "The policy number (e.g., 'PL-2025-00001') is known",
+        "Insurance Agent is authenticated and on the policy management page",
+        "Database contains the persisted policy record"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the policy search or lookup page",
+          "expectedResult": "Policy search page loads with search fields available (policy number, policyholder name, etc.)"
+        },
+        {
+          "step": 2,
+          "action": "Enter the policy number 'PL-2025-00001' in the search field and click 'Search'",
+          "expectedResult": "System retrieves and displays the policy in the search results list with key details (policy number, policyholder name, status, effective date)"
+        },
+        {
+          "step": 3,
+          "action": "Click on the policy record to open the full policy detail view",
+          "expectedResult": "Policy detail page loads displaying all information: policyholder details, risk/vehicle information, coverage selections, agent code, effective date, expiration date, and premium amount. All values match what was submitted through the wizard"
+        },
+        {
+          "step": 4,
+          "action": "Verify data integrity by comparing each field value against the original wizard submission",
+          "expectedResult": "Every field value matches exactly: names, dates, addresses, coverage amounts, deductibles, agent code, and all other data points are consistent with the original submission"
+        }
+      ],
+      "postconditions": [
+        "Policy data is correctly retrieved from the database and displayed",
+        "Data integrity is confirmed — no data corruption or loss during persistence",
+        "System handles the retrieval operation within acceptable response times"
+      ]
+    },
+    {
+      "id": "TC-FUNC-010",
+      "title": "Verify wizard can be saved as draft and resumed later",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and has started the policy creation wizard",
+        "Agent has completed Steps 1 and 2 with valid data and is currently on Step 3",
+        "System supports save-as-draft functionality"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the 'Save as Draft' or 'Save & Exit' button on Step 3 of the wizard",
+          "expectedResult": "System saves the current wizard state including all entered data from Steps 1-3. A confirmation message appears (e.g., 'Draft saved successfully'). Agent is redirected to the policy management page or dashboard"
+        },
+        {
+          "step": 2,
+          "action": "Log out of the application and log back in as the same agent",
+          "expectedResult": "Agent successfully logs back in and is on the dashboard"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to 'Drafts' or 'In-Progress Policies' section and locate the saved draft",
+          "expectedResult": "The saved draft appears in the list with identifying information (e.g., policyholder name, date saved, line of business)"
+        },
+        {
+          "step": 4,
+          "action": "Click on the draft to resume the wizard",
+          "expectedResult": "Wizard reopens at Step 3 (where it was saved). All data from Steps 1 and 2 is preserved and accessible via the Back button. Step 3 data entered before saving is also preserved"
+        }
+      ],
+      "postconditions": [
+        "Draft policy data is persisted in the database and retrievable across sessions",
+        "Wizard resumes at the correct step with all previously entered data intact",
+        "Progress indicator correctly reflects the resumed state"
+      ]
+    },
+    {
+      "id": "TC-FUNC-011",
+      "title": "Verify product type dropdown filters based on selected line of business",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and on Step 1 of the policy creation wizard",
+        "System has multiple lines of business configured: 'Personal Auto' (with products: Standard Auto, Preferred Auto), 'Homeowners' (with products: Standard Homeowners, Premium Homeowners), 'Commercial Auto' (with products: Fleet, Non-Fleet)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the 'Line of Business' dropdown and select 'Personal Auto'",
+          "expectedResult": "The 'Product Type' dropdown is enabled and populated with only 'Standard Auto' and 'Preferred Auto'. No Homeowners or Commercial products appear"
+        },
+        {
+          "step": 2,
+          "action": "Change the 'Line of Business' selection to 'Homeowners'",
+          "expectedResult": "The 'Product Type' dropdown refreshes and now shows only 'Standard Homeowners' and 'Premium Homeowners'. Previous auto products are no longer listed"
+        },
+        {
+          "step": 3,
+          "action": "Change the 'Line of Business' selection to 'Commercial Auto'",
+          "expectedResult": "The 'Product Type' dropdown refreshes and now shows only 'Fleet' and 'Non-Fleet'. No personal auto or homeowners products appear"
+        },
+        {
+          "step": 4,
+          "action": "Select 'Fleet' from the Product Type dropdown and click 'Next'",
+          "expectedResult": "Wizard advances to Step 2 with fields specific to Commercial Auto - Fleet policies"
+        }
+      ],
+      "postconditions": [
+        "Product type dropdown correctly filters based on the selected line of business each time",
+        "No cross-line-of-business product types are ever displayed",
+        "Wizard steps and fields adapt to the final selection"
+      ]
+    },
+    {
+      "id": "TC-FUNC-012",
+      "title": "Verify the review/summary step displays all data from all previous steps accurately",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent has completed all wizard steps with the following data: Line of Business: Personal Auto, Product: Standard Auto, Policyholder: Jane Doe, DOB: 03/15/1985, Vehicle: 2023 Toyota Camry, Agent Code: AGT-12345, Effective Date: 01/15/2025",
+        "Agent is on the final review/summary step of the wizard"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Review the 'Line of Business & Product' section on the summary page",
+          "expectedResult": "Displays 'Personal Auto - Standard Auto' correctly"
+        },
+        {
+          "step": 2,
+          "action": "Review the 'Policyholder Information' section",
+          "expectedResult": "Displays First Name: 'Jane', Last Name: 'Doe', Date of Birth: '03/15/1985', and all other entered policyholder details accurately"
+        },
+        {
+          "step": 3,
+          "action": "Review the 'Vehicle Information' section",
+          "expectedResult": "Displays Year: '2023', Make: 'Toyota', Model: 'Camry', VIN: '4T1BF1FK5CU123456', Usage: 'Commute'"
+        },
+        {
+          "step": 4,
+          "action": "Review the 'Coverage Options' section",
+          "expectedResult": "Displays all selected coverage options with correct limits and deductibles matching what was selected or defaulted"
+        },
+        {
+          "step": 5,
+          "action": "Review the 'Agent & Policy Details' section",
+          "expectedResult": "Displays Agent Code: 'AGT-12345', Effective Date: '01/15/2025', Policy Term, and any calculated premium estimate"
+        },
+        {
+          "step": 6,
+          "action": "Click 'Edit' or the step indicator for Step 2 (Policyholder Info) to go back and make a change",
+          "expectedResult": "Wizard navigates back to Step 2 allowing the agent to edit policyholder information. After editing and navigating back to the summary, the updated data is reflected"
+        }
+      ],
+      "postconditions": [
+        "Summary step accurately reflects all data from every wizard step",
+        "Agent can navigate back to any step from the summary to make edits",
+        "Edited data is correctly updated on the summary upon return"
+      ]
+    },
+    {
+      "id": "TC-FUNC-013",
+      "title": "Verify smart defaults reduce manual entry by at least 40%",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent 'AGT-12345' is authenticated",
+        "System has smart defaults configured for 'Personal Auto - Standard Auto'",
+        "A complete list of all wizard fields for this product type is documented for comparison"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Launch the policy creation wizard and select 'Personal Auto' - 'Standard Auto'",
+          "expectedResult": "Wizard initializes with the first step displayed"
+        },
+        {
+          "step": 2,
+          "action": "Navigate through all wizard steps WITHOUT entering any data, counting the total number of input fields across all steps",
+          "expectedResult": "Total field count is documented (e.g., 25 total fields across all steps)"
+        },
+        {
+          "step": 3,
+          "action": "Restart the wizard with the same selections and count the number of fields that are pre-populated with smart defaults (agent code, effective date, standard coverages, default deductibles, policy term, etc.)",
+          "expectedResult": "Pre-populated field count is documented (e.g., 12 out of 25 fields are pre-populated). This includes at minimum: Agent Code, Effective Date, Expiration Date, standard coverage limits, and default deductibles"
+        },
+        {
+          "step": 4,
+          "action": "Calculate the percentage of pre-populated fields: (pre-populated fields / total fields) × 100",
+          "expectedResult": "The percentage of pre-populated fields is at least 40% (e.g., 12/25 = 48%). The 40% reduction threshold specified in the acceptance criteria is met or exceeded"
+        }
+      ],
+      "postconditions": [
+        "Smart defaults achieve at least 40% reduction in manual data entry",
+        "All pre-populated values are accurate and appropriate for the selected product type",
+        "Agent can override any pre-populated default value if needed"
+      ]
+    },
+    {
+      "id": "TC-FUNC-014",
+      "title": "Verify wizard handles authenticated agent session and security requirements",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated with valid credentials",
+        "Agent has the required 'Policy Creation' role/permission",
+        "Application enforces authentication on all policy creation endpoints"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the policy creation wizard while authenticated",
+          "expectedResult": "Wizard loads successfully. Agent's identity is recognized (agent code pre-populated)"
+        },
+        {
+          "step": 2,
+          "action": "Inspect the network requests (via browser developer tools) during wizard interaction",
+          "expectedResult": "All API calls include proper authentication tokens/headers. No sensitive data is transmitted in URL parameters. HTTPS is used for all requests"
+        },
+        {
+          "step": 3,
+          "action": "Enter data with potential XSS content in a text field, e.g., First Name: '<script>alert(1)</script>'",
+          "expectedResult": "System sanitizes the input. The script tag is either rejected with a validation error or stored as escaped text. No script execution occurs"
+        },
+        {
+          "step": 4,
+          "action": "Submit the policy and verify the stored data",
+          "expectedResult": "If the input was accepted, it is stored as sanitized/escaped text. If rejected, a clear validation error was shown. Input validation is enforced on both client and server side"
+        }
+      ],
+      "postconditions": [
+        "Authentication is enforced throughout the wizard flow",
+        "Input validation prevents injection attacks",
+        "All data transmission uses secure protocols"
+      ]
+    }
+  ],
+  "negative": [
+    {
+      "id": "TC-NEGA-001",
+      "title": "Verify wizard prevents submission with all required fields empty",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and on the policy creation wizard",
+        "Line of business and product type have been selected on Step 1",
+        "Agent is on a step with multiple required fields (e.g., Policyholder Information)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Leave all fields on the current step completely empty (do not enter any data)",
+          "expectedResult": "Fields remain blank with no default values (except smart-defaulted fields)"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Next' button to attempt to advance to the next step",
+          "expectedResult": "Wizard does NOT advance. Validation error messages appear for each required field (e.g., 'First Name is required', 'Last Name is required', 'Date of Birth is required'). Errors are displayed in red near the respective fields"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to click directly on a later step in the progress indicator to skip ahead",
+          "expectedResult": "System prevents skipping to a later step when the current step has validation errors. Either the click is ignored or a message indicates the current step must be completed first"
+        }
+      ],
+      "postconditions": [
+        "No data is saved or persisted when required fields are empty",
+        "Wizard remains on the current step with validation errors displayed",
+        "No partial or incomplete policy record is created in the database"
+      ]
+    },
+    {
+      "id": "TC-NEGA-002",
+      "title": "Verify wizard rejects invalid date format for effective date",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and on the wizard step containing the 'Policy Effective Date' field",
+        "The effective date field has been cleared of its smart default value"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Clear the 'Policy Effective Date' field and enter '13/32/2025' (invalid month and day)",
+          "expectedResult": "System displays a validation error: 'Please enter a valid date in MM/DD/YYYY format' or similar. The field is highlighted in red"
+        },
+        {
+          "step": 2,
+          "action": "Clear the field and enter 'abcd-ef-gh' (non-date text)",
+          "expectedResult": "System displays a validation error indicating invalid date format. The field does not accept non-numeric characters in the date field, or rejects the input upon validation"
+        },
+        {
+          "step": 3,
+          "action": "Clear the field and enter '02/30/2025' (February 30th - impossible date)",
+          "expectedResult": "System displays a validation error: 'Invalid date' or 'February does not have 30 days'. The wizard does not advance"
+        },
+        {
+          "step": 4,
+          "action": "Clear the field and enter '01/15/2020' (a date in the past)",
+          "expectedResult": "System displays a validation error: 'Effective date cannot be in the past' or similar. The wizard does not advance"
+        },
+        {
+          "step": 5,
+          "action": "Click 'Next' with the invalid date still in the field",
+          "expectedResult": "Wizard does not advance. Validation error remains visible next to the date field"
+        }
+      ],
+      "postconditions": [
+        "No policy is created with an invalid effective date",
+        "All invalid date formats are rejected with clear error messages",
+        "Wizard remains on the current step until a valid date is provided"
+      ]
+    },
+    {
+      "id": "TC-NEGA-003",
+      "title": "Verify wizard rejects special characters and SQL injection in text fields",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and on the policyholder information step of the wizard",
+        "Required text fields such as 'First Name', 'Last Name', and 'Address' are visible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter SQL injection string in the 'First Name' field: \"'; DROP TABLE policies; --\"",
+          "expectedResult": "System either rejects the input with a validation error ('Invalid characters in First Name') or sanitizes the input. No database operation is executed. The application does not crash or display a database error"
+        },
+        {
+          "step": 2,
+          "action": "Enter XSS attack string in the 'Last Name' field: '<script>alert(\"XSS\")</script>'",
+          "expectedResult": "System either rejects the input with a validation error or sanitizes/escapes the HTML tags. No JavaScript execution occurs. The field displays the text as plain text if accepted"
+        },
+        {
+          "step": 3,
+          "action": "Enter excessive special characters in the 'Address' field: '!@#$%^&*()_+={}[]|\\:\";<>?,./~`'",
+          "expectedResult": "System validates the input. Common address characters (., #, -) may be accepted, but unusual special characters trigger a validation warning or are stripped"
+        },
+        {
+          "step": 4,
+          "action": "Click 'Next' to attempt to advance",
+          "expectedResult": "If invalid inputs were flagged, the wizard does not advance and shows appropriate validation errors. If inputs were sanitized and accepted, the wizard advances with sanitized data"
+        }
+      ],
+      "postconditions": [
+        "No SQL injection or XSS attack is successful",
+        "Database integrity is maintained — no tables dropped or data corrupted",
+        "Application remains stable and functional after injection attempts"
+      ]
+    },
+    {
+      "id": "TC-NEGA-004",
+      "title": "Verify unauthenticated user cannot access the policy creation wizard",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is NOT logged into the application (no active session)",
+        "The direct URL to the policy creation wizard is known (e.g., '/policies/create/wizard')"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open a new browser window/tab and navigate directly to the policy creation wizard URL without logging in",
+          "expectedResult": "System redirects the user to the login page. The policy creation wizard is NOT displayed. An error message may appear: 'Please log in to access this feature'"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to call the policy creation API endpoint directly (e.g., POST /api/policies/create) without an authentication token using a tool like Postman",
+          "expectedResult": "API returns HTTP 401 Unauthorized response. No policy data is created. Response body contains an error message such as 'Authentication required'"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to access the wizard URL with an expired session token",
+          "expectedResult": "System detects the expired session and redirects to the login page. A message such as 'Your session has expired. Please log in again' is displayed"
+        }
+      ],
+      "postconditions": [
+        "Unauthenticated users cannot access any part of the policy creation wizard",
+        "No policy data is created or exposed to unauthenticated users",
+        "All unauthorized access attempts are logged for security auditing"
+      ]
+    },
+    {
+      "id": "TC-NEGA-005",
+      "title": "Verify user without Policy Creation permission cannot access the wizard",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "A user with role 'Read-Only Agent' or 'Claims Adjuster' (without 'Policy Creation' permission) is authenticated",
+        "The user is on the main dashboard or policy management page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Look for the 'Create New Policy' button on the policy management page",
+          "expectedResult": "The 'Create New Policy' button is either not visible or is disabled/greyed out for users without Policy Creation permission"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to navigate directly to the policy creation wizard URL (e.g., '/policies/create/wizard')",
+          "expectedResult": "System displays an 'Access Denied' or 'Insufficient Permissions' error page. The wizard is not loaded. Message states: 'You do not have permission to create policies'"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to call the policy creation API endpoint with the authenticated user's token",
+          "expectedResult": "API returns HTTP 403 Forbidden response. Response body contains: 'Insufficient permissions to create policies'"
+        }
+      ],
+      "postconditions": [
+        "Users without Policy Creation permission cannot access the wizard through any method",
+        "No policy data is created by unauthorized users",
+        "Permission denial is logged in the audit trail"
+      ]
+    },
+    {
+      "id": "TC-NEGA-006",
+      "title": "Verify wizard handles network failure during policy submission gracefully",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent has completed all wizard steps with valid data",
+        "Agent is on the review/summary step ready to submit",
+        "Browser developer tools are open to simulate network conditions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Using browser developer tools, set the network to 'Offline' mode to simulate a network disconnection",
+          "expectedResult": "Network is disconnected. No outgoing requests can reach the server"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Submit Policy' button while offline",
+          "expectedResult": "System attempts to submit but fails. A user-friendly error message is displayed: 'Unable to submit policy. Please check your network connection and try again.' The wizard does NOT close or lose the entered data"
+        },
+        {
+          "step": 3,
+          "action": "Re-enable the network connection (set to 'Online' in developer tools)",
+          "expectedResult": "Network connectivity is restored"
+        },
+        {
+          "step": 4,
+          "action": "Click the 'Submit Policy' button again (or a 'Retry' button if available)",
+          "expectedResult": "System successfully submits the policy. Confirmation message appears with the generated policy number. All data is correctly persisted"
+        },
+        {
+          "step": 5,
+          "action": "Verify no duplicate policy was created from the failed attempt",
+          "expectedResult": "Only one policy record exists in the database. The failed submission did not create a partial or duplicate record"
+        }
+      ],
+      "postconditions": [
+        "Network failure is handled gracefully with a clear error message",
+        "No data loss occurs during network failure — wizard state is preserved",
+        "No duplicate or partial policy records are created",
+        "Successful retry creates exactly one policy record"
+      ]
+    },
+    {
+      "id": "TC-NEGA-007",
+      "title": "Verify wizard rejects excessively long input in text fields",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and on the policyholder information step",
+        "Text fields such as 'First Name', 'Last Name', and 'Address' are visible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter a string of 500 characters in the 'First Name' field (e.g., 'A' repeated 500 times)",
+          "expectedResult": "System either truncates the input to the maximum allowed length (e.g., 50 characters) or displays a validation error: 'First Name cannot exceed [X] characters'"
+        },
+        {
+          "step": 2,
+          "action": "Enter a string of 1000 characters in the 'Address' field",
+          "expectedResult": "System either truncates the input or displays a validation error indicating the maximum character limit for the address field"
+        },
+        {
+          "step": 3,
+          "action": "Enter a string of 255 characters in the 'Email' field (e.g., a very long email address)",
+          "expectedResult": "System validates the email format and length. If the email exceeds the maximum allowed length, a validation error is displayed"
+        },
+        {
+          "step": 4,
+          "action": "Click 'Next' with the excessively long inputs",
+          "expectedResult": "Wizard does not advance if validation errors exist. If inputs were truncated, the wizard advances with the truncated values"
+        }
+      ],
+      "postconditions": [
+        "No database errors occur from excessively long input",
+        "Field length limits are enforced on both client and server side",
+        "Clear error messages indicate maximum allowed lengths"
+      ]
+    },
+    {
+      "id": "TC-NEGA-008",
+      "title": "Verify wizard handles server error (500) during submission",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent has completed all wizard steps with valid data",
+        "Agent is on the review/summary step ready to submit",
+        "Test environment can simulate a server 500 error (e.g., via mock server or by temporarily disabling the backend service)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Configure the test environment to return a 500 Internal Server Error on the policy creation API endpoint",
+          "expectedResult": "Server is configured to return 500 error"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Submit Policy' button",
+          "expectedResult": "System receives the 500 error. A user-friendly error message is displayed: 'An unexpected error occurred. Please try again later or contact support.' The raw server error details are NOT exposed to the user"
+        },
+        {
+          "step": 3,
+          "action": "Verify the wizard state after the error",
+          "expectedResult": "All entered data is preserved in the wizard. The agent remains on the review/summary step. The 'Submit Policy' button is still available for retry"
+        },
+        {
+          "step": 4,
+          "action": "Restore the server to normal operation and click 'Submit Policy' again",
+          "expectedResult": "Policy is successfully created. Confirmation message appears with the policy number"
+        }
+      ],
+      "postconditions": [
+        "Server errors are handled gracefully without exposing technical details",
+        "Wizard data is preserved after a server error",
+        "No partial or corrupted policy records exist in the database from the failed attempt",
+        "Error is logged on the server side for debugging"
+      ]
+    },
+    {
+      "id": "TC-NEGA-009",
+      "title": "Verify wizard rejects invalid VIN format for auto policy",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is on the vehicle information step of a Personal Auto policy wizard",
+        "The VIN field is visible and requires a valid 17-character VIN"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter a VIN with only 10 characters: 'ABC1234567'",
+          "expectedResult": "Validation error appears: 'VIN must be exactly 17 characters' or similar. The field is highlighted in red"
+        },
+        {
+          "step": 2,
+          "action": "Enter a VIN with 20 characters: '4T1BF1FK5CU12345678901'",
+          "expectedResult": "System either prevents entry beyond 17 characters or displays a validation error: 'VIN must be exactly 17 characters'"
+        },
+        {
+          "step": 3,
+          "action": "Enter a VIN with invalid characters: '4T1BF1FK5CU12345O' (letter O which is not valid in VINs)",
+          "expectedResult": "Validation error appears: 'Invalid VIN format. VIN cannot contain letters I, O, or Q'"
+        },
+        {
+          "step": 4,
+          "action": "Leave the VIN field completely empty and click 'Next'",
+          "expectedResult": "Validation error appears: 'VIN is required'. Wizard does not advance"
+        },
+        {
+          "step": 5,
+          "action": "Enter a valid 17-character VIN: '4T1BF1FK5CU123456' and click 'Next'",
+          "expectedResult": "VIN validation passes. Wizard advances to the next step"
+        }
+      ],
+      "postconditions": [
+        "Invalid VIN formats are rejected with specific error messages",
+        "Only valid 17-character VINs are accepted",
+        "No policy is created with an invalid VIN"
+      ]
+    },
+    {
+      "id": "TC-NEGA-010",
+      "title": "Verify wizard handles no line of business or product type selection",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and on Step 1 of the policy creation wizard",
+        "Line of Business and Product Type dropdowns are displayed with no default selection"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Without selecting any Line of Business, click the 'Next' button",
+          "expectedResult": "Validation error appears: 'Please select a Line of Business'. Wizard does not advance. The Line of Business dropdown is highlighted"
+        },
+        {
+          "step": 2,
+          "action": "Select 'Personal Auto' from Line of Business but leave Product Type unselected. Click 'Next'",
+          "expectedResult": "Validation error appears: 'Please select a Product Type'. Wizard does not advance. The Product Type dropdown is highlighted"
+        },
+        {
+          "step": 3,
+          "action": "Select both 'Personal Auto' and 'Standard Auto' and click 'Next'",
+          "expectedResult": "Validation passes. Wizard advances to Step 2 with relevant fields for the selected combination"
+        }
+      ],
+      "postconditions": [
+        "Wizard enforces selection of both Line of Business and Product Type before advancing",
+        "Clear validation messages guide the user to make required selections",
+        "No wizard steps are configured without a valid LOB and product type selection"
+      ]
+    },
+    {
+      "id": "TC-NEGA-011",
+      "title": "Verify wizard handles invalid email format in policyholder information",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is on the policyholder information step of the wizard",
+        "Email field is visible and available for input"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter 'notanemail' in the Email field (no @ symbol or domain)",
+          "expectedResult": "Validation error appears: 'Please enter a valid email address'. Field is highlighted in red"
+        },
+        {
+          "step": 2,
+          "action": "Enter 'user@' in the Email field (missing domain)",
+          "expectedResult": "Validation error appears: 'Please enter a valid email address'"
+        },
+        {
+          "step": 3,
+          "action": "Enter '@domain.com' in the Email field (missing local part)",
+          "expectedResult": "Validation error appears: 'Please enter a valid email address'"
+        },
+        {
+          "step": 4,
+          "action": "Enter 'user@domain' in the Email field (missing TLD)",
+          "expectedResult": "Validation error appears: 'Please enter a valid email address'"
+        },
+        {
+          "step": 5,
+          "action": "Enter 'user name@domain.com' in the Email field (space in local part)",
+          "expectedResult": "Validation error appears: 'Please enter a valid email address'"
+        },
+        {
+          "step": 6,
+          "action": "Enter 'jane.doe@email.com' in the Email field (valid format)",
+          "expectedResult": "No validation error. Email is accepted"
+        }
+      ],
+      "postconditions": [
+        "All invalid email formats are rejected with clear error messages",
+        "Valid email formats are accepted without errors",
+        "Email validation occurs on both client-side and server-side"
+      ]
+    },
+    {
+      "id": "TC-NEGA-012",
+      "title": "Verify wizard handles session timeout during multi-step completion",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is authenticated and has completed Steps 1-3 of the wizard with valid data",
+        "Session timeout is configured (e.g., 30 minutes of inactivity)",
+        "Agent is on Step 4 of the wizard"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Leave the wizard idle for longer than the session timeout period (e.g., 31 minutes)",
+          "expectedResult": "Session expires on the server side"
+        },
+        {
+          "step": 2,
+          "action": "After the timeout period, attempt to click 'Next' or interact with the wizard",
+          "expectedResult": "System detects the expired session. A modal or redirect appears: 'Your session has expired. Please log in again to continue.' The user is redirected to the login page"
+        },
+        {
+          "step": 3,
+          "action": "Log back in with valid credentials",
+          "expectedResult": "Agent is authenticated and redirected to the dashboard or the wizard resume page"
+        },
+        {
+          "step": 4,
+          "action": "Check if the wizard data from the expired session is recoverable (e.g., via auto-save or drafts)",
+          "expectedResult": "If auto-save is implemented, the wizard data is available as a draft and can be resumed. If not, a clear message indicates that unsaved progress was lost and the agent must start over"
+        }
+      ],
+      "postconditions": [
+        "Session timeout is handled gracefully without application crash",
+        "User is informed about the session expiration with a clear message",
+        "If auto-save exists, wizard data is recoverable; otherwise, the user is informed of data loss",
+        "No partial or corrupted policy records exist from the timed-out session"
+      ]
+    },
+    {
+      "id": "TC-NEGA-013",
+      "title": "Verify wizard rejects negative numbers in numeric fields",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is on a wizard step containing numeric fields such as coverage amounts, deductibles, or vehicle year",
+        "Fields accept numeric input"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter '-500' in the 'Collision Deductible' field",
+          "expectedResult": "Validation error appears: 'Deductible amount must be a positive number' or the field does not accept the negative sign"
+        },
+        {
+          "step": 2,
+          "action": "Enter '-100000' in a 'Coverage Limit' field",
+          "expectedResult": "Validation error appears: 'Coverage limit must be a positive number'"
+        },
+        {
+          "step": 3,
+          "action": "Enter '0' in the 'Coverage Limit' field",
+          "expectedResult": "Validation error appears: 'Coverage limit must be greater than zero' or the system accepts zero if it represents 'no coverage' with appropriate handling"
+        },
+        {
+          "step": 4,
+          "action": "Enter '1800' in the 'Vehicle Year' field (unreasonably old)",
+          "expectedResult": "Validation error appears: 'Vehicle year must be between [minimum year] and [current year + 1]'"
+        },
+        {
+          "step": 5,
+          "action": "Click 'Next' with invalid numeric values",
+          "expectedResult": "Wizard does not advance. All numeric validation errors remain visible"
+        }
+      ],
+      "postconditions": [
+        "Negative numbers are rejected in all numeric fields where they are not valid",
+        "Boundary values for numeric fields are enforced",
+        "Clear error messages indicate the acceptable range for each numeric field"
+      ]
+    },
+    {
+      "id": "TC-NEGA-014",
+      "title": "Verify wizard prevents double submission of the same policy",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent has completed all wizard steps with valid data",
+        "Agent is on the review/summary step with the 'Submit Policy' button visible",
+        "Network latency is normal or slightly slow"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the 'Submit Policy' button",
+          "expectedResult": "System begins processing the submission. The 'Submit Policy' button becomes disabled or shows a loading spinner to prevent additional clicks"
+        },
+        {
+          "step": 2,
+          "action": "Immediately attempt to click the 'Submit Policy' button again (rapid double-click)",
+          "expectedResult": "The second click is ignored because the button is disabled. No duplicate submission request is sent to the server"
+        },
+        {
+          "step": 3,
+          "action": "Wait for the submission to complete",
+          "expectedResult": "Only one policy is created. Confirmation message displays a single policy number"
+        },
+        {
+          "step": 4,
+          "action": "Search for the policyholder in the system to verify no duplicate policies exist",
+          "expectedResult": "Only one policy record exists for the submitted data. No duplicate policies were created"
+        }
+      ],
+      "postconditions": [
+        "Double-click protection prevents duplicate policy submissions",
+        "Only one policy record is created in the database",
+        "Submit button is properly disabled during processing and re-enabled only if submission fails"
+      ]
+    },
+    {
+      "id": "TC-NEGA-015",
+      "title": "Verify wizard handles browser back button without data corruption",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is authenticated and on Step 3 of the policy creation wizard",
+        "Data has been entered on Steps 1, 2, and partially on Step 3"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the browser's native 'Back' button (not the wizard's Back button)",
+          "expectedResult": "System handles the browser back navigation gracefully. Either: (a) the wizard navigates to the previous step with data preserved, (b) a confirmation dialog appears asking 'Are you sure you want to leave? Unsaved changes may be lost', or (c) the wizard state is maintained via URL routing"
+        },
+        {
+          "step": 2,
+          "action": "If a confirmation dialog appeared, click 'Stay on Page' or 'Cancel'",
+          "expectedResult": "User remains on Step 3 of the wizard with all data intact"
+        },
+        {
+          "step": 3,
+          "action": "Click the browser's 'Back' button again and this time confirm leaving (if dialog appears)",
+          "expectedResult": "If the user confirms leaving, the wizard navigates appropriately. If the wizard uses URL-based routing, it navigates to the previous step with data preserved"
+        },
+        {
+          "step": 4,
+          "action": "Click the browser's 'Forward' button to return",
+          "expectedResult": "Wizard returns to the step the user was on. Data is either preserved or the user is informed that they need to re-enter data"
+        }
+      ],
+      "postconditions": [
+        "Browser navigation does not cause data corruption or application errors",
+        "User is warned before potentially losing unsaved wizard data",
+        "Application remains stable after browser navigation interactions"
+      ]
+    },
+    {
+      "id": "TC-NEGA-016",
+      "title": "Verify wizard rejects future date of birth for policyholder",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is on the policyholder information step of the wizard",
+        "Date of Birth field is visible and editable",
+        "Today's date is 2025-01-15"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter '06/15/2030' in the 'Date of Birth' field (a future date)",
+          "expectedResult": "Validation error appears: 'Date of Birth cannot be a future date'. Field is highlighted in red"
+        },
+        {
+          "step": 2,
+          "action": "Enter today's date '01/15/2025' in the 'Date of Birth' field (newborn)",
+          "expectedResult": "System may accept or reject based on minimum age requirements. If minimum age is required (e.g., 16 for auto), validation error appears: 'Policyholder must be at least [X] years old'"
+        },
+        {
+          "step": 3,
+          "action": "Enter '01/15/1900' in the 'Date of Birth' field (125 years old)",
+          "expectedResult": "Validation error appears: 'Please enter a valid Date of Birth' or 'Date of Birth is outside acceptable range'. Unreasonably old dates are rejected"
+        },
+        {
+          "step": 4,
+          "action": "Enter '03/15/1985' in the 'Date of Birth' field (valid date, 39 years old)",
+          "expectedResult": "Validation passes. No error message is displayed. The field accepts the valid date"
+        }
+      ],
+      "postconditions": [
+        "Future dates of birth are rejected",
+        "Unreasonably old dates are rejected",
+        "Age-based business rules are enforced where applicable",
+        "Valid dates of birth are accepted without errors"
+      ]
+    },
+    {
+      "id": "TC-NEGA-017",
+      "title": "Verify wizard handles concurrent policy creation for the same policyholder",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Two browser sessions are open, both authenticated as the same Insurance Agent or different agents",
+        "Both sessions have the policy creation wizard open with the same policyholder data (Jane Doe, DOB: 03/15/1985)",
+        "Both sessions are on the final review/summary step"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "In Browser Session 1, click 'Submit Policy' to create the policy",
+          "expectedResult": "Policy is successfully created in Session 1. Confirmation message appears with policy number (e.g., 'PL-2025-00001')"
+        },
+        {
+          "step": 2,
+          "action": "Immediately in Browser Session 2, click 'Submit Policy' to create the same policy",
+          "expectedResult": "System handles the concurrent submission appropriately. Either: (a) a duplicate detection warning appears: 'A similar policy already exists for this policyholder. Do you want to proceed?', (b) the second policy is created with a different policy number if duplicates are allowed, or (c) the submission is rejected with an error: 'A policy with these details already exists'"
+        },
+        {
+          "step": 3,
+          "action": "Verify the database state",
+          "expectedResult": "The system has handled the concurrent submissions according to business rules — either one policy exists (if duplicates are prevented) or two distinct policies exist (if duplicates are allowed with different policy numbers)"
+        }
+      ],
+      "postconditions": [
+        "Concurrent submissions do not cause database deadlocks or application crashes",
+        "Data integrity is maintained regardless of concurrent access",
+        "Business rules for duplicate detection are enforced consistently"
+      ]
+    },
+    {
+      "id": "TC-NEGA-018",
+      "title": "Verify wizard handles phone number field with invalid formats",
+      "category": "Negative",
+      "priority": "Low",
+      "preconditions": [
+        "Insurance Agent is on the policyholder information step",
+        "Phone number field is visible and available for input"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter 'abcdefghij' (alphabetic characters) in the Phone field",
+          "expectedResult": "System rejects the input: 'Please enter a valid phone number' or the field does not accept alphabetic characters"
+        },
+        {
+          "step": 2,
+          "action": "Enter '123' (too few digits) in the Phone field",
+          "expectedResult": "Validation error appears: 'Phone number must be at least 10 digits' or similar"
+        },
+        {
+          "step": 3,
+          "action": "Enter '12345678901234567890' (20 digits - too many) in the Phone field",
+          "expectedResult": "System either truncates to maximum allowed length or displays a validation error about maximum length"
+        },
+        {
+          "step": 4,
+          "action": "Enter '(217) 555-0100' (valid US phone format) in the Phone field",
+          "expectedResult": "Phone number is accepted without validation errors"
+        }
+      ],
+      "postconditions": [
+        "Invalid phone number formats are rejected with clear error messages",
+        "Valid phone number formats are accepted",
+        "Phone field enforces appropriate length and format constraints"
+      ]
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "TC-EDGE-001",
+      "title": "Wizard behavior when switching line of business mid-way through wizard after completing multiple steps",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials and has policy creation permissions",
+        "Agent is on the Policy Creation Wizard page accessed via main navigation 'Policies > Create New Policy'",
+        "At least two different lines of business (e.g., 'Auto' and 'Homeowners') are configured in the system with distinct field sets",
+        "Agent has completed Steps 1 through 3 of the wizard with 'Auto' line of business selected"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Verify the progress indicator shows Step 3 of N completed with 'Auto' line of business data filled in Steps 1-3",
+          "expectedResult": "Progress indicator highlights Steps 1, 2, 3 as completed with green checkmarks; current step is Step 4; all previously entered Auto-specific data is visible when navigating back"
+        },
+        {
+          "step": 2,
+          "action": "Click on Step 1 in the progress indicator to navigate back to the first step of the wizard",
+          "expectedResult": "Wizard navigates back to Step 1 displaying the line of business selection field with 'Auto' currently selected"
+        },
+        {
+          "step": 3,
+          "action": "Change the line of business dropdown from 'Auto' to 'Homeowners'",
+          "expectedResult": "System displays a confirmation dialog warning: 'Changing the line of business will reset all subsequent steps. Previously entered data may be lost. Do you want to continue?' with 'Yes, Continue' and 'Cancel' buttons"
+        },
+        {
+          "step": 4,
+          "action": "Click 'Yes, Continue' to confirm the line of business change",
+          "expectedResult": "Wizard resets Steps 2 through N; progress indicator shows only Step 1 as current/active; all subsequent steps show as incomplete/pending; fields in Step 1 now reflect 'Homeowners' relevant fields"
+        },
+        {
+          "step": 5,
+          "action": "Proceed to Step 2 by clicking 'Next' button",
+          "expectedResult": "Step 2 displays only fields relevant to 'Homeowners' line of business (e.g., property address, dwelling type, construction year) instead of Auto-specific fields (e.g., VIN, vehicle make/model); smart defaults are re-applied for Homeowners product type"
+        },
+        {
+          "step": 6,
+          "action": "Navigate back to Step 1 and verify the previously entered Auto data is no longer present in any step",
+          "expectedResult": "Step 1 shows 'Homeowners' selected; no residual Auto-specific data exists in any wizard step; all Homeowners-specific smart defaults are correctly populated"
+        }
+      ],
+      "postconditions": [
+        "All Auto-specific data from the previous wizard session is completely cleared from memory and form state",
+        "Wizard is in a clean state for Homeowners line of business with appropriate smart defaults applied",
+        "Progress indicator accurately reflects only Step 1 as completed"
+      ]
+    },
+    {
+      "id": "TC-EDGE-002",
+      "title": "Smart defaults behavior when agent code, effective date, or standard coverage options have no valid default values",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "Agent's profile has no default agent code assigned (agent code field is null/empty in the user profile)",
+        "System date/time is set to December 31, 2025 23:59 (near midnight boundary)",
+        "The selected product type has no standard coverage options configured in the system"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to 'Policies > Create New Policy' to launch the Policy Creation Wizard",
+          "expectedResult": "Wizard opens at Step 1 with line of business selection available"
+        },
+        {
+          "step": 2,
+          "action": "Select 'Commercial General Liability' as the line of business and click 'Next'",
+          "expectedResult": "Wizard proceeds to the step containing agent code, effective date, and coverage options fields"
+        },
+        {
+          "step": 3,
+          "action": "Observe the 'Agent Code' field which should be smart-defaulted",
+          "expectedResult": "Agent Code field is empty (not pre-populated) since no default agent code exists in the agent's profile; field is highlighted with an informational message: 'Please enter your agent code manually' or similar guidance; field is marked as required with a red asterisk"
+        },
+        {
+          "step": 4,
+          "action": "Observe the 'Effective Date' field which should be smart-defaulted",
+          "expectedResult": "Effective Date is pre-populated with January 1, 2026 (next day) rather than December 31, 2025, since the system correctly handles the year boundary; the date format is displayed correctly"
+        },
+        {
+          "step": 5,
+          "action": "Observe the 'Standard Coverage Options' section which should be smart-defaulted",
+          "expectedResult": "Coverage options section displays a message such as 'No standard coverage options available for this product type. Please configure coverage manually.' or presents empty/blank coverage fields for manual entry without causing a system error"
+        },
+        {
+          "step": 6,
+          "action": "Attempt to proceed to the next step without entering the Agent Code",
+          "expectedResult": "Validation error appears: 'Agent Code is required' preventing the user from advancing; the Agent Code field receives focus and is highlighted in red"
+        }
+      ],
+      "postconditions": [
+        "Wizard remains on the current step with validation error displayed until agent code is manually entered",
+        "No system crash or unhandled exception occurs due to missing default values",
+        "Smart defaults that could be resolved (effective date) are correctly populated despite edge conditions"
+      ]
+    },
+    {
+      "id": "TC-EDGE-003",
+      "title": "Wizard handles extremely long text input in free-text fields without truncation or UI breakage",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in and has navigated to the Policy Creation Wizard",
+        "Agent has selected a line of business (e.g., 'Commercial Property') and is on a step containing free-text fields such as 'Insured Name', 'Address', or 'Special Instructions'",
+        "A text string of 500+ characters including special characters is prepared for input"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "In the 'Insured Name' field, enter a string of 255 characters: 'ABCDEFGHIJ' repeated 25 times followed by 'ABCDE'",
+          "expectedResult": "If a character limit exists, the field stops accepting input at the maximum allowed length and displays a character counter (e.g., '255/255'); if no limit, the full string is accepted without UI overflow"
+        },
+        {
+          "step": 2,
+          "action": "In the 'Mailing Address Line 1' field, enter a 300-character string containing special characters: 'Ünit 42/B, Bldg #7 — O'Connor & Associates™, 1234 São Paulo Blvd., Ste. «100»' repeated to reach 300 characters",
+          "expectedResult": "Field either accepts the input up to its maximum character limit with proper encoding of special characters (accented letters, ampersands, em dashes, guillemets, trademark symbol) or truncates gracefully with a visible character count indicator"
+        },
+        {
+          "step": 3,
+          "action": "In the 'Special Instructions' or 'Notes' textarea field, paste a 5000-character block of text containing Unicode characters, emojis (🏠🚗💼), and newline characters",
+          "expectedResult": "Textarea accepts the text up to its defined limit; emojis and Unicode characters render correctly without garbled text or encoding errors; character count updates accurately accounting for multi-byte characters"
+        },
+        {
+          "step": 4,
+          "action": "Click 'Next' to proceed to the following wizard step",
+          "expectedResult": "Wizard validates all fields successfully; no server-side errors or 500 responses; wizard advances to the next step normally"
+        },
+        {
+          "step": 5,
+          "action": "Navigate back to the previous step using the 'Back' button or progress indicator",
+          "expectedResult": "All entered text including special characters, Unicode, and emojis is preserved exactly as entered; no data loss or character corruption occurs"
+        },
+        {
+          "step": 6,
+          "action": "Complete the remaining wizard steps and submit the policy",
+          "expectedResult": "Policy is created successfully; all long text and special character data is persisted correctly in the database and displayed accurately on the policy summary/confirmation page"
+        }
+      ],
+      "postconditions": [
+        "Policy record in the database contains all special characters, Unicode, and emojis without corruption or encoding issues",
+        "UI displays the long text fields without layout breakage, overflow, or horizontal scrolling on the confirmation page",
+        "No truncation of data occurred beyond defined field limits"
+      ]
+    },
+    {
+      "id": "TC-EDGE-004",
+      "title": "Rapid consecutive clicks on Next/Back buttons do not cause duplicate submissions or wizard state corruption",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in and on Step 2 of the Policy Creation Wizard",
+        "All required fields in Step 2 are filled with valid data",
+        "Network latency is normal (no artificial throttling)",
+        "Browser developer tools Network tab is open to monitor API calls"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Rapidly click the 'Next' button 5 times in quick succession (within 1 second)",
+          "expectedResult": "Wizard advances only one step (from Step 2 to Step 3); the 'Next' button is disabled or shows a loading spinner after the first click to prevent duplicate submissions; only one API call is made to save Step 2 data (verified in Network tab)"
+        },
+        {
+          "step": 2,
+          "action": "On Step 3, rapidly click the 'Back' button 3 times in quick succession",
+          "expectedResult": "Wizard navigates back only one step (from Step 3 to Step 2); no skipping of steps occurs; previously entered data on Step 2 is intact and displayed correctly"
+        },
+        {
+          "step": 3,
+          "action": "Rapidly alternate between clicking 'Next' and 'Back' buttons 4 times each within 2 seconds",
+          "expectedResult": "Wizard remains stable; progress indicator accurately reflects the current step; no JavaScript errors appear in the browser console; no duplicate API calls are made"
+        },
+        {
+          "step": 4,
+          "action": "After the rapid clicking stops, verify the current wizard step and all data integrity",
+          "expectedResult": "Wizard is on a valid step with correct data displayed; progress indicator matches the actual current step; all previously entered data across all steps is preserved without corruption"
+        },
+        {
+          "step": 5,
+          "action": "Complete the wizard normally from the current step through to submission",
+          "expectedResult": "Policy is created successfully with a single policy record; no duplicate policies were created; confirmation page displays correct policy details"
+        }
+      ],
+      "postconditions": [
+        "Exactly one policy record exists in the database (no duplicates from rapid clicking)",
+        "Wizard state is consistent and not corrupted",
+        "No orphaned or partial data records exist in the system from interrupted step transitions"
+      ]
+    },
+    {
+      "id": "TC-EDGE-005",
+      "title": "Wizard session recovery after browser crash or accidental tab closure mid-wizard",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in and has progressed to Step 4 of 6 in the Policy Creation Wizard",
+        "Steps 1 through 3 contain valid data that has been saved (either auto-saved or saved on step transition)",
+        "Agent's session token is still valid (not expired)",
+        "Browser is Chrome version 120+ on Windows 10"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Note all data entered in Steps 1-3 and the current state of Step 4 for later comparison",
+          "expectedResult": "Data is documented for verification after recovery"
+        },
+        {
+          "step": 2,
+          "action": "Close the browser tab by clicking the X on the tab (simulating accidental closure) without clicking any save or cancel button in the wizard",
+          "expectedResult": "Browser tab closes; if the system has unsaved change detection, a browser confirmation dialog 'Leave site? Changes you made may not be saved' may appear"
+        },
+        {
+          "step": 3,
+          "action": "Confirm the tab closure if a dialog appears, then open a new browser tab and navigate back to the application URL and log in with the same agent credentials",
+          "expectedResult": "Agent is logged in successfully and lands on the dashboard or home page"
+        },
+        {
+          "step": 4,
+          "action": "Navigate to 'Policies > Create New Policy' or check for any 'Resume Draft' or 'In-Progress Policies' notification/link on the dashboard",
+          "expectedResult": "System either: (a) displays a notification 'You have an in-progress policy draft. Would you like to resume?' with a 'Resume' button, or (b) shows the draft in a 'Drafts' or 'In-Progress' section of the policies list"
+        },
+        {
+          "step": 5,
+          "action": "Click 'Resume' or open the in-progress draft policy",
+          "expectedResult": "Wizard reopens at Step 4 (or the last saved step) with all data from Steps 1-3 intact and matching the previously documented values; progress indicator shows Steps 1-3 as completed"
+        },
+        {
+          "step": 6,
+          "action": "Complete the remaining steps and submit the policy",
+          "expectedResult": "Policy is created successfully with all recovered data intact; no data loss from the interrupted session"
+        }
+      ],
+      "postconditions": [
+        "Policy is successfully created with all data from the recovered session",
+        "No duplicate draft records remain in the system after successful submission",
+        "Audit trail shows the policy creation with the session recovery event logged"
+      ]
+    },
+    {
+      "id": "TC-EDGE-006",
+      "title": "Wizard behavior with only one line of business and one product type available in the system",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "System is configured with only one line of business: 'Personal Auto'",
+        "Only one product type exists under 'Personal Auto': 'Standard Auto Policy'",
+        "Agent has permissions to create policies for this line of business"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to 'Policies > Create New Policy' to launch the Policy Creation Wizard",
+          "expectedResult": "Wizard opens at Step 1; the line of business field is either auto-selected with 'Personal Auto' or the dropdown contains only one option 'Personal Auto'"
+        },
+        {
+          "step": 2,
+          "action": "Observe the line of business and product type selection fields",
+          "expectedResult": "Line of business shows 'Personal Auto' pre-selected or as the only option; product type shows 'Standard Auto Policy' pre-selected or as the only option; smart defaults are applied based on this single combination"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Next' to proceed to Step 2",
+          "expectedResult": "Wizard advances to Step 2 showing only fields relevant to 'Personal Auto - Standard Auto Policy'; progress indicator updates correctly showing Step 1 complete"
+        },
+        {
+          "step": 4,
+          "action": "Verify that the wizard presents the correct number of steps for this single product configuration",
+          "expectedResult": "Progress indicator shows the appropriate number of steps for Personal Auto; estimated time is displayed; no extra or irrelevant steps are shown"
+        },
+        {
+          "step": 5,
+          "action": "Complete all wizard steps with valid data and submit the policy",
+          "expectedResult": "Policy is created successfully; confirmation page shows the correct line of business and product type; all smart defaults were correctly applied for the single available configuration"
+        }
+      ],
+      "postconditions": [
+        "Policy is created with 'Personal Auto' line of business and 'Standard Auto Policy' product type",
+        "No errors occurred due to single-option dropdowns or auto-selection logic",
+        "Smart defaults achieved at least 40% reduction in manual entry even with the single product configuration"
+      ]
+    },
+    {
+      "id": "TC-EDGE-007",
+      "title": "Wizard handles concurrent policy creation by the same agent in multiple browser tabs",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials in Chrome browser",
+        "Agent has permissions to create multiple policies",
+        "No in-progress policy drafts exist for this agent"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "In Tab 1, navigate to 'Policies > Create New Policy' and select 'Auto' as the line of business; fill in Step 1 fields and proceed to Step 2",
+          "expectedResult": "Tab 1 shows the wizard at Step 2 with Auto-specific fields; progress indicator shows Step 1 completed"
+        },
+        {
+          "step": 2,
+          "action": "Open a new browser tab (Tab 2) while keeping Tab 1 open, navigate to the same application URL, and go to 'Policies > Create New Policy'",
+          "expectedResult": "System either: (a) warns the agent 'You have an in-progress policy creation in another session. Do you want to continue with a new policy or resume the existing one?', or (b) allows opening a second independent wizard instance"
+        },
+        {
+          "step": 3,
+          "action": "If allowed, in Tab 2 select 'Homeowners' as the line of business and fill in Step 1 with different data than Tab 1; proceed to Step 2",
+          "expectedResult": "Tab 2 shows Homeowners-specific fields at Step 2; the data is independent from Tab 1's Auto policy wizard"
+        },
+        {
+          "step": 4,
+          "action": "Switch back to Tab 1 and continue filling in Step 2 data for the Auto policy; click 'Next' to proceed to Step 3",
+          "expectedResult": "Tab 1 wizard state is preserved; Auto-specific data from Steps 1-2 is intact; wizard advances to Step 3 without interference from Tab 2's session"
+        },
+        {
+          "step": 5,
+          "action": "Complete and submit the policy in Tab 1, then switch to Tab 2 and complete and submit the policy there",
+          "expectedResult": "Both policies are created successfully as separate records; Tab 1 creates an Auto policy and Tab 2 creates a Homeowners policy; no data cross-contamination between the two wizard instances"
+        },
+        {
+          "step": 6,
+          "action": "Navigate to the policy list and verify both newly created policies exist with correct, distinct data",
+          "expectedResult": "Two separate policy records appear in the list: one Auto and one Homeowners, each with their respective correct data; no merged or corrupted records"
+        }
+      ],
+      "postconditions": [
+        "Two distinct policy records exist in the database with correct and separate data",
+        "No session state corruption occurred between the concurrent wizard instances",
+        "Both policies have unique policy numbers and correct line of business assignments"
+      ]
+    },
+    {
+      "id": "TC-EDGE-008",
+      "title": "Progress indicator accuracy when wizard has maximum number of steps for a complex product type",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in with valid credentials",
+        "A complex product type is configured that generates the maximum number of wizard steps (e.g., 10+ steps for 'Commercial Package Policy' with multiple coverage lines)",
+        "Agent is on the Policy Creation Wizard start page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Select 'Commercial Lines' as the line of business and 'Commercial Package Policy' as the product type; click 'Next'",
+          "expectedResult": "Progress indicator displays all steps (e.g., 10-12 steps) in a readable format without UI overflow; each step label is visible or accessible via tooltip; estimated total time is displayed (e.g., 'Estimated time: 25 minutes')"
+        },
+        {
+          "step": 2,
+          "action": "Observe the progress indicator layout on a standard 1920x1080 resolution screen",
+          "expectedResult": "All step indicators fit within the visible area or have a scrollable/collapsible design; step numbers and labels are not truncated; current step is clearly highlighted"
+        },
+        {
+          "step": 3,
+          "action": "Complete Steps 1 through 5 by filling in required fields and clicking 'Next' on each step",
+          "expectedResult": "Progress indicator updates after each step: completed steps show green checkmarks, current step is highlighted/active, remaining steps show as pending; estimated remaining time decreases appropriately"
+        },
+        {
+          "step": 4,
+          "action": "Click directly on Step 2 in the progress indicator to navigate back",
+          "expectedResult": "Wizard navigates to Step 2; progress indicator shows Steps 1 as completed, Step 2 as current/active, Steps 3-5 retain their completed status, Steps 6+ remain pending"
+        },
+        {
+          "step": 5,
+          "action": "Click directly on Step 5 in the progress indicator to jump forward to the last completed step",
+          "expectedResult": "Wizard navigates to Step 5 with all data intact; progress indicator correctly reflects the navigation; no steps are skipped or data lost"
+        },
+        {
+          "step": 6,
+          "action": "Resize the browser window to 1024x768 resolution and observe the progress indicator",
+          "expectedResult": "Progress indicator adapts responsively: either collapses into a compact format (e.g., 'Step 5 of 12'), uses horizontal scrolling, or switches to a dropdown/accordion layout; all step information remains accessible"
+        }
+      ],
+      "postconditions": [
+        "Progress indicator accurately reflects the wizard state at all times regardless of navigation pattern",
+        "Estimated time calculations remain accurate throughout the wizard",
+        "No UI rendering issues with the maximum number of steps at various screen resolutions"
+      ]
+    },
+    {
+      "id": "TC-EDGE-009",
+      "title": "Smart defaults calculation when agent has multiple agent codes assigned to different regions",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in and has three agent codes assigned: 'AG-001' (Northeast region), 'AG-002' (Southeast region), 'AG-003' (West region)",
+        "Agent's primary/default agent code in their profile is 'AG-001'",
+        "Agent is on the Policy Creation Wizard start page",
+        "Each region has different standard coverage options and effective date rules"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Select 'Personal Auto' as the line of business and click 'Next'",
+          "expectedResult": "Wizard proceeds to the next step; 'Agent Code' field is smart-defaulted to 'AG-001' (the primary agent code)"
+        },
+        {
+          "step": 2,
+          "action": "Observe the smart-defaulted effective date and standard coverage options",
+          "expectedResult": "Effective date is pre-populated based on Northeast region rules associated with AG-001; standard coverage options reflect Northeast region defaults"
+        },
+        {
+          "step": 3,
+          "action": "Change the Agent Code from 'AG-001' to 'AG-002' (Southeast region) using the agent code dropdown or field",
+          "expectedResult": "System detects the agent code change and either: (a) automatically updates the effective date and standard coverage options to reflect Southeast region defaults, or (b) prompts the agent 'Agent code changed. Update defaults for Southeast region?' with Yes/No options"
+        },
+        {
+          "step": 4,
+          "action": "If prompted, click 'Yes' to update defaults; verify the effective date and coverage options",
+          "expectedResult": "Effective date is updated to reflect Southeast region rules; standard coverage options are refreshed to show Southeast region defaults; all other smart defaults remain appropriate for the new region"
+        },
+        {
+          "step": 5,
+          "action": "Change the Agent Code to 'AG-003' (West region) and verify defaults update again",
+          "expectedResult": "Defaults update to reflect West region rules; the system handles multiple agent code changes gracefully without errors or stale data"
+        }
+      ],
+      "postconditions": [
+        "Smart defaults are correctly aligned with the final selected agent code and its associated region",
+        "No residual defaults from previously selected agent codes remain in the form",
+        "The policy, when submitted, correctly associates with the final selected agent code"
+      ]
+    },
+    {
+      "id": "TC-EDGE-010",
+      "title": "Wizard behavior when session times out during policy creation at an intermediate step",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in and has progressed to Step 3 of the Policy Creation Wizard",
+        "Steps 1 and 2 contain valid completed data",
+        "Session timeout is configured to 30 minutes of inactivity",
+        "Agent has been idle for 29 minutes on Step 3"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Wait for the session to reach the timeout threshold (1 more minute of inactivity after 29 minutes)",
+          "expectedResult": "System displays a session timeout warning dialog: 'Your session will expire in 1 minute. Click Continue to extend your session.' with 'Continue Session' and 'Log Out' buttons"
+        },
+        {
+          "step": 2,
+          "action": "Do not interact with the warning dialog and let the session fully expire",
+          "expectedResult": "After the timeout period, the system redirects the agent to the login page with a message: 'Your session has expired. Please log in again.' The wizard state should be preserved as a draft if auto-save is enabled"
+        },
+        {
+          "step": 3,
+          "action": "Log back in with the same agent credentials",
+          "expectedResult": "Agent is authenticated and redirected to the dashboard or home page"
+        },
+        {
+          "step": 4,
+          "action": "Navigate to 'Policies > Create New Policy' or check for draft/in-progress policy notifications",
+          "expectedResult": "System shows the in-progress policy draft from the timed-out session; agent can resume from Step 3 (or the last auto-saved step) with all previously entered data intact"
+        },
+        {
+          "step": 5,
+          "action": "Resume the wizard and verify all data from Steps 1-2 and any partial Step 3 data",
+          "expectedResult": "All data from Steps 1 and 2 is preserved; any data entered in Step 3 before timeout is either preserved (if auto-saved) or the step is presented empty for re-entry; progress indicator accurately reflects the state"
+        }
+      ],
+      "postconditions": [
+        "No data loss occurred for completed wizard steps due to session timeout",
+        "Draft policy record exists in the system until the agent completes or discards it",
+        "Session timeout handling did not cause any unhandled errors or corrupt the wizard state"
+      ]
+    },
+    {
+      "id": "TC-EDGE-011",
+      "title": "Verify smart defaults achieve at least 40% reduction in manual entry across all product types",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in with a fully configured profile (agent code, default region, preferences)",
+        "Three different product types are available: 'Personal Auto', 'Homeowners', and 'Commercial General Liability'",
+        "Each product type has smart defaults configured for agent code, effective date, and standard coverage options",
+        "A spreadsheet or document is prepared to count total fields vs. pre-populated fields"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Start a new policy wizard for 'Personal Auto'; on each step, count the total number of input fields and the number of fields pre-populated by smart defaults",
+          "expectedResult": "Agent code is pre-populated, effective date is pre-populated, standard coverage options are pre-selected; document the counts (e.g., 25 total fields, 12 pre-populated = 48% reduction)"
+        },
+        {
+          "step": 2,
+          "action": "Cancel the Personal Auto wizard without submitting; start a new wizard for 'Homeowners'; repeat the field counting process",
+          "expectedResult": "Smart defaults pre-populate agent code, effective date, and Homeowners-specific standard coverage options; document the counts (e.g., 30 total fields, 14 pre-populated = 47% reduction)"
+        },
+        {
+          "step": 3,
+          "action": "Cancel the Homeowners wizard; start a new wizard for 'Commercial General Liability'; repeat the field counting process",
+          "expectedResult": "Smart defaults pre-populate agent code, effective date, and CGL-specific standard coverage options; document the counts (e.g., 40 total fields, 18 pre-populated = 45% reduction)"
+        },
+        {
+          "step": 4,
+          "action": "Calculate the manual entry reduction percentage for each product type: (pre-populated fields / total fields) × 100",
+          "expectedResult": "Each product type achieves at least 40% reduction in manual entry through smart defaults: Personal Auto ≥ 40%, Homeowners ≥ 40%, Commercial General Liability ≥ 40%"
+        },
+        {
+          "step": 5,
+          "action": "Verify that pre-populated fields include at minimum: agent code, effective date, and standard coverage options as specified in the acceptance criteria",
+          "expectedResult": "All three specified smart default categories (agent code, effective date, standard coverage options) are pre-populated for every product type tested"
+        }
+      ],
+      "postconditions": [
+        "Documentation confirms that smart defaults achieve at least 40% reduction in manual entry for all tested product types",
+        "All three smart default categories are functioning correctly across product types",
+        "No product type falls below the 40% threshold"
+      ]
+    },
+    {
+      "id": "TC-EDGE-012",
+      "title": "Wizard behavior when browser back/forward buttons are used instead of wizard navigation controls",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in and on Step 3 of the Policy Creation Wizard",
+        "Steps 1 and 2 have been completed with valid data",
+        "Browser is Chrome with standard navigation buttons visible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the browser's native 'Back' button (not the wizard's 'Back' button)",
+          "expectedResult": "System either: (a) navigates to the previous wizard step (Step 2) with data intact and progress indicator updated, or (b) shows a warning 'Are you sure you want to leave? Use the wizard navigation to go back.' preventing accidental navigation away from the wizard"
+        },
+        {
+          "step": 2,
+          "action": "If navigated to Step 2, click the browser's native 'Forward' button",
+          "expectedResult": "System returns to Step 3 with all data intact; progress indicator correctly shows the current step; no data loss or state corruption"
+        },
+        {
+          "step": 3,
+          "action": "Click the browser's native 'Back' button twice rapidly",
+          "expectedResult": "System handles the double navigation gracefully: either navigates back two steps (to Step 1) with all data preserved, or catches the navigation and shows appropriate warnings"
+        },
+        {
+          "step": 4,
+          "action": "Verify all wizard data integrity by navigating through all steps using the wizard's own navigation controls",
+          "expectedResult": "All data entered in Steps 1-3 is intact; progress indicator is accurate; wizard functions normally after browser button usage"
+        },
+        {
+          "step": 5,
+          "action": "Complete the wizard and submit the policy",
+          "expectedResult": "Policy is created successfully with all correct data; no issues caused by the browser navigation button usage"
+        }
+      ],
+      "postconditions": [
+        "Wizard state remained consistent despite browser navigation button usage",
+        "No data was lost or corrupted",
+        "Policy was created successfully with correct data"
+      ]
+    }
+  ],
+  "accessibility": [
+    {
+      "id": "TC-ACCE-001",
+      "title": "Complete keyboard-only navigation through all wizard steps without using a mouse",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in using keyboard-only navigation",
+        "Mouse/trackpad is disconnected or not used",
+        "Policy Creation Wizard is open at Step 1",
+        "Browser is Chrome latest version on Windows 10 with default accessibility settings"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Press Tab key repeatedly to navigate through all interactive elements on Step 1 of the wizard (line of business dropdown, product type dropdown, any other fields, Back/Next buttons)",
+          "expectedResult": "Focus moves sequentially through each interactive element in a logical left-to-right, top-to-bottom order; each focused element has a clearly visible focus indicator (e.g., blue outline ring with at least 2px width); no elements are skipped; no focus traps occur"
+        },
+        {
+          "step": 2,
+          "action": "When focus is on the 'Line of Business' dropdown, press Space or Enter to open it, use Arrow Down/Up keys to navigate options, and press Enter to select 'Personal Auto'",
+          "expectedResult": "Dropdown opens on Space/Enter; arrow keys cycle through options with each option visually highlighted; pressing Enter selects 'Personal Auto' and closes the dropdown; focus returns to the dropdown field"
+        },
+        {
+          "step": 3,
+          "action": "Press Tab to navigate to the 'Next' button and press Enter to advance to Step 2",
+          "expectedResult": "Focus lands on the 'Next' button with visible focus indicator; pressing Enter advances the wizard to Step 2; focus is automatically placed on the first interactive element of Step 2 or on the step heading"
+        },
+        {
+          "step": 4,
+          "action": "On Step 2, use Tab to navigate to a date picker field (Effective Date) and interact with it using keyboard only",
+          "expectedResult": "Date picker is fully keyboard accessible: Tab reaches the field, Enter/Space opens the calendar, Arrow keys navigate dates, Enter selects a date; the smart-defaulted date is pre-selected and can be changed via keyboard"
+        },
+        {
+          "step": 5,
+          "action": "Press Shift+Tab to navigate backwards through the Step 2 fields",
+          "expectedResult": "Focus moves in reverse order through all interactive elements; each element receives a visible focus indicator; focus does not jump to unexpected elements or leave the wizard area"
+        },
+        {
+          "step": 6,
+          "action": "Navigate to the progress indicator using Tab and attempt to click on a completed step (Step 1) using Enter",
+          "expectedResult": "Progress indicator steps are keyboard focusable; pressing Enter on a completed step navigates back to that step; focus is placed on the first element of the navigated-to step"
+        },
+        {
+          "step": 7,
+          "action": "Continue through all remaining wizard steps using only keyboard (Tab, Shift+Tab, Enter, Space, Arrow keys) and submit the policy",
+          "expectedResult": "Every step is fully navigable and operable via keyboard; all form fields, buttons, dropdowns, checkboxes, and radio buttons are accessible; the final 'Submit' button is reachable and activatable via Enter; policy is created successfully"
+        },
+        {
+          "step": 8,
+          "action": "On the confirmation page, verify all content is accessible via keyboard navigation",
+          "expectedResult": "Confirmation message, policy details, and any action buttons (e.g., 'Print', 'Create Another Policy') are all keyboard accessible with visible focus indicators"
+        }
+      ],
+      "postconditions": [
+        "Policy was created successfully using keyboard-only navigation throughout the entire wizard",
+        "No focus traps were encountered at any point in the wizard",
+        "All interactive elements were reachable and operable via keyboard"
+      ]
+    },
+    {
+      "id": "TC-ACCE-002",
+      "title": "Screen reader announces wizard steps, progress, field labels, errors, and smart defaults correctly",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in",
+        "NVDA screen reader (latest version) is active on Windows 10 with Chrome browser",
+        "Policy Creation Wizard is open at Step 1",
+        "Screen reader verbosity is set to default/medium"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "When the wizard loads, listen to the screen reader announcement for the page/wizard context",
+          "expectedResult": "Screen reader announces: the wizard title (e.g., 'New Policy Creation Wizard'), the current step (e.g., 'Step 1 of 6: Select Line of Business'), and any instructions; the page has proper heading hierarchy (h1 for wizard title, h2 for step title)"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the progress indicator region and listen to announcements",
+          "expectedResult": "Screen reader announces the progress indicator as a navigation landmark or list; each step is announced with its status (e.g., 'Step 1, Select Line of Business, current step', 'Step 2, Policy Details, not started', 'Step 3, Coverage Options, not started'); estimated time is announced"
+        },
+        {
+          "step": 3,
+          "action": "Tab to the 'Line of Business' dropdown field and listen to the announcement",
+          "expectedResult": "Screen reader announces: field label 'Line of Business', field type 'combo box' or 'dropdown', required status 'required', and any help text or instructions associated with the field"
+        },
+        {
+          "step": 4,
+          "action": "Navigate to a field with a smart default value (e.g., 'Agent Code' pre-populated with 'AG-001') and listen to the announcement",
+          "expectedResult": "Screen reader announces: field label 'Agent Code', current value 'AG-001', field type, and required status; the pre-populated value is clearly communicated so the agent knows it has been auto-filled"
+        },
+        {
+          "step": 5,
+          "action": "Leave a required field empty and click 'Next' to trigger a validation error; listen to the screen reader announcement",
+          "expectedResult": "Screen reader announces the validation error immediately via an ARIA live region: 'Error: [Field Name] is required' or similar; focus moves to the first field with an error; the error message is associated with the field via aria-describedby or aria-errormessage"
+        },
+        {
+          "step": 6,
+          "action": "Correct the error and successfully advance to Step 2; listen to the step transition announcement",
+          "expectedResult": "Screen reader announces the step change: 'Step 2 of 6: Policy Details' or similar; the progress indicator update is announced (e.g., 'Step 1 complete'); focus is placed on the step heading or first interactive element"
+        },
+        {
+          "step": 7,
+          "action": "Navigate through the entire wizard to the confirmation page and listen to the final announcement",
+          "expectedResult": "Screen reader announces the successful policy creation: 'Policy created successfully. Policy number: [number]' or similar confirmation; all policy details on the confirmation page are readable by the screen reader"
+        }
+      ],
+      "postconditions": [
+        "All wizard content was fully accessible and announced correctly by the screen reader",
+        "Error messages were announced immediately and associated with their respective fields",
+        "Step transitions and progress updates were communicated to the screen reader user"
+      ]
+    },
+    {
+      "id": "TC-ACCE-003",
+      "title": "Focus management is correct when navigating between wizard steps and after error states",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in",
+        "Policy Creation Wizard is open at Step 1",
+        "Browser developer tools are open to inspect focus state (document.activeElement)",
+        "Keyboard navigation is being used"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "When the wizard first loads, check which element has initial focus by inspecting document.activeElement in the browser console",
+          "expectedResult": "Focus is placed on either the wizard heading (h1/h2), the first interactive element (Line of Business dropdown), or a skip-to-content link; focus is NOT on the body element or an irrelevant element"
+        },
+        {
+          "step": 2,
+          "action": "Fill in Step 1 fields and click 'Next' to advance to Step 2; immediately check document.activeElement",
+          "expectedResult": "Focus is programmatically moved to the Step 2 heading or the first interactive element of Step 2; focus does NOT remain on the 'Next' button from Step 1 (which may no longer be visible); the focused element is within the visible viewport"
+        },
+        {
+          "step": 3,
+          "action": "On Step 2, click 'Back' to return to Step 1; check document.activeElement",
+          "expectedResult": "Focus is moved to the Step 1 heading or the first interactive element of Step 1; previously entered data is visible; focus is within the visible viewport"
+        },
+        {
+          "step": 4,
+          "action": "On Step 1, leave a required field empty and press 'Next' to trigger validation errors; check document.activeElement",
+          "expectedResult": "Focus is moved to the first field with a validation error; the error message is visible and associated with the field; the focused field is scrolled into view if necessary"
+        },
+        {
+          "step": 5,
+          "action": "Click on Step 3 in the progress indicator (if it's a completed step); check document.activeElement",
+          "expectedResult": "Focus is moved to the Step 3 heading or first interactive element; the transition is smooth without focus being lost to the body or an off-screen element"
+        },
+        {
+          "step": 6,
+          "action": "Open a modal dialog (if any exist in the wizard, e.g., a confirmation dialog when changing line of business); check focus behavior",
+          "expectedResult": "Focus is trapped within the modal dialog; Tab cycles only through modal elements; pressing Escape closes the modal and returns focus to the element that triggered it; focus does not escape to elements behind the modal"
+        },
+        {
+          "step": 7,
+          "action": "Submit the policy on the final step; check document.activeElement on the confirmation page",
+          "expectedResult": "Focus is moved to the confirmation heading or the success message; the confirmation content is the first thing a keyboard/screen reader user encounters"
+        }
+      ],
+      "postconditions": [
+        "Focus was correctly managed at every wizard transition point",
+        "No focus traps existed outside of modal dialogs",
+        "Focus always moved to a logical, visible element after each action"
+      ]
+    },
+    {
+      "id": "TC-ACCE-004",
+      "title": "Color contrast ratios meet WCAG 2.1 AA standards for all wizard elements including progress indicator states",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in and on the Policy Creation Wizard",
+        "Browser extension 'axe DevTools' or 'WAVE' is installed for contrast checking",
+        "Wizard is at Step 3 with Steps 1-2 completed (to show all progress indicator states)",
+        "Both light mode and dark mode (if available) are testable"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Run the axe DevTools accessibility scanner on the wizard page and review contrast-related findings",
+          "expectedResult": "No critical or serious contrast violations are reported; all text elements meet WCAG 2.1 AA minimum contrast ratios: 4.5:1 for normal text (below 18pt), 3:1 for large text (18pt+ or 14pt+ bold)"
+        },
+        {
+          "step": 2,
+          "action": "Inspect the progress indicator colors: completed step (green checkmark/fill), current step (highlighted/active), and pending steps (gray/inactive)",
+          "expectedResult": "Each progress indicator state has sufficient contrast: completed step icon/text against background ≥ 3:1 for non-text elements; current step indicator against background ≥ 3:1; pending step text against background ≥ 4.5:1; step status is NOT conveyed by color alone (also uses icons, text labels, or patterns)"
+        },
+        {
+          "step": 3,
+          "action": "Inspect form field labels, placeholder text, and input text contrast ratios using a color contrast checker tool",
+          "expectedResult": "Field labels have ≥ 4.5:1 contrast ratio against the background; placeholder text has ≥ 4.5:1 contrast ratio (or is not relied upon as the only label); user-entered text has ≥ 4.5:1 contrast ratio; smart-defaulted values have the same contrast as user-entered values"
+        },
+        {
+          "step": 4,
+          "action": "Trigger a validation error and inspect the error message and error field border contrast",
+          "expectedResult": "Error message text has ≥ 4.5:1 contrast ratio against its background; error state is not indicated by color alone (also uses an error icon, text message, or border pattern); error field border has ≥ 3:1 contrast ratio against adjacent colors"
+        },
+        {
+          "step": 5,
+          "action": "Inspect the 'Next', 'Back', and 'Submit' button contrast in both default and hover/focus states",
+          "expectedResult": "Button text has ≥ 4.5:1 contrast against button background in all states (default, hover, focus, active, disabled); disabled button text has ≥ 4.5:1 contrast or the disabled state is communicated through means other than color alone"
+        },
+        {
+          "step": 6,
+          "action": "Verify that all informational indicators (required field asterisks, help icons, tooltips) have sufficient contrast",
+          "expectedResult": "Required field asterisks (*) have ≥ 3:1 contrast ratio; help icons are distinguishable; tooltip text when displayed has ≥ 4.5:1 contrast against tooltip background"
+        }
+      ],
+      "postconditions": [
+        "All wizard elements meet WCAG 2.1 AA contrast requirements",
+        "No information is conveyed by color alone throughout the wizard",
+        "Contrast checker tool reports zero violations for the wizard pages"
+      ]
+    },
+    {
+      "id": "TC-ACCE-005",
+      "title": "Wizard is fully functional and readable at 200% browser zoom level",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in and on the Policy Creation Wizard Step 1",
+        "Browser zoom is set to 100% initially",
+        "Browser window is at standard 1920x1080 resolution",
+        "Content has been loaded completely"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Increase browser zoom to 200% using Ctrl+Plus (or Cmd+Plus on Mac) and observe the wizard layout",
+          "expectedResult": "Wizard content reflows to fit the viewport without horizontal scrolling; all text is readable and not truncated; no content overlaps; the layout may switch to a single-column format; all interactive elements remain visible and usable"
+        },
+        {
+          "step": 2,
+          "action": "Verify the progress indicator is visible and functional at 200% zoom",
+          "expectedResult": "Progress indicator is visible: either it reflows to a vertical layout, wraps to multiple lines, or collapses to a compact format (e.g., 'Step 1 of 6'); all step information is accessible; clicking/tapping on steps still works"
+        },
+        {
+          "step": 3,
+          "action": "Interact with form fields at 200% zoom: select a line of business from the dropdown, enter text in fields, select dates from date pickers",
+          "expectedResult": "All form controls are usable at 200% zoom; dropdowns open and display options without being cut off; date pickers are fully visible and navigable; text input fields are large enough to see entered text; smart-defaulted values are fully visible"
+        },
+        {
+          "step": 4,
+          "action": "Trigger a validation error at 200% zoom and verify the error message is visible",
+          "expectedResult": "Error messages are fully visible without being cut off or hidden behind other elements; error messages are associated with their fields and positioned correctly; scrolling to the error field works properly"
+        },
+        {
+          "step": 5,
+          "action": "Navigate through all wizard steps at 200% zoom and submit the policy",
+          "expectedResult": "All steps are fully functional at 200% zoom; 'Next', 'Back', and 'Submit' buttons are visible and clickable; confirmation page displays correctly at 200% zoom with all policy details readable"
+        },
+        {
+          "step": 6,
+          "action": "Increase zoom to 400% and verify critical content is still accessible (WCAG 2.1 Level AAA recommendation)",
+          "expectedResult": "At 400% zoom, content reflows into a single column; all text remains readable; primary functionality (navigation, form input, submission) still works; no content is lost or inaccessible"
+        }
+      ],
+      "postconditions": [
+        "Wizard is fully functional at 200% zoom with no horizontal scrolling required",
+        "All content is readable and no information is lost at increased zoom levels",
+        "Policy was created successfully while operating at 200% zoom"
+      ]
+    },
+    {
+      "id": "TC-ACCE-006",
+      "title": "ARIA attributes are correctly implemented for wizard steps, form fields, and dynamic content updates",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in and on the Policy Creation Wizard",
+        "Browser developer tools (Elements/Inspector tab) are open",
+        "NVDA or JAWS screen reader is available for verification",
+        "Wizard is at Step 1 with all elements loaded"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Inspect the wizard container element's ARIA attributes in the DOM",
+          "expectedResult": "Wizard container has role='form' or is wrapped in a <form> element; the wizard has an aria-label or aria-labelledby pointing to the wizard title (e.g., aria-labelledby='wizard-title' where the title reads 'New Policy Creation Wizard')"
+        },
+        {
+          "step": 2,
+          "action": "Inspect the progress indicator's ARIA attributes",
+          "expectedResult": "Progress indicator has role='navigation' or role='tablist' with aria-label='Policy creation progress'; each step has role='tab' or role='listitem' with aria-current='step' on the active step; completed steps have aria-label including 'completed' status (e.g., 'Step 1: Line of Business, completed')"
+        },
+        {
+          "step": 3,
+          "action": "Inspect required form fields for ARIA attributes",
+          "expectedResult": "Required fields have aria-required='true'; fields with smart defaults have their values reflected in the value attribute; fields have aria-label or associated <label> elements with matching 'for' and 'id' attributes; help text is linked via aria-describedby"
+        },
+        {
+          "step": 4,
+          "action": "Trigger a validation error and inspect the error field's ARIA attributes",
+          "expectedResult": "Error field has aria-invalid='true'; error message element has role='alert' or is within an aria-live='assertive' region; error message is linked to the field via aria-describedby or aria-errormessage; the error message has a unique id referenced by the field"
+        },
+        {
+          "step": 5,
+          "action": "Advance to the next wizard step and inspect the ARIA live region announcements",
+          "expectedResult": "Step transition triggers an aria-live='polite' announcement (e.g., 'Step 2 of 6: Policy Details'); the new step content area has appropriate ARIA landmarks; previously hidden step content has aria-hidden='true' or is removed from the DOM"
+        },
+        {
+          "step": 6,
+          "action": "Inspect any dynamically shown/hidden content (e.g., conditional fields based on line of business selection) for ARIA attributes",
+          "expectedResult": "Dynamically shown fields are not hidden with display:none while still having focus; conditional sections use aria-expanded on their trigger elements; newly revealed content is announced via aria-live region or focus management; hidden content has aria-hidden='true'"
+        },
+        {
+          "step": 7,
+          "action": "Verify the 'Submit' button on the final step has appropriate ARIA attributes",
+          "expectedResult": "Submit button has an accessible name (aria-label='Submit policy' or visible text 'Submit'); if the button becomes disabled during processing, it has aria-disabled='true' and aria-busy='true'; a loading state is announced via aria-live region"
+        }
+      ],
+      "postconditions": [
+        "All ARIA attributes are correctly implemented per WAI-ARIA 1.2 specification",
+        "No ARIA misuse detected (e.g., redundant roles on native elements, missing required ARIA properties)",
+        "Screen reader correctly interprets all ARIA attributes and announces content appropriately"
+      ]
+    },
+    {
+      "id": "TC-ACCE-007",
+      "title": "Wizard is accessible on mobile devices with touch targets meeting minimum size requirements",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in on a mobile device (iPhone 14 or Samsung Galaxy S23) using the default mobile browser",
+        "Policy Creation Wizard is open at Step 1",
+        "Device is in portrait orientation",
+        "VoiceOver (iOS) or TalkBack (Android) screen reader is available for testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Measure the touch target sizes of all interactive elements on Step 1 (buttons, dropdowns, links in progress indicator) using the browser's responsive design mode or device inspector",
+          "expectedResult": "All touch targets meet the WCAG 2.1 minimum of 44x44 CSS pixels; buttons ('Next', 'Back') are at least 44x44px; dropdown fields have at least 44px height; progress indicator step targets are at least 44x44px; there is adequate spacing (at least 8px) between adjacent touch targets"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to tap the 'Line of Business' dropdown on the mobile device and select an option",
+          "expectedResult": "Dropdown opens with a native mobile picker or a custom dropdown with sufficiently large options (each option at least 44px tall); options are easy to select without accidentally tapping adjacent options; selected option is confirmed and displayed correctly"
+        },
+        {
+          "step": 3,
+          "action": "Activate VoiceOver (iOS) or TalkBack (Android) and navigate through the wizard using swipe gestures",
+          "expectedResult": "Swipe right moves to the next element in logical order; swipe left moves to the previous element; all form fields, labels, buttons, and progress indicator elements are announced correctly; double-tap activates the focused element"
+        },
+        {
+          "step": 4,
+          "action": "Rotate the device to landscape orientation and verify the wizard layout adapts",
+          "expectedResult": "Wizard content reflows appropriately for landscape orientation; all elements remain accessible and usable; touch targets maintain minimum 44x44px size; no content is cut off or hidden"
+        },
+        {
+          "step": 5,
+          "action": "Complete the entire wizard on the mobile device using touch interaction and submit the policy",
+          "expectedResult": "All wizard steps are fully functional on mobile; date pickers, dropdowns, text fields, and buttons work correctly with touch; smart defaults are applied and visible; policy is created successfully"
+        },
+        {
+          "step": 6,
+          "action": "Verify that pinch-to-zoom is not disabled on the wizard pages",
+          "expectedResult": "Pinch-to-zoom gesture works to enlarge content; the page does not have user-scalable=no or maximum-scale=1.0 in the viewport meta tag; zoomed content remains functional"
+        }
+      ],
+      "postconditions": [
+        "All touch targets meet WCAG 2.1 AA minimum size requirements (44x44 CSS pixels)",
+        "Wizard is fully functional on mobile devices with both touch and screen reader interaction",
+        "Policy was created successfully on a mobile device"
+      ]
+    },
+    {
+      "id": "TC-ACCE-008",
+      "title": "Wizard does not rely on color alone to convey information for progress states and validation errors",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Insurance Agent is logged in and on the Policy Creation Wizard at Step 3",
+        "Steps 1 and 2 are completed (to show completed state in progress indicator)",
+        "Browser extension 'NoCoffee Vision Simulator' or similar is installed to simulate color blindness",
+        "At least one validation error can be triggered on the current step"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enable the color blindness simulator set to 'Deuteranopia' (red-green color blindness) and observe the progress indicator",
+          "expectedResult": "Completed steps are distinguishable from current and pending steps through means OTHER than color: completed steps show a checkmark icon (✓), current step shows a different shape or bold text, pending steps show a number or empty circle; the states are distinguishable even without color perception"
+        },
+        {
+          "step": 2,
+          "action": "Switch the simulator to 'Protanopia' (another form of red-green color blindness) and observe the same progress indicator",
+          "expectedResult": "All three states (completed, current, pending) remain distinguishable through non-color indicators (icons, text labels, patterns, borders)"
+        },
+        {
+          "step": 3,
+          "action": "Trigger a validation error by leaving a required field empty and clicking 'Next'; observe the error indication with color blindness simulator active",
+          "expectedResult": "Error state is indicated by more than just red color: an error icon (⚠ or ✕) appears next to the field, an error text message is displayed, and/or the field border uses a pattern (e.g., dashed) in addition to color change; the error is perceivable without color vision"
+        },
+        {
+          "step": 4,
+          "action": "Switch to 'Achromatopsia' (complete color blindness / grayscale) simulation and verify all wizard elements are distinguishable",
+          "expectedResult": "In grayscale, all interactive elements are distinguishable: buttons have visible borders/shadows, required field indicators use asterisks (*) not just color, smart-defaulted fields are identifiable through text labels or icons, progress states use shape/icon differences"
+        },
+        {
+          "step": 5,
+          "action": "Disable the color blindness simulator and verify that the estimated time display in the progress indicator uses text, not just a color-coded bar",
+          "expectedResult": "Estimated time is displayed as text (e.g., 'Estimated time remaining: 10 minutes') and not solely as a color-coded progress bar; if a progress bar exists, it also includes a text percentage or time label"
+        }
+      ],
+      "postconditions": [
+        "All wizard information is perceivable without relying on color perception alone",
+        "Users with any form of color blindness can distinguish all wizard states and error conditions",
+        "WCAG 2.1 Success Criterion 1.4.1 (Use of Color) is fully met"
+      ]
+    },
+    {
+      "id": "TC-ACCE-009",
+      "title": "Escape key behavior and modal/dialog accessibility within the wizard",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in and on the Policy Creation Wizard",
+        "Agent has completed Steps 1-2 and is on Step 3",
+        "A scenario exists that triggers a modal dialog (e.g., changing line of business triggers a confirmation dialog, or clicking 'Cancel' triggers a discard confirmation)",
+        "Keyboard navigation is being used"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Trigger a modal dialog by clicking the 'Cancel' button or changing the line of business (whichever triggers a confirmation dialog)",
+          "expectedResult": "Modal dialog opens with focus automatically placed on the first interactive element within the dialog (e.g., 'Yes, Discard' button or the dialog heading); the background content is visually dimmed and inert (aria-hidden='true' on background content)"
+        },
+        {
+          "step": 2,
+          "action": "Press Tab repeatedly to cycle through all interactive elements within the modal dialog",
+          "expectedResult": "Focus is trapped within the modal: Tab cycles only through modal elements (e.g., 'Yes, Discard', 'No, Continue', and close button); focus does NOT escape to elements behind the modal overlay"
+        },
+        {
+          "step": 3,
+          "action": "Press Shift+Tab to cycle backwards through modal elements",
+          "expectedResult": "Focus moves backwards through modal elements and wraps from the first element to the last element within the modal; focus remains trapped within the modal"
+        },
+        {
+          "step": 4,
+          "action": "Press the Escape key while the modal is open",
+          "expectedResult": "Modal closes without performing the destructive action (equivalent to clicking 'Cancel' or 'No'); focus returns to the element that originally triggered the modal (e.g., the 'Cancel' button or the line of business dropdown); wizard state is unchanged"
+        },
+        {
+          "step": 5,
+          "action": "Verify that the background content is no longer inert after the modal closes",
+          "expectedResult": "All wizard elements are interactive again; aria-hidden='true' is removed from the background content; Tab navigation works normally through wizard elements; no focus trap remains from the closed modal"
+        },
+        {
+          "step": 6,
+          "action": "Re-trigger the modal and use Enter key on the confirmation button (e.g., 'Yes, Discard') to confirm the action",
+          "expectedResult": "Modal closes and the confirmed action is performed; focus is placed on an appropriate element (e.g., if discarding, focus goes to the dashboard; if changing line of business, focus goes to the updated Step 1)"
+        }
+      ],
+      "postconditions": [
+        "Modal dialogs are fully keyboard accessible with proper focus trapping",
+        "Escape key consistently closes modals without performing destructive actions",
+        "Focus is correctly restored to the triggering element after modal closure"
+      ]
+    },
+    {
+      "id": "TC-ACCE-010",
+      "title": "Wizard heading hierarchy and landmark regions are properly structured for assistive technology navigation",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Insurance Agent is logged in and on the Policy Creation Wizard Step 1",
+        "NVDA screen reader is active",
+        "Browser developer tools are open to inspect HTML structure",
+        "Wizard page has fully loaded"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "In NVDA, press 'H' key to navigate through headings on the wizard page and document the heading hierarchy",
+          "expectedResult": "Heading hierarchy is logical and sequential: h1 for the page/wizard title (e.g., 'New Policy Creation Wizard'), h2 for the current step title (e.g., 'Step 1: Select Line of Business'), h3 for any subsections within the step; no heading levels are skipped (e.g., no h1 followed directly by h3)"
+        },
+        {
+          "step": 2,
+          "action": "In NVDA, press 'D' key to navigate through landmark regions on the page",
+          "expectedResult": "Wizard page has proper landmark regions: <main> for the primary wizard content, <nav> for the progress indicator navigation, <form> for the wizard form fields; each landmark has an accessible name (aria-label or aria-labelledby); the page header and footer (if present) use <header> and <footer> landmarks"
+        },
+        {
+          "step": 3,
+          "action": "Advance to Step 2 and repeat the heading navigation (press 'H' key)",
+          "expectedResult": "The h2 heading updates to reflect the new step (e.g., 'Step 2: Policy Details'); the heading hierarchy remains correct; the previous step's heading is no longer present in the DOM or is hidden with aria-hidden='true'"
+        },
+        {
+          "step": 4,
+          "action": "Use NVDA's Elements List (Insert+F7) to view all form fields on the current step",
+          "expectedResult": "All form fields are listed with their labels; no unlabeled fields appear; required fields are indicated; smart-defaulted fields show their current values; the list matches the visual order of fields on the page"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to the progress indicator using NVDA landmark navigation and verify its structure",
+          "expectedResult": "Progress indicator is within a <nav> landmark with aria-label='Policy creation steps' or similar; each step is announced with its number, title, and status; the structure allows efficient navigation between steps using screen reader commands"
+        }
+      ],
+      "postconditions": [
+        "Heading hierarchy is correct and sequential across all wizard steps",
+        "Landmark regions are properly defined and labeled for efficient screen reader navigation",
+        "All form fields are properly labeled and listed in the screen reader's elements list"
+      ]
+    }
+  ],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": true,
+    "negative": true,
+    "accessibility": true,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-27238",
+    "title": "As Insurance Agent, I want to perform new policy creation through a guided wizard to achieve error-free submissions with minimal steps",
+    "description": "CONTEXT & BACKGROUND:\nPolicy creation involves many fields; a step-by-step wizard with smart defaults reduces cognitive load and prevents incomplete submissions.\n\nCURRENT STATE:\nManual or incomplete process today.\n\nDESIRED STATE:\nSystem supports the capability end-to-end.\n\nKEY FUNCTIONALITY:\n• Implement core logic and validation\n• Expose API and UI\n• Handle errors and edge cases\n• Ensure data persistence and retrieval\n\nUSER INTERACTION FLOW:\n1. User accesses the feature\n2. User performs the required action\n3. System processes the request\n4. System displays results or confirmation\n5. User verifies the outcome\n\nTECHNICAL CONSIDERATIONS:\n• Data source: application database\n• Security: authentication and input validation\n• Performance: meet SLA requirements\n\nOUT OF SCOPE:\n• Advanced customization (future story)\n\nSUCCESS METRICS:\n• Feature works per acceptance criteria\n• No critical defects in production\n\n**Persona:** Insurance Agent\n\n**Acceptance Criteria:**\n1. Policy creation wizard presents only relevant fields per step based on selected line of business and product type\n2. Progress indicator shows current step, completed steps, and remaining steps with estimated time\n3. Smart defaults pre-populate agent code, effective date, and standard coverage options reducing manual entry by at least 40%\n4. System handles the operation correctly and returns expected results for scenario 4\n5. System handles the operation correctly and returns expected results for scenario 5\n",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "27238",
+    "externalId": "SMOKETEST-2570",
+    "state": "New",
+    "assignedTo": "Sri hari gupta K",
+    "createdDate": "2026-04-20T14:40:42.057Z",
+    "priority": "medium",
+    "storyPoints": 8,
+    "tags": "",
+    "epicId": "epic-22693",
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net//browse/SMOKETEST-2570"
+  }
+}
