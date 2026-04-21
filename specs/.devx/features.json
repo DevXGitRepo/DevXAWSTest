@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-04-21T12:49:51.977Z",
+  "enableTdd": false,
+  "totalFeatures": 1,
+  "features": [
+    {
+      "id": 60685,
+      "title": "Basic Policy Search",
+      "slug": "basic-policy-search",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 3,
+      "totalStoryPoints": 8,
+      "files": {
+        "specs": "specs/basic-policy-search/specs.md",
+        "requirements": "specs/basic-policy-search/requirements.md",
+        "prompt": "specs/basic-policy-search/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 60778,
+          "title": "As Insurance Agent, I want to view search results with key policy details to achieve informed selection",
+          "state": "New",
+          "storyPoints": 2
+        },
+        {
+          "id": 60769,
+          "title": "As Customer Service Rep, I want to perform keyword search on policyholder names to achieve easy policy lookup",
+          "state": "New",
+          "storyPoints": 3
+        },
+        {
+          "id": 60760,
+          "title": "As Insurance Agent, I want to perform policy number search to achieve quick access to specific policies",
+          "state": "New",
+          "storyPoints": 3
+        }
+      ]
+    }
+  ]
+}
