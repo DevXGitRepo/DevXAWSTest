@@ -15,6 +15,9 @@ Follow the specification exactly. Do not add features not described in the spec.
 
 ## User Stories
 
+- **As a DevOps Engineer, I want to maintain 99.9% system uptime so that users experience reliable service availability** (8 pts)
+- **As a User, I want to authenticate with login/signup and OTP verification so that my account access is secure** (8 pts)
+- **As a System Architect, I want to implement a cloud-based scalable architecture so that the system can dynamically adjust resources to meet demand** (8 pts)
 - **As Insurance Agent, I want to view search results with key policy details to achieve informed selection** (2 pts)
 - **As Customer Service Rep, I want to perform keyword search on policyholder names to achieve easy policy lookup** (3 pts)
 - **As Insurance Agent, I want to perform policy number search to achieve quick access to specific policies** (3 pts)
