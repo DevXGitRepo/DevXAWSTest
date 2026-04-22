@@ -1,7 +1,7 @@
 # Project
 
 > Auto-generated project context for AI-assisted development.
-> Last updated: 2026-04-21
+> Last updated: 2026-04-22
 
 
 ## Development Methodology
@@ -13,9 +13,10 @@ Every feature has:
 - `requirements.md` — Acceptance criteria checklist
 - `prompt.md` — Ready-to-use implementation prompt
 
-## Features (1)
+## Features (2)
 
-- **Basic Policy Search** (3 user stories)
+- **Advanced Policy Filtering** (3 user stories)
+- **Basic Policy Search** (6 user stories)
 
 ## Getting Started
 
