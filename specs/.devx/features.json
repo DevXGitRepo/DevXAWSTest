@@ -1,23 +1,75 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-04-21T12:49:51.977Z",
+  "generatedAt": "2026-04-22T08:40:01.299Z",
   "enableTdd": false,
-  "totalFeatures": 1,
+  "totalFeatures": 2,
   "features": [
+    {
+      "id": 60686,
+      "title": "Advanced Policy Filtering",
+      "slug": "advanced-policy-filtering",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 3,
+      "totalStoryPoints": 10,
+      "files": {
+        "specs": "specs/advanced-policy-filtering/specs.md",
+        "requirements": "specs/advanced-policy-filtering/requirements.md",
+        "prompt": "specs/advanced-policy-filtering/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 60805,
+          "title": "As Insurance Agent, I want to apply multiple filters simultaneously to achieve refined search results",
+          "state": "New",
+          "storyPoints": 4
+        },
+        {
+          "id": 60796,
+          "title": "As Underwriter, I want to filter policies by effective date range to achieve precise temporal search",
+          "state": "New",
+          "storyPoints": 3
+        },
+        {
+          "id": 60787,
+          "title": "As Insurance Agent, I want to filter policies by status to achieve targeted results",
+          "state": "New",
+          "storyPoints": 3
+        }
+      ]
+    },
     {
       "id": 60685,
       "title": "Basic Policy Search",
       "slug": "basic-policy-search",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 3,
-      "totalStoryPoints": 8,
+      "storyCount": 6,
+      "totalStoryPoints": 32,
       "files": {
         "specs": "specs/basic-policy-search/specs.md",
         "requirements": "specs/basic-policy-search/requirements.md",
         "prompt": "specs/basic-policy-search/prompt.md"
       },
       "userStories": [
+        {
+          "id": 63371,
+          "title": "As a DevOps Engineer, I want to maintain 99.9% system uptime so that users experience reliable service availability",
+          "state": "New",
+          "storyPoints": 8
+        },
+        {
+          "id": 63362,
+          "title": "As a User, I want to authenticate with login/signup and OTP verification so that my account access is secure",
+          "state": "New",
+          "storyPoints": 8
+        },
+        {
+          "id": 63353,
+          "title": "As a System Architect, I want to implement a cloud-based scalable architecture so that the system can dynamically adjust resources to meet demand",
+          "state": "New",
+          "storyPoints": 8
+        },
         {
           "id": 60778,
           "title": "As Insurance Agent, I want to view search results with key policy details to achieve informed selection",
