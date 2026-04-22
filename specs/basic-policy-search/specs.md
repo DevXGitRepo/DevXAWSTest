@@ -1,154 +1,175 @@
 # Feature: Basic Policy Search
 Status: NEW
 Owner: DevX
-Last Updated: 2026-04-21
+Last Updated: 2026-04-22
 
 ## Summary
-Create a fast, intuitive policy search interface that enables insurance agents and customer service representatives to locate policies through keyword and policy number searches. The product must deliver instant results with key policy details, support partial matching, and maintain sub-2-second response times while ensuring secure access to policy data.
+Create a fast, intuitive policy search interface that enables insurance agents and customer service representatives to locate policies quickly using policy numbers or policyholder names. The search must deliver results within 2 seconds, display key policy information clearly, and support partial matching to accommodate various search scenarios. The product must maintain 99.9% uptime, implement secure authentication with OTP verification, and scale dynamically to handle varying search loads.
 
 ## Actors
 - Insurance Agent (primary user)
 - Customer Service Representative (primary user)
-- Policyholder (data subject)
-- System (search engine, database, caching layer)
-- Audit Service (compliance tracking)
+- Policyholder (indirect beneficiary)
+- System Administrator (operations)
+- DevOps Engineer (infrastructure)
+- System (search engine, authentication service, scaling service)
 
 ## Goals
-- Enable rapid policy location through multiple search methods (policy number, policyholder name).
-- Display essential policy information in results without requiring additional navigation.
-- Provide instant feedback with highlighted search matches and clear no-results messaging.
-- Maintain fast response times even under concurrent user load.
+- Enable rapid policy location using minimal search criteria.
+- Display essential policy information without requiring navigation.
+- Maintain consistent sub-2-second response times under normal load.
+- Ensure secure access through robust authentication.
+- Provide reliable service with 99.9% uptime.
 
 ## Key Features
-- Multi-method search supporting policy numbers and policyholder names.
-- Intelligent partial matching with case-insensitive and punctuation-agnostic processing.
-- Real-time result updates as users type with debounced search execution.
-- Highlighted search term matches within results for quick visual scanning.
-- Comprehensive result display showing policy number, policyholder, effective date, and status.
+- Policy number search with partial matching capability.
+- Keyword search on policyholder names with fuzzy matching.
+- Results display with highlighted search terms and key policy details.
+- Secure authentication with OTP verification for all users.
+- Auto-scaling infrastructure to handle variable search volumes.
+- Real-time system monitoring with automated failover mechanisms.
 
 ## Data & Constraints
-- Policy: policy_number, policyholder_name, effective_date, expiry_date, status, type, premium
+- Policy: id, policy_number, policyholder_name, effective_date, status, type, premium
 - SearchQuery: id, user_id, query_text, query_type, timestamp, result_count
-- SearchResult: policy_id, match_score, matched_fields, highlight_positions
-- Constraints: max query length 100 chars, result set limit 100 records, 2-second SLA, minimum 3 chars for name search
+- User: id, username, email, phone, role, last_login, otp_verified
+- SystemMetrics: id, timestamp, response_time, concurrent_users, resource_utilization
+- Constraints: 2-second response time SLA, case-insensitive matching, 99.9% uptime requirement, OTP expiry (5 minutes)
 
 ## User Scenarios & Testing
 
 Scenario 1 — Search by policy number (happy path)
 1. Agent enters full or partial policy number in search field.
 2. System performs search and returns matching policies.
-3. Results display with policy number, holder name, and status.
-4. Agent identifies correct policy from results and proceeds with selection.
+3. Results display policy number, policyholder name, effective date, and status.
+4. Agent selects desired policy from results.
 
 Acceptance criteria (testable):
-- A user can search using partial policy numbers (minimum 3 characters) and receive relevant matches.
-- Search results appear within 2 seconds of input under normal load conditions.
-- Each result displays policy number, policyholder name, effective date, and current status.
+- A user can search using partial policy numbers (minimum 3 characters).
+- Search results return within 2 seconds for up to 1000 matches.
+- Results accurately match the search criteria with highlighted terms.
 
 Scenario 2 — Search by policyholder name
-1. Customer service rep enters customer's name (partial or full).
+1. Customer service rep enters policyholder name (partial or full).
 2. System performs case-insensitive search ignoring punctuation.
-3. Matching policies display with search terms highlighted.
-4. Rep selects appropriate policy from filtered results.
+3. Results display matching policies with key details.
+4. Rep identifies correct policy from results.
 
 Acceptance criteria (testable):
-- Name searches work with partial matches (e.g., "John" matches "Johnson" and "John Smith").
-- Search ignores case differences and common punctuation (apostrophes, hyphens).
-- Clear "No results found" message appears when no policies match the search criteria.
+- Name search supports partial matching (first name, last name, or both).
+- Search ignores case and common punctuation marks.
+- Empty results display clear "no matches found" message.
 
-Scenario 3 — Real-time search refinement
-1. User begins typing search query.
-2. Results automatically refresh after brief pause in typing (debounced).
-3. Matched terms appear highlighted in yellow within results.
-4. User continues refining search until desired policy appears.
+Scenario 3 — Secure authentication flow
+1. User attempts to access search interface.
+2. System prompts for login credentials.
+3. Upon successful credential validation, system sends OTP to registered contact.
+4. User enters OTP within 5-minute window.
+5. System grants access to search functionality.
 
-Scenario 4 — Handle no results gracefully
-1. User enters search term with no matches.
-2. System displays friendly "No policies found" message with search tips.
-3. User modifies search criteria based on guidance provided.
+Acceptance criteria (testable):
+- OTP delivery occurs within 30 seconds of request.
+- Invalid OTP attempts are limited to 3 before temporary lockout.
+- Session remains active for configured duration after successful authentication.
+
+Scenario 4 — System scaling under load
+1. Search volume increases beyond baseline threshold.
+2. System automatically provisions additional resources.
+3. Load balancer distributes requests across available instances.
+4. Response times remain within SLA despite increased load.
+
+Acceptance criteria (testable):
+- Auto-scaling triggers when CPU utilization exceeds 70% for 2 minutes.
+- New instances become operational within 3 minutes of scaling event.
+- System maintains sub-2-second response times during scaling.
 
 ## Functional Requirements (testable)
 
-1. Search input processing
-   - System accepts alphanumeric input with spaces and common punctuation.
-   - Minimum query length of 3 characters for name searches, 2 for policy numbers.
-   - Input sanitization prevents injection attacks while preserving legitimate characters.
+1. Policy number search
+   - Users can search using complete or partial policy numbers (minimum 3 characters).
+   - System returns exact matches first, followed by partial matches.
+   - Search supports alphanumeric policy numbers with special characters.
 
-2. Policy number search
-   - Support exact and partial matching for policy numbers.
-   - Return results sorted by relevance (exact matches first, then partial).
-   - Include archived/inactive policies with clear status indicators.
+2. Policyholder name search
+   - Users can search using first name, last name, or full name.
+   - Search performs case-insensitive matching and ignores punctuation.
+   - System supports common name variations and typos within reasonable limits.
 
-3. Name-based search
-   - Perform case-insensitive matching across policyholder name fields.
-   - Support partial word matching (beginning, middle, or end of names).
-   - Ignore common punctuation marks (apostrophes, hyphens, periods).
+3. Search results display
+   - Results show policy number, policyholder name, effective date, and current status.
+   - Matched search terms appear highlighted in results.
+   - Results refresh automatically when search criteria change.
 
-4. Result presentation
-   - Display policy number, policyholder name, effective date, and status for each result.
-   - Highlight matched search terms within result text using visual emphasis.
-   - Limit initial display to 20 results with option to load more.
+4. Authentication and security
+   - All users must authenticate before accessing search functionality.
+   - System generates and validates OTP for two-factor authentication.
+   - Failed login attempts trigger progressive delays and eventual lockout.
 
 5. Performance requirements
-   - Search execution completes within 2 seconds for 95% of queries under normal load.
-   - Support minimum 100 concurrent search operations without degradation.
-   - Results begin streaming to UI within 500ms of search initiation.
+   - Search queries complete within 2 seconds under normal load (up to 100 concurrent users).
+   - System supports at least 10,000 concurrent users without degradation.
+   - Page load time for search interface under 3 seconds on 3G connections.
 
-6. Real-time updates
-   - Debounce search execution with 300ms delay after last keystroke.
-   - Cancel in-flight searches when new search initiated.
-   - Maintain search state during result loading to prevent UI flicker.
+6. Availability and reliability
+   - System maintains 99.9% uptime measured monthly.
+   - Automated failover activates within 30 seconds of primary system failure.
+   - Load balancers distribute traffic evenly across available resources.
 
-7. Error handling
-   - Display user-friendly messages for system errors without exposing technical details.
-   - Provide retry capability for transient failures.
-   - Log all errors with context for troubleshooting.
+7. Scalability
+   - Infrastructure automatically scales based on demand metrics.
+   - System provisions additional resources when thresholds are exceeded.
+   - Scale-down occurs during low-usage periods to optimize costs.
 
-8. Security & access control
-   - Require authentication before accessing search functionality.
-   - Filter results based on user's data access permissions.
-   - Audit all search queries with user identification and timestamp.
+8. Monitoring and alerting
+   - Real-time monitoring tracks system health and performance metrics.
+   - Automated alerts trigger for downtime, performance degradation, or security events.
+   - Alert response time under 5 minutes for critical issues.
 
-9. Accessibility
-   - Search interface navigable via keyboard with proper tab order.
-   - Screen reader announces result count and updates.
-   - High contrast mode support for result highlighting.
+9. Data security and privacy
+   - All search queries and results are logged for audit purposes.
+   - Sensitive data is encrypted in transit and at rest.
+   - Access logs capture user actions for compliance tracking.
 
-10. Data freshness [NEEDS CLARIFICATION: cache invalidation strategy]
-   - Search index updates reflect policy changes within defined SLA.
-   - Stale data indicators when real-time sync unavailable.
+10. Error handling
+   - Clear error messages display for invalid searches or system issues.
+   - Users can retry failed searches without losing context.
+   - System gracefully handles edge cases like special characters or empty searches.
 
 ## Success Criteria (measurable & verifiable)
-- Search accuracy: 95% of searches return expected policy in top 5 results.
-- Response time: 95th percentile search latency under 2 seconds during business hours.
-- User efficiency: Average time from search initiation to policy selection under 15 seconds.
-- Zero-result rate: Less than 10% of searches result in no matches (excluding typos).
-- System availability: 99.9% uptime for search functionality during business hours.
-- Concurrent usage: Support 100 simultaneous users without performance degradation.
+- Search performance: 95% of searches complete within 2 seconds under normal load.
+- Search accuracy: 98% of searches return relevant results based on user criteria.
+- Authentication success: 100% of OTP deliveries complete within 30 seconds.
+- System uptime: Achieve 99.9% availability measured monthly.
+- Scaling efficiency: 100% successful auto-scaling events without service interruption.
+- User task completion: 95% of users successfully locate desired policies within first search attempt.
+- Security compliance: Zero unauthorized access incidents; all sessions properly authenticated.
+- Load capacity: Support minimum 10,000 concurrent users without performance degradation.
 
 ## Key Entities
-- User (agent, customer service rep)
-- Policy (core business object)
-- Policyholder (individual or organization)
-- SearchQuery (user input and metadata)
-- SearchResult (matched policies with relevance)
-- AuditLog (compliance and usage tracking)
+- User (agent, customer service rep, administrator)
+- Policy (core business record)
+- SearchQuery (user search history and patterns)
+- Session (authentication and activity tracking)
+- SystemMetric (performance and health data)
+- OTPToken (temporary authentication codes)
+- AuditLog (compliance and security tracking)
 
 ## Assumptions
-- Users have modern browsers supporting ES6+ JavaScript features.
-- Policy database contains indexed fields for efficient searching.
-- Network latency between users and servers typically under 100ms.
-- Search volume peaks during business hours with 70% of daily traffic.
-- Policy data updates occur through separate administrative processes.
+- Users have stable internet connections for search operations.
+- Policy data is indexed and optimized for search performance.
+- SMS/email infrastructure is available for OTP delivery.
+- Cloud provider supports required auto-scaling capabilities.
+- Search index updates occur near-real-time as policies change.
 
 ## Milestones (high-level)
-1. M1 — Core search by policy number with basic result display
-2. M2 — Name-based search with partial matching and highlighting
-3. M3 — Real-time updates, performance optimization, and advanced filtering
+1. M1 — Core search functionality with policy number and name search
+2. M2 — Authentication system with OTP verification and session management
+3. M3 — Cloud infrastructure with auto-scaling and monitoring
+4. M4 — Performance optimization and failover mechanisms
 
 ---
 
 Notes:
-- Define specific cache invalidation windows based on business requirements.
-- Establish data retention policies for search query logs per compliance needs.
-- Consider future enhancements: saved searches, search history, advanced filters.
+- Define specific cloud provider (AWS/Azure/GCP) for infrastructure implementation.
+- Establish data retention policies for search logs and audit trails.
+- Confirm OTP delivery channels and backup methods for authentication.
