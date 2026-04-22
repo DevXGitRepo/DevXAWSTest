@@ -1,0 +1,1974 @@
+{
+  "storyId": "ado-63398",
+  "storyTitle": "As a DevOps Manager, I want a dashboard showing real-time incident status and response progress so that I can monitor system health and response effectiveness",
+  "testCases": [],
+  "functional": [
+    {
+      "id": "TC-FUNC-001",
+      "title": "Verify successful login and dashboard initial load with active incidents",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User has valid DevOps Manager credentials",
+        "At least 3 active incidents exist in the system",
+        "Dashboard service is running and accessible",
+        "User is on the login page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter valid username 'devops.manager@company.com' in the Username field",
+          "expectedResult": "Username is accepted and displayed in the field"
+        },
+        {
+          "step": 2,
+          "action": "Enter valid password in the Password field",
+          "expectedResult": "Password is masked with asterisks"
+        },
+        {
+          "step": 3,
+          "action": "Click the 'Sign In' button",
+          "expectedResult": "Loading spinner appears briefly"
+        },
+        {
+          "step": 4,
+          "action": "Wait for dashboard to load",
+          "expectedResult": "Dashboard displays with header showing 'Incident Management Dashboard'"
+        },
+        {
+          "step": 5,
+          "action": "Observe the active incidents section",
+          "expectedResult": "All 3 active incidents are displayed with status indicators (red for critical, yellow for warning)"
+        }
+      ],
+      "postconditions": [
+        "User session is established and valid",
+        "Dashboard displays current incident data",
+        "User role 'DevOps Manager' is shown in top-right corner"
+      ]
+    },
+    {
+      "id": "TC-FUNC-002",
+      "title": "Verify real-time incident status updates without page refresh",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard is displaying 2 active incidents",
+        "WebSocket connection is established",
+        "Test incident 'INC-2024-001' status will be changed externally"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Observe incident 'INC-2024-001' showing status 'Investigating' in orange",
+          "expectedResult": "Incident displays with 'Investigating' status and orange indicator"
+        },
+        {
+          "step": 2,
+          "action": "Trigger external status change to 'In Progress' (via API or backend)",
+          "expectedResult": "No page refresh occurs"
+        },
+        {
+          "step": 3,
+          "action": "Wait 2-3 seconds for real-time update",
+          "expectedResult": "Incident 'INC-2024-001' status automatically updates to 'In Progress' with blue indicator"
+        },
+        {
+          "step": 4,
+          "action": "Verify timestamp in incident card",
+          "expectedResult": "Last updated timestamp changes to current time"
+        },
+        {
+          "step": 5,
+          "action": "Check notification area",
+          "expectedResult": "Toast notification appears: 'Incident INC-2024-001 status updated'"
+        }
+      ],
+      "postconditions": [
+        "Dashboard reflects current incident status",
+        "Update history is logged in system",
+        "WebSocket connection remains active"
+      ]
+    },
+    {
+      "id": "TC-FUNC-003",
+      "title": "Verify incident detail view with response actions and progress visualization",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard shows incident 'INC-2024-002' with 3 response actions",
+        "Incident has 60% progress completed"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on incident card 'INC-2024-002 - Database Connection Failure'",
+          "expectedResult": "Incident detail panel slides in from right side"
+        },
+        {
+          "step": 2,
+          "action": "Observe the response actions section",
+          "expectedResult": "3 response actions listed: 'Restart DB Service' (completed), 'Check Connection Pool' (in progress), 'Notify Team' (pending)"
+        },
+        {
+          "step": 3,
+          "action": "Check the progress bar visualization",
+          "expectedResult": "Circular progress indicator shows 60% with '2 of 3 actions completed' text"
+        },
+        {
+          "step": 4,
+          "action": "Verify action timestamps",
+          "expectedResult": "Each action shows start time, duration, and assigned responder"
+        },
+        {
+          "step": 5,
+          "action": "Click on 'View Timeline' button",
+          "expectedResult": "Timeline view expands showing chronological event history with timestamps"
+        }
+      ],
+      "postconditions": [
+        "Detail view remains open for further interaction",
+        "All incident data is accurately displayed",
+        "No data refresh issues observed"
+      ]
+    },
+    {
+      "id": "TC-FUNC-004",
+      "title": "Verify incident filtering by status, severity, and date range",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard displays 15 incidents (5 active, 10 resolved)",
+        "Incidents have various severity levels (Critical, High, Medium, Low)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on 'Filters' button in top toolbar",
+          "expectedResult": "Filter panel expands showing Status, Severity, and Date Range options"
+        },
+        {
+          "step": 2,
+          "action": "Select 'Active' checkbox under Status filter",
+          "expectedResult": "Checkbox is checked, 'Apply' button becomes enabled"
+        },
+        {
+          "step": 3,
+          "action": "Select 'Critical' and 'High' under Severity filter",
+          "expectedResult": "Both checkboxes are selected"
+        },
+        {
+          "step": 4,
+          "action": "Click 'Apply Filters' button",
+          "expectedResult": "Dashboard refreshes showing only 3 incidents matching criteria"
+        },
+        {
+          "step": 5,
+          "action": "Verify filter tags display",
+          "expectedResult": "Active filter tags show: 'Status: Active', 'Severity: Critical, High' with X buttons to remove"
+        },
+        {
+          "step": 6,
+          "action": "Click 'Clear All' filters link",
+          "expectedResult": "All 15 incidents reappear, filter tags are removed"
+        }
+      ],
+      "postconditions": [
+        "Dashboard returns to unfiltered state",
+        "Filter preferences are not saved",
+        "All incidents are visible again"
+      ]
+    },
+    {
+      "id": "TC-FUNC-005",
+      "title": "Verify incident search functionality with various search terms",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard displays 20 incidents",
+        "Search bar is visible in top navigation"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click in the search bar placeholder 'Search incidents...'",
+          "expectedResult": "Search bar becomes active with cursor blinking"
+        },
+        {
+          "step": 2,
+          "action": "Type 'database' in search field",
+          "expectedResult": "Search suggestions dropdown appears with matching incidents"
+        },
+        {
+          "step": 3,
+          "action": "Press Enter key",
+          "expectedResult": "Dashboard filters to show 4 incidents containing 'database' in title or description"
+        },
+        {
+          "step": 4,
+          "action": "Clear search and type incident ID 'INC-2024-005'",
+          "expectedResult": "Auto-complete suggests the full incident"
+        },
+        {
+          "step": 5,
+          "action": "Select the suggested incident",
+          "expectedResult": "Dashboard shows only the specific incident INC-2024-005"
+        },
+        {
+          "step": 6,
+          "action": "Click the X button in search bar",
+          "expectedResult": "Search clears and all 20 incidents reappear"
+        }
+      ],
+      "postconditions": [
+        "Search history is maintained for session",
+        "Dashboard returns to full incident list",
+        "Search performance remains responsive"
+      ]
+    },
+    {
+      "id": "TC-FUNC-006",
+      "title": "Verify historical incident data access and trend visualization",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "System has 90 days of historical incident data",
+        "Dashboard is on main view"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on 'Historical Data' tab in main navigation",
+          "expectedResult": "View switches to historical dashboard with date selector"
+        },
+        {
+          "step": 2,
+          "action": "Select 'Last 30 Days' from date range dropdown",
+          "expectedResult": "Line graph displays incident trends for past 30 days"
+        },
+        {
+          "step": 3,
+          "action": "Hover over data point for day 15",
+          "expectedResult": "Tooltip shows: 'Date: [date], Incidents: 12, Resolved: 10, Avg Resolution: 2.5 hrs'"
+        },
+        {
+          "step": 4,
+          "action": "Click on 'View by Severity' toggle",
+          "expectedResult": "Graph updates to show stacked area chart with severity breakdown"
+        },
+        {
+          "step": 5,
+          "action": "Select 'Export Data' button",
+          "expectedResult": "Export options appear: CSV, PDF, Excel"
+        },
+        {
+          "step": 6,
+          "action": "Click 'Download as CSV'",
+          "expectedResult": "File 'incident_history_[date].csv' downloads to browser"
+        }
+      ],
+      "postconditions": [
+        "CSV file is saved in downloads folder",
+        "Historical view remains accessible",
+        "Data accuracy is maintained"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Verify role-based access control for different user types",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Three test users exist: DevOps Manager, DevOps Engineer, Read-Only Viewer",
+        "Dashboard has sensitive incident data",
+        "Users are logged out initially"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Login as DevOps Manager role",
+          "expectedResult": "Full dashboard access with all features visible"
+        },
+        {
+          "step": 2,
+          "action": "Verify available actions",
+          "expectedResult": "Export, Filter, Search, and Historical Data tabs are all accessible"
+        },
+        {
+          "step": 3,
+          "action": "Logout and login as DevOps Engineer",
+          "expectedResult": "Dashboard loads with limited admin features"
+        },
+        {
+          "step": 4,
+          "action": "Verify Engineer permissions",
+          "expectedResult": "Can view incidents and details but Export button is disabled"
+        },
+        {
+          "step": 5,
+          "action": "Logout and login as Read-Only Viewer",
+          "expectedResult": "Dashboard shows view-only mode indicator"
+        },
+        {
+          "step": 6,
+          "action": "Attempt to access Historical Data",
+          "expectedResult": "Tab is visible but shows 'Insufficient permissions' message when clicked"
+        }
+      ],
+      "postconditions": [
+        "Access logs record all permission checks",
+        "No unauthorized data exposure occurred",
+        "User sessions are properly terminated"
+      ]
+    },
+    {
+      "id": "TC-FUNC-008",
+      "title": "Verify dashboard auto-refresh and manual refresh functionality",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard is displaying current incidents",
+        "Auto-refresh is enabled with 30-second interval"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Observe the refresh indicator showing 'Auto-refresh: ON (30s)'",
+          "expectedResult": "Indicator shows green status with countdown timer"
+        },
+        {
+          "step": 2,
+          "action": "Wait for 30 seconds",
+          "expectedResult": "Dashboard flashes briefly and updates with latest data"
+        },
+        {
+          "step": 3,
+          "action": "Click the manual refresh button (circular arrow icon)",
+          "expectedResult": "Spinning animation on button, dashboard updates immediately"
+        },
+        {
+          "step": 4,
+          "action": "Click on auto-refresh toggle to disable",
+          "expectedResult": "Indicator changes to 'Auto-refresh: OFF' in gray"
+        },
+        {
+          "step": 5,
+          "action": "Wait 60 seconds",
+          "expectedResult": "No automatic refresh occurs, data remains static"
+        },
+        {
+          "step": 6,
+          "action": "Re-enable auto-refresh",
+          "expectedResult": "Auto-refresh resumes with countdown timer"
+        }
+      ],
+      "postconditions": [
+        "Auto-refresh preference is saved for user session",
+        "Dashboard data is current",
+        "No duplicate data or display issues"
+      ]
+    },
+    {
+      "id": "TC-FUNC-009",
+      "title": "Verify incident export functionality with multiple formats",
+      "category": "Functional",
+      "priority": "Low",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard shows 8 filtered incidents",
+        "User has download permissions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on 'Export' button in toolbar",
+          "expectedResult": "Export modal opens with format options: PDF, CSV, Excel"
+        },
+        {
+          "step": 2,
+          "action": "Select 'Include resolved incidents' checkbox",
+          "expectedResult": "Checkbox is checked, incident count updates to '15 incidents to export'"
+        },
+        {
+          "step": 3,
+          "action": "Select PDF format and click 'Generate Report'",
+          "expectedResult": "Progress bar appears showing 'Generating PDF...'"
+        },
+        {
+          "step": 4,
+          "action": "Wait for generation to complete",
+          "expectedResult": "Success message: 'Report ready' with Download button"
+        },
+        {
+          "step": 5,
+          "action": "Click 'Download' button",
+          "expectedResult": "File 'incident_report_[timestamp].pdf' downloads"
+        },
+        {
+          "step": 6,
+          "action": "Open the downloaded PDF",
+          "expectedResult": "PDF contains all 15 incidents with proper formatting and company branding"
+        }
+      ],
+      "postconditions": [
+        "Export history is logged in audit trail",
+        "Downloaded file is valid and complete",
+        "Modal closes after successful download"
+      ]
+    },
+    {
+      "id": "TC-FUNC-010",
+      "title": "Verify responsive UI design on different screen sizes",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard is loaded on desktop browser (1920x1080)",
+        "Browser developer tools are available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "View dashboard on full desktop screen",
+          "expectedResult": "Three-column layout: sidebar, main content, detail panel"
+        },
+        {
+          "step": 2,
+          "action": "Resize browser to tablet size (768px width)",
+          "expectedResult": "Layout adjusts to two columns, detail panel becomes overlay"
+        },
+        {
+          "step": 3,
+          "action": "Click on an incident card",
+          "expectedResult": "Detail panel slides over main content as modal"
+        },
+        {
+          "step": 4,
+          "action": "Resize to mobile size (375px width)",
+          "expectedResult": "Single column layout, navigation becomes hamburger menu"
+        },
+        {
+          "step": 5,
+          "action": "Tap hamburger menu icon",
+          "expectedResult": "Slide-out navigation menu appears from left"
+        },
+        {
+          "step": 6,
+          "action": "Return to desktop size",
+          "expectedResult": "Layout returns to three-column view smoothly"
+        }
+      ],
+      "postconditions": [
+        "All UI elements remain functional",
+        "No data is lost during resize",
+        "Layout preferences are maintained"
+      ]
+    }
+  ],
+  "negative": [
+    {
+      "id": "TC-NEGA-001",
+      "title": "Verify login failure with invalid credentials",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is on the login page",
+        "Dashboard service is running",
+        "No active session exists"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enter invalid username 'wronguser@company.com' in Username field",
+          "expectedResult": "Username is accepted in the field"
+        },
+        {
+          "step": 2,
+          "action": "Enter invalid password 'wrongpass123' in Password field",
+          "expectedResult": "Password is masked"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Sign In' button",
+          "expectedResult": "Loading spinner appears briefly"
+        },
+        {
+          "step": 4,
+          "action": "Wait for response",
+          "expectedResult": "Error message displays: 'Invalid username or password. Please try again.'"
+        },
+        {
+          "step": 5,
+          "action": "Verify form state",
+          "expectedResult": "Username field retains entered value, password field is cleared"
+        }
+      ],
+      "postconditions": [
+        "No session is created",
+        "Failed login attempt is logged",
+        "User remains on login page"
+      ]
+    },
+    {
+      "id": "TC-NEGA-002",
+      "title": "Verify access denial for expired session",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User was logged in as DevOps Manager",
+        "Session has been expired on server (timeout)",
+        "User is viewing dashboard"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "With expired session, click on any incident card",
+          "expectedResult": "No immediate response"
+        },
+        {
+          "step": 2,
+          "action": "Wait for server response",
+          "expectedResult": "Session timeout modal appears: 'Your session has expired'"
+        },
+        {
+          "step": 3,
+          "action": "Click 'OK' on modal",
+          "expectedResult": "User is redirected to login page"
+        },
+        {
+          "step": 4,
+          "action": "Try to navigate back using browser back button",
+          "expectedResult": "Login page remains, no dashboard access"
+        },
+        {
+          "step": 5,
+          "action": "Attempt direct URL access to dashboard",
+          "expectedResult": "Redirected to login page with message 'Please login to continue'"
+        }
+      ],
+      "postconditions": [
+        "Session is completely terminated",
+        "No cached data is accessible",
+        "Security log records unauthorized access attempt"
+      ]
+    },
+    {
+      "id": "TC-NEGA-003",
+      "title": "Verify SQL injection attempt in search field",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard is loaded with incidents",
+        "Search field is accessible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click in search field",
+          "expectedResult": "Search field becomes active"
+        },
+        {
+          "step": 2,
+          "action": "Enter SQL injection string: \"'; DROP TABLE incidents; --\"",
+          "expectedResult": "Text is entered in field"
+        },
+        {
+          "step": 3,
+          "action": "Press Enter to search",
+          "expectedResult": "Search executes"
+        },
+        {
+          "step": 4,
+          "action": "Observe results",
+          "expectedResult": "Message displays: 'No incidents found matching your search'"
+        },
+        {
+          "step": 5,
+          "action": "Verify database integrity",
+          "expectedResult": "All incidents still display when search is cleared"
+        },
+        {
+          "step": 6,
+          "action": "Check security logs",
+          "expectedResult": "Potential SQL injection attempt is logged with user details"
+        }
+      ],
+      "postconditions": [
+        "Database remains intact",
+        "Security alert is triggered",
+        "User session continues normally"
+      ]
+    },
+    {
+      "id": "TC-NEGA-004",
+      "title": "Verify handling of network disconnection during real-time updates",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard showing real-time updates",
+        "WebSocket connection is active",
+        "Network can be disabled"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Verify real-time indicator shows 'Connected' in green",
+          "expectedResult": "Connection status is active"
+        },
+        {
+          "step": 2,
+          "action": "Disable network connection (airplane mode or disconnect)",
+          "expectedResult": "Network is disconnected"
+        },
+        {
+          "step": 3,
+          "action": "Wait 5 seconds",
+          "expectedResult": "Warning banner appears: 'Connection lost. Attempting to reconnect...'"
+        },
+        {
+          "step": 4,
+          "action": "Try to click on an incident",
+          "expectedResult": "Incident details show with warning: 'Data may be outdated'"
+        },
+        {
+          "step": 5,
+          "action": "Re-enable network connection",
+          "expectedResult": "After 3-5 seconds, 'Connection restored' message appears"
+        },
+        {
+          "step": 6,
+          "action": "Verify data sync",
+          "expectedResult": "Dashboard refreshes automatically with latest data"
+        }
+      ],
+      "postconditions": [
+        "WebSocket reconnects successfully",
+        "No data loss occurred",
+        "Real-time updates resume"
+      ]
+    },
+    {
+      "id": "TC-NEGA-005",
+      "title": "Verify unauthorized access attempt to admin features",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as Read-Only Viewer",
+        "Dashboard is displayed",
+        "Browser developer tools are available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Right-click on disabled 'Export' button and inspect element",
+          "expectedResult": "Developer tools open showing HTML"
+        },
+        {
+          "step": 2,
+          "action": "Remove 'disabled' attribute from Export button in HTML",
+          "expectedResult": "Button appears enabled in UI"
+        },
+        {
+          "step": 3,
+          "action": "Click the now-enabled Export button",
+          "expectedResult": "Error modal appears: 'Access Denied: Insufficient permissions'"
+        },
+        {
+          "step": 4,
+          "action": "Open browser console and attempt API call: fetch('/api/incidents/export')",
+          "expectedResult": "API returns 403 Forbidden error"
+        },
+        {
+          "step": 5,
+          "action": "Check security audit log",
+          "expectedResult": "Unauthorized access attempt is logged with user ID and timestamp"
+        }
+      ],
+      "postconditions": [
+        "No data is exported",
+        "Security incident is logged",
+        "User session remains active but monitored"
+      ]
+    },
+    {
+      "id": "TC-NEGA-006",
+      "title": "Verify handling of extremely long search queries",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard is loaded",
+        "Search field has no client-side length validation"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click in search field",
+          "expectedResult": "Search field becomes active"
+        },
+        {
+          "step": 2,
+          "action": "Paste a 5000-character string into search field",
+          "expectedResult": "Text is truncated or field accepts all characters"
+        },
+        {
+          "step": 3,
+          "action": "Press Enter to search",
+          "expectedResult": "Loading indicator appears"
+        },
+        {
+          "step": 4,
+          "action": "Wait for response",
+          "expectedResult": "Error message: 'Search query too long. Maximum 255 characters allowed'"
+        },
+        {
+          "step": 5,
+          "action": "Verify search field state",
+          "expectedResult": "Field is highlighted in red with error indicator"
+        },
+        {
+          "step": 6,
+          "action": "Clear search field",
+          "expectedResult": "Error state is removed, normal search functionality returns"
+        }
+      ],
+      "postconditions": [
+        "Search functionality remains operational",
+        "No server crash or timeout",
+        "Input validation is enforced"
+      ]
+    },
+    {
+      "id": "TC-NEGA-007",
+      "title": "Verify date range filter with invalid date combinations",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Dashboard is on Historical Data view",
+        "Custom date range selector is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on 'Custom Range' in date selector",
+          "expectedResult": "Date picker modal opens with From and To fields"
+        },
+        {
+          "step": 2,
+          "action": "Set 'From' date to '2024-12-31'",
+          "expectedResult": "Date is accepted"
+        },
+        {
+          "step": 3,
+          "action": "Set 'To' date to '2024-01-01' (earlier than From)",
+          "expectedResult": "Date is accepted initially"
+        },
+        {
+          "step": 4,
+          "action": "Click 'Apply' button",
+          "expectedResult": "Validation error: 'End date must be after start date'"
+        },
+        {
+          "step": 5,
+          "action": "Set 'To' date to year 2099",
+          "expectedResult": "Error message: 'Future dates are not allowed'"
+        },
+        {
+          "step": 6,
+          "action": "Enter invalid date format 'abc-def-ghij'",
+          "expectedResult": "Field shows 'Invalid date format. Use YYYY-MM-DD'"
+        }
+      ],
+      "postconditions": [
+        "Date filter is not applied",
+        "Previous valid filter remains active",
+        "Date picker remains open for correction"
+      ]
+    },
+    {
+      "id": "TC-NEGA-008",
+      "title": "Verify server timeout during large data export",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Over 10,000 incidents exist in selected range",
+        "Export timeout is set to 30 seconds"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Select 'Last 365 Days' filter",
+          "expectedResult": "Dashboard shows '10,000+ incidents'"
+        },
+        {
+          "step": 2,
+          "action": "Click Export button and select PDF format",
+          "expectedResult": "Export modal shows warning: 'Large dataset may take time'"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Proceed with Export'",
+          "expectedResult": "Progress bar starts at 0%"
+        },
+        {
+          "step": 4,
+          "action": "Wait for 30 seconds",
+          "expectedResult": "Progress stops at around 45%"
+        },
+        {
+          "step": 5,
+          "action": "Observe timeout error",
+          "expectedResult": "Error message: 'Export failed: Request timeout. Try smaller date range.'"
+        },
+        {
+          "step": 6,
+          "action": "Click 'Try Again' button",
+          "expectedResult": "Modal resets with suggestion to reduce data range"
+        }
+      ],
+      "postconditions": [
+        "No partial file is downloaded",
+        "Server resources are released",
+        "Export modal remains open"
+      ]
+    },
+    {
+      "id": "TC-NEGA-009",
+      "title": "Verify XSS attack prevention in incident details",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Test incident exists with XSS payload in description",
+        "Incident contains: '<script>alert(\"XSS\")</script>'"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on incident containing XSS payload",
+          "expectedResult": "Incident detail panel opens"
+        },
+        {
+          "step": 2,
+          "action": "Observe the description field",
+          "expectedResult": "Script tags are displayed as plain text, not executed"
+        },
+        {
+          "step": 3,
+          "action": "Check browser console",
+          "expectedResult": "No JavaScript alerts or errors appear"
+        },
+        {
+          "step": 4,
+          "action": "View page source",
+          "expectedResult": "Script tags are HTML-encoded: '&lt;script&gt;'"
+        },
+        {
+          "step": 5,
+          "action": "Copy description text",
+          "expectedResult": "Copied text contains escaped characters, not executable code"
+        }
+      ],
+      "postconditions": [
+        "No scripts are executed",
+        "Security measures are confirmed working",
+        "Incident data is safely displayed"
+      ]
+    },
+    {
+      "id": "TC-NEGA-010",
+      "title": "Verify handling of concurrent session limit exceeded",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User account allows maximum 2 concurrent sessions",
+        "User is logged in on 2 different browsers/devices",
+        "Attempting third login"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open dashboard in third browser",
+          "expectedResult": "Login page appears"
+        },
+        {
+          "step": 2,
+          "action": "Enter valid credentials",
+          "expectedResult": "Credentials are accepted"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Sign In'",
+          "expectedResult": "Loading indicator appears"
+        },
+        {
+          "step": 4,
+          "action": "Wait for response",
+          "expectedResult": "Warning modal: 'Maximum concurrent sessions (2) reached'"
+        },
+        {
+          "step": 5,
+          "action": "Select 'Terminate oldest session' option",
+          "expectedResult": "Confirmation prompt appears"
+        },
+        {
+          "step": 6,
+          "action": "Confirm termination",
+          "expectedResult": "Login succeeds, first session is terminated with notification"
+        }
+      ],
+      "postconditions": [
+        "Only 2 sessions remain active",
+        "Terminated session cannot access dashboard",
+        "Session management log is updated"
+      ]
+    },
+    {
+      "id": "TC-NEGA-011",
+      "title": "Verify empty state handling when no incidents exist",
+      "category": "Negative",
+      "priority": "Low",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "Database has zero incidents",
+        "All services are operational"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Load dashboard main view",
+          "expectedResult": "Dashboard loads successfully"
+        },
+        {
+          "step": 2,
+          "action": "Observe incident section",
+          "expectedResult": "Empty state message: 'No incidents to display. System is healthy!'"
+        },
+        {
+          "step": 3,
+          "action": "Click on Historical Data tab",
+          "expectedResult": "Chart shows flat line at zero with 'No historical data available'"
+        },
+        {
+          "step": 4,
+          "action": "Try to export data",
+          "expectedResult": "Export button is disabled with tooltip 'No data to export'"
+        },
+        {
+          "step": 5,
+          "action": "Use search function",
+          "expectedResult": "Search bar shows 'No incidents to search' placeholder"
+        }
+      ],
+      "postconditions": [
+        "Dashboard remains functional",
+        "Empty states are user-friendly",
+        "No errors in console"
+      ]
+    },
+    {
+      "id": "TC-NEGA-012",
+      "title": "Verify filter persistence failure after session timeout",
+      "category": "Negative",
+      "priority": "Low",
+      "preconditions": [
+        "User has active filters applied",
+        "Session timeout is set to 15 minutes",
+        "User has been idle for 14 minutes"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "With filters active (Status: Active, Severity: High), wait 2 more minutes",
+          "expectedResult": "Session expires after 15 minutes total"
+        },
+        {
+          "step": 2,
+          "action": "Try to modify filters",
+          "expectedResult": "Session timeout modal appears"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Login Again'",
+          "expectedResult": "Redirected to login page"
+        },
+        {
+          "step": 4,
+          "action": "Login with same credentials",
+          "expectedResult": "Dashboard loads successfully"
+        },
+        {
+          "step": 5,
+          "action": "Check filter state",
+          "expectedResult": "All filters are reset to default (no filters applied)"
+        },
+        {
+          "step": 6,
+          "action": "Check URL parameters",
+          "expectedResult": "No filter parameters are preserved in URL"
+        }
+      ],
+      "postconditions": [
+        "User must reapply filters",
+        "Session is fresh with default state",
+        "No data from previous session persists"
+      ]
+    },
+    {
+      "id": "TC-NEGA-013",
+      "title": "Verify API rate limiting for excessive requests",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "API rate limit is 100 requests per minute",
+        "Dashboard is loaded"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open browser developer console",
+          "expectedResult": "Console is accessible"
+        },
+        {
+          "step": 2,
+          "action": "Execute script to rapidly click refresh 150 times",
+          "expectedResult": "First 100 requests succeed"
+        },
+        {
+          "step": 3,
+          "action": "Observe network responses after 100 requests",
+          "expectedResult": "HTTP 429 'Too Many Requests' errors appear"
+        },
+        {
+          "step": 4,
+          "action": "Check dashboard UI",
+          "expectedResult": "Error banner: 'Rate limit exceeded. Please wait before retrying.'"
+        },
+        {
+          "step": 5,
+          "action": "Wait 60 seconds",
+          "expectedResult": "Rate limit resets"
+        },
+        {
+          "step": 6,
+          "action": "Click refresh once",
+          "expectedResult": "Request succeeds, dashboard updates normally"
+        }
+      ],
+      "postconditions": [
+        "Rate limiting is enforced",
+        "User can continue after cooldown",
+        "Abuse attempt is logged"
+      ]
+    },
+    {
+      "id": "TC-NEGA-014",
+      "title": "Verify handling of malformed WebSocket messages",
+      "category": "Negative",
+      "priority": "Low",
+      "preconditions": [
+        "User is logged in as DevOps Manager",
+        "WebSocket connection is established",
+        "Can inject malformed messages via dev tools"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open browser developer console",
+          "expectedResult": "Console is ready"
+        },
+        {
+          "step": 2,
+          "action": "Send malformed JSON via WebSocket: '{invalid json;;;'",
+          "expectedResult": "Message is sent"
+        },
+        {
+          "step": 3,
+          "action": "Observe dashboard behavior",
+          "expectedResult": "No visible errors in UI, dashboard continues functioning"
+        },
+        {
+          "step": 4,
+          "action": "Check console for errors",
+          "expectedResult": "Error logged: 'Failed to parse WebSocket message'"
+        },
+        {
+          "step": 5,
+          "action": "Verify real-time updates still work",
+          "expectedResult": "Valid WebSocket messages are still processed correctly"
+        },
+        {
+          "step": 6,
+          "action": "Check connection status",
+          "expectedResult": "WebSocket remains connected despite malformed message"
+        }
+      ],
+      "postconditions": [
+        "WebSocket connection is stable",
+        "Error handling prevents crashes",
+        "Malformed message is logged for debugging"
+      ]
+    },
+    {
+      "id": "TC-NEGA-015",
+      "title": "Verify browser compatibility error for unsupported browsers",
+      "category": "Negative",
+      "priority": "Low",
+      "preconditions": [
+        "Internet Explorer 11 or older browser",
+        "Dashboard URL is accessible",
+        "User has valid credentials"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to dashboard URL in IE11",
+          "expectedResult": "Page loads partially"
+        },
+        {
+          "step": 2,
+          "action": "Observe compatibility warning",
+          "expectedResult": "Banner displays: 'Your browser is not supported. Please use Chrome, Firefox, Safari, or Edge'"
+        },
+        {
+          "step": 3,
+          "action": "Try to login anyway",
+          "expectedResult": "Login form may appear broken or misaligned"
+        },
+        {
+          "step": 4,
+          "action": "Enter credentials and submit",
+          "expectedResult": "JavaScript errors prevent successful login"
+        },
+        {
+          "step": 5,
+          "action": "Check for fallback content",
+          "expectedResult": "Basic HTML message with supported browser list is visible"
+        }
+      ],
+      "postconditions": [
+        "No security vulnerabilities exposed",
+        "User is informed of compatibility requirements",
+        "No data corruption occurs"
+      ]
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "TC-EDGE-001",
+      "title": "Dashboard behavior with maximum concurrent incidents (1000+)",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "DevOps Manager is logged in with valid credentials",
+        "System has 1000+ active incidents in various states",
+        "Dashboard is accessible at /dashboard/incidents",
+        "Test environment configured to handle high load"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to incident dashboard URL",
+          "expectedResult": "Dashboard begins loading with progress indicator"
+        },
+        {
+          "step": 2,
+          "action": "Wait for all incidents to load (max 10 seconds)",
+          "expectedResult": "Dashboard displays all 1000+ incidents with pagination controls showing '1-50 of 1000+'"
+        },
+        {
+          "step": 3,
+          "action": "Scroll through the incident list rapidly",
+          "expectedResult": "Smooth scrolling without freezing, virtual scrolling engages for performance"
+        },
+        {
+          "step": 4,
+          "action": "Click on incident #500 to view details",
+          "expectedResult": "Incident details load within 2 seconds without affecting other incidents display"
+        },
+        {
+          "step": 5,
+          "action": "Use browser performance monitor to check memory usage",
+          "expectedResult": "Memory usage remains below 500MB, no memory leaks detected"
+        }
+      ],
+      "postconditions": [
+        "All incidents remain accessible via pagination",
+        "Dashboard performance metrics logged show response time under 3 seconds",
+        "No browser crashes or unresponsive script warnings"
+      ]
+    },
+    {
+      "id": "TC-EDGE-002",
+      "title": "Dashboard with zero incidents and empty state handling",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "DevOps Manager logged in with full permissions",
+        "Database contains no active or historical incidents",
+        "Dashboard configured with all widgets enabled"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Access dashboard at /dashboard/incidents",
+          "expectedResult": "Dashboard loads with empty state message 'No incidents to display'"
+        },
+        {
+          "step": 2,
+          "action": "Click on 'Historical Data' tab",
+          "expectedResult": "Tab displays 'No historical incidents found' with suggestion to check back later"
+        },
+        {
+          "step": 3,
+          "action": "Apply date filter for last 30 days",
+          "expectedResult": "Filter applies successfully, empty state message remains with date range shown"
+        },
+        {
+          "step": 4,
+          "action": "Click 'Export Report' button",
+          "expectedResult": "System displays warning 'No data available to export' instead of generating empty file"
+        }
+      ],
+      "postconditions": [
+        "Dashboard remains functional with all controls enabled",
+        "No JavaScript errors in browser console",
+        "Empty state messages provide helpful guidance"
+      ]
+    },
+    {
+      "id": "TC-EDGE-003",
+      "title": "Incident title with maximum character limit and special characters",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Manager logged into dashboard",
+        "Incident exists with 500-character title containing Unicode, emojis, and special characters",
+        "Title includes: '🚨Critical❗DB_Error<script>alert(1)</script>™€¥§½¾'",
+        "Dashboard loaded on incidents list view"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate incident with special character title in list",
+          "expectedResult": "Title displays correctly with all special characters rendered, HTML escaped properly"
+        },
+        {
+          "step": 2,
+          "action": "Hover over truncated title",
+          "expectedResult": "Full title appears in tooltip, all characters display correctly"
+        },
+        {
+          "step": 3,
+          "action": "Click incident to open details view",
+          "expectedResult": "Detail page shows full title without truncation, special characters intact"
+        },
+        {
+          "step": 4,
+          "action": "Use search bar to search for emoji '🚨'",
+          "expectedResult": "Search returns the incident correctly, emoji searchable"
+        },
+        {
+          "step": 5,
+          "action": "Export incident list to CSV",
+          "expectedResult": "CSV contains properly encoded special characters, no data corruption"
+        }
+      ],
+      "postconditions": [
+        "No XSS vulnerabilities exploited",
+        "Special characters stored and retrieved correctly",
+        "Export file valid and openable in Excel/CSV readers"
+      ]
+    },
+    {
+      "id": "TC-EDGE-004",
+      "title": "Simultaneous dashboard access by 100 managers with real-time updates",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "100 DevOps Manager accounts created and authenticated",
+        "Dashboard configured for WebSocket real-time updates",
+        "10 active incidents with ongoing status changes",
+        "Load testing tool configured to simulate concurrent users"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Connect all 100 managers to dashboard simultaneously",
+          "expectedResult": "All connections establish within 5 seconds, no connection failures"
+        },
+        {
+          "step": 2,
+          "action": "Trigger incident status change from 'Active' to 'Investigating'",
+          "expectedResult": "All 100 dashboards update within 2 seconds showing new status"
+        },
+        {
+          "step": 3,
+          "action": "Have 50 users apply different filters simultaneously",
+          "expectedResult": "Each user's filter applies independently without affecting others"
+        },
+        {
+          "step": 4,
+          "action": "Trigger 5 new incidents while all users connected",
+          "expectedResult": "New incidents appear on all dashboards within 3 seconds"
+        },
+        {
+          "step": 5,
+          "action": "Monitor server resources during peak activity",
+          "expectedResult": "CPU usage stays below 80%, memory usage stable, no connection drops"
+        }
+      ],
+      "postconditions": [
+        "All 100 sessions remain active and synchronized",
+        "WebSocket connections stable without reconnection loops",
+        "Server logs show successful handling of concurrent requests",
+        "No data inconsistencies between user views"
+      ]
+    },
+    {
+      "id": "TC-EDGE-005",
+      "title": "Dashboard behavior during network interruption and reconnection",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Manager logged into dashboard with active incidents displayed",
+        "Network throttling tool available",
+        "Dashboard showing real-time updates",
+        "At least 5 incidents in various states"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Disconnect network for 30 seconds while on dashboard",
+          "expectedResult": "Dashboard displays 'Connection lost' banner within 5 seconds"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to click on an incident during disconnection",
+          "expectedResult": "Click queued or gracefully handled with 'Unable to load - check connection' message"
+        },
+        {
+          "step": 3,
+          "action": "Reconnect network after 30 seconds",
+          "expectedResult": "Dashboard automatically reconnects within 10 seconds, 'Connection restored' message appears"
+        },
+        {
+          "step": 4,
+          "action": "Verify incident statuses after reconnection",
+          "expectedResult": "All incidents sync to current state, any missed updates applied"
+        },
+        {
+          "step": 5,
+          "action": "Check for duplicate entries or missing data",
+          "expectedResult": "No duplicate incidents, all data integrity maintained"
+        }
+      ],
+      "postconditions": [
+        "Dashboard fully functional after reconnection",
+        "Audit log shows disconnection and reconnection events",
+        "No data loss or corruption from network interruption"
+      ]
+    },
+    {
+      "id": "TC-EDGE-006",
+      "title": "Date range filter with maximum historical data span (10 years)",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Dashboard contains 10 years of historical incident data",
+        "Manager has permissions to view all historical data",
+        "Database indexed properly for date range queries"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Set date filter from January 1, 2014 to current date",
+          "expectedResult": "Filter accepts 10-year range, loading indicator appears"
+        },
+        {
+          "step": 2,
+          "action": "Wait for data to load (max 30 seconds)",
+          "expectedResult": "Dashboard displays incident count '50,000+ incidents found' with pagination"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Generate Report' for entire date range",
+          "expectedResult": "Warning appears: 'Large dataset (50,000+ records). Report will be emailed when ready'"
+        },
+        {
+          "step": 4,
+          "action": "Navigate through paginated results using 'Last Page' button",
+          "expectedResult": "Navigation to last page successful, showing oldest incidents from 2014"
+        },
+        {
+          "step": 5,
+          "action": "Apply additional filter for 'Critical' severity",
+          "expectedResult": "Filter stacks correctly, results update to show only critical incidents in date range"
+        }
+      ],
+      "postconditions": [
+        "Large dataset handled without browser crash",
+        "Report generation completes and email sent within 5 minutes",
+        "Database query performance logged and within acceptable limits"
+      ]
+    },
+    {
+      "id": "TC-EDGE-007",
+      "title": "Rapid filter changes and search combinations stress test",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Dashboard loaded with 500+ incidents",
+        "All filter options available (status, severity, date, assignee)",
+        "Search functionality enabled",
+        "Browser developer tools open to monitor network requests"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Rapidly toggle status filter 10 times between 'Active' and 'Resolved'",
+          "expectedResult": "Each filter change queues properly, last selection takes effect, no UI freezing"
+        },
+        {
+          "step": 2,
+          "action": "Type search query letter by letter: 'D-a-t-a-b-a-s-e'",
+          "expectedResult": "Debouncing prevents excessive API calls, search triggers after 500ms pause"
+        },
+        {
+          "step": 3,
+          "action": "Apply all filters simultaneously: status, severity, date, assignee",
+          "expectedResult": "All filters combine correctly with AND logic, results update accordingly"
+        },
+        {
+          "step": 4,
+          "action": "Clear all filters using 'Reset' button",
+          "expectedResult": "All filters clear instantly, dashboard returns to default view"
+        },
+        {
+          "step": 5,
+          "action": "Apply conflicting filters (resolved status with future date)",
+          "expectedResult": "Dashboard shows 'No results found' with suggestion to adjust filters"
+        }
+      ],
+      "postconditions": [
+        "No memory leaks from rapid filter changes",
+        "API request count optimized through debouncing",
+        "Filter state correctly maintained in URL parameters"
+      ]
+    },
+    {
+      "id": "TC-EDGE-008",
+      "title": "Browser zoom at 500% and responsive design limits",
+      "category": "Edge Cases",
+      "priority": "Low",
+      "preconditions": [
+        "Dashboard loaded in Chrome/Firefox/Safari",
+        "Screen resolution at 1920x1080",
+        "Multiple incidents displayed with charts and graphs"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Zoom browser to 500% using Ctrl/Cmd and +",
+          "expectedResult": "Dashboard switches to mobile layout, navigation collapses to hamburger menu"
+        },
+        {
+          "step": 2,
+          "action": "Scroll horizontally and vertically",
+          "expectedResult": "No horizontal scroll needed, all content fits within viewport width"
+        },
+        {
+          "step": 3,
+          "action": "Click on an incident card at 500% zoom",
+          "expectedResult": "Click target remains accessible, modal or detail view opens correctly"
+        },
+        {
+          "step": 4,
+          "action": "Reduce zoom to 25%",
+          "expectedResult": "Dashboard maintains layout integrity, text remains readable with minimum font size"
+        },
+        {
+          "step": 5,
+          "action": "Return to 100% zoom",
+          "expectedResult": "Dashboard returns to standard desktop layout without refresh needed"
+        }
+      ],
+      "postconditions": [
+        "No layout breaking at extreme zoom levels",
+        "All interactive elements remain accessible",
+        "Responsive breakpoints handle edge cases gracefully"
+      ]
+    }
+  ],
+  "accessibility": [
+    {
+      "id": "TC-ACCE-001",
+      "title": "Complete keyboard navigation through dashboard without mouse",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Dashboard loaded with multiple incidents displayed",
+        "Keyboard navigation enabled in browser",
+        "Screen reader software available but not required for this test",
+        "Manager logged in with full permissions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Press Tab key from browser address bar",
+          "expectedResult": "Focus moves to skip navigation link, visible focus indicator appears"
+        },
+        {
+          "step": 2,
+          "action": "Press Tab to navigate through header elements",
+          "expectedResult": "Focus moves through logo, navigation menu, user profile in logical order with visible focus rings"
+        },
+        {
+          "step": 3,
+          "action": "Press Enter on 'Incidents' navigation item",
+          "expectedResult": "Incidents section loads, focus moves to first incident card"
+        },
+        {
+          "step": 4,
+          "action": "Use arrow keys to navigate between incident cards",
+          "expectedResult": "Focus moves between cards, current card highlighted with clear visual indicator"
+        },
+        {
+          "step": 5,
+          "action": "Press Enter on an incident card",
+          "expectedResult": "Incident details modal opens, focus trapped within modal"
+        },
+        {
+          "step": 6,
+          "action": "Press Escape key",
+          "expectedResult": "Modal closes, focus returns to previously focused incident card"
+        },
+        {
+          "step": 7,
+          "action": "Press Shift+Tab to navigate backwards",
+          "expectedResult": "Focus moves in reverse order through all interactive elements"
+        },
+        {
+          "step": 8,
+          "action": "Tab to 'Export' button and press Space bar",
+          "expectedResult": "Export menu opens, arrow keys navigate menu options"
+        }
+      ],
+      "postconditions": [
+        "All interactive elements reached via keyboard",
+        "No keyboard traps encountered",
+        "Focus order matches visual layout",
+        "Focus indicators visible throughout navigation"
+      ]
+    },
+    {
+      "id": "TC-ACCE-002",
+      "title": "Screen reader compatibility and ARIA implementation",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "NVDA or JAWS screen reader installed and active",
+        "Dashboard loaded with active incidents",
+        "Manager logged in with standard permissions",
+        "Screen reader in browse mode"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to dashboard with screen reader active",
+          "expectedResult": "Page title announced: 'Incident Dashboard - DevOps Manager Portal'"
+        },
+        {
+          "step": 2,
+          "action": "Press H to navigate through headings",
+          "expectedResult": "Logical heading structure announced: h1 'Incident Dashboard', h2 'Active Incidents', h2 'Response Progress'"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to incident status indicator showing 'Critical'",
+          "expectedResult": "Screen reader announces 'Critical severity, 3 incidents' with proper emphasis"
+        },
+        {
+          "step": 4,
+          "action": "Tab to real-time update region",
+          "expectedResult": "Live region announced with 'aria-live=polite', updates announced as 'Incident INS-1234 status changed to Investigating'"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to data table of incidents",
+          "expectedResult": "Table structure announced with headers: 'Incident ID, Title, Status, Severity, Assigned To, Last Updated'"
+        },
+        {
+          "step": 6,
+          "action": "Enter forms mode and interact with filter dropdown",
+          "expectedResult": "Dropdown role and state announced: 'Status filter, combobox, collapsed, 1 of 5'"
+        },
+        {
+          "step": 7,
+          "action": "Navigate to chart showing incident trends",
+          "expectedResult": "Chart alternative text announced: 'Bar chart showing 45 incidents this week, 23% decrease from last week'"
+        }
+      ],
+      "postconditions": [
+        "All content accessible to screen reader",
+        "ARIA labels and roles properly implemented",
+        "Dynamic content changes announced appropriately",
+        "No accessibility errors in screen reader log"
+      ]
+    },
+    {
+      "id": "TC-ACCE-003",
+      "title": "Color contrast and visual accessibility compliance",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Dashboard displayed with various incident severities",
+        "Color contrast analyzer tool available",
+        "Dashboard in default theme/color scheme"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Analyze text contrast for incident titles against background",
+          "expectedResult": "Contrast ratio minimum 4.5:1 for normal text, 3:1 for large text (WCAG AA)"
+        },
+        {
+          "step": 2,
+          "action": "Check Critical incident indicator (typically red)",
+          "expectedResult": "Red indicator has additional icon/pattern, not relying on color alone"
+        },
+        {
+          "step": 3,
+          "action": "Verify Warning incident indicator (typically yellow)",
+          "expectedResult": "Yellow text on white has sufficient contrast (minimum 3:1) or uses dark background"
+        },
+        {
+          "step": 4,
+          "action": "Review success messages and confirmation banners",
+          "expectedResult": "Green success messages include checkmark icon, text contrast meets 4.5:1 ratio"
+        },
+        {
+          "step": 5,
+          "action": "Examine disabled buttons and inactive elements",
+          "expectedResult": "Disabled elements maintain 3:1 contrast ratio, visually distinct from active elements"
+        },
+        {
+          "step": 6,
+          "action": "Test with Windows High Contrast mode enabled",
+          "expectedResult": "Dashboard remains functional, all elements visible in high contrast mode"
+        }
+      ],
+      "postconditions": [
+        "All text meets WCAG AA contrast requirements",
+        "Information not conveyed by color alone",
+        "High contrast mode fully supported"
+      ]
+    },
+    {
+      "id": "TC-ACCE-004",
+      "title": "Focus management in modal dialogs and dynamic content",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Dashboard loaded with incidents",
+        "Keyboard navigation enabled",
+        "Multiple modal dialogs available (incident details, filters, export)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Tab to 'View Details' button and press Enter",
+          "expectedResult": "Modal opens, focus moves to modal heading or first interactive element"
+        },
+        {
+          "step": 2,
+          "action": "Press Tab repeatedly within modal",
+          "expectedResult": "Focus cycles only within modal elements, cannot tab to background content"
+        },
+        {
+          "step": 3,
+          "action": "Press Escape or click Close button",
+          "expectedResult": "Modal closes, focus returns to triggering 'View Details' button"
+        },
+        {
+          "step": 4,
+          "action": "Open filter panel using keyboard",
+          "expectedResult": "Panel expands, focus moves to first filter input"
+        },
+        {
+          "step": 5,
+          "action": "Apply filter that removes current focused item",
+          "expectedResult": "Focus moves to next available item or filter summary message"
+        },
+        {
+          "step": 6,
+          "action": "Trigger real-time incident update",
+          "expectedResult": "Focus remains on current element, update doesn't steal focus"
+        },
+        {
+          "step": 7,
+          "action": "Delete an incident while focused on it",
+          "expectedResult": "Focus moves to next incident in list or 'No incidents' message"
+        }
+      ],
+      "postconditions": [
+        "Focus never lost or moved unexpectedly",
+        "Modal focus trap working correctly",
+        "Focus returns to logical location after actions",
+        "Dynamic updates don't disrupt keyboard navigation"
+      ]
+    },
+    {
+      "id": "TC-ACCE-005",
+      "title": "Mobile accessibility with touch and gesture support",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Dashboard loaded on mobile device (iOS/Android)",
+        "TalkBack (Android) or VoiceOver (iOS) available",
+        "Touch targets sized appropriately (minimum 44x44px iOS, 48x48dp Android)",
+        "Device in portrait orientation"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Enable screen reader and swipe through dashboard",
+          "expectedResult": "All elements reachable via swipe gestures, content announced clearly"
+        },
+        {
+          "step": 2,
+          "action": "Double-tap on incident card",
+          "expectedResult": "Card expands or details open, action confirmed by screen reader"
+        },
+        {
+          "step": 3,
+          "action": "Verify touch target sizes for all buttons",
+          "expectedResult": "All interactive elements minimum 44x44 pixels, adequate spacing between targets"
+        },
+        {
+          "step": 4,
+          "action": "Perform pinch-to-zoom on charts",
+          "expectedResult": "Charts remain accessible, zoom doesn't break layout or hide information"
+        },
+        {
+          "step": 5,
+          "action": "Use rotor control (iOS) or reading controls (Android)",
+          "expectedResult": "Can navigate by headings, links, form controls using native gestures"
+        },
+        {
+          "step": 6,
+          "action": "Test swipe-to-dismiss on notifications",
+          "expectedResult": "Alternative method available for screen reader users (close button announced)"
+        },
+        {
+          "step": 7,
+          "action": "Rotate device to landscape",
+          "expectedResult": "Layout adapts, all content remains accessible, no horizontal scrolling required"
+        }
+      ],
+      "postconditions": [
+        "Mobile screen readers can access all content",
+        "Touch targets meet platform guidelines",
+        "Gestures have accessible alternatives",
+        "Responsive design maintains accessibility"
+      ]
+    },
+    {
+      "id": "TC-ACCE-006",
+      "title": "Form input accessibility and error handling",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Dashboard filter and search forms available",
+        "Screen reader software active",
+        "Keyboard navigation enabled"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Tab to search input field",
+          "expectedResult": "Field announced with label 'Search incidents' and current value if any"
+        },
+        {
+          "step": 2,
+          "action": "Enter invalid search characters '<<<>>>'",
+          "expectedResult": "Error announced immediately: 'Invalid characters in search' via aria-live region"
+        },
+        {
+          "step": 3,
+          "action": "Tab to date range picker",
+          "expectedResult": "Date picker announced with instructions 'Select start date, format MM/DD/YYYY'"
+        },
+        {
+          "step": 4,
+          "action": "Enter invalid date '13/32/2024'",
+          "expectedResult": "Error message associated with field via aria-describedby, 'Invalid date format'"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to required field left empty",
+          "expectedResult": "Required state announced, 'Severity filter, required, combobox'"
+        },
+        {
+          "step": 6,
+          "action": "Submit form with errors",
+          "expectedResult": "Focus moves to first error, error summary announced at top of form"
+        },
+        {
+          "step": 7,
+          "action": "Correct all errors and resubmit",
+          "expectedResult": "Success message announced, 'Filters applied successfully, showing 25 results'"
+        }
+      ],
+      "postconditions": [
+        "All form fields properly labeled",
+        "Errors clearly associated with fields",
+        "Screen reader users aware of all validation issues",
+        "Success feedback provided accessibly"
+      ]
+    },
+    {
+      "id": "TC-ACCE-007",
+      "title": "Time-based content and auto-updating accessibility",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Dashboard with real-time updates enabled",
+        "Auto-refresh set to 30-second intervals",
+        "Multiple incidents with changing statuses",
+        "Screen reader and keyboard navigation available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate auto-refresh control",
+          "expectedResult": "Pause/play button available and announced 'Pause auto-refresh, button'"
+        },
+        {
+          "step": 2,
+          "action": "Let auto-update occur while reading content",
+          "expectedResult": "Updates announced via polite live region, reading not interrupted"
+        },
+        {
+          "step": 3,
+          "action": "Press pause button during content review",
+          "expectedResult": "Auto-refresh stops, status announced 'Auto-refresh paused'"
+        },
+        {
+          "step": 4,
+          "action": "Check for session timeout warning",
+          "expectedResult": "Warning appears 5 minutes before timeout with accessible alert role"
+        },
+        {
+          "step": 5,
+          "action": "Interact with 'Extend session' option",
+          "expectedResult": "Keyboard accessible button, clear time remaining announced '5 minutes remaining'"
+        },
+        {
+          "step": 6,
+          "action": "Resume auto-refresh using keyboard",
+          "expectedResult": "Updates resume, status announced 'Auto-refresh resumed, updating every 30 seconds'"
+        }
+      ],
+      "postconditions": [
+        "Users can control time-based updates",
+        "Session timeout warnings accessible",
+        "Auto-updates don't disrupt user tasks",
+        "Live regions properly configured for updates"
+      ]
+    },
+    {
+      "id": "TC-ACCE-008",
+      "title": "Data visualization and chart accessibility",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Dashboard displaying various charts (bar, line, pie)",
+        "Screen reader active",
+        "Keyboard navigation enabled",
+        "Charts showing incident trends and metrics"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to incident trend line chart",
+          "expectedResult": "Chart announced with summary 'Line chart: Incident trends over last 30 days'"
+        },
+        {
+          "step": 2,
+          "action": "Press Enter to access detailed data",
+          "expectedResult": "Data table alternative appears or is announced, showing exact values"
+        },
+        {
+          "step": 3,
+          "action": "Tab through pie chart segments",
+          "expectedResult": "Each segment focusable, announces 'Critical: 25%, 10 incidents'"
+        },
+        {
+          "step": 4,
+          "action": "Access chart legend via keyboard",
+          "expectedResult": "Legend items focusable, linked to chart segments, proper associations announced"
+        },
+        {
+          "step": 5,
+          "action": "Check for sonification option",
+          "expectedResult": "Audio representation available via 'Play audio description' button if implemented"
+        },
+        {
+          "step": 6,
+          "action": "Export chart data using keyboard",
+          "expectedResult": "Export option accessible, produces accessible format (CSV/text) with all data points"
+        },
+        {
+          "step": 7,
+          "action": "Verify pattern/texture alternatives to color",
+          "expectedResult": "Charts use patterns or shapes in addition to color for differentiation"
+        }
+      ],
+      "postconditions": [
+        "All chart data accessible via text alternatives",
+        "Interactive chart elements keyboard accessible",
+        "Data relationships preserved in accessible format",
+        "Visual information not solely dependent on color"
+      ]
+    }
+  ],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": true,
+    "negative": true,
+    "accessibility": true,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-63398",
+    "title": "As a DevOps Manager, I want a dashboard showing real-time incident status and response progress so that I can monitor system health and response effectiveness",
+    "description": "<div><strong>CONTEXT &amp; BACKGROUND:</strong><br><br>Visibility into incidents and responses is critical for managing system reliability.<br><br><strong>CURRENT STATE:</strong><br><br>Incident status is tracked manually or via disparate tools.<br><br><strong>DESIRED STATE:</strong><br><br>A centralized dashboard displays real-time incident detection, response actions, and resolution status.<br><br><strong>KEY FUNCTIONALITY:</strong><br><br><ul><li>Real-time incident status updates </li> </ul><ul><li>Visualization of response actions and progress </li><li>Historical incident data and metrics </li><li>Filtering and search capabilities </li><li>Role </li> </ul>-based access control<br><br><strong>USER INTERACTION FLOW:</strong><br><br><ol><li>Manager logs into dashboard </li><li>Dashboard shows current active incidents </li><li>Manager selects an incident to view details </li><li>Dashboard displays response actions and progress </li><li>Manager reviews historical incident trends </li><li>Manager exports reports if needed </li> </ol><br><br><strong>TECHNICAL CONSIDERATIONS:</strong><br><br>Integration with incident detection and response systems, real-time data streaming, secure access controls, responsive UI design, data storage for history<br><br><strong>OUT OF SCOPE:</strong><br><br>Incident response initiation or modification via dashboard<br><br><strong>SUCCESS METRICS:</strong><br><br>95% uptime of dashboard, 80% positive user feedback on usability, reduced time to incident status awareness </div><br><div><strong>Persona:</strong> System User (System User) </div>",
+    "acceptanceCriteria": "<div><strong>Criteria 1:</strong> Dashboard displays real-time incident status updates </div><br><div><strong>Criteria 2:</strong> Response actions and progress are visualized clearly </div><br><div><strong>Criteria 3:</strong> Users can filter and search incidents </div><br><div><strong>Criteria 4:</strong> Access is controlled based on user roles </div><br><div><strong>Criteria 5:</strong> Historical incident data is accessible </div><br>",
+    "adoWorkItemId": 63398,
+    "state": "New",
+    "assignedTo": "Unassigned",
+    "createdDate": "2026-04-21T12:58:27.453Z",
+    "priority": 2,
+    "storyPoints": 6,
+    "tags": "",
+    "epicId": "epic-60677",
+    "featureId": "feature-60755",
+    "source": "ado",
+    "adoUrl": "https://dev.azure.com/demohg/Flow-test1/_workitems/edit/63398"
+  }
+}
