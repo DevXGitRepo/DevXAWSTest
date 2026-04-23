@@ -1,0 +1,1957 @@
+{
+  "storyId": "ado-36113",
+  "storyTitle": "As System Administrator, I want to perform access denial enforcement for unauthorized event requests to achieve security compliance",
+  "testCases": [],
+  "functional": [
+    {
+      "id": "TC-FUNC-001",
+      "title": "Verify unauthorized API request to event endpoint returns HTTP 403 with generic error message",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running in a test environment",
+        "A user account exists with a role that does NOT have permission to access event endpoints (e.g., role 'Viewer' or unauthenticated user)",
+        "API testing tool (e.g., Postman or cURL) is available",
+        "Event data exists in the application database"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as a user without event access permissions (e.g., 'viewer_user') and obtain the session token or API key",
+          "expectedResult": "Authentication succeeds and a valid session token is returned for the unauthorized role"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to the event endpoint (e.g., GET /api/events/123) using the unauthorized user's token in the Authorization header",
+          "expectedResult": "The API returns HTTP status code 403 Forbidden"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the response body of the 403 response",
+          "expectedResult": "The response body contains a generic error message such as 'Access Denied' or 'You do not have permission to access this resource' and does NOT expose any event data, internal error details, stack traces, or system information"
+        },
+        {
+          "step": 4,
+          "action": "Verify the response headers do not leak sensitive information (e.g., no X-Powered-By, no server version details)",
+          "expectedResult": "Response headers are clean and do not expose internal server technology or version information"
+        },
+        {
+          "step": 5,
+          "action": "Check the application security/audit log for a record of this denied request",
+          "expectedResult": "An audit log entry is created recording the unauthorized access attempt including timestamp, user ID, requested resource, and the 403 response code"
+        }
+      ],
+      "postconditions": [
+        "No event data was returned or exposed to the unauthorized user",
+        "An audit log entry exists documenting the denied access attempt",
+        "The unauthorized user's session remains valid (they are not logged out) but access is still denied for protected resources"
+      ]
+    },
+    {
+      "id": "TC-FUNC-002",
+      "title": "Verify unauthorized API request to follow-up endpoint returns HTTP 403 with generic error message",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running in a test environment",
+        "A user account exists with a role that does NOT have permission to access follow-up endpoints",
+        "Follow-up data exists in the application database linked to events",
+        "API testing tool is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as a user without follow-up access permissions and obtain the session token",
+          "expectedResult": "Authentication succeeds and a valid session token is returned"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to the follow-up endpoint (e.g., GET /api/events/123/follow-ups) using the unauthorized user's token",
+          "expectedResult": "The API returns HTTP status code 403 Forbidden"
+        },
+        {
+          "step": 3,
+          "action": "Send a POST request to create a follow-up (e.g., POST /api/events/123/follow-ups with a valid JSON body) using the unauthorized user's token",
+          "expectedResult": "The API returns HTTP status code 403 Forbidden with a generic error message"
+        },
+        {
+          "step": 4,
+          "action": "Inspect both response bodies to confirm no follow-up or event data is leaked",
+          "expectedResult": "Both responses contain only a generic denial message and no follow-up data, event data, or internal system details are present"
+        }
+      ],
+      "postconditions": [
+        "No follow-up data was returned or created by the unauthorized user",
+        "Audit log entries exist for both denied access attempts",
+        "Existing follow-up data in the database remains unchanged"
+      ]
+    },
+    {
+      "id": "TC-FUNC-003",
+      "title": "Verify UI redirects unauthorized user to access-denied page without exposing event data",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and accessible via a web browser",
+        "A user account exists with a role that does NOT have permission to view events (e.g., 'basic_user')",
+        "Event data exists in the system that would be visible to authorized users",
+        "Browser developer tools are available for network inspection"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open the application in a web browser and log in as 'basic_user' who does not have event access permissions",
+          "expectedResult": "User is logged in successfully and lands on the default dashboard or home page"
+        },
+        {
+          "step": 2,
+          "action": "Manually navigate to the event listing page by entering the URL directly in the browser address bar (e.g., /events)",
+          "expectedResult": "The browser redirects the user to an access-denied page (e.g., /access-denied or /403)"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the access-denied page content",
+          "expectedResult": "The page displays a user-friendly message such as 'You do not have permission to access this page' with no event data, event IDs, event titles, or any sensitive information visible on the page"
+        },
+        {
+          "step": 4,
+          "action": "Open browser developer tools and inspect the Network tab for the redirected request",
+          "expectedResult": "No event data was transferred in any network response; the redirect happened server-side or client-side before any event data was fetched"
+        },
+        {
+          "step": 5,
+          "action": "View the page source of the access-denied page",
+          "expectedResult": "The HTML source contains no hidden event data, no event-related API responses embedded in scripts, and no sensitive information in comments or hidden elements"
+        },
+        {
+          "step": 6,
+          "action": "Verify the access-denied page provides a navigation option (e.g., 'Go to Home' or 'Contact Administrator' link)",
+          "expectedResult": "The access-denied page includes at least one actionable link allowing the user to navigate back to an authorized area of the application"
+        }
+      ],
+      "postconditions": [
+        "User remains logged in but on the access-denied page",
+        "No event data was exposed at any point during the redirect flow",
+        "The user can navigate away from the access-denied page to authorized sections of the application"
+      ]
+    },
+    {
+      "id": "TC-FUNC-004",
+      "title": "Verify UI redirects unauthorized user accessing a specific event detail page to access-denied page",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and accessible via a web browser",
+        "A user account 'basic_user' exists without event access permissions",
+        "An event with ID 456 exists in the database with sensitive data",
+        "An authorized admin user has confirmed event 456 is visible when properly authorized"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Log in to the application as 'basic_user'",
+          "expectedResult": "User is logged in and sees the default home page"
+        },
+        {
+          "step": 2,
+          "action": "Navigate directly to the event detail page by entering the URL /events/456 in the browser address bar",
+          "expectedResult": "The browser redirects the user to the access-denied page"
+        },
+        {
+          "step": 3,
+          "action": "Verify the access-denied page does not display any details about event 456 (title, description, dates, participants)",
+          "expectedResult": "The access-denied page shows only a generic denial message with no reference to event 456 or its data"
+        },
+        {
+          "step": 4,
+          "action": "Press the browser Back button",
+          "expectedResult": "The user is taken back to the previous authorized page, not to the event detail page"
+        }
+      ],
+      "postconditions": [
+        "Event 456 data was never rendered or exposed to the unauthorized user",
+        "An audit log entry records the unauthorized access attempt to event 456",
+        "User session remains active and functional for authorized pages"
+      ]
+    },
+    {
+      "id": "TC-FUNC-005",
+      "title": "Verify repeated unauthorized API attempts trigger a security alert notification",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed with security alert notification system configured",
+        "A System Administrator account exists and is configured to receive security alert notifications (via email, dashboard, or SIEM integration)",
+        "The threshold for repeated unauthorized attempts is defined (e.g., 5 attempts within 10 minutes)",
+        "A user account 'attacker_user' exists without event access permissions",
+        "Security alert notification channel (email inbox, admin dashboard, or monitoring tool) is accessible for verification"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'attacker_user' and obtain the session token",
+          "expectedResult": "Authentication succeeds and a valid session token is returned"
+        },
+        {
+          "step": 2,
+          "action": "Send unauthorized API requests to the event endpoint (e.g., GET /api/events/1, GET /api/events/2, etc.) repeatedly, exceeding the configured threshold (e.g., send 6 requests within 2 minutes)",
+          "expectedResult": "Each request returns HTTP 403 Forbidden with a generic error message"
+        },
+        {
+          "step": 3,
+          "action": "After exceeding the threshold, check the System Administrator's notification channel (email inbox, admin dashboard alerts section, or SIEM tool)",
+          "expectedResult": "A security alert notification has been generated and delivered, indicating repeated unauthorized access attempts from 'attacker_user'"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the security alert notification content",
+          "expectedResult": "The notification includes: the user identifier (attacker_user), the number of unauthorized attempts, the time window, the targeted endpoints, and a timestamp of the alert"
+        },
+        {
+          "step": 5,
+          "action": "Verify the alert is visible in the application's security/admin dashboard if applicable",
+          "expectedResult": "The security alert appears in the admin dashboard's alerts or notifications section with appropriate severity level (e.g., 'Warning' or 'Critical')"
+        }
+      ],
+      "postconditions": [
+        "A security alert notification was successfully delivered to the System Administrator",
+        "All unauthorized attempts are logged individually in the audit log",
+        "The attacker_user's session may or may not be invalidated depending on security policy, but the alert has been raised",
+        "The security alert is persisted and can be reviewed later by administrators"
+      ]
+    },
+    {
+      "id": "TC-FUNC-006",
+      "title": "Verify authorized user can successfully access event endpoints without denial",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "A user account 'admin_user' exists with System Administrator role and full event access permissions",
+        "Event data exists in the database (e.g., event ID 100 with known title 'Annual Review Meeting')",
+        "API testing tool is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'admin_user' with System Administrator role and obtain the session token",
+          "expectedResult": "Authentication succeeds and a valid session token with admin privileges is returned"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to the event listing endpoint (e.g., GET /api/events) using the admin token",
+          "expectedResult": "The API returns HTTP 200 OK with a list of events including event ID 100"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to a specific event detail endpoint (e.g., GET /api/events/100) using the admin token",
+          "expectedResult": "The API returns HTTP 200 OK with full event details including title 'Annual Review Meeting', description, dates, and all associated data"
+        },
+        {
+          "step": 4,
+          "action": "Send a GET request to the follow-up endpoint (e.g., GET /api/events/100/follow-ups) using the admin token",
+          "expectedResult": "The API returns HTTP 200 OK with follow-up data associated with event 100"
+        },
+        {
+          "step": 5,
+          "action": "Verify no security alert was triggered for these authorized requests",
+          "expectedResult": "No security alert notification is generated for the authorized admin user's requests"
+        }
+      ],
+      "postconditions": [
+        "Authorized user received full event and follow-up data as expected",
+        "No false-positive security alerts were generated",
+        "Audit log records the successful authorized access for traceability"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Verify authorized user can access events via UI without being redirected to access-denied page",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and accessible via web browser",
+        "A user account 'admin_user' exists with System Administrator role",
+        "Events exist in the system with visible data",
+        "Browser is open and user is not yet logged in"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open the application in a web browser and log in as 'admin_user' with System Administrator role",
+          "expectedResult": "User is logged in and sees the admin dashboard or home page"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the events listing page via the main navigation menu (e.g., click 'Events' in the sidebar or top navigation)",
+          "expectedResult": "The events listing page loads successfully displaying a list of events with their titles, dates, and statuses"
+        },
+        {
+          "step": 3,
+          "action": "Click on a specific event (e.g., 'Annual Review Meeting') to view its details",
+          "expectedResult": "The event detail page loads showing full event information including title, description, date, participants, and follow-ups"
+        },
+        {
+          "step": 4,
+          "action": "Navigate to the follow-ups section within the event detail page",
+          "expectedResult": "Follow-up data is displayed correctly with all relevant details"
+        },
+        {
+          "step": 5,
+          "action": "Verify at no point during navigation was the user redirected to an access-denied page",
+          "expectedResult": "All pages loaded successfully without any access-denied redirects or 403 errors"
+        }
+      ],
+      "postconditions": [
+        "Admin user successfully viewed all event and follow-up data",
+        "No access-denied pages were encountered during the entire flow",
+        "User remains logged in with full admin session active"
+      ]
+    },
+    {
+      "id": "TC-FUNC-008",
+      "title": "Verify security alert notification contains actionable information for System Administrator",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Application is deployed with security alert system configured",
+        "System Administrator 'admin_user' is configured to receive security alerts",
+        "The repeated unauthorized attempt threshold has been previously triggered (from TC-FUNC-005 or equivalent)",
+        "Admin dashboard or notification system is accessible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Log in as 'admin_user' with System Administrator role",
+          "expectedResult": "Admin user is logged in and sees the admin dashboard"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to the security alerts or notifications section of the admin dashboard",
+          "expectedResult": "The security alerts section loads and displays recent alerts including the one triggered by repeated unauthorized attempts"
+        },
+        {
+          "step": 3,
+          "action": "Click on the security alert to view its full details",
+          "expectedResult": "The alert detail view shows: offending user ID/username, IP address (if available), number of attempts, time range of attempts, targeted endpoints/resources, and severity level"
+        },
+        {
+          "step": 4,
+          "action": "Verify the alert provides options for the administrator to take action (e.g., 'Block User', 'Investigate', 'Dismiss')",
+          "expectedResult": "The alert detail view includes actionable buttons or links allowing the administrator to respond to the security incident"
+        }
+      ],
+      "postconditions": [
+        "System Administrator was able to review the full security alert details",
+        "The alert contains sufficient information for incident investigation",
+        "The alert status can be updated (e.g., acknowledged, resolved) by the administrator"
+      ]
+    },
+    {
+      "id": "TC-FUNC-009",
+      "title": "Verify access denial enforcement works correctly for different HTTP methods on event endpoints",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "Event with ID 100 exists in the database",
+        "API testing tool is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'unauthorized_user' and obtain the session token",
+          "expectedResult": "Authentication succeeds and a valid session token is returned"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to GET /api/events/100 using the unauthorized token",
+          "expectedResult": "HTTP 403 Forbidden is returned with a generic error message"
+        },
+        {
+          "step": 3,
+          "action": "Send a POST request to POST /api/events with a valid event JSON body using the unauthorized token",
+          "expectedResult": "HTTP 403 Forbidden is returned with a generic error message; no event is created"
+        },
+        {
+          "step": 4,
+          "action": "Send a PUT request to PUT /api/events/100 with modified event data using the unauthorized token",
+          "expectedResult": "HTTP 403 Forbidden is returned with a generic error message; event 100 data remains unchanged"
+        },
+        {
+          "step": 5,
+          "action": "Send a DELETE request to DELETE /api/events/100 using the unauthorized token",
+          "expectedResult": "HTTP 403 Forbidden is returned with a generic error message; event 100 still exists in the database"
+        },
+        {
+          "step": 6,
+          "action": "Verify event 100 data is unchanged by querying the database or using an authorized account",
+          "expectedResult": "Event 100 exists with all original data intact, confirming no unauthorized modifications occurred"
+        }
+      ],
+      "postconditions": [
+        "All HTTP methods (GET, POST, PUT, DELETE) were properly blocked for the unauthorized user",
+        "No data was created, modified, or deleted by the unauthorized requests",
+        "All denied attempts are recorded in the audit log"
+      ]
+    },
+    {
+      "id": "TC-FUNC-010",
+      "title": "Verify access denial enforcement differentiates between multiple user roles correctly",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Application is deployed and running",
+        "Three user accounts exist: 'admin_user' (System Administrator with full access), 'event_viewer' (read-only event access), and 'no_access_user' (no event permissions)",
+        "Events and follow-ups exist in the database",
+        "API testing tool is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'no_access_user' and send GET /api/events",
+          "expectedResult": "HTTP 403 Forbidden is returned with a generic error message"
+        },
+        {
+          "step": 2,
+          "action": "Authenticate as 'event_viewer' and send GET /api/events",
+          "expectedResult": "HTTP 200 OK is returned with event listing data (read-only access granted)"
+        },
+        {
+          "step": 3,
+          "action": "As 'event_viewer', send POST /api/events with a new event body",
+          "expectedResult": "HTTP 403 Forbidden is returned because event_viewer has read-only access, not create permissions"
+        },
+        {
+          "step": 4,
+          "action": "Authenticate as 'admin_user' and send POST /api/events with a new event body",
+          "expectedResult": "HTTP 201 Created is returned and the new event is successfully created"
+        },
+        {
+          "step": 5,
+          "action": "Verify audit logs show appropriate access decisions for each role",
+          "expectedResult": "Audit logs show 403 for no_access_user on GET, 200 for event_viewer on GET, 403 for event_viewer on POST, and 201 for admin_user on POST"
+        }
+      ],
+      "postconditions": [
+        "Role-based access control correctly differentiated between three permission levels",
+        "Only the admin_user was able to create a new event",
+        "Audit logs accurately reflect all access decisions per role"
+      ]
+    }
+  ],
+  "negative": [
+    {
+      "id": "TC-NEGA-001",
+      "title": "Verify API request with no authentication token returns appropriate denial",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "Event endpoints are available (e.g., /api/events, /api/events/123)",
+        "API testing tool is available",
+        "No authentication token or session cookie is prepared"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Send a GET request to /api/events without any Authorization header or session cookie",
+          "expectedResult": "The API returns HTTP 401 Unauthorized or HTTP 403 Forbidden (depending on implementation) with a generic error message"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to /api/events/123 without any Authorization header",
+          "expectedResult": "The API returns HTTP 401 or 403 with a generic error message and no event data is exposed"
+        },
+        {
+          "step": 3,
+          "action": "Send a POST request to /api/events with a valid JSON body but no Authorization header",
+          "expectedResult": "The API returns HTTP 401 or 403 with a generic error message and no event is created"
+        },
+        {
+          "step": 4,
+          "action": "Inspect all response bodies to confirm no sensitive data leakage",
+          "expectedResult": "All responses contain only generic error messages with no event data, stack traces, or internal system details"
+        }
+      ],
+      "postconditions": [
+        "No event data was exposed in any response",
+        "No events were created or modified",
+        "Unauthenticated access attempts are logged in the security audit log"
+      ]
+    },
+    {
+      "id": "TC-NEGA-002",
+      "title": "Verify API request with expired authentication token is denied",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "A previously valid authentication token exists that has now expired (e.g., JWT with past expiration time)",
+        "API testing tool is available",
+        "Event data exists in the database"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Send a GET request to /api/events using the expired authentication token in the Authorization header",
+          "expectedResult": "The API returns HTTP 401 Unauthorized or HTTP 403 Forbidden with a generic error message indicating the session has expired or is invalid"
+        },
+        {
+          "step": 2,
+          "action": "Inspect the response body for any event data leakage",
+          "expectedResult": "The response contains only a generic error message such as 'Session expired' or 'Unauthorized' with no event data"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to access /api/events/123/follow-ups with the same expired token",
+          "expectedResult": "The API returns HTTP 401 or 403 with no follow-up data exposed"
+        }
+      ],
+      "postconditions": [
+        "No event or follow-up data was returned to the expired session",
+        "The expired token access attempts are logged in the audit log",
+        "The system did not refresh or extend the expired token"
+      ]
+    },
+    {
+      "id": "TC-NEGA-003",
+      "title": "Verify API request with tampered/forged authentication token is denied",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "A forged or tampered JWT token has been crafted (e.g., modified payload with admin role but invalid signature)",
+        "API testing tool is available",
+        "Event data exists in the database"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Craft a JWT token with a modified payload (e.g., change role from 'viewer' to 'admin') but keep the original or use an invalid signature",
+          "expectedResult": "Token is crafted and ready for use"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to /api/events using the tampered token in the Authorization header",
+          "expectedResult": "The API returns HTTP 401 Unauthorized or HTTP 403 Forbidden, rejecting the tampered token"
+        },
+        {
+          "step": 3,
+          "action": "Send a DELETE request to /api/events/100 using the tampered token",
+          "expectedResult": "The API returns HTTP 401 or 403 and event 100 is NOT deleted"
+        },
+        {
+          "step": 4,
+          "action": "Verify event 100 still exists by querying with a valid authorized token",
+          "expectedResult": "Event 100 exists with all data intact, confirming the tampered token had no effect"
+        }
+      ],
+      "postconditions": [
+        "The tampered token was rejected and no access was granted",
+        "No data was modified or deleted",
+        "The tampered token attempt is logged as a security event in the audit log"
+      ]
+    },
+    {
+      "id": "TC-NEGA-004",
+      "title": "Verify SQL injection in event ID parameter does not bypass access control",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "API testing tool is available",
+        "Database contains event data"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'unauthorized_user' and obtain the session token",
+          "expectedResult": "Authentication succeeds"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to /api/events/1%20OR%201=1 (SQL injection in event ID) using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 Forbidden or HTTP 400 Bad Request; no event data is returned"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to /api/events/1'; DROP TABLE events;-- using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 or 400; no SQL injection is executed and no data is affected"
+        },
+        {
+          "step": 4,
+          "action": "Send a GET request to /api/events/1 UNION SELECT * FROM users-- using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 or 400 with a generic error message; no user data or event data is leaked"
+        },
+        {
+          "step": 5,
+          "action": "Verify the events table and data are intact by querying with an authorized admin account",
+          "expectedResult": "All event data is intact and the events table exists with no corruption"
+        }
+      ],
+      "postconditions": [
+        "No SQL injection was executed against the database",
+        "All event data remains intact and uncorrupted",
+        "The injection attempts are logged in the security audit log",
+        "Access control was enforced before any query execution"
+      ]
+    },
+    {
+      "id": "TC-NEGA-005",
+      "title": "Verify path traversal attack on event endpoints does not bypass access control",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "API testing tool is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'unauthorized_user' and obtain the session token",
+          "expectedResult": "Authentication succeeds"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to /api/events/../admin/users using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 Forbidden or HTTP 404 Not Found; no admin or user data is exposed"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to /api/events/..%2F..%2Fadmin%2Fconfig using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 or 404 with a generic error message; no configuration data is exposed"
+        },
+        {
+          "step": 4,
+          "action": "Send a GET request to /api/events/%2e%2e%2f%2e%2e%2fetc%2fpasswd using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 or 400; no file system data is exposed"
+        }
+      ],
+      "postconditions": [
+        "No unauthorized data was accessed through path traversal",
+        "No internal system files or configuration data was exposed",
+        "Path traversal attempts are logged in the security audit log"
+      ]
+    },
+    {
+      "id": "TC-NEGA-006",
+      "title": "Verify unauthorized user accessing event URL directly in browser does not see cached event data",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and accessible via web browser",
+        "An authorized user 'admin_user' has previously accessed the events page in the same browser (data may be cached)",
+        "The admin_user has logged out",
+        "A user account 'unauthorized_user' exists without event access permissions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "In the same browser where admin_user previously accessed events, log in as 'unauthorized_user'",
+          "expectedResult": "User is logged in as unauthorized_user"
+        },
+        {
+          "step": 2,
+          "action": "Navigate directly to the events page URL (e.g., /events) by typing it in the address bar",
+          "expectedResult": "The user is redirected to the access-denied page"
+        },
+        {
+          "step": 3,
+          "action": "Press the browser Back button to check if cached event data is displayed",
+          "expectedResult": "No cached event data is displayed; the browser shows the previous authorized page or the access-denied page"
+        },
+        {
+          "step": 4,
+          "action": "Check browser developer tools > Application > Cache Storage and Local Storage for any cached event data",
+          "expectedResult": "No event data from the previous admin session is accessible in browser storage for the unauthorized user's session"
+        }
+      ],
+      "postconditions": [
+        "No cached event data was accessible to the unauthorized user",
+        "Browser cache headers (Cache-Control: no-store, no-cache) are properly set on event responses",
+        "The unauthorized user was properly redirected to the access-denied page"
+      ]
+    },
+    {
+      "id": "TC-NEGA-007",
+      "title": "Verify unauthorized user cannot access events by manipulating request headers",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "API testing tool capable of custom header manipulation is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'unauthorized_user' and obtain the session token",
+          "expectedResult": "Authentication succeeds"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to /api/events with the unauthorized token AND an additional header 'X-User-Role: admin'",
+          "expectedResult": "The API returns HTTP 403 Forbidden; the custom header does not override server-side role validation"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to /api/events with the unauthorized token AND header 'X-Forwarded-For: 127.0.0.1' to simulate internal network access",
+          "expectedResult": "The API returns HTTP 403 Forbidden; IP spoofing does not bypass access control"
+        },
+        {
+          "step": 4,
+          "action": "Send a GET request to /api/events with the unauthorized token AND header 'X-Original-URL: /api/public/events' to attempt URL rewriting",
+          "expectedResult": "The API returns HTTP 403 Forbidden; header-based URL rewriting does not bypass access control"
+        }
+      ],
+      "postconditions": [
+        "No event data was returned despite header manipulation attempts",
+        "Server-side authorization was not bypassed by any client-side header",
+        "All manipulation attempts are logged in the security audit log"
+      ]
+    },
+    {
+      "id": "TC-NEGA-008",
+      "title": "Verify system handles concurrent unauthorized requests without data leakage or race condition",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Application is deployed and running",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "Load testing or concurrent request tool is available (e.g., Apache JMeter, k6)",
+        "Event data exists in the database"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'unauthorized_user' and obtain the session token",
+          "expectedResult": "Authentication succeeds"
+        },
+        {
+          "step": 2,
+          "action": "Send 50 concurrent GET requests to /api/events using the unauthorized token simultaneously",
+          "expectedResult": "All 50 requests return HTTP 403 Forbidden with generic error messages"
+        },
+        {
+          "step": 3,
+          "action": "Inspect all 50 response bodies to verify none contain event data",
+          "expectedResult": "Every single response contains only the generic error message; no event data leaked in any response due to race conditions"
+        },
+        {
+          "step": 4,
+          "action": "Check if a security alert was triggered due to the burst of unauthorized requests",
+          "expectedResult": "A security alert notification was generated for the System Administrator indicating a burst of unauthorized access attempts"
+        }
+      ],
+      "postconditions": [
+        "All concurrent unauthorized requests were properly denied",
+        "No data leakage occurred due to race conditions or timing attacks",
+        "Security alert was triggered for the burst of unauthorized activity",
+        "System remained stable and responsive after handling the concurrent requests"
+      ]
+    },
+    {
+      "id": "TC-NEGA-009",
+      "title": "Verify unauthorized user cannot access event data through API response enumeration (IDOR)",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "Events exist with sequential IDs (e.g., 1, 2, 3, ... 100) in the database",
+        "API testing tool with scripting capability is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'unauthorized_user' and obtain the session token",
+          "expectedResult": "Authentication succeeds"
+        },
+        {
+          "step": 2,
+          "action": "Send GET requests to /api/events/1, /api/events/2, /api/events/3, ... /api/events/10 sequentially using the unauthorized token",
+          "expectedResult": "All requests return HTTP 403 Forbidden with identical generic error messages"
+        },
+        {
+          "step": 3,
+          "action": "Compare the response times and response bodies of all 10 requests",
+          "expectedResult": "Response times are similar (no timing-based information leakage indicating which IDs exist vs. don't exist) and all response bodies are identical generic error messages"
+        },
+        {
+          "step": 4,
+          "action": "Send a GET request to /api/events/99999 (non-existent event) using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 Forbidden (NOT 404), ensuring the unauthorized user cannot determine whether an event exists or not"
+        }
+      ],
+      "postconditions": [
+        "No event data was exposed through ID enumeration",
+        "The system does not reveal which event IDs exist vs. don't exist to unauthorized users",
+        "All enumeration attempts are logged in the audit log"
+      ]
+    },
+    {
+      "id": "TC-NEGA-010",
+      "title": "Verify XSS payload in request parameters does not bypass access control or cause reflected XSS on access-denied page",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and accessible via web browser",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "Browser with developer tools is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Log in as 'unauthorized_user' in the web browser",
+          "expectedResult": "User is logged in"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to /events?search=<script>alert('XSS')</script> in the browser address bar",
+          "expectedResult": "The user is redirected to the access-denied page; no JavaScript alert dialog appears"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to /events/<img src=x onerror=alert('XSS')> in the browser address bar",
+          "expectedResult": "The user is redirected to the access-denied page; no JavaScript executes and no broken image tag is rendered"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the access-denied page HTML source for any reflected XSS payload",
+          "expectedResult": "The XSS payloads are not reflected in the page source; any user input is properly sanitized or encoded"
+        },
+        {
+          "step": 5,
+          "action": "Check the browser console for any JavaScript errors or executed scripts",
+          "expectedResult": "No XSS-related scripts were executed; the console shows no evidence of injected code execution"
+        }
+      ],
+      "postconditions": [
+        "No XSS payload was executed on the access-denied page",
+        "All user input was properly sanitized before being reflected in any response",
+        "Access control was enforced regardless of the XSS payload in the request"
+      ]
+    },
+    {
+      "id": "TC-NEGA-011",
+      "title": "Verify unauthorized user session hijacking attempt is blocked",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "Application is deployed and running",
+        "An authorized user 'admin_user' is currently logged in with an active session",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "Two separate browser instances or API testing tools are available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "As 'admin_user', obtain the current session token/cookie value from the browser developer tools or API response",
+          "expectedResult": "Admin session token is captured"
+        },
+        {
+          "step": 2,
+          "action": "In a separate browser or API tool, send a GET request to /api/events using the admin_user's session token but from a different IP address or user agent",
+          "expectedResult": "The API returns HTTP 401 or 403 if session binding (IP/user-agent validation) is implemented, OR returns 200 if session binding is not implemented (note: this tests the security posture)"
+        },
+        {
+          "step": 3,
+          "action": "If the system allows the request, verify whether a security alert is generated for the session being used from a different context",
+          "expectedResult": "If session binding is not enforced, at minimum a security log entry should record the anomalous session usage from a different IP/user-agent"
+        },
+        {
+          "step": 4,
+          "action": "Verify the original admin_user's session is still valid and functional",
+          "expectedResult": "The admin_user can still access events normally from their original session"
+        }
+      ],
+      "postconditions": [
+        "Session hijacking attempt was either blocked or logged for security review",
+        "The original admin session remains functional",
+        "Security logs capture the anomalous session usage pattern"
+      ]
+    },
+    {
+      "id": "TC-NEGA-012",
+      "title": "Verify system returns proper error when API endpoint receives malformed JSON body from unauthorized user",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Application is deployed and running",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "API testing tool is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'unauthorized_user' and obtain the session token",
+          "expectedResult": "Authentication succeeds"
+        },
+        {
+          "step": 2,
+          "action": "Send a POST request to /api/events with a malformed JSON body (e.g., '{\"title\": \"test\",}') and Content-Type: application/json using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 Forbidden (authorization check should happen BEFORE body parsing) with a generic error message"
+        },
+        {
+          "step": 3,
+          "action": "Send a POST request to /api/events with an extremely large body (e.g., 10MB of random data) using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 Forbidden or HTTP 413 Payload Too Large; the server does not crash or become unresponsive"
+        },
+        {
+          "step": 4,
+          "action": "Send a POST request to /api/events with Content-Type: text/xml and an XML body containing XXE payload using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 Forbidden; no XXE processing occurs and no internal files are exposed"
+        }
+      ],
+      "postconditions": [
+        "Authorization was checked before request body processing in all cases",
+        "No server errors, crashes, or memory issues occurred",
+        "No data was created or modified by any of the malformed requests",
+        "All attempts are logged in the security audit log"
+      ]
+    },
+    {
+      "id": "TC-NEGA-013",
+      "title": "Verify access-denied page does not expose sensitive information in error details or page metadata",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Application is deployed and accessible via web browser",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "Browser with developer tools is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Log in as 'unauthorized_user' and navigate to /events to trigger the access-denied redirect",
+          "expectedResult": "User is redirected to the access-denied page"
+        },
+        {
+          "step": 2,
+          "action": "View the page source (Ctrl+U) and search for keywords like 'event', 'database', 'server', 'error', 'stack', 'trace', 'password', 'config'",
+          "expectedResult": "No sensitive keywords related to internal system details, database information, or event data appear in the page source"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the HTTP response headers of the access-denied page in the Network tab",
+          "expectedResult": "Headers do not contain X-Powered-By, Server version details, or any internal technology stack information"
+        },
+        {
+          "step": 4,
+          "action": "Check the page's HTML meta tags and comments for any developer notes or debug information",
+          "expectedResult": "No HTML comments contain debug information, developer notes, or references to internal systems"
+        },
+        {
+          "step": 5,
+          "action": "Inspect any JavaScript files loaded on the access-denied page for hardcoded API keys, tokens, or internal URLs",
+          "expectedResult": "No JavaScript files contain hardcoded credentials, API keys, or internal endpoint URLs"
+        }
+      ],
+      "postconditions": [
+        "The access-denied page is clean of any sensitive information",
+        "No internal system details are exposed through any channel (HTML, headers, scripts)",
+        "The page meets security best practices for error pages"
+      ]
+    },
+    {
+      "id": "TC-NEGA-014",
+      "title": "Verify unauthorized user cannot bypass access control by changing HTTP method",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Application is deployed and running",
+        "A user account 'unauthorized_user' exists without event access permissions",
+        "API testing tool is available",
+        "Event with ID 100 exists in the database"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'unauthorized_user' and obtain the session token",
+          "expectedResult": "Authentication succeeds"
+        },
+        {
+          "step": 2,
+          "action": "Send an OPTIONS request to /api/events/100 using the unauthorized token",
+          "expectedResult": "The API returns appropriate CORS headers or HTTP 403; no event data is exposed in the response"
+        },
+        {
+          "step": 3,
+          "action": "Send a HEAD request to /api/events/100 using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 Forbidden; response headers do not leak event metadata (e.g., Content-Length that reveals data exists)"
+        },
+        {
+          "step": 4,
+          "action": "Send a PATCH request to /api/events/100 with partial update data using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 Forbidden; event 100 data remains unchanged"
+        },
+        {
+          "step": 5,
+          "action": "Send a TRACE request to /api/events/100 using the unauthorized token",
+          "expectedResult": "The API returns HTTP 403 or HTTP 405 Method Not Allowed; TRACE method is disabled for security"
+        }
+      ],
+      "postconditions": [
+        "No HTTP method variant bypassed the access control enforcement",
+        "Event data remained unchanged and unexposed",
+        "All method attempts are logged in the audit log"
+      ]
+    },
+    {
+      "id": "TC-NEGA-015",
+      "title": "Verify system handles server error gracefully without exposing event data during authorization check failure",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "Application is deployed in a test environment where the authorization service can be temporarily disrupted",
+        "A user account 'test_user' exists (role doesn't matter for this test)",
+        "API testing tool is available",
+        "Ability to simulate authorization service downtime (e.g., stop the auth microservice, block network to auth database)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Authenticate as 'test_user' and obtain a valid session token while the auth service is still running",
+          "expectedResult": "Authentication succeeds and a valid token is obtained"
+        },
+        {
+          "step": 2,
+          "action": "Simulate authorization service failure (e.g., stop the auth service, block the auth database connection)",
+          "expectedResult": "The authorization service is no longer responding"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to /api/events using the valid token while the auth service is down",
+          "expectedResult": "The API returns HTTP 500 Internal Server Error or HTTP 503 Service Unavailable with a generic error message; critically, NO event data is returned (fail-closed behavior)"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the error response body",
+          "expectedResult": "The response contains a generic error message like 'Service temporarily unavailable' with no event data, no stack traces, and no internal error details"
+        },
+        {
+          "step": 5,
+          "action": "Restore the authorization service and retry the request",
+          "expectedResult": "The system resumes normal operation and returns the appropriate response based on the user's actual permissions"
+        }
+      ],
+      "postconditions": [
+        "The system exhibited fail-closed behavior: when authorization could not be verified, access was denied",
+        "No event data was leaked during the authorization service outage",
+        "Error logs capture the authorization service failure for operational monitoring",
+        "System recovered gracefully once the authorization service was restored"
+      ]
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "TC-EDGE-001",
+      "title": "Verify 403 response when expired authentication token is used for event API request",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User previously authenticated and received a valid JWT/session token",
+        "The token has been allowed to expire (past its TTL)",
+        "Event API endpoint is accessible at the expected base URL",
+        "System clock is synchronized and not skewed"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Capture a valid authentication token by logging in as a standard user with valid credentials (e.g., user@test.com / Password123!)",
+          "expectedResult": "Authentication succeeds and a token is returned"
+        },
+        {
+          "step": 2,
+          "action": "Wait for the token to expire (or manually set system time forward past the token's expiry)",
+          "expectedResult": "Token is now expired based on its TTL"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to /api/events/123 with the expired token in the Authorization header: 'Bearer <expired_token>'",
+          "expectedResult": "System returns HTTP 403 Forbidden with a generic error message such as 'Access denied. You do not have permission to access this resource.' and no event data is included in the response body"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the response body for any leaked event data, stack traces, or internal system details",
+          "expectedResult": "Response body contains only the generic error message with no event titles, descriptions, IDs, user data, or technical details"
+        },
+        {
+          "step": 5,
+          "action": "Check server-side security logs for the denied request entry",
+          "expectedResult": "A log entry is recorded with the timestamp, source IP, expired token identifier, and the attempted endpoint path"
+        }
+      ],
+      "postconditions": [
+        "No event data was exposed in the 403 response",
+        "Security audit log contains a record of the unauthorized access attempt with expired token",
+        "User session remains invalidated and no new token was issued"
+      ]
+    },
+    {
+      "id": "TC-EDGE-002",
+      "title": "Verify system behavior when hundreds of rapid unauthorized requests are sent simultaneously from a single IP",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "A load testing tool (e.g., JMeter, k6, or curl loop) is configured",
+        "No valid authentication token is available for the requests",
+        "Security alert notification channel (email, Slack, SIEM) is configured and monitored",
+        "Rate limiting or throttling configuration is documented",
+        "System Administrator has access to the security alert dashboard"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Configure the load testing tool to send 500 concurrent GET requests to /api/events within a 10-second window, each with no Authorization header",
+          "expectedResult": "Tool is configured and ready to execute"
+        },
+        {
+          "step": 2,
+          "action": "Execute the load test and capture all HTTP responses",
+          "expectedResult": "All 500 requests return HTTP 403 Forbidden with the generic error message. No request returns a 200 OK or any event data. Some requests may return HTTP 429 Too Many Requests if rate limiting is active"
+        },
+        {
+          "step": 3,
+          "action": "Check the security alert notification channel for triggered alerts",
+          "expectedResult": "At least one security alert notification is triggered indicating repeated unauthorized access attempts from the same source IP, including the IP address, count of attempts, and timestamp range"
+        },
+        {
+          "step": 4,
+          "action": "Verify system health: check CPU, memory, and response times for legitimate authenticated requests during and after the burst",
+          "expectedResult": "System remains responsive. Legitimate authenticated requests still return within SLA (e.g., < 2 seconds). No service degradation or outage occurs"
+        },
+        {
+          "step": 5,
+          "action": "Review security logs for completeness of logged denied requests",
+          "expectedResult": "All 500 unauthorized attempts are logged with source IP, timestamp, and endpoint. Logs are not truncated or missing entries"
+        }
+      ],
+      "postconditions": [
+        "Security alert was generated and delivered to the configured notification channel",
+        "System remained stable and responsive throughout the burst of unauthorized requests",
+        "All 500 unauthorized attempts are recorded in the security audit log",
+        "No event data was leaked in any of the 500 responses"
+      ]
+    },
+    {
+      "id": "TC-EDGE-003",
+      "title": "Verify access denial when request contains a forged/tampered authentication token with special characters",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Event API endpoint /api/events is accessible",
+        "No valid user session exists",
+        "Security logging is enabled"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Send a GET request to /api/events/1 with Authorization header set to 'Bearer eyJhbGciOiJIUzI1NiJ9.<tampered_payload>.<invalid_sig>' where the payload has been manually altered",
+          "expectedResult": "System returns HTTP 403 Forbidden with generic error message 'Access denied. You do not have permission to access this resource.'"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to /api/events/1 with Authorization header set to 'Bearer ../../../../etc/passwd' (path traversal attempt)",
+          "expectedResult": "System returns HTTP 403 Forbidden with generic error message. No file system data is exposed"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to /api/events/1 with Authorization header set to 'Bearer <script>alert(\"xss\")</script>'",
+          "expectedResult": "System returns HTTP 403 Forbidden. The XSS payload is not reflected or executed in the response. Response Content-Type is application/json"
+        },
+        {
+          "step": 4,
+          "action": "Send a GET request to /api/events/1 with Authorization header containing Unicode characters: 'Bearer tökën_ünïcödé_🔑🔐'",
+          "expectedResult": "System returns HTTP 403 Forbidden with generic error message. No server error (500) occurs"
+        },
+        {
+          "step": 5,
+          "action": "Send a GET request to /api/events/1 with Authorization header containing a 10,000-character random string as the token value",
+          "expectedResult": "System returns HTTP 403 Forbidden or HTTP 413/431 (header too large). No server crash or timeout occurs"
+        },
+        {
+          "step": 6,
+          "action": "Inspect all response bodies from steps 1-5 for any leaked internal data, stack traces, or event information",
+          "expectedResult": "All responses contain only the generic error message with no internal system details, database info, or event data"
+        }
+      ],
+      "postconditions": [
+        "No event data was exposed in any response",
+        "All tampered token attempts are logged in the security audit log",
+        "System remained stable with no 500 errors or crashes",
+        "If repeated attempts threshold was met, a security alert notification was triggered"
+      ]
+    },
+    {
+      "id": "TC-EDGE-004",
+      "title": "Verify access denial for unauthorized follow-up endpoint requests with various HTTP methods",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Follow-up API endpoints exist (e.g., /api/events/1/follow-ups)",
+        "User is not authenticated (no token provided)",
+        "Security logging is enabled and monitored"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Send a GET request to /api/events/1/follow-ups without any Authorization header",
+          "expectedResult": "System returns HTTP 403 Forbidden with generic error message"
+        },
+        {
+          "step": 2,
+          "action": "Send a POST request to /api/events/1/follow-ups with body {\"note\": \"Unauthorized follow-up\"} and no Authorization header",
+          "expectedResult": "System returns HTTP 403 Forbidden with generic error message. No follow-up record is created in the database"
+        },
+        {
+          "step": 3,
+          "action": "Send a PUT request to /api/events/1/follow-ups/1 with body {\"note\": \"Modified\"} and no Authorization header",
+          "expectedResult": "System returns HTTP 403 Forbidden. Existing follow-up data is not modified"
+        },
+        {
+          "step": 4,
+          "action": "Send a DELETE request to /api/events/1/follow-ups/1 without any Authorization header",
+          "expectedResult": "System returns HTTP 403 Forbidden. No follow-up record is deleted"
+        },
+        {
+          "step": 5,
+          "action": "Send a PATCH request to /api/events/1/follow-ups/1 with body {\"status\": \"closed\"} and no Authorization header",
+          "expectedResult": "System returns HTTP 403 Forbidden. Follow-up status remains unchanged"
+        },
+        {
+          "step": 6,
+          "action": "Send an OPTIONS request to /api/events/1/follow-ups without Authorization header",
+          "expectedResult": "System returns appropriate CORS headers but does not expose any event or follow-up data. Allowed methods are listed but access still requires authentication"
+        },
+        {
+          "step": 7,
+          "action": "Verify database state: query the follow-ups table for event ID 1",
+          "expectedResult": "No new records were created, no existing records were modified or deleted by the unauthorized requests"
+        }
+      ],
+      "postconditions": [
+        "Database state is unchanged — no unauthorized data modifications occurred",
+        "All unauthorized attempts across all HTTP methods are logged in security audit",
+        "Security alert may have been triggered due to repeated unauthorized attempts",
+        "All responses contained only generic error messages with no data leakage"
+      ]
+    },
+    {
+      "id": "TC-EDGE-005",
+      "title": "Verify access-denied page behavior when unauthorized user navigates directly to event URLs with non-existent or extreme IDs",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is not authenticated (no active session)",
+        "UI application is running and accessible in a browser",
+        "Event detail pages exist at URLs like /events/{id}"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate directly to /events/999999999 (non-existent event with very large ID) in the browser without logging in",
+          "expectedResult": "User is redirected to the access-denied page. The URL /events/999999999 is not shown. No indication is given whether event 999999999 exists or not (preventing enumeration)"
+        },
+        {
+          "step": 2,
+          "action": "Navigate directly to /events/-1 (negative ID) in the browser without logging in",
+          "expectedResult": "User is redirected to the access-denied page. No error stack trace or database error is displayed"
+        },
+        {
+          "step": 3,
+          "action": "Navigate directly to /events/0 in the browser without logging in",
+          "expectedResult": "User is redirected to the access-denied page with no event data exposed"
+        },
+        {
+          "step": 4,
+          "action": "Navigate directly to /events/abc (non-numeric ID) in the browser without logging in",
+          "expectedResult": "User is redirected to the access-denied page. No 500 error or unhandled exception page is shown"
+        },
+        {
+          "step": 5,
+          "action": "Navigate directly to /events/<script>alert('xss')</script> in the browser without logging in",
+          "expectedResult": "User is redirected to the access-denied page. The XSS payload is not executed. The URL is properly sanitized"
+        },
+        {
+          "step": 6,
+          "action": "Navigate directly to /events/1/follow-ups/../../admin in the browser without logging in",
+          "expectedResult": "User is redirected to the access-denied page. Path traversal does not expose admin pages or any other protected content"
+        }
+      ],
+      "postconditions": [
+        "No event data was displayed for any of the attempted URLs",
+        "No server errors (500) were encountered",
+        "User remains on the access-denied page after each attempt",
+        "Security logs record each unauthorized navigation attempt"
+      ]
+    },
+    {
+      "id": "TC-EDGE-006",
+      "title": "Verify security alert threshold behavior at exact boundary of repeated unauthorized attempts",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Security alert threshold is configured (e.g., alert triggers after N unauthorized attempts within T minutes — assume N=5 for testing)",
+        "Security alert notification channel is configured and monitored",
+        "No prior unauthorized attempts exist from the test source IP within the time window",
+        "System Administrator has access to alert dashboard"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Send exactly N-1 (e.g., 4) unauthorized GET requests to /api/events/1 from the same IP within the configured time window T, each without an Authorization header",
+          "expectedResult": "All 4 requests return HTTP 403 Forbidden. No security alert notification is triggered yet"
+        },
+        {
+          "step": 2,
+          "action": "Check the security alert notification channel (email inbox, Slack channel, SIEM dashboard)",
+          "expectedResult": "No alert has been generated — the threshold has not been reached"
+        },
+        {
+          "step": 3,
+          "action": "Send exactly 1 more unauthorized GET request to /api/events/1 from the same IP (this is the Nth request, e.g., 5th)",
+          "expectedResult": "Request returns HTTP 403 Forbidden. A security alert notification IS now triggered"
+        },
+        {
+          "step": 4,
+          "action": "Check the security alert notification channel again",
+          "expectedResult": "A security alert is present containing: source IP address, number of unauthorized attempts (5), time window, and the targeted endpoint(s)"
+        },
+        {
+          "step": 5,
+          "action": "Send 1 additional unauthorized request (N+1, e.g., 6th) from the same IP",
+          "expectedResult": "Request returns HTTP 403 Forbidden. System does not generate duplicate/redundant alerts for the same ongoing incident (or generates a follow-up alert per configuration)"
+        },
+        {
+          "step": 6,
+          "action": "Wait for the time window T to elapse, then send 1 unauthorized request from the same IP",
+          "expectedResult": "Request returns HTTP 403 Forbidden. The counter has reset. No new alert is triggered for this single request"
+        }
+      ],
+      "postconditions": [
+        "Exactly one security alert was generated when the threshold was reached",
+        "Alert contains accurate details: IP, count, time window, endpoints",
+        "Counter resets after the time window elapses",
+        "All unauthorized requests are logged regardless of alert threshold"
+      ]
+    },
+    {
+      "id": "TC-EDGE-007",
+      "title": "Verify access denial when authorized user's permissions are revoked mid-session",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User 'testuser@test.com' is authenticated with a valid session and has permission to access events",
+        "System Administrator has access to user management to revoke permissions",
+        "Event data exists in the system (e.g., Event ID 1)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "As testuser@test.com, send a GET request to /api/events/1 with the valid Authorization token",
+          "expectedResult": "Request succeeds with HTTP 200 OK and event data is returned"
+        },
+        {
+          "step": 2,
+          "action": "As System Administrator, navigate to User Management and revoke event access permissions for testuser@test.com while their session is still active",
+          "expectedResult": "Permission revocation is saved successfully. Admin sees confirmation message"
+        },
+        {
+          "step": 3,
+          "action": "As testuser@test.com (using the same session/token from step 1), send another GET request to /api/events/1",
+          "expectedResult": "System returns HTTP 403 Forbidden with generic error message. Event data is NOT returned despite the session still being technically active"
+        },
+        {
+          "step": 4,
+          "action": "As testuser@test.com, navigate to /events/1 in the UI using the same browser session",
+          "expectedResult": "User is redirected to the access-denied page. No event data is briefly visible before redirect (no flash of content)"
+        },
+        {
+          "step": 5,
+          "action": "Verify security logs for the permission change and subsequent denied access",
+          "expectedResult": "Logs show: (1) permission revocation by admin with timestamp, (2) subsequent denied access attempt by testuser@test.com with timestamp"
+        }
+      ],
+      "postconditions": [
+        "testuser@test.com can no longer access any event endpoints",
+        "Permission revocation took effect immediately without requiring re-login",
+        "Security audit trail records both the permission change and the denied access",
+        "No event data was cached or served after permission revocation"
+      ]
+    },
+    {
+      "id": "TC-EDGE-008",
+      "title": "Verify access denial when multiple unauthorized users from different IPs target the same event simultaneously",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "At least 3 different source IPs are available for testing (or simulated via proxy/VPN)",
+        "Event ID 1 exists in the system with sensitive data",
+        "Security alert notification is configured",
+        "Security logging captures source IP per request"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "From IP-A, send an unauthorized GET request to /api/events/1 (no Authorization header)",
+          "expectedResult": "HTTP 403 Forbidden returned with generic error message"
+        },
+        {
+          "step": 2,
+          "action": "Simultaneously from IP-B, send an unauthorized POST request to /api/events/1/follow-ups with body {\"note\": \"hack\"} (no Authorization header)",
+          "expectedResult": "HTTP 403 Forbidden returned with generic error message. No follow-up created"
+        },
+        {
+          "step": 3,
+          "action": "Simultaneously from IP-C, send an unauthorized DELETE request to /api/events/1 (no Authorization header)",
+          "expectedResult": "HTTP 403 Forbidden returned with generic error message. Event is not deleted"
+        },
+        {
+          "step": 4,
+          "action": "Repeat steps 1-3 in rapid succession 5 times each (15 total unauthorized requests from 3 IPs)",
+          "expectedResult": "All 15 requests return HTTP 403. System remains stable. Response times do not degrade significantly"
+        },
+        {
+          "step": 5,
+          "action": "Check security alert notifications",
+          "expectedResult": "Security alerts are generated for each IP that exceeded the threshold. Alerts correctly distinguish between the different source IPs"
+        },
+        {
+          "step": 6,
+          "action": "Verify Event ID 1 data integrity by logging in as an authorized admin and viewing the event",
+          "expectedResult": "Event ID 1 data is completely intact and unmodified. All follow-ups are unchanged. No unauthorized modifications occurred"
+        }
+      ],
+      "postconditions": [
+        "Event data integrity is preserved — no unauthorized modifications",
+        "Separate security alerts were generated per offending IP address",
+        "All 15 unauthorized attempts are individually logged with correct source IPs",
+        "System performance was not degraded by the concurrent unauthorized requests"
+      ]
+    },
+    {
+      "id": "TC-EDGE-009",
+      "title": "Verify access-denied page handles browser back/forward navigation without exposing cached event data",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User was previously authenticated and viewed event data at /events/1",
+        "User has since logged out or session has been invalidated",
+        "Browser cache may contain previously viewed event pages",
+        "Browser is Chrome, Firefox, or Edge (latest version)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Log in as an authorized user and navigate to /events/1 to view event details",
+          "expectedResult": "Event details page loads with full event data visible"
+        },
+        {
+          "step": 2,
+          "action": "Log out of the application using the 'Logout' button",
+          "expectedResult": "User is logged out and redirected to the login page"
+        },
+        {
+          "step": 3,
+          "action": "Press the browser Back button to attempt to navigate back to /events/1",
+          "expectedResult": "User is redirected to the access-denied page. The cached event data is NOT displayed. Cache-Control headers (no-store, no-cache) prevent the browser from serving stale content"
+        },
+        {
+          "step": 4,
+          "action": "Press the browser Forward button after being on the access-denied page",
+          "expectedResult": "User remains on the access-denied page or is redirected to login. No event data is shown"
+        },
+        {
+          "step": 5,
+          "action": "Type /events/1 directly into the browser address bar and press Enter",
+          "expectedResult": "User is redirected to the access-denied page. No flash of cached event content appears before redirect"
+        },
+        {
+          "step": 6,
+          "action": "Open browser developer tools > Network tab and inspect the response headers for the /events/1 request",
+          "expectedResult": "Response headers include 'Cache-Control: no-store, no-cache, must-revalidate' and 'Pragma: no-cache' to prevent caching of sensitive event data"
+        }
+      ],
+      "postconditions": [
+        "No cached event data was displayed after logout",
+        "Appropriate cache-control headers are set on all event-related responses",
+        "User is consistently redirected to access-denied page when unauthenticated",
+        "Browser history navigation does not bypass access controls"
+      ]
+    },
+    {
+      "id": "TC-EDGE-010",
+      "title": "Verify access denial when request contains SQL injection or NoSQL injection payloads in event ID parameter",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "Event API endpoint /api/events/{id} is accessible",
+        "User is not authenticated",
+        "Database contains event records"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Send a GET request to /api/events/1%20OR%201=1 without Authorization header",
+          "expectedResult": "System returns HTTP 403 Forbidden with generic error message. No SQL query results or database errors are exposed"
+        },
+        {
+          "step": 2,
+          "action": "Send a GET request to /api/events/1;DROP%20TABLE%20events without Authorization header",
+          "expectedResult": "System returns HTTP 403 Forbidden. The events table is NOT dropped. Generic error message only"
+        },
+        {
+          "step": 3,
+          "action": "Send a GET request to /api/events/{\"$gt\":\"\"} (NoSQL injection) without Authorization header",
+          "expectedResult": "System returns HTTP 403 Forbidden with generic error message. No database records are returned"
+        },
+        {
+          "step": 4,
+          "action": "Send a GET request to /api/events/1%27%20UNION%20SELECT%20*%20FROM%20users-- without Authorization header",
+          "expectedResult": "System returns HTTP 403 Forbidden. No user table data is exposed. Generic error message only"
+        },
+        {
+          "step": 5,
+          "action": "Log in as System Administrator and verify the events table and data are intact",
+          "expectedResult": "All event records are present and unmodified. No tables were dropped or altered"
+        },
+        {
+          "step": 6,
+          "action": "Check security logs for the injection attempt entries",
+          "expectedResult": "All injection attempts are logged with the full malicious payload (sanitized in logs), source IP, and timestamp"
+        }
+      ],
+      "postconditions": [
+        "Database integrity is fully preserved — no data loss or modification",
+        "All injection attempts were blocked at the authorization layer before reaching the database",
+        "Security logs contain records of all injection attempts",
+        "No sensitive database schema or data was exposed in any response"
+      ]
+    }
+  ],
+  "accessibility": [
+    {
+      "id": "TC-ACCE-001",
+      "title": "Verify access-denied page is fully navigable using keyboard only (Tab, Shift+Tab, Enter)",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is not authenticated and has been redirected to the access-denied page",
+        "Browser is open with no assistive technology active (keyboard-only testing)",
+        "Access-denied page contains at minimum: error message, link to login page, and optional link to home page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "After being redirected to the access-denied page, press the Tab key to move focus to the first interactive element",
+          "expectedResult": "Focus moves to the first interactive element (e.g., 'Go to Login' link or button) with a clearly visible focus indicator (outline, ring, or highlight)"
+        },
+        {
+          "step": 2,
+          "action": "Continue pressing Tab to cycle through all interactive elements on the access-denied page",
+          "expectedResult": "Focus moves sequentially through all interactive elements in a logical order (e.g., 'Go to Login' → 'Go to Home' → any other links). Each element has a visible focus indicator"
+        },
+        {
+          "step": 3,
+          "action": "Press Shift+Tab to move focus backwards through the interactive elements",
+          "expectedResult": "Focus moves in reverse order through the same elements. Focus indicator remains visible on each element"
+        },
+        {
+          "step": 4,
+          "action": "Navigate focus to the 'Go to Login' link/button and press Enter",
+          "expectedResult": "User is navigated to the login page. The action is triggered by Enter key without requiring a mouse click"
+        },
+        {
+          "step": 5,
+          "action": "Press Tab repeatedly past the last interactive element on the page",
+          "expectedResult": "Focus does not get trapped on the page. Focus moves to the browser's address bar or other browser chrome elements, then cycles back to the page content"
+        },
+        {
+          "step": 6,
+          "action": "Verify that no interactive element is skipped during Tab navigation",
+          "expectedResult": "All clickable links, buttons, and form elements on the access-denied page receive focus in a logical reading order"
+        }
+      ],
+      "postconditions": [
+        "All interactive elements on the access-denied page are reachable via keyboard",
+        "No focus traps exist on the page",
+        "Focus order follows a logical reading sequence (left-to-right, top-to-bottom)",
+        "All actions can be completed without a mouse"
+      ]
+    },
+    {
+      "id": "TC-ACCE-002",
+      "title": "Verify screen reader announces access-denied page content correctly with proper ARIA roles and labels",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "Screen reader is active (NVDA on Windows, VoiceOver on macOS, or JAWS)",
+        "User is not authenticated and has been redirected to the access-denied page",
+        "Browser is Chrome or Firefox (latest version)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "When the access-denied page loads, listen to the screen reader's automatic announcement",
+          "expectedResult": "Screen reader announces the page title (e.g., 'Access Denied') and identifies it as a page or document. The page has a descriptive <title> element like 'Access Denied - [Application Name]'"
+        },
+        {
+          "step": 2,
+          "action": "Use the screen reader's heading navigation (H key in NVDA/JAWS) to find headings on the page",
+          "expectedResult": "At least one heading is present (e.g., <h1> 'Access Denied'). The heading hierarchy is correct (no skipped levels). Screen reader announces 'heading level 1, Access Denied'"
+        },
+        {
+          "step": 3,
+          "action": "Use the screen reader's landmark navigation (D key in NVDA or rotor in VoiceOver) to identify page landmarks",
+          "expectedResult": "Page has appropriate ARIA landmarks: main content area (role='main'), navigation (if present). The access-denied message is within the main landmark"
+        },
+        {
+          "step": 4,
+          "action": "Navigate to the error message text using arrow keys",
+          "expectedResult": "Screen reader reads the full error message clearly (e.g., 'You do not have permission to access this page. Please contact your administrator or return to the login page.'). The message has role='alert' or aria-live='assertive' so it is announced automatically on page load"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to the 'Go to Login' link/button using Tab",
+          "expectedResult": "Screen reader announces the element type and label: 'Go to Login, link' or 'Go to Login, button'. The purpose of the link is clear from its accessible name alone"
+        },
+        {
+          "step": 6,
+          "action": "Check that no decorative images or icons have incorrect alt text",
+          "expectedResult": "Decorative images (e.g., lock icon, warning icon) have alt='' (empty alt) or role='presentation'. Meaningful images have descriptive alt text"
+        }
+      ],
+      "postconditions": [
+        "All content on the access-denied page is accessible to screen reader users",
+        "Error message is announced automatically when the page loads",
+        "All interactive elements have clear, descriptive accessible names",
+        "Page structure uses proper semantic HTML and ARIA landmarks"
+      ]
+    },
+    {
+      "id": "TC-ACCE-003",
+      "title": "Verify access-denied page meets WCAG 2.1 color contrast requirements (minimum 4.5:1 ratio)",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User has been redirected to the access-denied page",
+        "Browser developer tools or a contrast checking tool (e.g., axe DevTools, Colour Contrast Analyser) is available",
+        "Page is displayed in default theme (light mode)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Using the Colour Contrast Analyser or browser DevTools, check the contrast ratio of the main heading text ('Access Denied') against its background",
+          "expectedResult": "Contrast ratio is at least 4.5:1 for normal text or 3:1 for large text (18pt+ or 14pt+ bold) per WCAG 2.1 AA"
+        },
+        {
+          "step": 2,
+          "action": "Check the contrast ratio of the error message body text against its background",
+          "expectedResult": "Contrast ratio is at least 4.5:1 for the body text size"
+        },
+        {
+          "step": 3,
+          "action": "Check the contrast ratio of the 'Go to Login' link/button text against its background",
+          "expectedResult": "Contrast ratio is at least 4.5:1. If the link is distinguished only by color (not underlined), it must have a 3:1 contrast ratio against surrounding text"
+        },
+        {
+          "step": 4,
+          "action": "Check the focus indicator contrast: Tab to the 'Go to Login' element and measure the focus ring/outline contrast against the background",
+          "expectedResult": "Focus indicator has at least a 3:1 contrast ratio against adjacent colors per WCAG 2.1 AA 2.4.7"
+        },
+        {
+          "step": 5,
+          "action": "Verify that no information is conveyed by color alone (e.g., error state indicated only by red text)",
+          "expectedResult": "Error information is conveyed through text, icons, or other non-color means in addition to any color coding. For example, an error icon accompanies red text"
+        },
+        {
+          "step": 6,
+          "action": "If a dark mode/high contrast mode is available, switch to it and repeat contrast checks for heading, body text, and interactive elements",
+          "expectedResult": "All contrast ratios meet WCAG 2.1 AA minimums in dark mode/high contrast mode as well"
+        }
+      ],
+      "postconditions": [
+        "All text elements on the access-denied page meet WCAG 2.1 AA contrast requirements",
+        "Focus indicators are clearly visible with sufficient contrast",
+        "No information is conveyed by color alone",
+        "Contrast compliance is maintained across all available themes"
+      ]
+    },
+    {
+      "id": "TC-ACCE-004",
+      "title": "Verify access-denied page is usable at 200% browser zoom without content loss or overlap",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User has been redirected to the access-denied page",
+        "Browser is set to default 100% zoom initially",
+        "Browser window is at a standard desktop resolution (1920x1080)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "On the access-denied page at 100% zoom, note the layout: heading position, error message, and navigation links",
+          "expectedResult": "All content is visible and properly laid out at 100% zoom"
+        },
+        {
+          "step": 2,
+          "action": "Increase browser zoom to 200% using Ctrl+'+' (or Cmd+'+' on macOS)",
+          "expectedResult": "Page content reflows to fit the viewport. No horizontal scrollbar appears (content reflows vertically). All text remains readable"
+        },
+        {
+          "step": 3,
+          "action": "Verify that the heading 'Access Denied' is fully visible without being clipped or overlapping other elements",
+          "expectedResult": "Heading is fully visible, not truncated, and does not overlap with other page elements"
+        },
+        {
+          "step": 4,
+          "action": "Verify that the error message text is fully readable and not cut off",
+          "expectedResult": "Full error message is visible. Text wraps properly. No text is hidden behind other elements or cut off by overflow:hidden"
+        },
+        {
+          "step": 5,
+          "action": "Verify that the 'Go to Login' link/button is fully visible and clickable at 200% zoom",
+          "expectedResult": "Link/button is fully visible, has adequate touch/click target size (at least 44x44 CSS pixels equivalent), and is functional"
+        },
+        {
+          "step": 6,
+          "action": "Increase zoom to 400% and verify critical content is still accessible",
+          "expectedResult": "Core content (error message and login link) remains accessible. Content reflows into a single column if needed. No content is lost"
+        },
+        {
+          "step": 7,
+          "action": "Reset zoom to 100% using Ctrl+'0' (or Cmd+'0')",
+          "expectedResult": "Page returns to normal layout without any rendering artifacts"
+        }
+      ],
+      "postconditions": [
+        "Access-denied page is fully functional at 200% and 400% zoom",
+        "No content is lost or hidden at any zoom level",
+        "No horizontal scrolling is required at 200% zoom on a 1280px wide viewport",
+        "All interactive elements remain usable at all tested zoom levels"
+      ]
+    },
+    {
+      "id": "TC-ACCE-005",
+      "title": "Verify security alert notification content is accessible to screen reader users in the admin dashboard",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "System Administrator is logged in and on the security alerts dashboard",
+        "At least one security alert has been triggered by repeated unauthorized access attempts",
+        "Screen reader (NVDA, VoiceOver, or JAWS) is active",
+        "Browser is Chrome or Firefox (latest version)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the security alerts section of the admin dashboard using keyboard (Tab or screen reader navigation)",
+          "expectedResult": "Screen reader announces the security alerts section with an appropriate heading or landmark (e.g., 'Security Alerts, heading level 2' or 'Security Alerts region')"
+        },
+        {
+          "step": 2,
+          "action": "When a new security alert notification appears (e.g., toast, banner, or inline alert), listen for the screen reader announcement",
+          "expectedResult": "Screen reader automatically announces the new alert using aria-live='assertive' or role='alert'. The announcement includes the alert type and summary (e.g., 'Security Alert: Multiple unauthorized access attempts detected from IP 192.168.1.100')"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to the alert details using Tab or arrow keys",
+          "expectedResult": "Screen reader reads all alert details: source IP, number of attempts, time window, targeted endpoints. Data is presented in a structured format (table or definition list) with proper headers/labels"
+        },
+        {
+          "step": 4,
+          "action": "If the alert is in a data table, use screen reader table navigation (Ctrl+Alt+Arrow keys in NVDA) to navigate cells",
+          "expectedResult": "Table has proper <th> headers. Screen reader announces column header with each cell value (e.g., 'Source IP: 192.168.1.100', 'Attempts: 5', 'Time: 2024-01-15 14:30:00')"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to any 'Dismiss' or 'Acknowledge' button on the alert and activate it with Enter or Space",
+          "expectedResult": "Button is properly labeled (e.g., 'Dismiss alert for IP 192.168.1.100'). Screen reader announces the action result (e.g., 'Alert dismissed'). Focus moves to a logical location (next alert or alerts heading)"
+        }
+      ],
+      "postconditions": [
+        "All security alert content is fully accessible to screen reader users",
+        "New alerts are announced automatically via ARIA live regions",
+        "Alert data tables have proper semantic structure",
+        "All alert actions (dismiss, acknowledge) are keyboard accessible and properly labeled"
+      ]
+    },
+    {
+      "id": "TC-ACCE-006",
+      "title": "Verify access-denied page error message uses ARIA live region for dynamic announcement",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is on the login page or any authenticated page",
+        "Screen reader is active",
+        "User's session is about to be invalidated or user will attempt unauthorized navigation"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "As an unauthenticated user, attempt to navigate to /events/1 in the browser",
+          "expectedResult": "User is redirected to the access-denied page"
+        },
+        {
+          "step": 2,
+          "action": "Inspect the access-denied page HTML source using browser DevTools (F12 > Elements tab)",
+          "expectedResult": "The error message container has either role='alert', aria-live='assertive', or aria-live='polite' attribute. Example: <div role='alert'>You do not have permission to access this page.</div>"
+        },
+        {
+          "step": 3,
+          "action": "Listen to the screen reader announcement when the access-denied page loads",
+          "expectedResult": "Screen reader announces the error message automatically without requiring the user to navigate to it. The announcement is clear: 'You do not have permission to access this page'"
+        },
+        {
+          "step": 4,
+          "action": "Verify the error message element has an accessible name or is associated with a heading",
+          "expectedResult": "The error message is either within a labeled region (aria-labelledby pointing to a heading) or the message itself serves as the accessible description. It is not an empty container"
+        },
+        {
+          "step": 5,
+          "action": "Verify that the error message does not use aria-hidden='true' or display:none that would hide it from assistive technology",
+          "expectedResult": "Error message is visible both visually and to assistive technology. aria-hidden is not set to 'true' on the message or any of its parent containers"
+        }
+      ],
+      "postconditions": [
+        "Error message is announced by screen readers automatically on page load",
+        "ARIA live region is properly implemented with correct politeness level",
+        "Error message is not hidden from assistive technology",
+        "The implementation follows WAI-ARIA 1.1 best practices for alert messages"
+      ]
+    },
+    {
+      "id": "TC-ACCE-007",
+      "title": "Verify access-denied page has proper focus management when user is redirected from an event page",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is not authenticated",
+        "User attempts to access a protected event URL directly",
+        "Screen reader is active (optional but recommended)",
+        "Browser is Chrome, Firefox, or Edge"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate directly to /events/1 in the browser address bar while not authenticated",
+          "expectedResult": "User is redirected to the access-denied page"
+        },
+        {
+          "step": 2,
+          "action": "Immediately after the access-denied page loads, check where the keyboard focus is placed (press Tab once and observe which element receives focus)",
+          "expectedResult": "Focus is placed on the main heading ('Access Denied') or the first meaningful content element on the page — NOT on a random element in the header/footer or lost in the body. Alternatively, focus is on the page's <main> element with tabindex='-1'"
+        },
+        {
+          "step": 3,
+          "action": "Verify that the focus placement is visible (a focus ring or outline is shown on the focused element)",
+          "expectedResult": "A visible focus indicator is present on the element that received initial focus. The indicator meets the 3:1 contrast requirement"
+        },
+        {
+          "step": 4,
+          "action": "Press Tab to move to the next interactive element",
+          "expectedResult": "Focus moves to the first actionable element (e.g., 'Go to Login' link). The transition is smooth with no focus jumping to unexpected locations"
+        },
+        {
+          "step": 5,
+          "action": "Press Escape key on the access-denied page",
+          "expectedResult": "No unexpected behavior occurs. If a modal or dialog is present, it closes. If no modal, Escape has no adverse effect. Focus is not lost"
+        },
+        {
+          "step": 6,
+          "action": "Use browser DevTools to verify that the focused element on page load has an appropriate tabindex or is a naturally focusable element",
+          "expectedResult": "The initially focused element either has tabindex='-1' (for programmatic focus) or is a naturally focusable element like a heading with tabindex='-1'. No positive tabindex values (tabindex='1', '2', etc.) are used anywhere on the page"
+        }
+      ],
+      "postconditions": [
+        "Focus is managed correctly on redirect to access-denied page",
+        "No focus traps or lost focus states exist",
+        "Focus order is logical and predictable",
+        "No positive tabindex values disrupt the natural tab order"
+      ]
+    },
+    {
+      "id": "TC-ACCE-008",
+      "title": "Verify access-denied page is accessible on mobile devices with touch and gesture support",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "Mobile device (iOS or Android) with screen reader available (VoiceOver on iOS, TalkBack on Android)",
+        "User is not authenticated",
+        "Mobile browser (Safari on iOS, Chrome on Android) is open",
+        "Device is in portrait orientation"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "On the mobile device, navigate to /events/1 in the mobile browser while not authenticated",
+          "expectedResult": "User is redirected to the access-denied page. Page renders correctly in mobile viewport without horizontal scrolling"
+        },
+        {
+          "step": 2,
+          "action": "Verify that all touch targets (links, buttons) have a minimum size of 44x44 CSS pixels",
+          "expectedResult": "All interactive elements ('Go to Login' link/button, any other links) have touch targets of at least 44x44 pixels. Elements are not too close together (at least 8px spacing)"
+        },
+        {
+          "step": 3,
+          "action": "Enable VoiceOver (iOS) or TalkBack (Android) and swipe right to navigate through page elements",
+          "expectedResult": "Screen reader navigates through all elements in logical order: heading, error message, navigation links. Each element is announced with its role and label"
+        },
+        {
+          "step": 4,
+          "action": "Double-tap on the 'Go to Login' link when it is focused by the screen reader",
+          "expectedResult": "The link is activated and user is navigated to the login page. The action works identically to a single tap for sighted users"
+        },
+        {
+          "step": 5,
+          "action": "Rotate the device to landscape orientation",
+          "expectedResult": "Page content reflows appropriately. No content is lost or hidden. All interactive elements remain accessible and properly sized"
+        },
+        {
+          "step": 6,
+          "action": "Pinch to zoom on the access-denied page",
+          "expectedResult": "Zoom is not disabled (no maximum-scale=1 or user-scalable=no in viewport meta tag). Content scales properly when zoomed"
+        }
+      ],
+      "postconditions": [
+        "Access-denied page is fully functional on mobile devices",
+        "All touch targets meet minimum size requirements",
+        "Screen reader navigation works correctly on mobile",
+        "Zoom is not restricted and content scales properly"
+      ]
+    }
+  ],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": true,
+    "negative": true,
+    "accessibility": true,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-36113",
+    "title": "As System Administrator, I want to perform access denial enforcement for unauthorized event requests to achieve security compliance",
+    "description": "CONTEXT & BACKGROUND:\nThe system must block and gracefully handle any unauthorized attempt to access event or follow-up endpoints.\n\nCURRENT STATE:\nManual or incomplete process today.\n\nDESIRED STATE:\nSystem supports the capability end-to-end.\n\nKEY FUNCTIONALITY:\n• Implement core logic and validation\n• Expose API and UI\n• Handle errors and edge cases\n• Ensure data persistence and retrieval\n\nUSER INTERACTION FLOW:\n1. User accesses the feature\n2. User performs the required action\n3. System processes the request\n4. System displays results or confirmation\n5. User verifies the outcome\n\nTECHNICAL CONSIDERATIONS:\n• Data source: application database\n• Security: authentication and input validation\n• Performance: meet SLA requirements\n\nOUT OF SCOPE:\n• Advanced customization (future story)\n\nSUCCESS METRICS:\n• Feature works per acceptance criteria\n• No critical defects in production\n\n**Persona:** System Administrator\n\n**Acceptance Criteria:**\n1. Unauthorized API requests return HTTP 403 with a generic error message\n2. UI redirects unauthorized users to an access-denied page without exposing event data\n3. Repeated unauthorized attempts trigger a security alert notification\n4. System handles the operation correctly and returns expected results for scenario 4\n5. System handles the operation correctly and returns expected results for scenario 5\n",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "36113",
+    "externalId": "JIRA-1721",
+    "state": "New",
+    "assignedTo": "devxnous2k25@gmail.com",
+    "createdDate": "2026-04-23T13:06:57.709Z",
+    "priority": "medium",
+    "storyPoints": 3,
+    "tags": "",
+    "epicId": "epic-JIRA-5",
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net//browse/JIRA-1721"
+  }
+}
