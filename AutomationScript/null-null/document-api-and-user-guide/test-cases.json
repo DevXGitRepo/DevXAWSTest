@@ -1,0 +1,716 @@
+{
+  "storyId": "ado-33468",
+  "storyTitle": "Document API and user guide",
+  "testCases": [],
+  "functional": [
+    {
+      "id": "TC-FUNC-001",
+      "title": "Verify API documentation page is accessible and loads correctly",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged into the application with a valid account",
+        "API documentation has been published and deployed to the documentation portal",
+        "User has at least 'Viewer' or 'Developer' role permissions",
+        "Browser is a modern supported browser (Chrome, Firefox, Edge, Safari latest)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the main application dashboard or home page",
+          "expectedResult": "Dashboard loads successfully with navigation menu visible"
+        },
+        {
+          "step": 2,
+          "action": "Locate and click the 'Documentation' or 'API Docs' link in the main navigation menu or footer",
+          "expectedResult": "The API documentation landing page loads within 3 seconds, displaying the documentation title, version number, and table of contents"
+        },
+        {
+          "step": 3,
+          "action": "Verify the page structure includes sections for Introduction, Authentication, Endpoints, Error Codes, and Rate Limits",
+          "expectedResult": "All major sections are listed in the table of contents / sidebar navigation and each section heading is visible"
+        },
+        {
+          "step": 4,
+          "action": "Scroll through the entire documentation page from top to bottom",
+          "expectedResult": "All content renders correctly with no broken images, missing text, or layout issues. Code examples are displayed in formatted code blocks"
+        },
+        {
+          "step": 5,
+          "action": "Check the documentation version number displayed in the header or footer area",
+          "expectedResult": "Version number matches the latest published release version (e.g., 'v1.0.0' or the current sprint version)"
+        }
+      ],
+      "postconditions": [
+        "API documentation page remains loaded and accessible for further browsing",
+        "No console errors related to documentation rendering are present in browser developer tools",
+        "User session remains active and authenticated"
+      ]
+    },
+    {
+      "id": "TC-FUNC-002",
+      "title": "Verify all API endpoints are documented with correct HTTP methods, paths, and descriptions",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "API documentation page is loaded and accessible",
+        "User is authenticated with Developer or Admin role",
+        "A reference list of all implemented API endpoints is available for cross-checking",
+        "The API service is running and endpoints are deployed"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the 'Endpoints' or 'API Reference' section of the documentation",
+          "expectedResult": "A categorized list of all API endpoints is displayed, grouped by resource or domain (e.g., Users, Orders, Products)"
+        },
+        {
+          "step": 2,
+          "action": "For each endpoint listed, verify the HTTP method (GET, POST, PUT, PATCH, DELETE) is clearly indicated with a color-coded badge or label",
+          "expectedResult": "Each endpoint displays the correct HTTP method badge (e.g., green for GET, blue for POST, orange for PUT, red for DELETE) matching the reference list"
+        },
+        {
+          "step": 3,
+          "action": "Click on the first GET endpoint (e.g., 'GET /api/v1/users') to expand its details",
+          "expectedResult": "Endpoint detail section expands showing: full URL path, description of what the endpoint does, request parameters (query/path), request headers, and example response with status codes"
+        },
+        {
+          "step": 4,
+          "action": "Click on a POST endpoint (e.g., 'POST /api/v1/users') to expand its details",
+          "expectedResult": "Endpoint detail section shows: request body schema with field names, data types, required/optional indicators, example request payload in JSON format, and example success/error responses"
+        },
+        {
+          "step": 5,
+          "action": "Cross-reference the documented endpoints against the reference list of implemented endpoints",
+          "expectedResult": "Every implemented endpoint appears in the documentation with no missing or extra undocumented endpoints"
+        },
+        {
+          "step": 6,
+          "action": "Verify at least one endpoint from each HTTP method type (GET, POST, PUT, DELETE) has a complete example request and response",
+          "expectedResult": "Each method type has at least one fully documented example with realistic sample data in both request and response bodies"
+        }
+      ],
+      "postconditions": [
+        "All API endpoints are confirmed documented and match the implemented API surface",
+        "No discrepancies found between documentation and actual API implementation",
+        "Documentation page remains stable with no rendering issues after expanding/collapsing multiple endpoints"
+      ]
+    },
+    {
+      "id": "TC-FUNC-003",
+      "title": "Verify authentication section documents all supported auth methods with examples",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "API documentation page is loaded and accessible",
+        "User is authenticated and on the documentation portal",
+        "The API supports at least one authentication method (e.g., API Key, OAuth 2.0, Bearer Token)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the 'Authentication' section in the documentation sidebar or table of contents",
+          "expectedResult": "Authentication section loads displaying an overview of supported authentication methods"
+        },
+        {
+          "step": 2,
+          "action": "Verify the section lists all supported authentication mechanisms (e.g., API Key, Bearer Token, OAuth 2.0)",
+          "expectedResult": "Each authentication method is listed with a clear heading, description of when to use it, and security considerations"
+        },
+        {
+          "step": 3,
+          "action": "Review the API Key authentication subsection for instructions on how to obtain and use an API key",
+          "expectedResult": "Documentation includes: step-by-step instructions to generate an API key, where to include the key in requests (header name e.g., 'X-API-Key' or 'Authorization'), and a curl/HTTP example showing the header in use"
+        },
+        {
+          "step": 4,
+          "action": "Review the Bearer Token / OAuth 2.0 subsection for token acquisition flow",
+          "expectedResult": "Documentation includes: token endpoint URL, required parameters (client_id, client_secret, grant_type), example token request, example token response with access_token and expiry, and how to include the token in subsequent API calls"
+        },
+        {
+          "step": 5,
+          "action": "Copy the example curl command from the authentication section and verify it is syntactically correct",
+          "expectedResult": "The curl command is properly formatted, uses correct syntax, includes placeholder values clearly marked (e.g., '<YOUR_API_KEY>'), and can be pasted into a terminal without syntax errors after replacing placeholders"
+        }
+      ],
+      "postconditions": [
+        "Authentication documentation is confirmed complete with all supported methods",
+        "Example code snippets are syntactically valid and copy-pasteable",
+        "User understands the full authentication flow from reading the documentation alone"
+      ]
+    },
+    {
+      "id": "TC-FUNC-004",
+      "title": "Verify user guide section provides step-by-step getting started instructions",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Documentation portal is accessible and loaded",
+        "User guide section has been published alongside the API documentation",
+        "User is a new developer with no prior knowledge of the system"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the 'User Guide' or 'Getting Started' section from the documentation home page or sidebar navigation",
+          "expectedResult": "User guide landing page loads with a clear 'Getting Started' heading and an overview of what the guide covers"
+        },
+        {
+          "step": 2,
+          "action": "Verify the guide includes a 'Prerequisites' or 'Before You Begin' section",
+          "expectedResult": "Prerequisites section lists required tools, accounts, permissions, SDK versions, and any environment setup needed before using the API"
+        },
+        {
+          "step": 3,
+          "action": "Follow the 'Quick Start' or 'First API Call' tutorial step by step",
+          "expectedResult": "The tutorial provides numbered steps including: 1) How to sign up/get credentials, 2) How to authenticate, 3) How to make a first API call, 4) How to interpret the response. Each step has clear instructions and expected outcomes"
+        },
+        {
+          "step": 4,
+          "action": "Verify that code examples in the user guide are provided in at least two programming languages (e.g., curl, Python, JavaScript)",
+          "expectedResult": "Code examples are available in multiple languages with a language selector/tabs, and each example is complete and runnable"
+        },
+        {
+          "step": 5,
+          "action": "Check that the user guide includes a 'Common Use Cases' or 'Tutorials' section beyond the quick start",
+          "expectedResult": "At least 2-3 common use case tutorials are documented (e.g., 'Creating a resource', 'Searching and filtering', 'Handling pagination') with full code examples and explanations"
+        },
+        {
+          "step": 6,
+          "action": "Verify the user guide includes a 'Troubleshooting' or 'FAQ' section",
+          "expectedResult": "Troubleshooting section lists at least 5 common issues with solutions (e.g., '401 Unauthorized - Check your API key', '429 Too Many Requests - Implement rate limiting backoff')"
+        }
+      ],
+      "postconditions": [
+        "User guide is confirmed to provide a complete onboarding experience from zero to first successful API call",
+        "All code examples in the user guide are syntactically correct and include comments",
+        "Troubleshooting section covers the most common developer pain points"
+      ]
+    },
+    {
+      "id": "TC-FUNC-005",
+      "title": "Verify API documentation includes complete request and response schema definitions",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "API documentation is loaded on the documentation portal",
+        "At least one resource endpoint (e.g., /api/v1/users) is documented",
+        "OpenAPI/Swagger specification or equivalent schema reference is available for validation"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to a POST endpoint documentation (e.g., 'POST /api/v1/users - Create User')",
+          "expectedResult": "Endpoint detail page loads showing request body schema section"
+        },
+        {
+          "step": 2,
+          "action": "Review the request body schema and verify it includes: field name, data type, required/optional flag, description, constraints (min/max length, regex pattern, enum values)",
+          "expectedResult": "Each field in the request body is documented with all attributes. For example: 'email' - type: string, required: true, format: email, description: 'User email address', maxLength: 255"
+        },
+        {
+          "step": 3,
+          "action": "Review the response schema for a successful response (HTTP 200/201)",
+          "expectedResult": "Success response schema shows the complete response object structure with field names, data types, descriptions, and an example JSON response body"
+        },
+        {
+          "step": 4,
+          "action": "Review the error response schemas (HTTP 400, 401, 403, 404, 500)",
+          "expectedResult": "Each error status code has a documented response schema showing the error object structure (e.g., {\"error\": {\"code\": \"VALIDATION_ERROR\", \"message\": \"Email is required\", \"details\": [...]}})"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to the 'Models' or 'Schemas' section of the documentation if available",
+          "expectedResult": "A dedicated section lists all data models/schemas used across the API with their complete field definitions, relationships, and example objects"
+        },
+        {
+          "step": 6,
+          "action": "Cross-reference one documented schema against an actual API response by making a test API call",
+          "expectedResult": "The actual API response structure matches the documented schema exactly - same field names, same data types, same nesting structure"
+        }
+      ],
+      "postconditions": [
+        "All request and response schemas are confirmed complete and accurate",
+        "Schema documentation matches the actual API behavior",
+        "No undocumented fields exist in actual API responses"
+      ]
+    },
+    {
+      "id": "TC-FUNC-006",
+      "title": "Verify documentation search functionality returns relevant results",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Documentation portal is loaded and accessible",
+        "Search functionality is implemented on the documentation site",
+        "Documentation content has been indexed for search"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate the search bar on the documentation page (typically in the header or sidebar)",
+          "expectedResult": "Search input field is visible with a placeholder text like 'Search documentation...' or a magnifying glass icon"
+        },
+        {
+          "step": 2,
+          "action": "Type 'authentication' into the search bar and press Enter or wait for auto-complete results",
+          "expectedResult": "Search results appear showing relevant documentation sections related to authentication, including the Authentication section, any endpoints requiring auth, and related user guide sections"
+        },
+        {
+          "step": 3,
+          "action": "Click on the first search result",
+          "expectedResult": "User is navigated directly to the relevant section of the documentation with the search term highlighted or the section scrolled into view"
+        },
+        {
+          "step": 4,
+          "action": "Return to the search bar and type a specific endpoint path (e.g., '/api/v1/users')",
+          "expectedResult": "Search results show the specific endpoint documentation page and any user guide sections that reference this endpoint"
+        },
+        {
+          "step": 5,
+          "action": "Search for a term that does not exist in the documentation (e.g., 'xyznonexistent123')",
+          "expectedResult": "A 'No results found' message is displayed with a suggestion to browse the table of contents or refine the search query"
+        },
+        {
+          "step": 6,
+          "action": "Clear the search bar and verify the documentation returns to its normal state",
+          "expectedResult": "Search results are cleared and the documentation page displays its default content/navigation"
+        }
+      ],
+      "postconditions": [
+        "Search functionality is confirmed working with relevant result ranking",
+        "Search handles both found and not-found scenarios gracefully",
+        "Navigation from search results correctly links to the appropriate documentation sections"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Verify documentation navigation sidebar and table of contents work correctly",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Documentation portal is loaded in a desktop browser",
+        "All documentation sections have been published",
+        "Sidebar navigation is visible on the left side of the page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Observe the sidebar navigation on the documentation page",
+          "expectedResult": "Sidebar displays a hierarchical table of contents with expandable/collapsible sections including: Introduction, Authentication, API Reference (with sub-items for each resource), User Guide, Error Codes, Rate Limits, Changelog"
+        },
+        {
+          "step": 2,
+          "action": "Click on 'API Reference' in the sidebar to expand its sub-sections",
+          "expectedResult": "Sub-sections expand showing individual resource categories (e.g., Users, Orders, Products) with further expandable endpoint listings"
+        },
+        {
+          "step": 3,
+          "action": "Click on a specific endpoint link in the sidebar (e.g., 'GET /users')",
+          "expectedResult": "The main content area scrolls to or loads the selected endpoint documentation. The sidebar item is highlighted/active to indicate current location"
+        },
+        {
+          "step": 4,
+          "action": "Scroll down the main content area past several sections",
+          "expectedResult": "The sidebar navigation highlights the current section as the user scrolls, providing a visual indicator of the reader's position in the documentation"
+        },
+        {
+          "step": 5,
+          "action": "Click the 'Back to top' link or the documentation logo/title to return to the top of the page",
+          "expectedResult": "Page scrolls smoothly back to the top and the sidebar resets to show the top-level navigation items"
+        },
+        {
+          "step": 6,
+          "action": "Click on 'Changelog' or 'Version History' in the sidebar",
+          "expectedResult": "Changelog section loads showing a chronological list of API changes with dates, version numbers, and descriptions of what was added, changed, deprecated, or removed"
+        }
+      ],
+      "postconditions": [
+        "All sidebar navigation links correctly route to their respective documentation sections",
+        "Active section highlighting in sidebar accurately reflects the user's current position",
+        "No broken links or dead-end navigation paths exist in the sidebar"
+      ]
+    },
+    {
+      "id": "TC-FUNC-008",
+      "title": "Verify error codes and status codes are comprehensively documented",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "API documentation is loaded and accessible",
+        "Error codes section exists in the documentation",
+        "A reference list of all API error codes is available for cross-checking"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the 'Error Codes' or 'Status Codes' section in the documentation",
+          "expectedResult": "A dedicated section loads displaying a table or list of all HTTP status codes and custom error codes used by the API"
+        },
+        {
+          "step": 2,
+          "action": "Verify standard HTTP status codes are documented (200, 201, 204, 400, 401, 403, 404, 409, 422, 429, 500, 503)",
+          "expectedResult": "Each status code is listed with: numeric code, standard name (e.g., '400 Bad Request'), description of when the API returns this code, and an example response body"
+        },
+        {
+          "step": 3,
+          "action": "Verify custom/application-specific error codes are documented if applicable",
+          "expectedResult": "Custom error codes (e.g., 'INVALID_EMAIL_FORMAT', 'RESOURCE_LIMIT_EXCEEDED') are listed with: error code string, human-readable message, description, and suggested resolution"
+        },
+        {
+          "step": 4,
+          "action": "Check that the error response format/schema is documented",
+          "expectedResult": "A standard error response format is defined showing the JSON structure (e.g., {\"error\": {\"code\": \"string\", \"message\": \"string\", \"details\": []}}) with field descriptions"
+        },
+        {
+          "step": 5,
+          "action": "Verify rate limiting error (429) documentation includes rate limit details",
+          "expectedResult": "Rate limiting section documents: request limits per time window, rate limit headers (X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset), and recommended retry/backoff strategy"
+        }
+      ],
+      "postconditions": [
+        "All error codes returned by the API are documented with clear descriptions",
+        "Developers can understand and handle every possible error response from the documentation alone",
+        "Rate limiting behavior is clearly explained with actionable guidance"
+      ]
+    },
+    {
+      "id": "TC-FUNC-009",
+      "title": "Verify interactive 'Try It Out' or API playground functionality works correctly",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Documentation portal includes an interactive API testing feature (e.g., Swagger UI 'Try it out', Postman-style playground)",
+        "User is authenticated on the documentation portal",
+        "API backend service is running and accessible from the documentation portal",
+        "Test/sandbox environment credentials are available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to a GET endpoint documentation page (e.g., 'GET /api/v1/users')",
+          "expectedResult": "Endpoint documentation is displayed with a 'Try It Out' or 'Send Request' button visible"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Try It Out' button",
+          "expectedResult": "The endpoint section transforms into an interactive form with editable fields for path parameters, query parameters, and headers. An 'Execute' or 'Send' button appears"
+        },
+        {
+          "step": 3,
+          "action": "Enter valid authentication credentials in the Authorization header field (e.g., 'Bearer <test_token>') and click 'Execute'",
+          "expectedResult": "The API call is made and the response is displayed below showing: HTTP status code (e.g., 200), response headers, response body in formatted JSON, and the actual curl command that was executed"
+        },
+        {
+          "step": 4,
+          "action": "Navigate to a POST endpoint and click 'Try It Out'",
+          "expectedResult": "An editable request body text area appears pre-populated with the example request JSON from the documentation"
+        },
+        {
+          "step": 5,
+          "action": "Modify the pre-populated request body with valid test data and click 'Execute'",
+          "expectedResult": "The POST request is sent, and the response shows HTTP 201 Created with the created resource in the response body"
+        },
+        {
+          "step": 6,
+          "action": "Remove the Authorization header and click 'Execute' on any endpoint",
+          "expectedResult": "The response shows HTTP 401 Unauthorized with the documented error response format, demonstrating the authentication requirement"
+        }
+      ],
+      "postconditions": [
+        "Interactive API testing feature is confirmed functional for both GET and POST methods",
+        "Responses from the playground match the documented response schemas",
+        "Any test data created during playground testing is in the sandbox/test environment only"
+      ]
+    },
+    {
+      "id": "TC-FUNC-010",
+      "title": "Verify documentation versioning and version switching functionality",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Multiple versions of the API documentation exist (e.g., v1.0, v1.1, v2.0)",
+        "Documentation portal supports version switching",
+        "User is on the documentation portal viewing the latest version"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate the version selector dropdown or toggle on the documentation page (typically in the header near the title)",
+          "expectedResult": "A version selector is visible displaying the current version (e.g., 'v2.0 (latest)') with a dropdown arrow or similar indicator"
+        },
+        {
+          "step": 2,
+          "action": "Click the version selector to open the dropdown",
+          "expectedResult": "A dropdown list appears showing all available documentation versions (e.g., 'v2.0 (latest)', 'v1.1', 'v1.0') with the current version highlighted"
+        },
+        {
+          "step": 3,
+          "action": "Select an older version (e.g., 'v1.0') from the dropdown",
+          "expectedResult": "The documentation page reloads or updates to show the v1.0 documentation. The version indicator updates to show 'v1.0'. A banner or notice may appear indicating this is not the latest version"
+        },
+        {
+          "step": 4,
+          "action": "Verify the content of the older version differs from the latest (e.g., fewer endpoints, different schemas)",
+          "expectedResult": "The older version documentation reflects the API state at that version - endpoints added in later versions are not present, and schemas match the v1.0 specification"
+        },
+        {
+          "step": 5,
+          "action": "Click the 'View latest version' link or switch back to the latest version using the version selector",
+          "expectedResult": "Documentation returns to the latest version with all current endpoints and schemas. Any 'outdated version' banner is removed"
+        }
+      ],
+      "postconditions": [
+        "Version switching is confirmed functional with accurate content per version",
+        "Users are clearly informed when viewing an older version of the documentation",
+        "Deep links to specific documentation sections maintain version context"
+      ]
+    },
+    {
+      "id": "TC-FUNC-011",
+      "title": "Verify code examples can be copied to clipboard successfully",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Documentation portal is loaded with code examples visible",
+        "Browser supports clipboard API",
+        "At least one endpoint with code examples in multiple languages is displayed"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to any endpoint documentation that contains a code example (e.g., a curl command example)",
+          "expectedResult": "Code example is displayed in a formatted code block with syntax highlighting and a 'Copy' button (clipboard icon) visible in the top-right corner of the code block"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Copy' button on the code example",
+          "expectedResult": "A visual confirmation appears (e.g., the button text changes to 'Copied!' or a green checkmark appears, or a toast notification says 'Copied to clipboard')"
+        },
+        {
+          "step": 3,
+          "action": "Open a text editor or terminal and paste (Ctrl+V / Cmd+V) the copied content",
+          "expectedResult": "The pasted content exactly matches the code example from the documentation, including proper formatting, indentation, and all characters"
+        },
+        {
+          "step": 4,
+          "action": "Switch the code example language tab to a different language (e.g., from 'curl' to 'Python')",
+          "expectedResult": "The code block updates to show the equivalent example in Python with proper syntax highlighting for Python"
+        },
+        {
+          "step": 5,
+          "action": "Click the 'Copy' button on the Python code example and paste it into a text editor",
+          "expectedResult": "The Python code is correctly copied with proper indentation and can be saved as a .py file and executed (after replacing placeholder values)"
+        }
+      ],
+      "postconditions": [
+        "Copy functionality works for all code example languages",
+        "Copied code maintains proper formatting and is immediately usable",
+        "Copy button visual feedback resets after a few seconds for subsequent copies"
+      ]
+    },
+    {
+      "id": "TC-FUNC-012",
+      "title": "Verify documentation is accessible to different user roles with appropriate content visibility",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "Documentation portal supports role-based access if applicable",
+        "Test accounts exist for different roles: Public/Anonymous user, Authenticated Developer, Admin user",
+        "Some documentation sections may be restricted (e.g., Admin API endpoints)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Access the documentation portal as an unauthenticated/public user (not logged in)",
+          "expectedResult": "Public documentation sections are visible (e.g., Introduction, Getting Started, Public API endpoints). If all docs are public, the full documentation loads. If some are restricted, a login prompt or 'restricted' indicator appears for protected sections"
+        },
+        {
+          "step": 2,
+          "action": "Log in as a user with 'Developer' role and navigate to the documentation portal",
+          "expectedResult": "All standard API documentation sections are accessible including endpoints, authentication guide, user guide, and code examples"
+        },
+        {
+          "step": 3,
+          "action": "Log in as a user with 'Admin' role and navigate to the documentation portal",
+          "expectedResult": "All documentation sections are accessible including any admin-only API endpoints or configuration guides that may be hidden from regular developers"
+        },
+        {
+          "step": 4,
+          "action": "As an Admin user, navigate to an admin-only section (e.g., 'Admin API - User Management')",
+          "expectedResult": "Admin API documentation loads with endpoints for user management, system configuration, and other administrative operations"
+        },
+        {
+          "step": 5,
+          "action": "Log out and attempt to directly access the admin documentation URL",
+          "expectedResult": "User is redirected to a login page or receives a 403 Forbidden message indicating they do not have permission to view this section"
+        }
+      ],
+      "postconditions": [
+        "Role-based documentation access is confirmed working correctly",
+        "No sensitive admin documentation is exposed to unauthorized users",
+        "Public documentation remains accessible without authentication"
+      ]
+    },
+    {
+      "id": "TC-FUNC-013",
+      "title": "Verify documentation renders correctly on mobile devices and tablets",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "Documentation portal is loaded and accessible",
+        "Mobile device or browser developer tools with device emulation are available",
+        "Documentation site is expected to be responsive"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open the documentation portal on a mobile device (or use Chrome DevTools to emulate iPhone 14 at 390x844 resolution)",
+          "expectedResult": "Documentation page loads with a responsive layout - sidebar navigation collapses into a hamburger menu, content fills the screen width, and text is readable without horizontal scrolling"
+        },
+        {
+          "step": 2,
+          "action": "Tap the hamburger menu icon to open the navigation sidebar",
+          "expectedResult": "Sidebar slides in from the left as an overlay, displaying the full table of contents with all sections accessible via touch"
+        },
+        {
+          "step": 3,
+          "action": "Tap on an endpoint section in the mobile navigation",
+          "expectedResult": "Navigation closes and the main content scrolls to the selected endpoint section. Content is properly formatted for mobile width"
+        },
+        {
+          "step": 4,
+          "action": "View a code example block on the mobile layout",
+          "expectedResult": "Code block is horizontally scrollable within its container (not causing the entire page to scroll horizontally). Copy button is accessible via touch"
+        },
+        {
+          "step": 5,
+          "action": "Switch to tablet emulation (e.g., iPad at 768x1024) and verify the layout",
+          "expectedResult": "Documentation displays in a tablet-optimized layout - sidebar may be visible alongside content, or accessible via toggle. All content is readable and interactive elements are touch-friendly"
+        }
+      ],
+      "postconditions": [
+        "Documentation is confirmed responsive and usable across mobile, tablet, and desktop viewports",
+        "No content is cut off or inaccessible on smaller screens",
+        "All interactive features (navigation, copy, search, try-it-out) work on touch devices"
+      ]
+    },
+    {
+      "id": "TC-FUNC-014",
+      "title": "Verify documentation includes pagination, filtering, and sorting parameter documentation",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "API documentation is loaded and accessible",
+        "API supports list endpoints with pagination, filtering, and sorting capabilities",
+        "At least one list endpoint (e.g., 'GET /api/v1/users') is documented"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to a list endpoint documentation (e.g., 'GET /api/v1/users')",
+          "expectedResult": "Endpoint documentation shows query parameters section with pagination, filtering, and sorting parameters listed"
+        },
+        {
+          "step": 2,
+          "action": "Review the pagination parameters documentation",
+          "expectedResult": "Pagination parameters are documented including: 'page' or 'offset' (type: integer, default value, description), 'limit' or 'per_page' (type: integer, default value, max value, description). Example: 'GET /api/v1/users?page=2&limit=25'"
+        },
+        {
+          "step": 3,
+          "action": "Review the filtering parameters documentation",
+          "expectedResult": "Filter parameters are documented with supported filter fields (e.g., 'status=active', 'created_after=2024-01-01'), supported operators, and example filter queries"
+        },
+        {
+          "step": 4,
+          "action": "Review the sorting parameters documentation",
+          "expectedResult": "Sort parameters are documented showing: sort field parameter name (e.g., 'sort_by'), supported sort fields (e.g., 'created_at', 'name'), sort direction (e.g., 'order=asc|desc'), and example: 'GET /api/v1/users?sort_by=created_at&order=desc'"
+        },
+        {
+          "step": 5,
+          "action": "Review the paginated response format documentation",
+          "expectedResult": "Response format shows pagination metadata in the response body or headers (e.g., 'total_count', 'page', 'per_page', 'total_pages', or Link headers for cursor-based pagination) with a complete example response"
+        }
+      ],
+      "postconditions": [
+        "Pagination, filtering, and sorting are fully documented for all list endpoints",
+        "Default values and maximum limits are clearly stated",
+        "Example queries demonstrate real-world usage patterns"
+      ]
+    },
+    {
+      "id": "TC-FUNC-015",
+      "title": "Verify documentation deep links and URL anchors work for sharing specific sections",
+      "category": "Functional",
+      "priority": "Low",
+      "preconditions": [
+        "Documentation portal is loaded and accessible",
+        "Documentation sections have anchor links / fragment identifiers in the URL",
+        "A second browser tab or incognito window is available for testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to a specific section in the documentation (e.g., the 'Authentication' section) and observe the URL in the browser address bar",
+          "expectedResult": "The URL updates to include a fragment identifier or path segment for the current section (e.g., '/docs#authentication' or '/docs/authentication')"
+        },
+        {
+          "step": 2,
+          "action": "Hover over a section heading (e.g., 'Bearer Token Authentication') and look for a link/anchor icon",
+          "expectedResult": "A link icon (chain link or '#' symbol) appears next to the heading, indicating a deep link is available for this specific subsection"
+        },
+        {
+          "step": 3,
+          "action": "Click the anchor icon to copy the deep link URL, or right-click and select 'Copy link address'",
+          "expectedResult": "The URL is copied to clipboard with the specific section anchor (e.g., '/docs/authentication#bearer-token')"
+        },
+        {
+          "step": 4,
+          "action": "Open a new browser tab or incognito window and paste the copied deep link URL into the address bar, then press Enter",
+          "expectedResult": "The documentation page loads and automatically scrolls to the exact section referenced by the anchor link. The 'Bearer Token Authentication' heading is visible at or near the top of the viewport"
+        },
+        {
+          "step": 5,
+          "action": "Share the deep link URL via a messaging tool and open it from the message",
+          "expectedResult": "The link opens the documentation at the exact referenced section, confirming deep links are shareable and persistent"
+        }
+      ],
+      "postconditions": [
+        "Deep links correctly navigate to specific documentation sections",
+        "URLs are human-readable and descriptive",
+        "Deep links remain stable across page refreshes and browser sessions"
+      ]
+    }
+  ],
+  "negative": [],
+  "edgeCases": [],
+  "accessibility": [],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": false,
+    "negative": false,
+    "accessibility": false,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-33468",
+    "title": "Document API and user guide",
+    "description": "",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "33468",
+    "externalId": "MYPRO-4681",
+    "state": "New",
+    "assignedTo": "bhanushraygupta@nousinfo.com",
+    "createdDate": "2026-04-23T12:20:36.947Z",
+    "priority": "medium",
+    "storyPoints": null,
+    "tags": "",
+    "epicId": "epic-MYPRO-4676",
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net/browse/MYPRO-4681"
+  }
+}
