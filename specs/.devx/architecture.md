@@ -5,8 +5,8 @@
 ## Feature Map
 
 ### As a data engineer, I want to support schema evolution so that data structures can adapt over time without data loss
-- 1 user stories
-- Stories: As a data engineer, I want to support schema evolution so that data structures can adapt over time without data loss
+- 0 user stories
+- Stories: 
 
 ### As Retail Store Associate, I want to perform responsive tile interaction on mobile devices to achieve seamless access on any screen size
 - 1 user stories
@@ -15,6 +15,10 @@
 ### As Retail Store Manager, I want to perform transcription text review to achieve quality verification before AI summary generation
 - 1 user stories
 - Stories: As Retail Store Manager, I want to perform transcription text review to achieve quality verification before AI summary generation
+
+### As Retail Store Manager, I want to perform home screen loading upon login to achieve immediate visibility of all key section tiles
+- 1 user stories
+- Stories: As Retail Store Manager, I want to perform home screen loading upon login to achieve immediate visibility of all key section tiles
 
 ### As QA Engineer, I want to perform Android device compatibility testing to achieve verified functionality across target Android versions
 - 0 user stories
