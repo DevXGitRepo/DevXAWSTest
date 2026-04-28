@@ -1,16 +1,68 @@
-# Architecture — Project
+# Architecture — Test230426
 
 > Auto-generated architecture overview. Update this file as the system evolves.
 
 ## Feature Map
 
-### Advanced Policy Filtering
-- 3 user stories
-- Stories: As Insurance Agent, I want to apply multiple filters simultaneously to achieve refined search results, As Underwriter, I want to filter policies by effective date range to achieve precise temporal search, As Insurance Agent, I want to filter policies by status to achieve targeted results
+### As a data engineer, I want to support schema evolution so that data structures can adapt over time without data loss
+- 1 user stories
+- Stories: As a data engineer, I want to support schema evolution so that data structures can adapt over time without data loss
 
-### Basic Policy Search
-- 6 user stories
-- Stories: As a DevOps Engineer, I want to maintain 99.9% system uptime so that users experience reliable service availability, As a User, I want to authenticate with login/signup and OTP verification so that my account access is secure, As a System Architect, I want to implement a cloud-based scalable architecture so that the system can dynamically adjust resources to meet demand, As Insurance Agent, I want to view search results with key policy details to achieve informed selection, As Customer Service Rep, I want to perform keyword search on policyholder names to achieve easy policy lookup, As Insurance Agent, I want to perform policy number search to achieve quick access to specific policies
+### As Retail Store Associate, I want to perform responsive tile interaction on mobile devices to achieve seamless access on any screen size
+- 1 user stories
+- Stories: As Retail Store Associate, I want to perform responsive tile interaction on mobile devices to achieve seamless access on any screen size
+
+### As Retail Store Manager, I want to perform transcription text review to achieve quality verification before AI summary generation
+- 1 user stories
+- Stories: As Retail Store Manager, I want to perform transcription text review to achieve quality verification before AI summary generation
+
+### As QA Engineer, I want to perform Android device compatibility testing to achieve verified functionality across target Android versions
+- 0 user stories
+- Stories: 
+
+### As Backend Developer, I want to perform retry logic for failed Whisper API calls to achieve resilient transcription processing
+- 1 user stories
+- Stories: As Backend Developer, I want to perform retry logic for failed Whisper API calls to achieve resilient transcription processing
+
+### trial task 1
+- 1 user stories
+- Stories: trial task 1
+
+### As Retail Store Manager, I want to perform loading state display during data fetch to achieve clear feedback while home screen data loads
+- 0 user stories
+- Stories: 
+
+### trial task 3
+- 0 user stories
+- Stories: 
+
+### As Retail Store Manager, I want to perform loading state display during data fetch to achieve clear feedback while home screen data loads
+- 1 user stories
+- Stories: As Retail Store Manager, I want to perform loading state display during data fetch to achieve clear feedback while home screen data loads
+
+### As Platform Engineer, I want to perform health checks on registered internal services to achieve proactive detection of unavailable backends
+- 1 user stories
+- Stories: As Platform Engineer, I want to perform health checks on registered internal services to achieve proactive detection of unavailable backends
+
+### task 4.1
+- 0 user stories
+- Stories: 
+
+### As Backend Developer, I want to perform audio file transmission to Whisper API to achieve text transcription of recorded audio
+- 0 user stories
+- Stories: 
+
+### As System Administrator, I want to perform structured error logging for transcription failures to achieve fast root cause analysis
+- 0 user stories
+- Stories: 
+
+### As Backend Developer, I want to perform asynchronous transcription job processing to achieve non-blocking audio processing
+- 0 user stories
+- Stories: 
+
+### As Retail Store Manager, I want to perform tile visual customization to achieve quick recognition of each section
+- 0 user stories
+- Stories: 
 
 ## Guidelines
 
