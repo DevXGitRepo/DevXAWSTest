@@ -1,94 +1,282 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-04-22T08:40:01.299Z",
+  "generatedAt": "2026-04-28T10:07:48.373Z",
   "enableTdd": false,
-  "totalFeatures": 2,
+  "totalFeatures": 15,
   "features": [
     {
-      "id": 60686,
-      "title": "Advanced Policy Filtering",
-      "slug": "advanced-policy-filtering",
+      "id": -50926,
+      "title": "As a data engineer, I want to support schema evolution so that data structures can adapt over time without data loss",
+      "slug": "as-a-data-engineer-i-want-to-support-schema-evolution-so-that-data-structures-can-adapt-over-time-without-data-loss",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 3,
-      "totalStoryPoints": 10,
+      "storyCount": 1,
+      "totalStoryPoints": 9,
       "files": {
-        "specs": "specs/advanced-policy-filtering/specs.md",
-        "requirements": "specs/advanced-policy-filtering/requirements.md",
-        "prompt": "specs/advanced-policy-filtering/prompt.md"
+        "specs": "specs/as-a-data-engineer-i-want-to-support-schema-evolution-so-that-data-structures-can-adapt-over-time-without-data-loss/specs.md",
+        "requirements": "specs/as-a-data-engineer-i-want-to-support-schema-evolution-so-that-data-structures-can-adapt-over-time-without-data-loss/requirements.md",
+        "prompt": "specs/as-a-data-engineer-i-want-to-support-schema-evolution-so-that-data-structures-can-adapt-over-time-without-data-loss/prompt.md"
       },
       "userStories": [
         {
-          "id": 60805,
-          "title": "As Insurance Agent, I want to apply multiple filters simultaneously to achieve refined search results",
+          "id": 50926,
+          "title": "As a data engineer, I want to support schema evolution so that data structures can adapt over time without data loss",
           "state": "New",
-          "storyPoints": 4
-        },
-        {
-          "id": 60796,
-          "title": "As Underwriter, I want to filter policies by effective date range to achieve precise temporal search",
-          "state": "New",
-          "storyPoints": 3
-        },
-        {
-          "id": 60787,
-          "title": "As Insurance Agent, I want to filter policies by status to achieve targeted results",
-          "state": "New",
-          "storyPoints": 3
+          "storyPoints": 9
         }
       ]
     },
     {
-      "id": 60685,
-      "title": "Basic Policy Search",
-      "slug": "basic-policy-search",
+      "id": 48864,
+      "title": "As Retail Store Associate, I want to perform responsive tile interaction on mobile devices to achieve seamless access on any screen size",
+      "slug": "as-retail-store-associate-i-want-to-perform-responsive-tile-interaction-on-mobile-devices-to-achieve-seamless-access-on-any-screen-size",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 6,
-      "totalStoryPoints": 32,
+      "storyCount": 1,
+      "totalStoryPoints": 5,
       "files": {
-        "specs": "specs/basic-policy-search/specs.md",
-        "requirements": "specs/basic-policy-search/requirements.md",
-        "prompt": "specs/basic-policy-search/prompt.md"
+        "specs": "specs/as-retail-store-associate-i-want-to-perform-responsive-tile-interaction-on-mobile-devices-to-achieve-seamless-access-on-any-screen-size/specs.md",
+        "requirements": "specs/as-retail-store-associate-i-want-to-perform-responsive-tile-interaction-on-mobile-devices-to-achieve-seamless-access-on-any-screen-size/requirements.md",
+        "prompt": "specs/as-retail-store-associate-i-want-to-perform-responsive-tile-interaction-on-mobile-devices-to-achieve-seamless-access-on-any-screen-size/prompt.md"
       },
       "userStories": [
         {
-          "id": 63371,
-          "title": "As a DevOps Engineer, I want to maintain 99.9% system uptime so that users experience reliable service availability",
+          "id": 48864,
+          "title": "As Retail Store Associate, I want to perform responsive tile interaction on mobile devices to achieve seamless access on any screen size",
           "state": "New",
-          "storyPoints": 8
-        },
-        {
-          "id": 63362,
-          "title": "As a User, I want to authenticate with login/signup and OTP verification so that my account access is secure",
-          "state": "New",
-          "storyPoints": 8
-        },
-        {
-          "id": 63353,
-          "title": "As a System Architect, I want to implement a cloud-based scalable architecture so that the system can dynamically adjust resources to meet demand",
-          "state": "New",
-          "storyPoints": 8
-        },
-        {
-          "id": 60778,
-          "title": "As Insurance Agent, I want to view search results with key policy details to achieve informed selection",
-          "state": "New",
-          "storyPoints": 2
-        },
-        {
-          "id": 60769,
-          "title": "As Customer Service Rep, I want to perform keyword search on policyholder names to achieve easy policy lookup",
-          "state": "New",
-          "storyPoints": 3
-        },
-        {
-          "id": 60760,
-          "title": "As Insurance Agent, I want to perform policy number search to achieve quick access to specific policies",
-          "state": "New",
-          "storyPoints": 3
+          "storyPoints": 5
         }
       ]
+    },
+    {
+      "id": 48866,
+      "title": "As Retail Store Manager, I want to perform transcription text review to achieve quality verification before AI summary generation",
+      "slug": "as-retail-store-manager-i-want-to-perform-transcription-text-review-to-achieve-quality-verification-before-ai-summary-generation",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 5,
+      "files": {
+        "specs": "specs/as-retail-store-manager-i-want-to-perform-transcription-text-review-to-achieve-quality-verification-before-ai-summary-generation/specs.md",
+        "requirements": "specs/as-retail-store-manager-i-want-to-perform-transcription-text-review-to-achieve-quality-verification-before-ai-summary-generation/requirements.md",
+        "prompt": "specs/as-retail-store-manager-i-want-to-perform-transcription-text-review-to-achieve-quality-verification-before-ai-summary-generation/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 48866,
+          "title": "As Retail Store Manager, I want to perform transcription text review to achieve quality verification before AI summary generation",
+          "state": "New",
+          "storyPoints": 5
+        }
+      ]
+    },
+    {
+      "id": 35678,
+      "title": "As QA Engineer, I want to perform Android device compatibility testing to achieve verified functionality across target Android versions",
+      "slug": "as-qa-engineer-i-want-to-perform-android-device-compatibility-testing-to-achieve-verified-functionality-across-target-android-versions",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-qa-engineer-i-want-to-perform-android-device-compatibility-testing-to-achieve-verified-functionality-across-target-android-versions/specs.md",
+        "requirements": "specs/as-qa-engineer-i-want-to-perform-android-device-compatibility-testing-to-achieve-verified-functionality-across-target-android-versions/requirements.md",
+        "prompt": "specs/as-qa-engineer-i-want-to-perform-android-device-compatibility-testing-to-achieve-verified-functionality-across-target-android-versions/prompt.md"
+      },
+      "userStories": []
+    },
+    {
+      "id": 48836,
+      "title": "As Backend Developer, I want to perform retry logic for failed Whisper API calls to achieve resilient transcription processing",
+      "slug": "as-backend-developer-i-want-to-perform-retry-logic-for-failed-whisper-api-calls-to-achieve-resilient-transcription-processing",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 5,
+      "files": {
+        "specs": "specs/as-backend-developer-i-want-to-perform-retry-logic-for-failed-whisper-api-calls-to-achieve-resilient-transcription-processing/specs.md",
+        "requirements": "specs/as-backend-developer-i-want-to-perform-retry-logic-for-failed-whisper-api-calls-to-achieve-resilient-transcription-processing/requirements.md",
+        "prompt": "specs/as-backend-developer-i-want-to-perform-retry-logic-for-failed-whisper-api-calls-to-achieve-resilient-transcription-processing/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 48836,
+          "title": "As Backend Developer, I want to perform retry logic for failed Whisper API calls to achieve resilient transcription processing",
+          "state": "New",
+          "storyPoints": 5
+        }
+      ]
+    },
+    {
+      "id": -50999,
+      "title": "trial task 1",
+      "slug": "trial-task-1",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/trial-task-1/specs.md",
+        "requirements": "specs/trial-task-1/requirements.md",
+        "prompt": "specs/trial-task-1/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 50999,
+          "title": "trial task 1",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": -48892,
+      "title": "As Retail Store Manager, I want to perform loading state display during data fetch to achieve clear feedback while home screen data loads",
+      "slug": "as-retail-store-manager-i-want-to-perform-loading-state-display-during-data-fetch-to-achieve-clear-feedback-while-home-screen-data-loads",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-retail-store-manager-i-want-to-perform-loading-state-display-during-data-fetch-to-achieve-clear-feedback-while-home-screen-data-loads/specs.md",
+        "requirements": "specs/as-retail-store-manager-i-want-to-perform-loading-state-display-during-data-fetch-to-achieve-clear-feedback-while-home-screen-data-loads/requirements.md",
+        "prompt": "specs/as-retail-store-manager-i-want-to-perform-loading-state-display-during-data-fetch-to-achieve-clear-feedback-while-home-screen-data-loads/prompt.md"
+      },
+      "userStories": []
+    },
+    {
+      "id": -51054,
+      "title": "trial task 3",
+      "slug": "trial-task-3",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/trial-task-3/specs.md",
+        "requirements": "specs/trial-task-3/requirements.md",
+        "prompt": "specs/trial-task-3/prompt.md"
+      },
+      "userStories": []
+    },
+    {
+      "id": 48892,
+      "title": "As Retail Store Manager, I want to perform loading state display during data fetch to achieve clear feedback while home screen data loads",
+      "slug": "as-retail-store-manager-i-want-to-perform-loading-state-display-during-data-fetch-to-achieve-clear-feedback-while-home-screen-data-loads",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 2,
+      "files": {
+        "specs": "specs/as-retail-store-manager-i-want-to-perform-loading-state-display-during-data-fetch-to-achieve-clear-feedback-while-home-screen-data-loads/specs.md",
+        "requirements": "specs/as-retail-store-manager-i-want-to-perform-loading-state-display-during-data-fetch-to-achieve-clear-feedback-while-home-screen-data-loads/requirements.md",
+        "prompt": "specs/as-retail-store-manager-i-want-to-perform-loading-state-display-during-data-fetch-to-achieve-clear-feedback-while-home-screen-data-loads/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 48892,
+          "title": "As Retail Store Manager, I want to perform loading state display during data fetch to achieve clear feedback while home screen data loads",
+          "state": "New",
+          "storyPoints": 2
+        }
+      ]
+    },
+    {
+      "id": 35230,
+      "title": "As Platform Engineer, I want to perform health checks on registered internal services to achieve proactive detection of unavailable backends",
+      "slug": "as-platform-engineer-i-want-to-perform-health-checks-on-registered-internal-services-to-achieve-proactive-detection-of-unavailable-backends",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 5,
+      "files": {
+        "specs": "specs/as-platform-engineer-i-want-to-perform-health-checks-on-registered-internal-services-to-achieve-proactive-detection-of-unavailable-backends/specs.md",
+        "requirements": "specs/as-platform-engineer-i-want-to-perform-health-checks-on-registered-internal-services-to-achieve-proactive-detection-of-unavailable-backends/requirements.md",
+        "prompt": "specs/as-platform-engineer-i-want-to-perform-health-checks-on-registered-internal-services-to-achieve-proactive-detection-of-unavailable-backends/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 35230,
+          "title": "As Platform Engineer, I want to perform health checks on registered internal services to achieve proactive detection of unavailable backends",
+          "state": "New",
+          "storyPoints": 5
+        }
+      ]
+    },
+    {
+      "id": -51055,
+      "title": "task 4.1",
+      "slug": "task-4-1",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/task-4-1/specs.md",
+        "requirements": "specs/task-4-1/requirements.md",
+        "prompt": "specs/task-4-1/prompt.md"
+      },
+      "userStories": []
+    },
+    {
+      "id": 48823,
+      "title": "As Backend Developer, I want to perform audio file transmission to Whisper API to achieve text transcription of recorded audio",
+      "slug": "as-backend-developer-i-want-to-perform-audio-file-transmission-to-whisper-api-to-achieve-text-transcription-of-recorded-audio",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-backend-developer-i-want-to-perform-audio-file-transmission-to-whisper-api-to-achieve-text-transcription-of-recorded-audio/specs.md",
+        "requirements": "specs/as-backend-developer-i-want-to-perform-audio-file-transmission-to-whisper-api-to-achieve-text-transcription-of-recorded-audio/requirements.md",
+        "prompt": "specs/as-backend-developer-i-want-to-perform-audio-file-transmission-to-whisper-api-to-achieve-text-transcription-of-recorded-audio/prompt.md"
+      },
+      "userStories": []
+    },
+    {
+      "id": 48824,
+      "title": "As System Administrator, I want to perform structured error logging for transcription failures to achieve fast root cause analysis",
+      "slug": "as-system-administrator-i-want-to-perform-structured-error-logging-for-transcription-failures-to-achieve-fast-root-cause-analysis",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-system-administrator-i-want-to-perform-structured-error-logging-for-transcription-failures-to-achieve-fast-root-cause-analysis/specs.md",
+        "requirements": "specs/as-system-administrator-i-want-to-perform-structured-error-logging-for-transcription-failures-to-achieve-fast-root-cause-analysis/requirements.md",
+        "prompt": "specs/as-system-administrator-i-want-to-perform-structured-error-logging-for-transcription-failures-to-achieve-fast-root-cause-analysis/prompt.md"
+      },
+      "userStories": []
+    },
+    {
+      "id": 48851,
+      "title": "As Backend Developer, I want to perform asynchronous transcription job processing to achieve non-blocking audio processing",
+      "slug": "as-backend-developer-i-want-to-perform-asynchronous-transcription-job-processing-to-achieve-non-blocking-audio-processing",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-backend-developer-i-want-to-perform-asynchronous-transcription-job-processing-to-achieve-non-blocking-audio-processing/specs.md",
+        "requirements": "specs/as-backend-developer-i-want-to-perform-asynchronous-transcription-job-processing-to-achieve-non-blocking-audio-processing/requirements.md",
+        "prompt": "specs/as-backend-developer-i-want-to-perform-asynchronous-transcription-job-processing-to-achieve-non-blocking-audio-processing/prompt.md"
+      },
+      "userStories": []
+    },
+    {
+      "id": 48878,
+      "title": "As Retail Store Manager, I want to perform tile visual customization to achieve quick recognition of each section",
+      "slug": "as-retail-store-manager-i-want-to-perform-tile-visual-customization-to-achieve-quick-recognition-of-each-section",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-retail-store-manager-i-want-to-perform-tile-visual-customization-to-achieve-quick-recognition-of-each-section/specs.md",
+        "requirements": "specs/as-retail-store-manager-i-want-to-perform-tile-visual-customization-to-achieve-quick-recognition-of-each-section/requirements.md",
+        "prompt": "specs/as-retail-store-manager-i-want-to-perform-tile-visual-customization-to-achieve-quick-recognition-of-each-section/prompt.md"
+      },
+      "userStories": []
     }
   ]
 }
