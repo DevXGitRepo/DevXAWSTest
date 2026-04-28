@@ -1,7 +1,7 @@
 {
-  "name": "project-mcp-server",
+  "name": "test230426-mcp-server",
   "version": "1.0.0",
-  "description": "DevX MCP server for Project specs",
+  "description": "DevX MCP server for Test230426 specs",
   "type": "module",
   "main": "server.js",
   "scripts": {
