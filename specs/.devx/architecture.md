@@ -5,8 +5,8 @@
 ## Feature Map
 
 ### As Customer, I want to perform biometric fallback authentication to achieve login access when biometric recognition fails
-- 1 user stories
-- Stories: As Customer, I want to perform biometric fallback authentication to achieve login access when biometric recognition fails
+- 0 user stories
+- Stories: 
 
 ### Integration Security, Audit Logging, and Compliance
 - 0 user stories
@@ -21,8 +21,8 @@
 - Stories: As Sales Representative, I want to perform biometric login to achieve fast re-authentication without typing credentials
 
 ### As System Administrator, I want to perform biometric policy management to achieve control over biometric authentication availability per role
-- 1 user stories
-- Stories: As System Administrator, I want to perform biometric policy management to achieve control over biometric authentication availability per role
+- 0 user stories
+- Stories: 
 
 ### As Security Auditor, I want to perform authentication security dashboard review to achieve real-time visibility into authentication health and threats
 - 1 user stories
