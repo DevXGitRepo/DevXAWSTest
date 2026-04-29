@@ -1,6 +1,6 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-04-29T12:11:56.734Z",
+  "generatedAt": "2026-04-29T12:47:10.606Z",
   "enableTdd": false,
   "totalFeatures": 18,
   "features": [
@@ -10,21 +10,14 @@
       "slug": "as-customer-i-want-to-perform-biometric-fallback-authentication-to-achieve-login-access-when-biometric-recognition-fails",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 1,
-      "totalStoryPoints": 3,
+      "storyCount": 0,
+      "totalStoryPoints": 0,
       "files": {
         "specs": "specs/as-customer-i-want-to-perform-biometric-fallback-authentication-to-achieve-login-access-when-biometric-recognition-fails/specs.md",
         "requirements": "specs/as-customer-i-want-to-perform-biometric-fallback-authentication-to-achieve-login-access-when-biometric-recognition-fails/requirements.md",
         "prompt": "specs/as-customer-i-want-to-perform-biometric-fallback-authentication-to-achieve-login-access-when-biometric-recognition-fails/prompt.md"
       },
-      "userStories": [
-        {
-          "id": 51768,
-          "title": "As Customer, I want to perform biometric fallback authentication to achieve login access when biometric recognition fails",
-          "state": "New",
-          "storyPoints": 3
-        }
-      ]
+      "userStories": []
     },
     {
       "id": 30070,
@@ -91,21 +84,14 @@
       "slug": "as-system-administrator-i-want-to-perform-biometric-policy-management-to-achieve-control-over-biometric-authentication-availability-per-role",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 1,
-      "totalStoryPoints": 3,
+      "storyCount": 0,
+      "totalStoryPoints": 0,
       "files": {
         "specs": "specs/as-system-administrator-i-want-to-perform-biometric-policy-management-to-achieve-control-over-biometric-authentication-availability-per-role/specs.md",
         "requirements": "specs/as-system-administrator-i-want-to-perform-biometric-policy-management-to-achieve-control-over-biometric-authentication-availability-per-role/requirements.md",
         "prompt": "specs/as-system-administrator-i-want-to-perform-biometric-policy-management-to-achieve-control-over-biometric-authentication-availability-per-role/prompt.md"
       },
-      "userStories": [
-        {
-          "id": 51756,
-          "title": "As System Administrator, I want to perform biometric policy management to achieve control over biometric authentication availability per role",
-          "state": "New",
-          "storyPoints": 3
-        }
-      ]
+      "userStories": []
     },
     {
       "id": -51888,
