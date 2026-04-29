@@ -1,7 +1,7 @@
 {
-  "name": "test230426-mcp-server",
+  "name": "devxjiratest-mcp-server",
   "version": "1.0.0",
-  "description": "DevX MCP server for Test230426 specs",
+  "description": "DevX MCP server for DevXJiraTest specs",
   "type": "module",
   "main": "server.js",
   "scripts": {
