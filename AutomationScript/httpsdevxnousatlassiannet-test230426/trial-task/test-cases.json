@@ -1,0 +1,380 @@
+{
+  "storyId": "ado-58916",
+  "storyTitle": "trial task",
+  "testCases": [],
+  "functional": [
+    {
+      "id": "TC-FUNC-001",
+      "title": "Verify trial task can be created successfully with all required fields",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged into the application with a valid account that has task creation permissions",
+        "User is on the main task management or dashboard page",
+        "No existing trial task with the same name exists in the system"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the 'Create Task' or 'New Task' button on the task management page",
+          "expectedResult": "A task creation form or modal dialog opens with empty fields ready for input"
+        },
+        {
+          "step": 2,
+          "action": "Enter 'Trial Task - Test 001' in the 'Task Title' or 'Name' field",
+          "expectedResult": "The title field accepts the text and displays 'Trial Task - Test 001' without errors"
+        },
+        {
+          "step": 3,
+          "action": "Select 'Trial' from the task type or category dropdown if available",
+          "expectedResult": "The 'Trial' option is selected and the dropdown closes, showing 'Trial' as the selected value"
+        },
+        {
+          "step": 4,
+          "action": "Fill in any other mandatory fields (e.g., description, assignee, due date) with valid data",
+          "expectedResult": "All mandatory fields accept the input and no validation errors are displayed"
+        },
+        {
+          "step": 5,
+          "action": "Click the 'Save' or 'Create' button to submit the trial task",
+          "expectedResult": "A success notification or confirmation message such as 'Task created successfully' appears on screen"
+        },
+        {
+          "step": 6,
+          "action": "Navigate to the task list or board view and search for 'Trial Task - Test 001'",
+          "expectedResult": "The newly created trial task appears in the task list with the correct title, type, and all entered details"
+        }
+      ],
+      "postconditions": [
+        "The trial task 'Trial Task - Test 001' is persisted in the system and visible in the task list",
+        "User remains on the task management page or is redirected to the newly created task's detail view",
+        "An audit log or activity entry is created recording the task creation event with timestamp and user"
+      ]
+    },
+    {
+      "id": "TC-FUNC-002",
+      "title": "Verify trial task details can be viewed after creation",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged into the application with valid credentials",
+        "A trial task with title 'Trial Task - View Test' already exists in the system",
+        "User has read/view permissions for tasks"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the task list or task board page",
+          "expectedResult": "The task list page loads and displays all available tasks including the trial task"
+        },
+        {
+          "step": 2,
+          "action": "Locate and click on the trial task titled 'Trial Task - View Test' in the list",
+          "expectedResult": "The task detail view or detail panel opens showing the full details of the trial task"
+        },
+        {
+          "step": 3,
+          "action": "Verify all displayed fields: title, type/category, description, assignee, status, created date, and any other metadata",
+          "expectedResult": "All fields display the correct data that was entered during task creation, with proper formatting and labels"
+        },
+        {
+          "step": 4,
+          "action": "Check that the task status is displayed correctly (e.g., 'New', 'Open', or 'To Do')",
+          "expectedResult": "The task status shows the correct initial state as defined by the system's workflow"
+        }
+      ],
+      "postconditions": [
+        "The trial task details are displayed accurately without any data corruption or missing fields",
+        "User remains on the task detail view and can navigate back to the task list"
+      ]
+    },
+    {
+      "id": "TC-FUNC-003",
+      "title": "Verify trial task can be edited and updated successfully",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged into the application with edit/update permissions for tasks",
+        "A trial task with title 'Trial Task - Edit Test' exists in the system",
+        "User is on the task detail view of the trial task"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the 'Edit' button or pencil icon on the trial task detail view",
+          "expectedResult": "The task fields become editable, or an edit form/modal opens with current values pre-populated"
+        },
+        {
+          "step": 2,
+          "action": "Change the task title from 'Trial Task - Edit Test' to 'Trial Task - Updated'",
+          "expectedResult": "The title field updates to show 'Trial Task - Updated'"
+        },
+        {
+          "step": 3,
+          "action": "Update the description field to 'This trial task has been updated with new information'",
+          "expectedResult": "The description field accepts the new text and displays it correctly"
+        },
+        {
+          "step": 4,
+          "action": "Change the task status from 'New' to 'In Progress' using the status dropdown or workflow transition button",
+          "expectedResult": "The status updates to 'In Progress' and any associated visual indicators (color, icon) change accordingly"
+        },
+        {
+          "step": 5,
+          "action": "Click the 'Save' or 'Update' button to persist the changes",
+          "expectedResult": "A success message such as 'Task updated successfully' is displayed and the task detail view reflects all changes"
+        },
+        {
+          "step": 6,
+          "action": "Navigate away from the task and then return to the task detail view",
+          "expectedResult": "All updated values (title, description, status) are persisted and displayed correctly after navigation"
+        }
+      ],
+      "postconditions": [
+        "The trial task is saved with the updated title 'Trial Task - Updated', new description, and status 'In Progress'",
+        "The task's last modified date and modified-by user are updated in the system",
+        "An activity log or history entry records the edit action with before and after values"
+      ]
+    },
+    {
+      "id": "TC-FUNC-004",
+      "title": "Verify trial task can be deleted from the system",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged into the application with delete permissions for tasks",
+        "A trial task with title 'Trial Task - Delete Test' exists in the system",
+        "User is on the task detail view or task list page where the trial task is visible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Locate the trial task 'Trial Task - Delete Test' and click the 'Delete' button or select 'Delete' from the actions/context menu",
+          "expectedResult": "A confirmation dialog appears asking 'Are you sure you want to delete this task?' or similar confirmation prompt"
+        },
+        {
+          "step": 2,
+          "action": "Click the 'Confirm' or 'Yes, Delete' button on the confirmation dialog",
+          "expectedResult": "The confirmation dialog closes and a success message such as 'Task deleted successfully' is displayed"
+        },
+        {
+          "step": 3,
+          "action": "Search for 'Trial Task - Delete Test' in the task list using the search or filter functionality",
+          "expectedResult": "No results are found; the deleted trial task no longer appears in the task list"
+        },
+        {
+          "step": 4,
+          "action": "Attempt to navigate directly to the deleted task's URL (if applicable)",
+          "expectedResult": "A '404 Not Found' page or 'Task not found' error message is displayed"
+        }
+      ],
+      "postconditions": [
+        "The trial task 'Trial Task - Delete Test' is permanently removed from the system or moved to a recycle bin/trash",
+        "The task list no longer contains the deleted trial task",
+        "An audit log entry records the deletion event with the user and timestamp"
+      ]
+    },
+    {
+      "id": "TC-FUNC-005",
+      "title": "Verify trial task appears correctly in the task list with proper sorting and filtering",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged into the application with task viewing permissions",
+        "Multiple tasks exist in the system including at least 3 trial tasks with different statuses and creation dates",
+        "User is on the main task list or board view page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "On the task list page, apply a filter to show only 'Trial' type tasks (if task type filter is available)",
+          "expectedResult": "The task list filters to display only trial tasks, hiding all other task types"
+        },
+        {
+          "step": 2,
+          "action": "Verify that all trial tasks are displayed with their correct titles, statuses, assignees, and dates",
+          "expectedResult": "Each trial task row/card shows accurate information matching what was entered during creation"
+        },
+        {
+          "step": 3,
+          "action": "Click on the 'Created Date' or 'Date' column header to sort tasks by creation date in descending order",
+          "expectedResult": "Trial tasks are reordered with the most recently created task appearing first"
+        },
+        {
+          "step": 4,
+          "action": "Use the search bar to search for a specific trial task by entering part of its title",
+          "expectedResult": "The search results display only trial tasks matching the search query, with matching text highlighted if applicable"
+        },
+        {
+          "step": 5,
+          "action": "Clear all filters and search terms to return to the full task list",
+          "expectedResult": "All tasks including trial tasks are displayed again in the default sort order"
+        }
+      ],
+      "postconditions": [
+        "The task list displays correctly with all trial tasks visible and properly formatted",
+        "All filters and sorting are cleared and the page is in its default state"
+      ]
+    },
+    {
+      "id": "TC-FUNC-006",
+      "title": "Verify trial task assignment to a different user works correctly",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged into the application with task management permissions",
+        "A trial task exists in the system and is currently unassigned or assigned to the current user",
+        "At least one other active user exists in the system who can be assigned tasks",
+        "User is on the trial task's detail view"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click on the 'Assignee' field or 'Assign To' dropdown on the trial task detail view",
+          "expectedResult": "A dropdown or user picker opens showing a list of available users in the system"
+        },
+        {
+          "step": 2,
+          "action": "Search for and select a different user (e.g., 'Jane Smith') from the assignee list",
+          "expectedResult": "The user 'Jane Smith' is selected and displayed as the new assignee in the field"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Save' or confirm the assignment change",
+          "expectedResult": "A success notification appears confirming the assignment change, and the assignee field shows 'Jane Smith'"
+        },
+        {
+          "step": 4,
+          "action": "Log out and log in as 'Jane Smith' (or check the assigned user's task view)",
+          "expectedResult": "The trial task appears in Jane Smith's assigned tasks list or 'My Tasks' view"
+        },
+        {
+          "step": 5,
+          "action": "Open the trial task from Jane Smith's view and verify all task details are intact",
+          "expectedResult": "The trial task displays all correct details including the assignment to Jane Smith"
+        }
+      ],
+      "postconditions": [
+        "The trial task is now assigned to 'Jane Smith' and visible in her task queue",
+        "The previous assignee (if any) no longer sees the task in their assigned tasks unless they have broader view permissions",
+        "A notification or email may have been sent to 'Jane Smith' about the new assignment"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Verify trial task status workflow transitions are enforced correctly",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged into the application with permissions to change task status",
+        "A trial task exists with status 'New' or the initial default status",
+        "The system has a defined workflow for task status transitions (e.g., New -> In Progress -> Done)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open the trial task detail view and locate the status field or workflow transition buttons",
+          "expectedResult": "The current status is displayed as 'New' and available transitions are shown (e.g., 'Start' or 'Move to In Progress')"
+        },
+        {
+          "step": 2,
+          "action": "Click the transition button or change the status to 'In Progress'",
+          "expectedResult": "The status updates to 'In Progress' and the UI reflects the change with updated visual indicators"
+        },
+        {
+          "step": 3,
+          "action": "Verify that only valid next transitions are available from 'In Progress' (e.g., 'Done', 'Blocked', but not back to 'New' if not allowed)",
+          "expectedResult": "Only the permitted workflow transitions are displayed as available options"
+        },
+        {
+          "step": 4,
+          "action": "Transition the task to 'Done' or 'Completed' status",
+          "expectedResult": "The status updates to 'Done' and a completion timestamp or indicator is recorded"
+        },
+        {
+          "step": 5,
+          "action": "Verify the task history or activity log shows all status transitions with timestamps",
+          "expectedResult": "The activity log displays entries for each status change: New -> In Progress -> Done, with correct timestamps and user names"
+        }
+      ],
+      "postconditions": [
+        "The trial task is in 'Done' or 'Completed' status",
+        "All status transitions are recorded in the task's activity history",
+        "The task's completion date is set to the current date/time"
+      ]
+    },
+    {
+      "id": "TC-FUNC-008",
+      "title": "Verify trial task page loads correctly and all UI elements are rendered",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged into the application with valid credentials",
+        "The trial task feature/module is enabled and accessible",
+        "User has a stable network connection and is using a supported browser (Chrome, Firefox, Edge)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the trial task section or page via the main navigation menu",
+          "expectedResult": "The trial task page loads within 3 seconds without any console errors or broken UI elements"
+        },
+        {
+          "step": 2,
+          "action": "Verify the page header, breadcrumbs, and navigation elements are displayed correctly",
+          "expectedResult": "The page title shows 'Trial Task' or equivalent, breadcrumbs show the correct navigation path, and all menu items are functional"
+        },
+        {
+          "step": 3,
+          "action": "Verify all action buttons (Create, Edit, Delete, Filter, Sort) are visible and properly labeled",
+          "expectedResult": "All expected action buttons are rendered with correct labels, icons, and are in their expected positions on the page"
+        },
+        {
+          "step": 4,
+          "action": "Resize the browser window to a tablet viewport (768px width) and verify responsive layout",
+          "expectedResult": "The page layout adjusts responsively; all elements remain accessible and no content is cut off or overlapping"
+        },
+        {
+          "step": 5,
+          "action": "Resize the browser window to a mobile viewport (375px width) and verify responsive layout",
+          "expectedResult": "The page adapts to mobile layout with appropriate stacking, hamburger menu if applicable, and all functionality remains accessible"
+        }
+      ],
+      "postconditions": [
+        "The trial task page is fully rendered and functional across all tested viewport sizes",
+        "No JavaScript errors or broken resources are present in the browser console"
+      ]
+    }
+  ],
+  "negative": [],
+  "edgeCases": [],
+  "accessibility": [],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": false,
+    "negative": false,
+    "accessibility": false,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-58916",
+    "title": "trial task",
+    "description": "",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "58916",
+    "externalId": "JIRA-15810",
+    "state": "New",
+    "assignedTo": "devxnous2k25@gmail.com",
+    "createdDate": "2026-04-29T05:21:04.031Z",
+    "priority": "medium",
+    "storyPoints": null,
+    "tags": "",
+    "epicId": null,
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net//browse/JIRA-15810"
+  }
+}
