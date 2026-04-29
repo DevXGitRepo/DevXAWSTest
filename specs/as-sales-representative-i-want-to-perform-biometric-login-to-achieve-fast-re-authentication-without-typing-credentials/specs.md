@@ -4,20 +4,20 @@ Owner: DevX
 Last Updated: 2026-04-29
 
 Status: NEW
-Owner: Identity & Access Management
-Last Updated: 2025-07-10
-Feature ID: -51744
+Owner: (Pending Assignment)
+Last Updated: 2025-01-15
+Feature ID: 51744
 
 ## Summary
 
-Enable sales representatives to authenticate into the application using device-native biometric mechanisms (fingerprint, face recognition, iris scan) so they can regain access quickly between sessions without manually entering usernames and passwords. The feature must maintain the same security posture as credential-based login while dramatically reducing re-authentication friction — critical for field sales workflows where representatives frequently lock/unlock devices throughout the day.
+Enable sales representatives to authenticate into the application using device-native biometric mechanisms (fingerprint, face recognition, iris scan) so they can re-authenticate quickly between sessions or after idle timeouts without manually typing usernames and passwords. The feature must maintain the same security posture as credential-based login while dramatically reducing friction for field sales workflows where speed and hands-free convenience matter.
 
 ## Actors
 
-- **Sales Representative** (primary end user — field and office-based)
-- **IT / Security Administrator** (manages biometric policy, enrollment rules, and revocation)
-- **System** (device biometric subsystem, authentication service, token management, audit logging)
-- **Identity Provider (IdP)** (existing credential store and session authority)
+- **Sales Representative** (primary end user — field or office-based)
+- **IT / Security Administrator** (manages authentication policies, enrollment rules, and revocation)
+- **System** (device biometric subsystem, authentication service, session manager, audit logger)
+- **Identity Provider** (corporate SSO / directory service that issues and validates tokens)
 
 ## Goals
 
@@ -25,204 +25,198 @@ Enable sales representatives to authenticate into the application using device-n
 - Maintain or exceed the security level of password-based login (no downgrade of authentication assurance).
 - Provide a clear, guided enrollment experience that builds user trust in biometric data handling.
 - Ensure graceful fallback to credential-based login when biometrics are unavailable or fail.
-- Give administrators visibility and control over biometric enrollment and usage across the sales force.
+- Capture auditable records of every biometric authentication event.
 
 ## Key Features
 
-- **Biometric enrollment flow** — guided, one-time setup linking a device biometric to the user's account after successful credential authentication.
-- **Biometric re-authentication** — fast unlock using device-native biometric (fingerprint, face, iris) that issues a valid application session.
-- **Credential fallback** — seamless path to username/password login when biometric is unavailable, fails, or is locked out.
-- **Device & enrollment management** — users can view and revoke enrolled devices; administrators can enforce policies and remotely revoke enrollments.
-- **Audit trail** — every biometric enrollment, authentication attempt, fallback, and revocation is logged.
+- **Biometric enrollment flow** — guided, one-time setup linking a device biometric profile to the user's account after initial credential-based authentication.
+- **Biometric prompt for re-authentication** — device-native biometric challenge replaces password entry on subsequent logins and session resumptions.
+- **Graceful fallback** — automatic and manual paths to credential-based login when biometric verification is unavailable, fails, or is locked out.
+- **Device & enrollment management** — users and administrators can view enrolled devices and revoke biometric associations.
+- **Security controls** — attempt limits, lockout policy, token expiry, and full audit trail.
 
 ## Data & Constraints
 
-- **BiometricEnrollment**: id, user_id, device_id, device_name, biometric_type (fingerprint | face | iris), enrolled_at, last_used_at, status (active | revoked)
-- **AuthEvent**: id, user_id, device_id, method (biometric | credential | fallback), result (success | failure | lockout), timestamp, ip_address, geo (optional)
-- **Policy**: max_enrolled_devices_per_user, biometric_timeout_seconds, max_consecutive_failures_before_lockout, enrollment_requires_mfa
+- **BiometricEnrollment**: id, user_id, device_id, device_name, biometric_type (fingerprint | face | iris), enrollment_timestamp, status (active | revoked), last_used_timestamp
+- **AuthenticationEvent**: id, user_id, device_id, method (biometric | credential | fallback), result (success | failure | lockout), timestamp, ip_address, geolocation (optional)
+- **Session**: id, user_id, auth_method, issued_at, expires_at, refresh_token_ref
 
 ### Constraints
 
-- Biometric templates must **never** leave the device; the system relies on device-level biometric verification and a cryptographic challenge/response — no server-side biometric storage.
-- Communication between client and authentication service must be encrypted in transit (TLS 1.2+).
-- Session tokens issued after biometric authentication must have the same (or stricter) expiry and scope as credential-based tokens.
-- The feature must comply with applicable privacy regulations (e.g., GDPR, BIPA) regarding biometric data notice and consent.
-- Maximum enrolled devices per user is configurable by policy (default: 3).
+- Biometric templates must **never** leave the device; only cryptographic proof of successful local verification is transmitted to the server.
+- All tokens and authentication payloads must be encrypted in transit (TLS 1.2+) and at rest.
+- Maximum failed biometric attempts before automatic fallback to credentials: configurable (default 3).
+- Enrollment requires a preceding successful credential-based authentication within the current session.
+- Biometric enrollment expires and must be re-established after a configurable period of inactivity (default 90 days). [NEEDS CLARIFICATION: exact expiry window per organizational policy]
+- Compliance with applicable biometric data regulations (e.g., GDPR, BIPA, CCPA) regarding consent and data handling.
 
 ## User Scenarios & Testing
 
 ### Scenario 1 — First-time biometric enrollment (happy path)
 
-1. Sales representative logs in with existing credentials (username + password, optionally MFA).
-2. System detects the device supports biometrics and prompts the user to enroll.
-3. User reviews a clear consent notice explaining that biometric data stays on-device and agrees.
-4. User completes the device-native biometric capture (e.g., fingerprint scan).
-5. System registers the device enrollment and confirms success with device name and biometric type displayed.
+1. Sales representative logs in with existing credentials (username + password / SSO).
+2. System detects a biometric-capable device with no active enrollment and presents an enrollment prompt.
+3. Sales representative opts in, reviews a consent notice, and confirms.
+4. Device biometric subsystem captures and registers the biometric template locally.
+5. System creates a `BiometricEnrollment` record linking the device to the user's account.
+6. Sales representative sees confirmation that biometric login is now active for this device.
 
 **Acceptance criteria (testable):**
 
-- Enrollment is only offered after a successful credential-based login on a biometric-capable device.
-- A consent notice is displayed before any biometric capture begins; enrollment does not proceed without explicit acceptance.
-- After successful enrollment, the BiometricEnrollment record is persisted with status `active` and correct device metadata.
-- If the device does not support biometrics, the enrollment prompt is never shown.
+- After successful credential login on a biometric-capable device with no prior enrollment, the enrollment prompt appears within 2 seconds of dashboard load.
+- The consent notice is displayed and must be explicitly accepted before enrollment proceeds.
+- Upon successful enrollment, a `BiometricEnrollment` record with status `active` exists for the user + device combination.
+- An `AuthenticationEvent` with method `credential` is logged for the initial login, and an enrollment audit entry is created.
 
 ### Scenario 2 — Biometric re-authentication (happy path)
 
-1. Sales representative opens the application after session expiry or device lock.
-2. System presents the biometric login prompt (e.g., "Use fingerprint to sign in").
-3. User provides biometric via device sensor.
-4. System verifies the cryptographic response, issues a session token, and lands the user on their home screen.
+1. Sales representative opens the application after session expiry or idle timeout.
+2. System detects an active biometric enrollment for the device and presents the biometric prompt instead of the credential form.
+3. Sales representative completes the biometric gesture (e.g., fingerprint touch).
+4. Device confirms identity locally; system validates the cryptographic assertion and issues a new session.
+5. Sales representative lands on the dashboard, fully authenticated.
 
 **Acceptance criteria (testable):**
 
-- A user with an active enrollment can complete re-authentication end-to-end without typing any credentials.
-- A valid session token is issued with the same scopes and expiry as a credential-based session.
-- The entire biometric re-authentication flow (prompt → home screen) completes in under 3 seconds on supported devices under normal conditions.
-- An `AuthEvent` with method `biometric` and result `success` is logged.
+- The biometric prompt appears within 1 second of the login screen loading on an enrolled device.
+- A successful biometric gesture results in full authentication and dashboard access within 3 seconds end-to-end on a typical network connection.
+- An `AuthenticationEvent` with method `biometric` and result `success` is logged.
+- No password or credential input is required during the flow.
 
-### Scenario 3 — Biometric failure and fallback
+### Scenario 3 — Biometric failure with fallback
 
-1. User attempts biometric login but the scan fails (e.g., wet finger, poor lighting for face).
+1. Sales representative attempts biometric login but the gesture fails (e.g., wet finger, poor lighting for face).
 2. System shows a clear, non-alarming message and allows retry.
-3. After the configured maximum consecutive failures, system locks biometric login for that session and presents credential-based login.
-4. User logs in with credentials successfully.
+3. After the configured maximum failed attempts (default 3), the system automatically presents the credential-based login form.
+4. Sales representative logs in with credentials successfully.
 
 **Acceptance criteria (testable):**
 
-- Each failed biometric attempt is logged as an `AuthEvent` with result `failure`.
-- After reaching `max_consecutive_failures_before_lockout` (default: 5), the biometric option is disabled for that session and the credential fallback is presented automatically.
-- The user can choose credential-based login at any point before lockout via a visible "Use password instead" option.
-- After credential fallback login, the user's biometric enrollment remains active (not revoked) unless an administrator intervenes.
+- Each failed biometric attempt displays a user-friendly retry message (no technical jargon).
+- After the configured maximum failures, the credential login form is displayed automatically without requiring the user to navigate away.
+- An `AuthenticationEvent` with method `biometric` and result `failure` is logged for each failed attempt.
+- An `AuthenticationEvent` with method `fallback` and result `success` is logged when the user completes credential login after biometric lockout.
+- The biometric prompt is re-enabled on the next login session (lockout is per-session, not permanent).
 
-### Scenario 4 — Device/enrollment revocation by user
+### Scenario 4 — Biometric unavailable (device lacks capability or permission denied)
 
-1. User navigates to account security settings and views a list of enrolled devices.
-2. User selects a device and chooses "Remove."
-3. System revokes the enrollment and confirms removal.
+- On devices without biometric hardware or where the user has denied biometric permissions, the system silently skips the biometric prompt and presents standard credential login.
+- No enrollment prompt is shown on incapable devices.
 
-**Acceptance criteria (testable):**
+### Scenario 5 — Device / enrollment revocation
 
-- The enrolled devices list shows device name, biometric type, enrollment date, and last-used date for each active enrollment.
-- After revocation, the BiometricEnrollment status is set to `revoked` and biometric login from that device is immediately rejected.
-- An audit event for the revocation is logged with the acting user.
-
-### Scenario 5 — Administrator policy enforcement and remote revocation
-
-1. Administrator sets a policy limiting enrolled devices to 2 per user.
-2. A user who already has 2 enrollments attempts to enroll a third device.
-3. System informs the user they have reached the maximum and must remove an existing device before enrolling a new one.
+1. Sales representative (or IT administrator) navigates to device management and selects "Remove biometric login" for a specific device.
+2. System sets the enrollment status to `revoked` and logs the action.
+3. On the next login attempt from that device, the credential form is shown; no biometric prompt appears.
 
 **Acceptance criteria (testable):**
 
-- Enrollment is blocked (not silently ignored) when the user has reached the policy-defined device limit, with a clear message.
-- Administrators can remotely revoke any user's enrollment; the revocation takes effect on the next authentication attempt from that device.
-- Policy changes (e.g., reducing max devices) do not retroactively revoke existing enrollments but prevent new ones until the user is within limits.
+- After revocation, the `BiometricEnrollment` record status is `revoked` and `last_used_timestamp` is unchanged.
+- Subsequent login from the revoked device does not trigger a biometric prompt.
+- An audit entry records who performed the revocation and when.
+
+### Scenario 6 — Sales representative declines enrollment
+
+- When the enrollment prompt appears, the user selects "Not now" or "Don't ask again."
+- If "Not now," the prompt reappears on the next login. If "Don't ask again," the prompt is suppressed until the user manually enables biometric login from settings.
 
 ## Functional Requirements (testable)
 
 ### 1. Biometric enrollment
 
-- Enrollment is gated behind a successful credential-based authentication session (and MFA if policy requires).
-- The system must detect device biometric capability before offering enrollment.
-- A consent notice must be displayed and accepted before biometric capture.
-- Enrollment associates a cryptographic key pair with the user account and device; no biometric template data is transmitted or stored server-side.
+- The system must offer enrollment only after a successful credential-based authentication and only on devices reporting biometric capability.
+- Enrollment must require explicit user consent via a clearly worded notice before any biometric interaction occurs.
+- A user may enroll multiple devices; each enrollment is independently tracked and revocable.
 
-### 2. Biometric re-authentication
+### 2. Biometric authentication prompt
 
-- The biometric login option is presented only when the device has an active enrollment for the current user context.
-- Authentication uses a cryptographic challenge/response validated by the server; the biometric unlock is performed entirely on-device.
-- On success, a session token is issued with equivalent security properties to credential-based login.
+- On login or session resumption, the system must check for an active enrollment matching the current device and present the biometric prompt if one exists.
+- The biometric challenge must use the device-native API (e.g., WebAuthn, platform authenticator) and must not transmit raw biometric data.
 
-### 3. Credential fallback
+### 3. Fallback to credential-based login
 
-- A "Use password instead" option is visible on the biometric login screen at all times.
-- After biometric lockout, the system automatically transitions to credential-based login without requiring the user to restart the application.
+- A manual "Use password instead" option must be visible alongside the biometric prompt at all times.
+- Automatic fallback must engage after the configured number of consecutive biometric failures within a single session.
 
 ### 4. Device & enrollment management
 
-- Users can list, inspect, and revoke their own enrolled devices from account security settings.
-- Administrators can search enrollments by user and revoke any enrollment remotely.
-- Revocation is immediate: subsequent biometric attempts on the revoked device must fail and prompt credential login.
+- Sales representatives must be able to view a list of their enrolled devices (device name, biometric type, enrollment date, last used date).
+- Sales representatives and IT administrators must be able to revoke any enrollment.
+- IT administrators must be able to revoke all enrollments for a given user in a single action.
 
-### 5. Policy configuration
+### 5. Security controls
 
-- Administrators can configure: maximum enrolled devices per user, biometric session timeout, maximum consecutive biometric failures before lockout, and whether enrollment requires prior MFA.
-- Policy changes apply to future enrollment and authentication attempts without disrupting active sessions.
+- Biometric tokens / assertions must have a configurable maximum lifetime; expired tokens require re-enrollment or credential login. [NEEDS CLARIFICATION: token lifetime policy]
+- The system must enforce a maximum number of consecutive biometric failures before fallback (configurable, default 3).
+- All authentication events (success, failure, lockout, enrollment, revocation) must be written to an immutable audit log.
 
-### 6. Audit & logging
+### 6. Privacy & compliance
 
-- All enrollment, authentication (success and failure), fallback, and revocation events are recorded with user ID, device ID, method, result, and timestamp.
-- Audit logs are immutable and accessible to authorized administrators.
+- No biometric template data may be stored server-side. Only device identifiers and enrollment metadata are persisted.
+- Consent records (timestamp, user acknowledgment) must be stored and retrievable for compliance audits.
 
-### 7. Security
+### 7. Accessibility
 
-- No biometric template data is stored or transmitted beyond the device's secure enclave / trusted execution environment.
-- Cryptographic keys used for biometric authentication are stored in device-level secure storage (e.g., Keychain, Keystore, TPM).
-- Session tokens issued via biometric login are indistinguishable in privilege from those issued via credential login (no elevated or reduced access).
-- Biometric enrollment and authentication endpoints are protected against replay attacks.
+- The biometric prompt and all fallback flows must meet WCAG 2.1 AA.
+- Screen readers must announce the biometric prompt context and the availability of the password fallback option.
+- Users who cannot use biometrics (e.g., due to disability) must never be blocked from logging in.
 
-### 8. Privacy & consent
+### 8. Performance
 
-- Users are informed, in plain language, about what biometric data is used, that it remains on-device, and how to revoke enrollment.
-- Consent acceptance is recorded with a timestamp in the enrollment record.
-- [NEEDS CLARIFICATION: specific regulatory frameworks applicable to the deployment regions — GDPR, BIPA, or others — to finalize consent language and data-handling disclosures.]
+- Biometric prompt display: ≤ 1 second from login screen render on an enrolled device.
+- End-to-end biometric authentication (gesture → authenticated dashboard): ≤ 3 seconds on a typical mobile network (4G / broadband equivalent).
+- Enrollment flow completion: ≤ 15 seconds from consent acceptance to confirmation.
 
-### 9. Accessibility
+### 9. Resilience
 
-- The biometric prompt and all fallback flows meet WCAG 2.1 AA.
-- Screen readers can navigate the enrollment flow, consent notice, and fallback login without loss of information or function.
-- Users who cannot use biometrics (e.g., due to disability) are never blocked; credential login is always available.
+- If the device biometric subsystem is temporarily unavailable (e.g., sensor busy), the system must display an informative message and offer immediate credential fallback.
+- Network interruptions during biometric token exchange must not corrupt session state; the user may retry or fall back.
 
-### 10. Performance
+### 10. Audit & logging
 
-- Biometric re-authentication (from prompt to authenticated home screen) completes in under 3 seconds on supported devices under typical network conditions.
-- Enrollment flow adds no more than 15 seconds to the initial credential-based login experience.
-
-### 11. Resilience
-
-- If the biometric subsystem is temporarily unavailable (e.g., sensor error, OS update), the system falls back to credential login gracefully with a clear message.
-- Network interruptions during the cryptographic challenge/response surface a retry option before falling back to credentials.
+- Every authentication attempt, enrollment, revocation, and administrative override must produce a timestamped, tamper-evident log entry containing user ID, device ID, method, result, and source IP.
 
 ## Success Criteria (measurable & verifiable)
 
 | Metric | Target |
 |---|---|
-| **Re-authentication speed** | 90% of biometric logins complete (prompt → home screen) in ≤ 3 seconds. |
-| **Adoption** | ≥ 70% of active sales representatives enroll at least one device within 60 days of rollout. |
-| **Credential entry reduction** | Average credential-based logins per user per day decrease by ≥ 50% within 30 days of enrollment. |
-| **Biometric success rate** | ≥ 95% of biometric authentication attempts succeed on the first try. |
-| **Fallback reliability** | 100% of biometric lockout events result in a functional credential fallback without app restart. |
-| **Security** | Zero incidents of session token issuance without valid biometric or credential verification. |
-| **Audit completeness** | 100% of enrollment, authentication, fallback, and revocation events have corresponding audit log entries. |
-| **Accessibility** | All critical flows (enrollment, biometric login, fallback, revocation) pass WCAG 2.1 AA automated and manual checks. |
+| Re-authentication time (biometric) | Median ≤ 3 seconds from app open to dashboard (enrolled devices) |
+| Enrollment adoption | ≥ 70% of active sales representatives enroll at least one device within 60 days of rollout |
+| Biometric success rate | ≥ 95% of biometric authentication attempts succeed on first gesture |
+| Fallback availability | 100% of biometric failure scenarios present a working credential fallback within 2 seconds |
+| Credential-free re-logins | ≥ 80% of re-authentication events use biometric method after enrollment |
+| Security | Zero incidents of biometric template data transmitted to or stored on the server |
+| Audit completeness | 100% of authentication events (all methods) have corresponding audit log entries |
+| Accessibility | WCAG 2.1 AA conformance for enrollment, biometric prompt, and fallback flows |
+| Performance | 95th percentile biometric login end-to-end ≤ 5 seconds on 4G-equivalent network |
 
 ## Key Entities
 
-- **User** (sales representative, administrator)
-- **Device** (enrolled device with biometric capability)
-- **BiometricEnrollment** (link between user, device, and biometric type)
-- **AuthEvent** (authentication and enrollment audit record)
-- **Session** (authenticated application session)
-- **Policy** (administrator-defined biometric rules)
+- **User** (sales representative, IT administrator)
+- **BiometricEnrollment** (links a user to a device biometric profile)
+- **AuthenticationEvent** (immutable record of every login attempt)
+- **Session** (authenticated session with method metadata)
+- **Device** (logical representation of the enrolled device)
+- **ConsentRecord** (proof of user's biometric enrollment consent)
 
 ## Assumptions
 
-- Sales representatives use devices (mobile or laptop) with hardware biometric sensors and OS-level biometric APIs.
-- An existing credential-based authentication system (IdP) is in place; biometric login augments but does not replace it.
-- The device operating system provides a secure enclave or equivalent for biometric template storage and cryptographic key management.
-- Network connectivity is available at the time of biometric authentication (offline authentication is out of scope for this release).
-- The organization's security team has approved the use of device-native biometric verification as an acceptable re-authentication factor.
+- Sales representatives use modern mobile devices or laptops equipped with biometric sensors (fingerprint reader, face recognition camera, or equivalent).
+- The organization has an existing credential-based authentication system (SSO / identity provider) that will remain the primary authentication method; biometric login augments but does not replace it.
+- Device-native biometric APIs (e.g., WebAuthn / FIDO2 platform authenticators) are available and will be leveraged; no custom biometric capture is built.
+- Biometric template storage and matching are handled entirely on-device by the operating system; the application never accesses raw biometric data.
+- Network connectivity is available at the time of authentication (offline biometric login is out of scope for this release).
 
 ## Milestones (high-level)
 
-1. **M1** — Biometric enrollment flow, biometric re-authentication (happy path), credential fallback, and audit logging.
-2. **M2** — Device management UI (user self-service), administrator remote revocation, and policy configuration.
-3. **M3** — Adoption analytics, edge-case hardening (sensor failures, OS updates), accessibility audit, and production rollout.
+1. **M1 — Core biometric enrollment & authentication** — Enrollment flow, biometric re-authentication prompt, credential fallback, and audit logging.
+2. **M2 — Device management & administration** — User-facing enrolled device list, self-service revocation, IT admin bulk revocation, and consent record retrieval.
+3. **M3 — Hardening & optimization** — Configurable policy controls (attempt limits, token lifetimes, enrollment expiry), performance tuning, accessibility audit remediation, and compliance certification.
 
 ---
 
 **Notes:**
 
-- Clarify applicable biometric privacy regulations per deployment region before finalizing consent language (see Requirement 8).
-- Confirm supported device/OS matrix with the sales operations team to determine minimum biometric API versions.
-- Offline biometric authentication may be considered in a future iteration if field connectivity proves unreliable.
+- Replace placeholders marked [NEEDS CLARIFICATION] with decisions from Security and IT Policy teams before development begins.
+- Biometric type support (fingerprint, face, iris) depends on device capabilities; the application should be agnostic to the specific modality and delegate to the platform authenticator.
+- Offline biometric authentication is a candidate for a future iteration but is explicitly out of scope for this feature.
