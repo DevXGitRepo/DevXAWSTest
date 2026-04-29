@@ -16,11 +16,11 @@ Every feature has:
 
 ## Features (18)
 
-- **As Customer, I want to perform biometric fallback authentication to achieve login access when biometric recognition fails** (1 user stories)
+- **As Customer, I want to perform biometric fallback authentication to achieve login access when biometric recognition fails** (0 user stories)
 - **Integration Security, Audit Logging, and Compliance** (0 user stories)
 - **Document API and user guide** (1 user stories)
 - **As Sales Representative, I want to perform biometric login to achieve fast re-authentication without typing credentials** (1 user stories)
-- **As System Administrator, I want to perform biometric policy management to achieve control over biometric authentication availability per role** (1 user stories)
+- **As System Administrator, I want to perform biometric policy management to achieve control over biometric authentication availability per role** (0 user stories)
 - **As Security Auditor, I want to perform authentication security dashboard review to achieve real-time visibility into authentication health and threats** (1 user stories)
 - **Filter State Management and Reset** (0 user stories)
 - **Primary Queue Grid Layout and Interaction** (1 user stories)
