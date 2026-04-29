@@ -1,7 +1,7 @@
 # Feature: Write unit and integration tests
 Status: NEW
 Owner: DevX
-Last Updated: 2026-04-24
+Last Updated: 2026-04-22
 
 Status: NEW
 Owner: Engineering / Quality
@@ -9,195 +9,207 @@ Last Updated: 2025-07-11
 
 ## Summary
 
-Establish a comprehensive, maintainable suite of unit and integration tests across the product codebase. The goal is to catch regressions early, document expected behaviour through executable specifications, and provide a reliable safety net that enables confident refactoring and continuous delivery. The testing practice must be embedded in the development workflow—tests run automatically on every change, results are visible to the whole team, and coverage gaps are surfaced proactively.
+Establish a comprehensive, maintainable suite of unit and integration tests across the product codebase. The goal is to catch regressions early, document expected behaviour through executable specifications, enforce quality gates in CI, and give every team member confidence that changes do not break existing functionality. The initiative covers defining testing standards, writing the tests themselves, integrating them into the development workflow, and reporting on coverage and results.
 
 ## Actors
 
 - **Developer** — writes, maintains, and runs tests locally and in CI.
-- **Tech Lead / Reviewer** — reviews test quality, coverage, and design during code review.
+- **Tech Lead / Architect** — defines testing standards, coverage thresholds, and review criteria.
+- **QA Engineer** — validates test adequacy, identifies coverage gaps, and contributes integration test scenarios.
 - **CI/CD System** — executes test suites automatically on every commit/PR, gates merges, and publishes results.
-- **QA Engineer** — validates coverage reports, identifies gaps, and may author higher-level integration tests.
-- **Product Owner** — consumes quality metrics and confidence signals to make release decisions.
+- **Product Owner** — reviews coverage reports and quality metrics to inform release decisions.
 
 ## Goals
 
-- Ensure every critical business rule and data transformation is covered by at least one unit test.
-- Verify that key components interact correctly through integration tests that exercise real boundaries (APIs, data stores, external service contracts).
-- Prevent regressions from reaching production by gating merges on a passing test suite.
-- Reduce mean time to detect defects by surfacing failures within minutes of a code change.
-- Provide living documentation of system behaviour that stays in sync with the code.
+- Ensure every critical module has unit tests that verify its behaviour in isolation.
+- Ensure key cross-module workflows have integration tests that verify correct collaboration between components.
+- Prevent regressions by running all tests automatically before code is merged.
+- Provide clear, actionable feedback when a test fails (what broke, where, and why).
+- Establish and enforce minimum coverage thresholds so quality does not erode over time.
 
 ## Key Features
 
-- **Unit test foundation** — isolated tests for business logic, utilities, data models, and pure functions with deterministic, fast execution.
-- **Integration test layer** — tests that verify interactions between modules, services, APIs, and data stores using realistic (but controlled) environments.
-- **Automated CI execution** — every pull request and merge to mainline triggers the full test suite; results and coverage are reported inline.
-- **Coverage tracking & enforcement** — measurable code-coverage thresholds that block merges when not met and trend dashboards visible to the team.
-- **Test quality standards** — naming conventions, structure guidelines, and review checklists that keep the suite readable, maintainable, and trustworthy.
+- **Unit test suite** covering business logic, data transformations, utilities, and edge cases for individual modules.
+- **Integration test suite** covering cross-module interactions, API contracts, data persistence round-trips, and external-service boundaries.
+- **CI pipeline integration** that runs all tests on every pull request and blocks merges on failure.
+- **Coverage reporting** with per-module and aggregate metrics, published as PR comments and dashboard artefacts.
+- **Testing standards documentation** (naming conventions, folder structure, mocking guidelines, fixture management) available to all contributors.
 
 ## Data & Constraints
 
-- **Test Case**: id, suite (unit | integration), target_module, description, expected_outcome, status (pass | fail | skip)
-- **Coverage Report**: id, run_id, timestamp, module, line_coverage_pct, branch_coverage_pct, uncovered_lines
-- **Test Run**: id, trigger (local | CI), commit_sha, branch, duration_ms, total, passed, failed, skipped
-- Constraints:
-  - Unit tests must not depend on network, file system, or external services (use test doubles).
-  - Integration tests must use isolated, reproducible environments (e.g., test databases, service stubs/containers).
-  - No test may contain hard-coded secrets or PII.
-  - Test data fixtures must be version-controlled alongside tests.
-  - Flaky tests (non-deterministic failures) must be quarantined and fixed within a defined SLA.
+| Concept | Description |
+|---|---|
+| Test Case | id, suite (unit / integration), module, description, expected outcome, status (pass / fail / skip) |
+| Coverage Report | id, run_id, module, line_coverage_%, branch_coverage_%, uncovered_lines |
+| Test Run | id, trigger (CI / local), commit_sha, timestamp, duration, pass_count, fail_count, skip_count |
+
+**Constraints**
+
+- Tests must not depend on shared mutable state; each test must be independently runnable and idempotent.
+- Integration tests that require external services must use controlled test doubles or dedicated test environments — never production resources.
+- Test data and fixtures must not contain real PII or secrets.
+- Total CI test-suite execution time must remain within a defined budget to keep feedback loops short.
 
 ## User Scenarios & Testing
 
 ### Scenario 1 — Developer writes unit tests for a new module (happy path)
 
-1. Developer creates a new module containing business logic.
-2. Developer writes unit tests covering expected inputs, edge cases, and error conditions.
+1. Developer creates a new module with business logic.
+2. Developer writes unit tests covering nominal inputs, boundary values, and error cases.
 3. Developer runs the test suite locally; all tests pass.
-4. Developer opens a pull request; CI executes the full unit test suite automatically.
-5. Coverage report confirms the new module meets or exceeds the coverage threshold.
-6. Reviewer verifies test quality and approves the change.
+4. Developer opens a pull request; CI executes the full unit test suite.
+5. Coverage report confirms the new module meets the minimum coverage threshold.
+6. PR is eligible for merge.
 
 **Acceptance criteria (testable):**
-- Every new module introduced in a PR has corresponding unit tests in the same PR.
-- The CI pipeline executes all unit tests and reports results within the PR before merge is permitted.
-- Coverage for the new module is at or above the project-defined threshold (see Success Criteria).
 
-### Scenario 2 — Developer writes integration tests for a cross-module interaction
+- Every new or modified module in the PR has accompanying unit tests.
+- CI reports a green status and coverage meets or exceeds the agreed threshold for the changed module.
+- Each unit test runs in isolation — disabling any other test does not cause it to fail.
 
-1. Developer identifies an interaction between two or more modules or between a module and an external boundary (API, database).
-2. Developer writes an integration test that exercises the interaction with a controlled test environment.
-3. CI executes integration tests in an isolated environment; all pass.
-4. Test results and any environment setup/teardown logs are visible in the CI report.
+### Scenario 2 — Developer writes integration tests for a cross-module workflow
 
-**Acceptance criteria (testable):**
-- Integration tests run in an isolated environment that does not affect production or shared development data.
-- Integration tests can be executed independently and in any order without side effects.
-- CI reports integration test results separately from unit test results.
-
-### Scenario 3 — CI gates a merge on failing tests
-
-1. Developer pushes a commit that causes an existing test to fail.
-2. CI runs the test suite and detects the failure.
-3. The pull request is blocked from merging until the failure is resolved.
-4. Developer fixes the issue, pushes again; CI re-runs and all tests pass; merge is unblocked.
+1. Developer identifies a workflow that spans multiple modules (e.g., request handling → business logic → data persistence).
+2. Developer writes integration tests that exercise the full path with realistic inputs.
+3. Tests verify correct outputs, side effects (e.g., records persisted), and error propagation.
+4. CI executes integration tests in a controlled environment with test doubles for external dependencies.
 
 **Acceptance criteria (testable):**
-- A PR with any failing unit or integration test cannot be merged to the mainline branch.
-- The specific failing test name(s) and failure reason(s) are visible in the CI output within the PR.
 
-### Scenario 4 — Flaky test is detected and quarantined
+- Integration tests cover the end-to-end data flow for the targeted workflow.
+- Tests pass consistently across repeated CI runs (no flakiness).
+- External dependencies are replaced by deterministic test doubles; no network calls to production services occur during the test run.
 
-1. CI detects a test that passes and fails intermittently across multiple runs without code changes.
-2. The test is flagged as flaky and moved to a quarantine suite so it no longer blocks merges.
-3. A tracking item is created to investigate and fix the flaky test.
-4. Once fixed, the test is moved back into the main suite.
+### Scenario 3 — CI blocks a merge due to test failure
 
-**Acceptance criteria (testable):**
-- Flaky tests are identifiable in CI reports (e.g., labelled or in a separate suite).
-- Quarantined tests do not block PR merges.
-- Quarantined tests are tracked and resolved within the agreed SLA (see Success Criteria).
-
-### Scenario 5 — Coverage regression is caught
-
-1. Developer removes or weakens tests in a PR, causing module coverage to drop below the threshold.
-2. CI coverage check fails and the PR is blocked.
-3. Developer adds sufficient tests to restore coverage; CI re-runs and passes.
+1. Developer pushes a commit that introduces a regression.
+2. CI runs the test suite; one or more tests fail.
+3. CI marks the PR as failing and publishes a clear report identifying the failing test(s), the assertion that failed, and the relevant module.
+4. The merge button is disabled until all tests pass.
 
 **Acceptance criteria (testable):**
-- CI fails the coverage check when any module's coverage drops below the defined threshold.
-- The coverage report clearly identifies which modules are below threshold and by how much.
+
+- A deliberately broken commit results in a red CI status within the defined time budget.
+- The failure report names the specific test(s), expected vs. actual values, and file locations.
+- The PR cannot be merged while any required test is failing.
+
+### Scenario 4 — Coverage drops below threshold
+
+1. Developer submits a PR that adds code without sufficient tests.
+2. CI coverage report shows the module or aggregate coverage has fallen below the minimum threshold.
+3. CI flags the PR with a clear message indicating the coverage gap and the threshold requirement.
+4. Developer adds tests to restore coverage before the PR can be merged.
+
+**Acceptance criteria (testable):**
+
+- A PR that reduces module-level coverage below the threshold is flagged by CI.
+- The flag message specifies the current coverage percentage, the required threshold, and the affected module(s).
+- After the developer adds tests that restore coverage, CI re-runs and the flag is cleared.
+
+### Scenario 5 — Refactoring existing code with confidence
+
+1. Developer refactors an existing module.
+2. Existing unit and integration tests are executed; any behavioural change is surfaced as a test failure.
+3. If the refactor intentionally changes behaviour, the developer updates the corresponding tests and documents the reason.
+
+**Acceptance criteria (testable):**
+
+- All pre-existing tests pass after a behaviour-preserving refactor without modification.
+- If tests are updated, the PR description or commit message explains the behavioural change.
 
 ## Functional Requirements (testable)
 
-### 1. Unit test execution
-- All unit tests execute without network, database, or external service access.
-- The full unit test suite completes within a defined time budget (see Success Criteria).
-- Each test is independent; execution order does not affect outcomes.
+### 1. Unit test coverage
 
-### 2. Integration test execution
-- Integration tests run against controlled, ephemeral environments provisioned as part of the test run.
-- Setup and teardown of test environments is automated and repeatable.
-- Integration tests cover critical boundaries: API endpoints, database read/write paths, and external service contracts.
+- Every module containing business logic, data transformation, or utility functions has a corresponding test file.
+- Unit tests cover at minimum: nominal/happy-path inputs, boundary/edge-case inputs, and expected error/exception paths.
+- Each unit test is self-contained — it sets up its own state, executes, and asserts without relying on execution order or shared mutable state.
 
-### 3. CI pipeline integration
-- Every push to a PR branch triggers the full unit and integration test suite.
-- Test results (pass/fail/skip counts, duration, failure details) are reported inline on the PR.
-- Merge to mainline is blocked when any non-quarantined test fails or coverage thresholds are not met.
+### 2. Integration test coverage
 
-### 4. Coverage tracking & enforcement
-- Coverage is measured per module and in aggregate after every CI run.
-- Coverage thresholds are configurable per project/module.
-- Historical coverage trends are available to the team (dashboard or report).
+- Integration tests exist for every critical cross-module workflow identified by the team.
+- Integration tests verify correct data flow, side effects, and error propagation across module boundaries.
+- Integration tests use controlled test doubles or sandboxed environments for external dependencies (databases, APIs, message queues).
 
-### 5. Test quality & maintainability
-- Tests follow a consistent naming convention that describes the behaviour under test.
-- Tests are co-located with or clearly mapped to the modules they cover.
-- Shared test utilities and fixtures are centralized and documented.
+### 3. Test naming and organisation
 
-### 6. Flaky test management
-- CI tooling can identify tests with inconsistent results across recent runs.
-- A quarantine mechanism exists to isolate flaky tests from the merge-blocking suite.
-- Quarantined tests are visible in a tracking system with ownership and SLA.
+- Tests follow a consistent naming convention that describes the unit under test, the scenario, and the expected outcome.
+- Test files are co-located with or clearly mapped to the modules they cover.
+- A testing standards document is available in the repository and referenced in the contribution guide.
 
-### 7. Reporting & visibility
-- Developers can view test results and coverage locally before pushing.
-- CI publishes a summary (total, passed, failed, skipped, coverage %) on every run.
-- Failure logs include sufficient context (assertion messages, stack traces, relevant input data) to diagnose without re-running.
+### 4. CI pipeline execution
 
-### 8. Security & data handling
-- Test fixtures contain no real user data, secrets, or PII.
-- Credentials for integration test environments are managed via secure secret storage, not hard-coded.
+- All unit and integration tests run automatically on every pull request and on merges to the main branch.
+- CI publishes pass/fail status, test count summary, and duration.
+- A failing test suite blocks the PR from being merged.
 
-### 9. Performance [NEEDS CLARIFICATION: specific time budgets per project]
-- Unit test suite execution time is monitored; regressions in suite duration are flagged.
-- Integration test suite execution time is monitored separately.
+### 5. Coverage reporting and thresholds
 
-### 10. Documentation
-- A contributor guide explains how to write, run, and debug tests locally.
-- Test patterns (e.g., how to mock external services, how to set up integration fixtures) are documented with examples.
+- Coverage is measured and reported per module and in aggregate on every CI run.
+- Minimum coverage thresholds are configured and enforced; PRs that violate thresholds are flagged. [NEEDS CLARIFICATION: exact threshold percentages to be agreed by the team]
+- Coverage trends are visible over time (dashboard or historical artefact).
+
+### 6. Test reliability and performance
+
+- Tests must be deterministic — no flaky tests are permitted in the required suite.
+- Flaky tests are quarantined, tracked, and fixed within a defined SLA. [NEEDS CLARIFICATION: flaky-test SLA duration]
+- The full test suite completes within the CI time budget. [NEEDS CLARIFICATION: maximum CI duration target]
+
+### 7. Test data and fixture management
+
+- Shared fixtures and factories are maintained in a dedicated location and documented.
+- Test data must not contain real PII, production secrets, or credentials.
+- Fixtures are version-controlled alongside the tests.
+
+### 8. Reporting and observability
+
+- CI produces a machine-readable test results artefact (e.g., JUnit XML or equivalent) for downstream tooling.
+- Failed test output includes assertion details, stack traces, and enough context to diagnose without re-running locally.
+
+### 9. Documentation
+
+- A testing guide in the repository describes how to run tests locally, add new tests, manage fixtures, and interpret coverage reports.
+- The guide is kept up to date as standards evolve.
 
 ## Success Criteria (measurable & verifiable)
 
-| Metric | Target |
-|---|---|
-| **Unit test coverage (line)** | ≥ 80 % across all modules; no individual module below 70 %. |
-| **Branch coverage** | ≥ 70 % across all modules. |
-| **Unit test suite duration** | Full suite completes in ≤ 5 minutes in CI. |
-| **Integration test suite duration** | Full suite completes in ≤ 15 minutes in CI. |
-| **Test pass rate (non-flaky)** | 100 % of non-quarantined tests pass on mainline at all times. |
-| **Flaky test SLA** | Quarantined tests resolved (fixed or permanently removed) within 5 business days. |
-| **Merge gate enforcement** | 0 merges to mainline with failing non-quarantined tests in the trailing 30 days. |
-| **Regression detection** | New defects caught by tests before reaching any deployed environment ≥ 85 % of the time (measured over a quarter). |
-| **CI feedback time** | Test results available on a PR within 10 minutes of push. |
+- **Coverage:** All critical modules meet or exceed the agreed minimum line and branch coverage thresholds.
+- **Regression prevention:** Zero regressions attributable to untested code paths reach production per release cycle.
+- **CI gate enforcement:** 100 % of merged PRs have a passing test suite — no overrides of the quality gate without documented exception.
+- **Test reliability:** Flaky-test rate is below 1 % of total test cases in any rolling 30-day window.
+- **Feedback speed:** Full test suite (unit + integration) completes in CI within the agreed time budget, keeping developer feedback loops short.
+- **Adoption:** 100 % of new modules introduced after this feature is delivered ship with accompanying unit tests that meet the coverage threshold.
+- **Documentation:** Testing standards document exists, is linked from the contribution guide, and has been reviewed by the team.
 
 ## Key Entities
 
-- **Test Case** — an individual unit or integration test with a clear expected outcome.
-- **Test Suite** — a logical grouping of test cases (e.g., by module, by layer, by feature).
-- **Test Run** — a single execution of one or more suites, tied to a commit and branch.
-- **Coverage Report** — per-module and aggregate coverage metrics produced by a test run.
-- **Quarantine List** — the set of tests currently excluded from merge-blocking due to flakiness.
-- **CI Pipeline** — the automated workflow that triggers, executes, and reports test runs.
+- **Module** — a discrete unit of source code (function, class, service) that is independently testable.
+- **Test Case** — an executable specification of expected behaviour for a module or workflow.
+- **Test Suite** — a grouped collection of test cases (unit suite, integration suite).
+- **Test Run** — a single execution of one or more suites, producing pass/fail results and coverage data.
+- **Coverage Report** — a quantitative summary of code exercised by the test suite.
+- **Fixture / Factory** — reusable test data or object builders used to set up test preconditions.
+- **CI Pipeline** — the automated build-and-test workflow triggered by code changes.
 
 ## Assumptions
 
-- The project has (or will establish) a CI/CD system capable of running tests on every PR and reporting results inline.
-- Developers have access to run the full unit test suite locally on standard development hardware.
-- Integration test environments (databases, service stubs, containers) can be provisioned ephemerally in CI without manual intervention.
-- Coverage tooling compatible with the project's language(s) and framework(s) is available.
-- The team agrees on coverage thresholds before enforcement begins; thresholds may be raised incrementally.
+- The project already has (or will concurrently adopt) a test runner and assertion library appropriate for the technology stack.
+- A CI/CD platform is available and can be configured to run tests and publish artefacts.
+- Developers have local environments capable of running the full unit test suite; integration tests may require additional setup documented in the testing guide.
+- Code review processes will include review of test quality and coverage, not just production code.
+- External services used in integration scenarios have test/sandbox modes or can be effectively doubled.
 
 ## Milestones (high-level)
 
-1. **M1 — Foundation** — Unit test framework configured, CI pipeline runs unit tests on every PR, coverage reporting enabled, merge gate active.
-2. **M2 — Integration layer** — Integration test framework and ephemeral environment provisioning in place; critical boundary tests written; integration results reported in CI.
-3. **M3 — Coverage enforcement & quality** — Coverage thresholds enforced per module, flaky test quarantine process operational, contributor testing guide published.
-4. **M4 — Maturity & continuous improvement** — Coverage trend dashboards live, test duration budgets monitored, quarterly review cadence for threshold adjustments and gap analysis.
+1. **M1 — Foundation** — Agree on testing standards, configure CI test execution and coverage reporting, establish folder structure and fixture conventions, document the testing guide.
+2. **M2 — Unit test baseline** — Write unit tests for all existing critical modules to reach the minimum coverage threshold; enforce the threshold on new PRs.
+3. **M3 — Integration test baseline** — Identify critical cross-module workflows, write integration tests, and integrate them into the CI pipeline.
+4. **M4 — Hardening & observability** — Eliminate flaky tests, optimise suite execution time, publish coverage trend dashboards, and conduct a team retrospective on testing practices.
 
 ---
 
 **Notes:**
-- Specific time budgets for test suite execution should be calibrated to the project's size and CI infrastructure; the values above are starting targets.
-- Coverage thresholds (80 % line / 70 % branch) are recommended starting points; teams may adjust upward as the suite matures.
-- See the contributor testing guide (to be created in M3) for patterns, conventions, and examples.
+
+- Replace placeholders for coverage thresholds, flaky-test SLA, and CI time budget with the team's agreed values before development begins.
+- Coordinate with the Tech Lead to finalise the list of critical modules and workflows that require priority test coverage.
+- See the repository's contribution guide for links to the testing standards document once published.
