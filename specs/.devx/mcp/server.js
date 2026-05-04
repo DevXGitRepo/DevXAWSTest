@@ -16,14 +16,14 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { readFileSync, writeFileSync, existsSync } from "fs";
-import { resolve, dirname } from "path";
-import { fileURLToPath } from "url";
+import { resolve } from "path";
+import { getRepoRoot } from "../../utils/module-paths";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// Resolve paths relative to repo root (specs/.devx/mcp/ -> repo root)
-const REPO_ROOT = resolve(__dirname, "..", "..", "..");
+// Anchor REPO_ROOT to DEVX_REPO_ROOT (production: /opt/devx) or the directory
+// above the entry script. Do NOT walk up from per-file __dirname: the bundled
+// CJS collapses every module into dist/index.cjs, so relative dot-dot math
+// silently lands in the wrong place at runtime.
+const REPO_ROOT = getRepoRoot();
 const SPECS_DIR = resolve(REPO_ROOT, "specs");
 const DEVX_DIR = resolve(SPECS_DIR, ".devx");
 const FEATURES_JSON = resolve(DEVX_DIR, "features.json");
