@@ -15,7 +15,7 @@ Follow the specification exactly. Do not add features not described in the spec.
 
 ## User Stories
 
-- **As Dealership Receptionist, I want to perform customer name capture with validation to achieve accurate identity recording for the customer profile**
+See specs.md for details.
 
 ## Implementation Instructions
 
