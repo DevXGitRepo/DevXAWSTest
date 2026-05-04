@@ -1,12 +1,20 @@
-# Architecture — project3004
+# Architecture — Hilti_ProjTest
 
 > Auto-generated architecture overview. Update this file as the system evolves.
 
 ## Feature Map
 
-### Design and implement core logic
+### As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance
 - 1 user stories
-- Stories: Design and implement core logic
+- Stories: As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance
+
+### As Dealership Receptionist, I want to perform customer name capture with validation to achieve accurate identity recording for the customer profile
+- 1 user stories
+- Stories: As Dealership Receptionist, I want to perform customer name capture with validation to achieve accurate identity recording for the customer profile
+
+### As a user, I want to configure Contact Information Management and Verification settings so that I can customize it to my needs
+- 1 user stories
+- Stories: Code review and documentation
 
 ## Guidelines
 
