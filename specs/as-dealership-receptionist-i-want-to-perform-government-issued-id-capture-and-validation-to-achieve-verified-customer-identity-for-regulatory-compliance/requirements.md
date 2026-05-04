@@ -1,7 +1,7 @@
 # Specification Quality Checklist: Government-Issued ID Capture and Validation
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
-**Created**: 2025-07-10
+**Created**: 2025-07-09
 **Feature**: 63120 — As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance
 
 ## Content Quality
@@ -14,48 +14,47 @@
 ## Requirement Completeness
 
 - [ ] No [NEEDS CLARIFICATION] markers remain
-- [ ] Accepted government-issued ID types are explicitly enumerated (e.g., driver's license, passport, state ID, military ID)
-- [ ] ID capture method is defined (photo capture, scan, manual entry, or combination)
-- [ ] Validation rules and criteria are specified (expiration check, name matching, photo matching, format validity)
 - [ ] Requirements are testable and unambiguous
 - [ ] Success criteria are measurable
 - [ ] Success criteria are technology-agnostic (no implementation details)
-- [ ] All acceptance scenarios are defined (valid ID, expired ID, damaged/unreadable ID, unsupported ID type, underage customer)
-- [ ] Edge cases are identified (non-English IDs, foreign government IDs, name mismatches, blurry captures)
-- [ ] Scope is clearly bounded (which regulatory frameworks apply — federal, state, dealership-specific)
-- [ ] Dependencies and assumptions identified (e.g., hardware availability, network connectivity, third-party verification services)
-- [ ] Data retention and privacy requirements for captured ID images/data are defined
-- [ ] Error handling and fallback workflows are described (e.g., system unavailable, validation inconclusive)
+- [ ] All acceptance scenarios are defined (capture, validation pass, validation fail, retry, expiration)
+- [ ] Edge cases are identified (expired IDs, damaged/unreadable IDs, foreign-issued IDs, minors, name mismatches)
+- [ ] Scope is clearly bounded (which ID types are accepted, which jurisdictions apply)
+- [ ] Dependencies and assumptions identified (regulatory frameworks, data privacy obligations)
 
 ## Feature Readiness
 
 - [ ] All functional requirements have clear acceptance criteria
-- [ ] User scenarios cover the primary happy-path flow (receptionist captures ID → system validates → identity confirmed)
-- [ ] User scenarios cover rejection and retry flows
-- [ ] Regulatory compliance requirements reference specific regulations or standards
+- [ ] User scenarios cover primary flows (happy path capture → validation → verified identity)
+- [ ] User scenarios cover failure flows (invalid ID, unreadable image, expired document)
 - [ ] Feature meets measurable outcomes defined in Success Criteria
 - [ ] No implementation details leak into specification
-- [ ] Accessibility requirements for the receptionist interface are addressed
+- [ ] No user stories are missing — feature currently has **zero** associated user stories
 
 ## Notes
 
-- Items marked incomplete require spec updates before proceeding to clarification or planning.
-- Feature is currently in **New** state with a single user story; additional story decomposition may be needed after clarification.
+- Items marked incomplete require spec updates before clarification or planning can proceed.
+- **Critical gap**: No user stories have been provided for this feature. User stories must be authored and accepted before any validation can meaningfully pass.
 
-## Validation Results (Initial)
+## Validation Results (initial)
 
-- **No [NEEDS CLARIFICATION] markers remain**: FAIL — multiple open questions identified below
-- **Requirements are testable**: FAIL — validation rules, accepted ID types, and pass/fail criteria are not yet specified
-- **Success criteria measurable**: FAIL — no quantitative targets defined (e.g., capture-to-verification time, accuracy rate, compliance audit pass rate)
-- **Technology-agnostic**: PASS — no implementation details observed in current feature description
-- **All mandatory sections completed**: FAIL — feature is in New state; specification body appears incomplete
+- **No [NEEDS CLARIFICATION] markers remain**: CANNOT ASSESS — no specification or user stories exist to evaluate.
+- **Requirements are testable**: FAIL — no user stories or acceptance criteria have been defined.
+- **Success criteria measurable**: FAIL — no success criteria have been established.
+- **Technology-agnostic**: CANNOT ASSESS — no content to review.
+- **All mandatory sections completed**: FAIL — user stories, acceptance criteria, edge cases, and success criteria are all absent.
+- **User stories present**: FAIL — zero user stories associated with this feature.
 
-Remaining issues:
+### Remaining Issues
 
-- [NEEDS CLARIFICATION: accepted ID types] — Which government-issued ID types must be supported at launch, and should foreign-issued IDs be in scope?
-- [NEEDS CLARIFICATION: validation depth] — Should validation be limited to visual/data checks performed by the receptionist, or must it include automated verification (e.g., document authenticity, database cross-reference)?
-- [NEEDS CLARIFICATION: applicable regulations] — Which specific regulatory requirements drive this feature (e.g., Red Flags Rule, OFAC, state DMV regulations, FTC Safeguards Rule)?
-- [NEEDS CLARIFICATION: captured data retention] — What is the required retention period for ID images and extracted data, and what privacy/consent obligations apply?
-- [NEEDS CLARIFICATION: offline capability] — Must the capture and validation workflow function when network connectivity is unavailable at the dealership?
+- [NEEDS CLARIFICATION: accepted ID types] — Which government-issued documents are in scope (driver's license, passport, state ID, military ID, foreign national ID)? This defines capture requirements and validation rules.
+- [NEEDS CLARIFICATION: regulatory framework] — Which specific regulations drive this requirement (e.g., OFAC, Red Flags Rule, state-level dealer licensing laws)? This determines what constitutes a compliant verification and how records must be retained.
+- [NEEDS CLARIFICATION: validation scope] — Does "validation" mean visual confirmation by the receptionist, automated document authenticity checks, or identity cross-referencing against external databases? This fundamentally shapes the user workflow and success criteria.
+- [NEEDS CLARIFICATION: data retention and privacy] — What are the requirements for storing captured ID images and extracted data (retention period, encryption at rest, customer consent, right to deletion)?
+- [NEEDS CLARIFICATION: capture method] — Is the receptionist expected to use a scanner, a device camera, or accept pre-existing digital copies? This affects the user experience and hardware assumptions.
 
-Proceed to clarification with the five questions above to resolve scope-critical choices before planning.
+### Recommended Next Steps
+
+1. **Author user stories** covering at minimum: ID capture, ID validation (pass/fail), handling of invalid or expired documents, data storage and consent, and audit trail for compliance.
+2. **Resolve the five clarification items** above to unblock story definition.
+3. Re-run this checklist once stories and acceptance criteria are in place.
