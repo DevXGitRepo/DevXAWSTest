@@ -15,7 +15,7 @@ Follow the specification exactly. Do not add features not described in the spec.
 
 ## User Stories
 
-- **As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance**
+See specs.md for details.
 
 ## Implementation Instructions
 
