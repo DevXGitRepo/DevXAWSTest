@@ -1,7 +1,7 @@
 {
-  "name": "project3004-mcp-server",
+  "name": "hilti-projtest-mcp-server",
   "version": "1.0.0",
-  "description": "DevX MCP server for project3004 specs",
+  "description": "DevX MCP server for Hilti_ProjTest specs",
   "type": "module",
   "main": "server.js",
   "scripts": {
