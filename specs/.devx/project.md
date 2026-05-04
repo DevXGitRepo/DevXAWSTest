@@ -1,4 +1,4 @@
-# project3004
+# Hilti_ProjTest
 
 > Auto-generated project context for AI-assisted development.
 > Last updated: 2026-05-04
@@ -14,9 +14,11 @@ Every feature has:
 - `requirements.md` — Acceptance criteria checklist
 - `prompt.md` — Ready-to-use implementation prompt
 
-## Features (1)
+## Features (3)
 
-- **Design and implement core logic** (1 user stories)
+- **As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance** (1 user stories)
+- **As Dealership Receptionist, I want to perform customer name capture with validation to achieve accurate identity recording for the customer profile** (1 user stories)
+- **As a user, I want to configure Contact Information Management and Verification settings so that I can customize it to my needs** (1 user stories)
 
 ## Getting Started
 
