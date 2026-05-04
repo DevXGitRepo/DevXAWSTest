@@ -1,7 +1,7 @@
-# DevXJiraTest
+# project3004
 
 > Auto-generated project context for AI-assisted development.
-> Last updated: 2026-04-29
+> Last updated: 2026-05-04
 
 **Organization:** https://devxnous.atlassian.net/
 
@@ -14,26 +14,9 @@ Every feature has:
 - `requirements.md` — Acceptance criteria checklist
 - `prompt.md` — Ready-to-use implementation prompt
 
-## Features (18)
+## Features (1)
 
-- **As Customer, I want to perform biometric fallback authentication to achieve login access when biometric recognition fails** (0 user stories)
-- **Integration Security, Audit Logging, and Compliance** (0 user stories)
-- **Document API and user guide** (1 user stories)
-- **As Sales Representative, I want to perform biometric login to achieve fast re-authentication without typing credentials** (1 user stories)
-- **As System Administrator, I want to perform biometric policy management to achieve control over biometric authentication availability per role** (0 user stories)
-- **As Security Auditor, I want to perform authentication security dashboard review to achieve real-time visibility into authentication health and threats** (1 user stories)
-- **Filter State Management and Reset** (0 user stories)
-- **Primary Queue Grid Layout and Interaction** (1 user stories)
-- **Transaction Management Subsystem Connectivity** (1 user stories)
-- **Real-Time Pending Transaction Data Retrieval** (1 user stories)
-- **Pending Transaction Filter Engine** (0 user stories)
-- **As Operations Manager, I want to perform module-level performance benchmarking and comparison to achieve identification of optimization opportunities across insurance operations** (0 user stories)
-- **Write unit and integration tests** (1 user stories)
-- **Filtered Results Display and Feedback** (0 user stories)
-- **Queue Monitoring Dashboard and Visualization** (1 user stories)
-- **As Performance Engineer, I want to perform capacity planning projections based on business growth metrics to achieve proactive infrastructure scaling** (1 user stories)
-- **Develop UI components and integration** (0 user stories)
-- **Write unit and integration tests** (0 user stories)
+- **Design and implement core logic** (1 user stories)
 
 ## Getting Started
 
