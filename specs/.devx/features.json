@@ -1,26 +1,70 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-05-04T06:34:10.062Z",
+  "generatedAt": "2026-05-04T09:20:02.492Z",
   "enableTdd": false,
-  "totalFeatures": 1,
+  "totalFeatures": 3,
   "features": [
     {
-      "id": 63264,
-      "title": "Design and implement core logic",
-      "slug": "design-and-implement-core-logic",
+      "id": 63120,
+      "title": "As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance",
+      "slug": "as-dealership-receptionist-i-want-to-perform-government-issued-id-capture-and-validation-to-achieve-verified-customer-identity-for-regulatory-compliance",
       "state": "planned",
       "status": "not-started",
       "storyCount": 1,
       "totalStoryPoints": 0,
       "files": {
-        "specs": "specs/design-and-implement-core-logic/specs.md",
-        "requirements": "specs/design-and-implement-core-logic/requirements.md",
-        "prompt": "specs/design-and-implement-core-logic/prompt.md"
+        "specs": "specs/as-dealership-receptionist-i-want-to-perform-government-issued-id-capture-and-validation-to-achieve-verified-customer-identity-for-regulatory-compliance/specs.md",
+        "requirements": "specs/as-dealership-receptionist-i-want-to-perform-government-issued-id-capture-and-validation-to-achieve-verified-customer-identity-for-regulatory-compliance/requirements.md",
+        "prompt": "specs/as-dealership-receptionist-i-want-to-perform-government-issued-id-capture-and-validation-to-achieve-verified-customer-identity-for-regulatory-compliance/prompt.md"
       },
       "userStories": [
         {
-          "id": 63264,
-          "title": "Design and implement core logic",
+          "id": 63120,
+          "title": "As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 63108,
+      "title": "As Dealership Receptionist, I want to perform customer name capture with validation to achieve accurate identity recording for the customer profile",
+      "slug": "as-dealership-receptionist-i-want-to-perform-customer-name-capture-with-validation-to-achieve-accurate-identity-recording-for-the-customer-profile",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-dealership-receptionist-i-want-to-perform-customer-name-capture-with-validation-to-achieve-accurate-identity-recording-for-the-customer-profile/specs.md",
+        "requirements": "specs/as-dealership-receptionist-i-want-to-perform-customer-name-capture-with-validation-to-achieve-accurate-identity-recording-for-the-customer-profile/requirements.md",
+        "prompt": "specs/as-dealership-receptionist-i-want-to-perform-customer-name-capture-with-validation-to-achieve-accurate-identity-recording-for-the-customer-profile/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 63108,
+          "title": "As Dealership Receptionist, I want to perform customer name capture with validation to achieve accurate identity recording for the customer profile",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 63132,
+      "title": "As a user, I want to configure Contact Information Management and Verification settings so that I can customize it to my needs",
+      "slug": "as-a-user-i-want-to-configure-contact-information-management-and-verification-settings-so-that-i-can-customize-it-to-my-needs",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-a-user-i-want-to-configure-contact-information-management-and-verification-settings-so-that-i-can-customize-it-to-my-needs/specs.md",
+        "requirements": "specs/as-a-user-i-want-to-configure-contact-information-management-and-verification-settings-so-that-i-can-customize-it-to-my-needs/requirements.md",
+        "prompt": "specs/as-a-user-i-want-to-configure-contact-information-management-and-verification-settings-so-that-i-can-customize-it-to-my-needs/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 63137,
+          "title": "Code review and documentation",
           "state": "New",
           "storyPoints": null
         }
