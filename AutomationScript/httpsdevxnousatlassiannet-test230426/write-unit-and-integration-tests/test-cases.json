@@ -1,0 +1,129 @@
+{
+  "storyId": "ado-61785",
+  "storyTitle": "Write unit and integration tests",
+  "testCases": [],
+  "functional": [
+    {
+      "id": "TC-FUNC-FALLBACK-001",
+      "title": "Verify core functionality for Write unit and integration tests",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "System is available",
+        "User is authenticated"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Execute the main user workflow",
+          "expectedResult": "All expected features work correctly"
+        }
+      ],
+      "postconditions": [
+        "System remains stable",
+        "No data corruption"
+      ],
+      "estimatedTime": "3-5 minutes"
+    }
+  ],
+  "negative": [
+    {
+      "id": "TC-NEGA-FALLBACK-001",
+      "title": "Test error handling for Write unit and integration tests",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "System is available",
+        "Test data prepared"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Provide invalid input or simulate error condition",
+          "expectedResult": "Appropriate error message is displayed"
+        }
+      ],
+      "postconditions": [
+        "System remains stable",
+        "No data corruption"
+      ],
+      "estimatedTime": "3-5 minutes"
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "TC-EDGE-FALLBACK-001",
+      "title": "Test boundary conditions for Write unit and integration tests",
+      "category": "EdgeCases",
+      "priority": "Medium",
+      "preconditions": [
+        "System is available",
+        "Boundary test data ready"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Test with minimum, maximum, and boundary values",
+          "expectedResult": "System handles edge cases gracefully"
+        }
+      ],
+      "postconditions": [
+        "System remains stable",
+        "No data corruption"
+      ],
+      "estimatedTime": "3-5 minutes"
+    }
+  ],
+  "accessibility": [
+    {
+      "id": "TC-ACCE-FALLBACK-001",
+      "title": "Verify accessibility compliance for Write unit and integration tests",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "System is available",
+        "Screen reader software running"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate using keyboard only and test screen reader",
+          "expectedResult": "All elements are accessible via keyboard and screen reader"
+        }
+      ],
+      "postconditions": [
+        "System remains stable",
+        "No data corruption"
+      ],
+      "estimatedTime": "3-5 minutes"
+    }
+  ],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": true,
+    "negative": true,
+    "accessibility": true,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-61785",
+    "title": "Write unit and integration tests",
+    "description": "",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "61785",
+    "externalId": "JIRA-16848",
+    "state": "New",
+    "assignedTo": "Bhanushray Gupta",
+    "createdDate": "2026-05-03T14:02:28.020Z",
+    "priority": "medium",
+    "storyPoints": null,
+    "tags": "",
+    "epicId": "epic-JIRA-16844",
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net//browse/JIRA-16848"
+  }
+}
