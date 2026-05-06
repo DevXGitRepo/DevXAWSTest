@@ -1,26 +1,70 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-05-06T09:48:44.282Z",
+  "generatedAt": "2026-05-06T11:54:07.151Z",
   "enableTdd": false,
-  "totalFeatures": 1,
+  "totalFeatures": 3,
   "features": [
     {
-      "id": 76506,
-      "title": "Document API and user guide",
-      "slug": "document-api-and-user-guide",
+      "id": 77589,
+      "title": "As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts",
+      "slug": "as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts",
       "state": "planned",
       "status": "not-started",
       "storyCount": 1,
       "totalStoryPoints": 0,
       "files": {
-        "specs": "specs/document-api-and-user-guide/specs.md",
-        "requirements": "specs/document-api-and-user-guide/requirements.md",
-        "prompt": "specs/document-api-and-user-guide/prompt.md"
+        "specs": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/specs.md",
+        "requirements": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/requirements.md",
+        "prompt": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/prompt.md"
       },
       "userStories": [
         {
-          "id": 76506,
-          "title": "Document API and user guide",
+          "id": 77589,
+          "title": "As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 77595,
+      "title": "As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts",
+      "slug": "as-account-manager-i-want-to-perform-customer-health-assessment-to-achieve-early-identification-of-at-risk-accounts",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-account-manager-i-want-to-perform-customer-health-assessment-to-achieve-early-identification-of-at-risk-accounts/specs.md",
+        "requirements": "specs/as-account-manager-i-want-to-perform-customer-health-assessment-to-achieve-early-identification-of-at-risk-accounts/requirements.md",
+        "prompt": "specs/as-account-manager-i-want-to-perform-customer-health-assessment-to-achieve-early-identification-of-at-risk-accounts/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 77595,
+          "title": "As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 77601,
+      "title": "As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy",
+      "slug": "as-account-manager-i-want-to-perform-priority-list-customization-to-achieve-alignment-with-personal-territory-strategy",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-account-manager-i-want-to-perform-priority-list-customization-to-achieve-alignment-with-personal-territory-strategy/specs.md",
+        "requirements": "specs/as-account-manager-i-want-to-perform-priority-list-customization-to-achieve-alignment-with-personal-territory-strategy/requirements.md",
+        "prompt": "specs/as-account-manager-i-want-to-perform-priority-list-customization-to-achieve-alignment-with-personal-territory-strategy/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 77601,
+          "title": "As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy",
           "state": "New",
           "storyPoints": null
         }
