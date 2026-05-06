@@ -1,4 +1,4 @@
-# ABC
+# HiltiProjT
 
 > Auto-generated project context for AI-assisted development.
 > Last updated: 2026-05-06
@@ -14,9 +14,11 @@ Every feature has:
 - `requirements.md` — Acceptance criteria checklist
 - `prompt.md` — Ready-to-use implementation prompt
 
-## Features (1)
+## Features (3)
 
-- **Document API and user guide** (1 user stories)
+- **As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts** (1 user stories)
+- **As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts** (1 user stories)
+- **As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy** (1 user stories)
 
 ## Getting Started
 
