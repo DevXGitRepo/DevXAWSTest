@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-05-06T11:54:07.151Z",
-  "enableTdd": false,
-  "totalFeatures": 3,
+  "generatedAt": "2026-05-06T15:21:21.718Z",
+  "enableTdd": true,
+  "totalFeatures": 5,
   "features": [
     {
       "id": 77589,
@@ -10,21 +10,14 @@
       "slug": "as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 1,
+      "storyCount": 0,
       "totalStoryPoints": 0,
       "files": {
         "specs": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/specs.md",
         "requirements": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/requirements.md",
         "prompt": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/prompt.md"
       },
-      "userStories": [
-        {
-          "id": 77589,
-          "title": "As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
+      "userStories": []
     },
     {
       "id": 77595,
@@ -43,6 +36,76 @@
         {
           "id": 77595,
           "title": "As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 78380,
+      "title": "As DevOps Engineer, I want to perform canary deployment validation to achieve risk-reduced production releases",
+      "slug": "as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/specs.md",
+        "requirements": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/requirements.md",
+        "tddTests": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/tdd-tests.md",
+        "prompt": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 78385,
+          "title": "Document API and user guide",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 78386,
+      "title": "As Release Manager, I want to perform automated deployment scheduling to achieve predictable release timelines",
+      "slug": "as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 5,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/specs.md",
+        "requirements": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/requirements.md",
+        "tddTests": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/tdd-tests.md",
+        "prompt": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 78391,
+          "title": "Document API and user guide",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 78390,
+          "title": "Write unit and integration tests",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 78389,
+          "title": "Develop UI components and integration",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 78388,
+          "title": "Implement API endpoint and business logic",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 78387,
+          "title": "Define requirements and acceptance criteria",
           "state": "New",
           "storyPoints": null
         }
