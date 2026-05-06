@@ -1,0 +1,132 @@
+{
+  "storyId": "ado-78225",
+  "storyTitle": "As Sales Professional, I want to perform login with session security enforcement to achieve protection against unauthorized session reuse",
+  "functional": [
+    {
+      "id": "TC-FUNC-FALLBACK-001",
+      "title": "Verify core functionality for As Sales Professional, I want to perform login with session security enforcement to achieve protection against unauthorized session reuse",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "System is available",
+        "User is authenticated"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Execute the main user workflow",
+          "expectedResult": "All expected features work correctly"
+        }
+      ],
+      "postconditions": [
+        "System remains stable",
+        "No data corruption"
+      ],
+      "estimatedTime": "3-5 minutes"
+    }
+  ],
+  "negative": [
+    {
+      "id": "TC-NEG-FALLBACK-001",
+      "title": "Test error handling for As Sales Professional, I want to perform login with session security enforcement to achieve protection against unauthorized session reuse",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "System is available",
+        "Test data prepared"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Provide invalid input or simulate error condition",
+          "expectedResult": "Appropriate error message is displayed"
+        }
+      ],
+      "postconditions": [
+        "System remains stable",
+        "No data corruption"
+      ],
+      "estimatedTime": "3-5 minutes"
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "TC-EDGE-FALLBACK-001",
+      "title": "Test boundary conditions for As Sales Professional, I want to perform login with session security enforcement to achieve protection against unauthorized session reuse",
+      "category": "EdgeCases",
+      "priority": "Medium",
+      "preconditions": [
+        "System is available",
+        "Boundary test data ready"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Test with minimum, maximum, and boundary values",
+          "expectedResult": "System handles edge cases gracefully"
+        }
+      ],
+      "postconditions": [
+        "System remains stable",
+        "No data corruption"
+      ],
+      "estimatedTime": "3-5 minutes"
+    }
+  ],
+  "accessibility": [
+    {
+      "id": "TC-A11Y-FALLBACK-001",
+      "title": "Verify accessibility compliance for As Sales Professional, I want to perform login with session security enforcement to achieve protection against unauthorized session reuse",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "System is available",
+        "Screen reader software running"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate using keyboard only and test screen reader",
+          "expectedResult": "All elements are accessible via keyboard and screen reader"
+        }
+      ],
+      "postconditions": [
+        "System remains stable",
+        "No data corruption"
+      ],
+      "estimatedTime": "3-5 minutes"
+    }
+  ],
+  "performance": [],
+  "security": [],
+  "usability": [],
+  "reliability": [],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": true,
+    "negative": true,
+    "accessibility": true,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-78225",
+    "title": "As Sales Professional, I want to perform login with session security enforcement to achieve protection against unauthorized session reuse",
+    "description": "CONTEXT & BACKGROUND:\nUpon successful authentication, session tokens must be securely stored using platform-specific secure storage and credentials must never persist in local app memory or shared preferences.\n\nCURRENT STATE:\nManual or incomplete process today.\n\nDESIRED STATE:\nSystem supports the capability end-to-end.\n\nKEY FUNCTIONALITY:\n• Implement core logic and validation\n• Expose API and UI\n• Handle errors and edge cases\n• Ensure data persistence and retrieval\n\nUSER INTERACTION FLOW:\n\n- User accesses the feature\n- User performs the required action\n- System processes the request\n- System displays results or confirmation\n- User verifies the outcome\n\nTECHNICAL CONSIDERATIONS:\n• Data source: application database\n• Security: authentication and input validation\n• Performance: meet SLA requirements\n\nOUT OF SCOPE:\n• Advanced customization (future story)\n\nSUCCESS METRICS:\n• Feature works per acceptance criteria\n• No critical defects in production\n\n## Design Prompt\n\n# Design Guidelines: Multi-Tenant Development Platform\n\n## Design Approach\n\nThis design system serves a multi-tenant enterprise development platform tailored for diverse personas including retail field sales professionals, IT administrators, security engineers, compliance officers, and store managers. The application supports mobile (Flutter, distributed via Microsoft Intune) and web interfaces, authenticated through enterprise SSO (Azure AD / Microsoft Entra ID).\n\nThe design language balances enterprise security rigor with mobile-first usability for field workers who need rapid access to daily priorities, meetings, follow-ups, and customer information, while providing administrators with powerful configuration, monitoring, and compliance tools.\n\nThe system follows a task-oriented, card-based dashboard paradigm optimized for quick scanning and one-handed mobile interaction. It employs a progressive disclosure navigation model (tiles → lists → detail views) consistent across all tenant configurations. All patterns support role-based access, multi-tenant configurability, graceful error handling, offline resilience, and compliance with OWASP mobile security and GDPR standards.\n\n\n## Core Design Elements\n\n### Typography\n\nLevel\nUsage\nSpecification\nDisplay\nLogin screen branding, welcome headers\nSemi-bold, 28–32sp, primary text color\nH1 / Page Title\nDashboard title (\"My Day\"), section headers\nSemi-bold, 22–24sp\nH2 / Section Title\nCard group labels (\"Meetings\", \"Follow-ups\")\nMedium, 18–20sp\nH3 / Card Title\nIndividual tile headings, priority item names\nMedium, 16sp\nBody\nDescriptions, meeting details, event summaries\nRegular, 14sp, secondary text color\nLabel\nInput field labels, metadata, timestamps\nRegular, 12sp, tertiary text color\nCaption / Metadata\nStatus badges, counts, last-updated timestamps\nRegular, 11sp, muted color\nButton Text\nLogin button, CTAs, quick actions\nMedium, 14–16sp, high-contrast on fill\nError Text\nValidation messages, authentication failures\nMedium, 12–13sp, semantic error color\n\nFont Family:\n\n- Primary: System default (San Francisco on iOS, Roboto on Android) for native feel and optimal rendering.\n- Monospace: Used for credential masking indicators, technical error codes, timestamps in audit logs, countdown timers, and revealed secret fields (font-family: var(--font-mono)).\n\nHierarchy Principles:\n\n- Maximum 3 levels of typographic weight visible on any single screen.\n- Error and validation text must meet WCAG AA contrast (4.5:1 minimum) against both light and dark backgrounds.\n- Line height: 1.4× for body text, 1.2× for headings.\n\n\n### Layout System\n\n#### Spacing Primitives\n\nToken\nValue\nUsage\nspace-xs\n4dp\nInline icon padding, badge internal spacing, error message gap below inputs\nspace-sm\n8dp\nBetween metadata elements, compact list items, tile grid gutter (mobile)\nspace-md\n16dp\nCard internal padding, form field spacing, tile grid gap (desktop), horizontal margins\nspace-lg\n24dp\nSection separation, card group margins, button-to-field spacing\nspace-xl\n32dp\nPage-level top/bottom margins, major form section separation, login form centering\nspace-2xl\n48dp\nHero spacing on login screen\n\n#### Grid Structure\n\n- Mobile (primary): Single-column layout, 16dp horizontal margins, full-width cards.\n- Dashboard tile grid: Responsive CSS Grid with auto-fit / minmax():\n\nViewport\nColumns\nTile Min-Width\nGap\nDesktop (≥1280px)\n3–5 tiles per row\n200px\n16px\nTablet (768–1279px)\n2–3 columns\n180px\n12px\nMobile (<768px)\n1 (stacked, full-width)\n100%\n8px\n\n- Admin configuration layouts: Two-panel layout (60% form / 40% preview) on desktop; stacks vertically on tablet with collapsible summary.\n- Dashboard widget grid: 12-column responsive grid — 3 columns on desktop (4 cols each), 2 on tablet, 1 on mobile.\n- Login screen: Centered single-column form card, max-width 400px, vertically centered with brand mark above.\n\n#### Screen Regions\n\n- Top Bar: App title or context label, avatar/profile access (session indicator), notification indicator. Height: 56dp.\n- Main Content Area: Scrollable, holds dashboard cards, configuration forms, or data tables. Padding: space-md horizontal, space-lg vertical between sections.\n- Quick Access Tile Grid: Summary tiles (My Day, Support, Meetings, Events, Follow-ups). Each tile: minimum height 120–200px depending on viewport.\n- Priority Items Strip: Vertical list of high-priority items surfaced below the tile grid. Card height: 72dp minimum.\n- Bottom Navigation (mobile): 4–5 primary destinations, 56dp height, icon + label.\n- Action Bar (configuration screens): Fixed bottom bar (height: 64px) with primary action and cancel buttons, separated by 1px divider.\n\n#### Login Screen Layout\n\n- Vertically and horizontally centered content block.\n- Brand/logo mark: top of form block, fixed height 40–56px, space-xl below top safe area.\n- Input fields stacked with space-md gap.\n- Login button: full-width within form container, minimum height 48dp, space-lg above from last input.\n- Error message region: reserved space below form or inline below fields; no layout shift on error display.\n- Desktop (≥1024px): Split layout — branded illustration panel (50%) + login card (50%), card max-width 420px.\n- Tablet (768–1023px): Illustration collapses to top banner (120px height), login card centered below.\n- Mobile (<768px): Full-bleed login card, illustration hidden, logo pinned top-center.\n\n\n### Component Library\n\n#### Navigation Components\n\n##### Top Bar\n\n- Displays app title or context label, user avatar + truncated display name (session indicator), and notification badge.\n- Height: 56dp. Persistent across all authenticated views.\n\n##### Sidebar Navigation\n\n- Full sidebar visible on desktop; collapses to hamburger menu on tablet/mobile.\n- Contains primary navigation destinations grouped by function.\n\n##### Breadcrumbs\n\n- Appears at the top of every detail view: Home > [Section Name] > [Item Title].\n- Each segment is a clickable link. On mobile, collapses to show only the immediate parent level.\n- A dedicated back arrow button (← icon + \"Back\" label) is positioned at top-left for touch-friendly navigation.\n\n##### Context Switcher\n\n- For multi-role users: a role-selection interstitial card post-login showing available roles with iconography and brief descriptions.\n- For multi-tenant admins: tenant selector in the top bar or sidebar header.\n- Selection persists for the session.\n\n##### Deep Link Architecture\n\n- Every section and detail view is addressable via a unique, shareable URL: /{tenant-slug}/{section}/{item-id}.\n- Deep links require authentication before rendering; unauthenticated users redirect to login then forward to the original destination.\n- \"Copy link\" action available in the toolbar of every detail view with toast confirmation.\n\n##### Tile-to-Detail Navigation\n\n- Three-level progressive disclosure: tiles → list views → detail pages.\n- Tile interaction states: default (subtle elevation), hover (elevated + scale 1.01), active/pressed (reduced elevation), focused (2px focus ring).\n- All tile-to-detail navigations must complete within 1 second. Use skeleton screens for transitions exceeding 300ms.\n- Browser back button behavior explicitly supported via history stack management.\n\n\n#### Dashboard Widgets\n\n##### Metric Cards\n\n- Key metrics (pipeline value, open opportunities, win rate, upcoming activities) occupy the top row.\n- Numeric value uses display-large typography; metric label uses label-small.\n- Each card supports single-tap drill-down with a subtle chevron-right icon indicating interactivity.\n- Skeleton loaders display immediately while data hydrates; first meaningful paint within 2 seconds.\n\n##### Section Tiles (Home Screen)\n\nTile Anatomy:\n\n```\n┌──────────────────────────┐\n│  [Icon]                  │\n│  Section Title           │\n│  ┌────────────────────┐  │\n│  │  Summary Count     │  │\n│  │  (pending items)   │  │\n│  └────────────────────┘  │\n│  Optional: badge/flag    │\n└──────────────────────────┘\n```\n\n- Summary count: font-size: 28px, font-weight: 700 for scannability.\n- Count badge on header: pill shape, high-contrast background (danger for urgent, warning for moderate).\n- Badges update in real-time via WebSocket or polling (≤5s interval) without page refresh.\n- Tiles are tappable — entire surface acts as navigation target.\n- Tile visibility and ordering are configurable per tenant role.\n- Use distinct, muted background tints per category for quick visual scanning while maintaining contrast ratios.\n\nMeeting Summary Tile:\n\n- Count badge showing total meetings today.\n- Next upcoming meeting highlighted with left accent border (4px, brand accent color).\n- Remaining meetings listed chronologically with monospace timestamps.\n- Empty state: \"No meetings scheduled today\" with calendar illustration.\n\nMy Day Task Summary Tile:\n\n- Total task count, next scheduled task pinned at top.\n- Progress bar or ring showing completed/total ratio.\n- Completed tasks use strikethrough + muted color.\n- Micro-copy: \"X of Y tasks complete.\"\n\nUpcoming Events Tile:\n\n- Today's events + next 3 upcoming. \"+N more\" overflow link.\n- Event row: abbreviated date + title + location (secondary text).\n\n##### Activity Feed\n\n- Supports distinct visual treatments for Visit, Call, Email, and Meeting.\n- Each type has a unique icon and color accent in the timeline gutter:\n- Visit: map-pin / blue-500\n- Call: phone / green-500\n- Email: mail / purple-500\n- Meeting: calendar / orange-500\n- Timestamps in relative format (\"12 min ago\") with full datetime on hover/long-press.\n- Location auto-captured as secondary metadata line.\n- Sync status icon per item (cloud-check or cloud-off); unsynced items show yellow-400 dot badge.\n\n##### Quick Actions Strip\n\n- Icon + label buttons for high-frequency tasks (log activity, view pipeline, check calendar).\n- Navigation to any detailed view is one interaction away — no intermediate screens.\n\n##### Priority Task List\n\n- Sorted highest priority first (P0 → P1 → P2).\n- Priority badges: Critical = danger-500, High = warning-500, Medium = info-400.\n- Overdue items: warning flag icon + \"Overdue\" label in danger-600, row background tinted with danger-50.\n- Maximum 5 visible items per role; \"View All\" link for overflow.\n\n##### Follow-Up Items\n\n- Row: [Avatar/Initials] Customer Name · Due: MMM DD [Status Pill]\n- Status dots: red = overdue, amber = due today, green = upcoming.\n- Past-due items visually highlighted with overdue pattern.\n- Customer name truncates at 24 characters on mobile.\n\n##### Empty States\n\n- Centered illustration (line-art, theme-aware).\n- Heading: \"You're all caught up\" or contextual equivalent.\n- Subtext explaining the empty state.\n- Optional CTA linking to the unfiltered list or creation action.\n\n##### Repository Cards / App Catalog Cards\n\n- App icon (48×48, rounded 8px), app name (semibold, 16px), publisher/category metadata (12px, neutral-500).\n- Install button: primary action, full-width on mobile. States: \"Install\", \"Installing…\" (spinner), \"Installed\" (disabled, check icon), \"Update Available\".\n- Device authorization badge: shield icon + \"Managed Device\" label if authorized; visually muted with overlay if not enrolled.\n\n##### Deployment Status Dashboard Widget\n\n- Horizontal stacked bar (success / in-progress / failed / pending); each segment interactive.\n- Status iconography: Green ● (success), Blue/Amber ◐ (in progress), Red ● (failed with retry), Gray ○ (pending).\n- \"Last synced\" timestamp with manual refresh button. Auto-refresh every 60 seconds with shimmer on bar only.\n\n##### Security Monitoring Widgets\n\n- Failed Login Metric Cards: Total failed attempts (24h/7d toggle), unique IPs, accounts locked, alerts triggered.\n- Trend Chart: Time-series showing failed attempts; danger color for threshold spikes; horizontal reference line for alert threshold.\n- Data Table: Sortable/filterable — Timestamp, IP, masked username, Status, Geo-location.\n\n\n#### Forms & Inputs\n\n##### Authentication Form Patterns\n\nLogin Form Structure:\n\n- Single-column centered card (max-width 400px) with clear hierarchy: logo → heading → inputs → primary action → secondary links.\n- Username/email field: visible label above, autofocus on render, accepts email or UPN format, max 256 characters.\n- Password field: type=\"password\" default, visibility toggle (eye/eye-slash) as trailing icon button (min 44×44px tap target), max 128 characters, autocomplete=\"current-password\".\n- Immediate masking — no brief character reveal on entry to prevent shoulder-surfing.\n- Toggle state resets to masked on blur, form submission, or new login attempt.\n\nLogin Button:\n\n- Full-width, minimum height 48dp, primary brand color fill with high-contrast text (4.5:1 minimum).\n- Disabled state (opacity: 0.4, cursor: not-allowed) until all required fields contain valid input.\n- Loading state: label replaced by 16px spinner + \"Signing in…\" text; button disabled; pointer events suppressed.\n- Duplicate submission prevention: debounce 300ms; disables on first tap until explicit response.\n- On failure: re-enables simultaneously with error display. On success: remains loading until navigation completes.\n\nSSO Entry Point:\n\n- Single \"Sign in with your organization\" button with identity provider branding (e.g., Microsoft Entra ID logo, 16×16 inline SVG).\n- Uses primary action color (Blue-600 light / Blue-400 dark).\n\nField Behavior After Failed Authentication:\n\n- Username/email field retains its value (never cleared).\n- Password field is always cleared for security.\n- Focus programmatically moves to the password field.\n\nKeyboard-Driven Submission:\n\n- Mobile keyboard action button displays contextual label: Go (iOS) / Login (Android).\n- Enter/Done/Go in password field triggers the same submission pipeline as button tap.\n\n##### Inline Validation & Error States\n\nError Message Placement:\n\n- Inline, directly below the offending field with 4px (space-xs) gap.\n- Never as page-level banners alone for field-specific errors; never triggers full page reload.\n\nError Message Timing:\n\n- Validation feedback renders within 2 seconds of submission or field blur.\n- Prefer inline validation on submit for login forms (not real-time keystroke validation).\n- Server-side errors appear after round-trip but still inline.\n\nError Message Content:\n\n- Specific and actionable per field: \"Email is required\", \"Password is required.\"\n- Authentication failures use generic, security-safe language: \"The email or password you entered is incorrect.\" — never specify which field is wrong.\n- Never expose system internals, stack traces, or enumeration hints.\n\nError Visual Treatment:\n\nElement\nSpecification\nError text color\n$color-error-500 / red-600 (light) / red-400 (dark)\nError icon\n16px alert-circle, same color, inline-start of message\nInput border on error\n2px solid $color-error-500\nBackground tint\n$color-error-50 at 8% opacity (optional)\nError text size\n12–13px, font-weight: 500\nBox shadow on error\n0 0 0 3px rgba($error, 0.12)\n\nError Lifecycle:\n\n- Error appears only after explicit form submission.\n- Error clears immediately when user focuses or modifies the errored field — no manual dismissal required.\n- No premature re-validation until next explicit submission event.\n\nDesign Tokens for Validation States:\n\n| Token\n\nPersona: Sales Professional\n\nAcceptance Criteria:\n\n- Authentication tokens are stored in Flutter secure storage (Keychain/Keystore)\n- Credentials are cleared from memory immediately after authentication request completes\n- Session tokens include expiration and are validated server-side on each subsequent request\n- System handles the operation correctly and returns expected results for scenario 4\n- System handles the operation correctly and returns expected results for scenario 5\n",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "78225",
+    "externalId": "PROJECT060-432",
+    "state": "New",
+    "assignedTo": "Bhanushray Gupta",
+    "createdDate": "2026-05-06T13:35:32.568Z",
+    "priority": "high",
+    "storyPoints": null,
+    "tags": "",
+    "epicId": "epic-77794",
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net//browse/PROJECT060-432"
+  }
+}
