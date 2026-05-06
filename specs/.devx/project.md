@@ -7,17 +7,20 @@
 
 ## Development Methodology
 
-This project follows **Spec-Driven Development (SDD)**.
+This project follows **Spec-Driven Development (SDD)** with **Test-Driven Development (TDD)**.
 
 Every feature has:
 - `specs.md` — Full technical specification
 - `requirements.md` — Acceptance criteria checklist
+- `tdd-tests.md` — Test specifications (Red → Green → Refactor)
 - `prompt.md` — Ready-to-use implementation prompt
 
-## Features (3)
+## Features (5)
 
-- **As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts** (1 user stories)
+- **As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts** (0 user stories)
 - **As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts** (1 user stories)
+- **As DevOps Engineer, I want to perform canary deployment validation to achieve risk-reduced production releases** (1 user stories)
+- **As Release Manager, I want to perform automated deployment scheduling to achieve predictable release timelines** (5 user stories)
 - **As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy** (1 user stories)
 
 ## Getting Started
@@ -42,6 +45,7 @@ specs/
   <feature-slug>/
     specs.md             ← Technical specification
     requirements.md      ← Acceptance criteria
+    tdd-tests.md         ← TDD test specifications
     prompt.md            ← Implementation prompt
 ```
 
