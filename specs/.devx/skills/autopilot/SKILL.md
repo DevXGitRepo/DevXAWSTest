@@ -8,7 +8,7 @@ allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 
 # /autopilot — Implement All Features Automatically
 
-> Chains the full SDD workflow in a loop: pick next → implement → validate → mark done → repeat.
+> Chains the full SDD + TDD workflow in a loop: pick next → implement → validate → mark done → repeat.
 
 ## Arguments
 
@@ -27,19 +27,22 @@ For each unimplemented feature, execute these phases in sequence:
 ### Phase 2 — Read Specs
 1. Read `specs/<slug>/specs.md` — understand what to build
 2. Read `specs/<slug>/requirements.md` — the acceptance checklist
+3. Read `specs/<slug>/tdd-tests.md` — test specifications
 
 ### Phase 3 — Implement
-Implement each requirement from requirements.md one at a time:
+Follow the TDD Red → Green → Refactor cycle for each acceptance criterion:
 
-1. Read the requirement
-2. Write the code to satisfy it
-3. Verify it works
-4. Move to the next requirement
+1. **Red** — Write a failing test based on tdd-tests.md
+2. **Green** — Write minimum code to pass the test
+3. **Refactor** — Clean up while keeping tests green
+4. Run the full test suite — all tests must pass
+5. Repeat for each criterion in requirements.md
 
 ### Phase 4 — Validate
 1. Go through every item in `specs/<slug>/requirements.md`
 2. Verify each acceptance criterion is satisfied in the code
 3. Check edge cases from specs.md
+4. Confirm all tests pass
 
 If validation fails:
 - Fix the failing criteria
@@ -65,6 +68,7 @@ After each feature, show a brief status:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✓ Completed: <Feature Title>
   Requirements: 8/8 passed
+  Tests: 12 passed, 0 failed
   Next: <Next Feature Title> (N remaining)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -77,6 +81,7 @@ When all features are done (or limit reached), show:
   Autopilot Complete
   Features implemented: X / Y
   Total requirements satisfied: N
+  Total tests: N passed
   Remaining: Z features
 ══════════════════════════════════════
 ```
@@ -87,4 +92,5 @@ When all features are done (or limit reached), show:
 - **Stop on repeated failure.** If a feature fails validation 3 times, stop and report the issue.
 - **Do not modify specs.** If a spec seems wrong, stop and ask the user.
 - **Commit after each feature.** Keep changes atomic and reviewable.
+- **Follow TDD strictly.** No production code without a failing test.
 - **No gold-plating.** Implement exactly what the spec describes, nothing more.
