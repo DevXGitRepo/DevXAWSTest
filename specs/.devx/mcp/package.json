@@ -1,7 +1,7 @@
 {
-  "name": "hilti-projtest-mcp-server",
+  "name": "abc-mcp-server",
   "version": "1.0.0",
-  "description": "DevX MCP server for Hilti_ProjTest specs",
+  "description": "DevX MCP server for ABC specs",
   "type": "module",
   "main": "server.js",
   "scripts": {
