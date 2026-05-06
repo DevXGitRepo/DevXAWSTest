@@ -1,9 +1,9 @@
-# Hilti_ProjTest
+# ABC
 
 > Auto-generated project context for AI-assisted development.
-> Last updated: 2026-05-04
+> Last updated: 2026-05-06
 
-**Organization:** https://devxnous.atlassian.net/
+**Organization:** https://devxnous.atlassian.net
 
 ## Development Methodology
 
@@ -14,13 +14,9 @@ Every feature has:
 - `requirements.md` — Acceptance criteria checklist
 - `prompt.md` — Ready-to-use implementation prompt
 
-## Features (5)
+## Features (1)
 
-- **As a user, I want to use Customer Profile Creation and Lifecycle Initiation so that I can benefit from its core functionality** (1 user stories)
-- **As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance** (0 user stories)
-- **As Dealership Receptionist, I want to perform customer name capture with validation to achieve accurate identity recording for the customer profile** (0 user stories)
-- **As a user, I want to configure Contact Information Management and Verification settings so that I can customize it to my needs** (1 user stories)
-- **As a user, I want Contact Information Management and Verification to handle errors gracefully so that I can recover from issues easily** (1 user stories)
+- **Document API and user guide** (1 user stories)
 
 ## Getting Started
 
