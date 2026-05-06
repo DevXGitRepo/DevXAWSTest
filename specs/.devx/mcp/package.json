@@ -1,7 +1,7 @@
 {
-  "name": "abc-mcp-server",
+  "name": "hiltiprojt-mcp-server",
   "version": "1.0.0",
-  "description": "DevX MCP server for ABC specs",
+  "description": "DevX MCP server for HiltiProjT specs",
   "type": "module",
   "main": "server.js",
   "scripts": {
