@@ -1,9 +1,56 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-05-06T15:21:21.718Z",
+  "generatedAt": "2026-05-08T07:58:23.381Z",
   "enableTdd": true,
-  "totalFeatures": 5,
+  "totalFeatures": 11,
   "features": [
+    {
+      "id": 86256,
+      "title": "As System Administrator, I want to perform login screen accessibility compliance to achieve inclusive access for all users",
+      "slug": "as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 5,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users/specs.md",
+        "requirements": "specs/as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users/requirements.md",
+        "tddTests": "specs/as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users/tdd-tests.md",
+        "prompt": "specs/as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 86266,
+          "title": "Document API and user guide",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86264,
+          "title": "Write unit and integration tests",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86262,
+          "title": "Develop UI components and integration",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86260,
+          "title": "Implement API endpoint and business logic",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86258,
+          "title": "Define requirements and acceptance criteria",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
     {
       "id": 77589,
       "title": "As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts",
@@ -18,6 +65,194 @@
         "prompt": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/prompt.md"
       },
       "userStories": []
+    },
+    {
+      "id": 86160,
+      "title": "As Production Manager, I want to perform login screen navigation to achieve quick access to the authentication page",
+      "slug": "as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 5,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/specs.md",
+        "requirements": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/requirements.md",
+        "tddTests": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/tdd-tests.md",
+        "prompt": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 86170,
+          "title": "Document API and user guide",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86168,
+          "title": "Write unit and integration tests",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86166,
+          "title": "Develop UI components and integration",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86164,
+          "title": "Implement API endpoint and business logic",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86162,
+          "title": "Define requirements and acceptance criteria",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 86172,
+      "title": "As Plant Operator, I want to perform login button click to achieve authentication request submission",
+      "slug": "as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 5,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/specs.md",
+        "requirements": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/requirements.md",
+        "tddTests": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/tdd-tests.md",
+        "prompt": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 86182,
+          "title": "Document API and user guide",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86180,
+          "title": "Write unit and integration tests",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86178,
+          "title": "Develop UI components and integration",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86176,
+          "title": "Implement API endpoint and business logic",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86174,
+          "title": "Define requirements and acceptance criteria",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 86196,
+      "title": "As System Administrator, I want to perform login form submission via keyboard to achieve efficient authentication without mouse dependency",
+      "slug": "as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 5,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/specs.md",
+        "requirements": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/requirements.md",
+        "tddTests": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/tdd-tests.md",
+        "prompt": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 86206,
+          "title": "Document API and user guide",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86204,
+          "title": "Write unit and integration tests",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86202,
+          "title": "Develop UI components and integration",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86200,
+          "title": "Implement API endpoint and business logic",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86198,
+          "title": "Define requirements and acceptance criteria",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 86208,
+      "title": "As Plant Operator, I want to perform login with empty field detection to achieve clear guidance on required inputs",
+      "slug": "as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 5,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs/specs.md",
+        "requirements": "specs/as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs/requirements.md",
+        "tddTests": "specs/as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs/tdd-tests.md",
+        "prompt": "specs/as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 86218,
+          "title": "Document API and user guide",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86216,
+          "title": "Write unit and integration tests",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86214,
+          "title": "Develop UI components and integration",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86212,
+          "title": "Implement API endpoint and business logic",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86210,
+          "title": "Define requirements and acceptance criteria",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
     },
     {
       "id": 77595,
@@ -47,7 +282,7 @@
       "slug": "as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 1,
+      "storyCount": 0,
       "totalStoryPoints": 0,
       "files": {
         "specs": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/specs.md",
@@ -55,14 +290,7 @@
         "tddTests": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/tdd-tests.md",
         "prompt": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/prompt.md"
       },
-      "userStories": [
-        {
-          "id": 78385,
-          "title": "Document API and user guide",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
+      "userStories": []
     },
     {
       "id": 78386,
@@ -70,7 +298,7 @@
       "slug": "as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 5,
+      "storyCount": 0,
       "totalStoryPoints": 0,
       "files": {
         "specs": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/specs.md",
@@ -78,38 +306,7 @@
         "tddTests": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/tdd-tests.md",
         "prompt": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/prompt.md"
       },
-      "userStories": [
-        {
-          "id": 78391,
-          "title": "Document API and user guide",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 78390,
-          "title": "Write unit and integration tests",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 78389,
-          "title": "Develop UI components and integration",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 78388,
-          "title": "Implement API endpoint and business logic",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 78387,
-          "title": "Define requirements and acceptance criteria",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
+      "userStories": []
     },
     {
       "id": 77601,
@@ -128,6 +325,53 @@
         {
           "id": 77601,
           "title": "As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 86244,
+      "title": "As Plant Operator, I want to perform login with masked password display to achieve credential confidentiality",
+      "slug": "as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 5,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/specs.md",
+        "requirements": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/requirements.md",
+        "tddTests": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/tdd-tests.md",
+        "prompt": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 86254,
+          "title": "Document API and user guide",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86252,
+          "title": "Write unit and integration tests",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86250,
+          "title": "Develop UI components and integration",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86248,
+          "title": "Implement API endpoint and business logic",
+          "state": "New",
+          "storyPoints": null
+        },
+        {
+          "id": 86246,
+          "title": "Define requirements and acceptance criteria",
           "state": "New",
           "storyPoints": null
         }
