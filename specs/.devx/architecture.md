@@ -4,25 +4,49 @@
 
 ## Feature Map
 
+### As System Administrator, I want to perform login screen accessibility compliance to achieve inclusive access for all users
+- 5 user stories
+- Stories: Document API and user guide, Write unit and integration tests, Develop UI components and integration, Implement API endpoint and business logic, Define requirements and acceptance criteria
+
 ### As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts
 - 0 user stories
 - Stories: 
+
+### As Production Manager, I want to perform login screen navigation to achieve quick access to the authentication page
+- 5 user stories
+- Stories: Document API and user guide, Write unit and integration tests, Develop UI components and integration, Implement API endpoint and business logic, Define requirements and acceptance criteria
+
+### As Plant Operator, I want to perform login button click to achieve authentication request submission
+- 5 user stories
+- Stories: Document API and user guide, Write unit and integration tests, Develop UI components and integration, Implement API endpoint and business logic, Define requirements and acceptance criteria
+
+### As System Administrator, I want to perform login form submission via keyboard to achieve efficient authentication without mouse dependency
+- 5 user stories
+- Stories: Document API and user guide, Write unit and integration tests, Develop UI components and integration, Implement API endpoint and business logic, Define requirements and acceptance criteria
+
+### As Plant Operator, I want to perform login with empty field detection to achieve clear guidance on required inputs
+- 5 user stories
+- Stories: Document API and user guide, Write unit and integration tests, Develop UI components and integration, Implement API endpoint and business logic, Define requirements and acceptance criteria
 
 ### As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts
 - 1 user stories
 - Stories: As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts
 
 ### As DevOps Engineer, I want to perform canary deployment validation to achieve risk-reduced production releases
-- 1 user stories
-- Stories: Document API and user guide
+- 0 user stories
+- Stories: 
 
 ### As Release Manager, I want to perform automated deployment scheduling to achieve predictable release timelines
-- 5 user stories
-- Stories: Document API and user guide, Write unit and integration tests, Develop UI components and integration, Implement API endpoint and business logic, Define requirements and acceptance criteria
+- 0 user stories
+- Stories: 
 
 ### As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy
 - 1 user stories
 - Stories: As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy
+
+### As Plant Operator, I want to perform login with masked password display to achieve credential confidentiality
+- 5 user stories
+- Stories: Document API and user guide, Write unit and integration tests, Develop UI components and integration, Implement API endpoint and business logic, Define requirements and acceptance criteria
 
 ## Guidelines
 
