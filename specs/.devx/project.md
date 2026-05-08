@@ -1,7 +1,7 @@
 # HiltiProjT
 
 > Auto-generated project context for AI-assisted development.
-> Last updated: 2026-05-06
+> Last updated: 2026-05-08
 
 **Organization:** https://devxnous.atlassian.net
 
@@ -15,13 +15,19 @@ Every feature has:
 - `tdd-tests.md` — Test specifications (Red → Green → Refactor)
 - `prompt.md` — Ready-to-use implementation prompt
 
-## Features (5)
+## Features (11)
 
+- **As System Administrator, I want to perform login screen accessibility compliance to achieve inclusive access for all users** (5 user stories)
 - **As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts** (0 user stories)
+- **As Production Manager, I want to perform login screen navigation to achieve quick access to the authentication page** (5 user stories)
+- **As Plant Operator, I want to perform login button click to achieve authentication request submission** (5 user stories)
+- **As System Administrator, I want to perform login form submission via keyboard to achieve efficient authentication without mouse dependency** (5 user stories)
+- **As Plant Operator, I want to perform login with empty field detection to achieve clear guidance on required inputs** (5 user stories)
 - **As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts** (1 user stories)
-- **As DevOps Engineer, I want to perform canary deployment validation to achieve risk-reduced production releases** (1 user stories)
-- **As Release Manager, I want to perform automated deployment scheduling to achieve predictable release timelines** (5 user stories)
+- **As DevOps Engineer, I want to perform canary deployment validation to achieve risk-reduced production releases** (0 user stories)
+- **As Release Manager, I want to perform automated deployment scheduling to achieve predictable release timelines** (0 user stories)
 - **As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy** (1 user stories)
+- **As Plant Operator, I want to perform login with masked password display to achieve credential confidentiality** (5 user stories)
 
 ## Getting Started
 
