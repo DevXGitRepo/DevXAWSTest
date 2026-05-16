@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-05-08T07:58:23.381Z",
+  "generatedAt": "2026-05-15T14:29:54.475Z",
   "enableTdd": true,
-  "totalFeatures": 11,
+  "totalFeatures": 13,
   "features": [
     {
       "id": 86256,
@@ -52,6 +52,29 @@
       ]
     },
     {
+      "id": 89541,
+      "title": "As Account Manager, I want to see a specific error when my credentials are incorrect so that I can identify which field to correct",
+      "slug": "as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct/specs.md",
+        "requirements": "specs/as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct/requirements.md",
+        "tddTests": "specs/as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct/tdd-tests.md",
+        "prompt": "specs/as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 89543,
+          "title": "Return appropriate error codes and messages from authentication endpoint for different failure types",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
       "id": 77589,
       "title": "As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts",
       "slug": "as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts",
@@ -72,7 +95,7 @@
       "slug": "as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 5,
+      "storyCount": 0,
       "totalStoryPoints": 0,
       "files": {
         "specs": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/specs.md",
@@ -80,38 +103,7 @@
         "tddTests": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/tdd-tests.md",
         "prompt": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/prompt.md"
       },
-      "userStories": [
-        {
-          "id": 86170,
-          "title": "Document API and user guide",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86168,
-          "title": "Write unit and integration tests",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86166,
-          "title": "Develop UI components and integration",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86164,
-          "title": "Implement API endpoint and business logic",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86162,
-          "title": "Define requirements and acceptance criteria",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
+      "userStories": []
     },
     {
       "id": 86172,
@@ -119,7 +111,7 @@
       "slug": "as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 5,
+      "storyCount": 0,
       "totalStoryPoints": 0,
       "files": {
         "specs": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/specs.md",
@@ -127,38 +119,7 @@
         "tddTests": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/tdd-tests.md",
         "prompt": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/prompt.md"
       },
-      "userStories": [
-        {
-          "id": 86182,
-          "title": "Document API and user guide",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86180,
-          "title": "Write unit and integration tests",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86178,
-          "title": "Develop UI components and integration",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86176,
-          "title": "Implement API endpoint and business logic",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86174,
-          "title": "Define requirements and acceptance criteria",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
+      "userStories": []
     },
     {
       "id": 86196,
@@ -166,7 +127,7 @@
       "slug": "as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 5,
+      "storyCount": 0,
       "totalStoryPoints": 0,
       "files": {
         "specs": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/specs.md",
@@ -174,38 +135,7 @@
         "tddTests": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/tdd-tests.md",
         "prompt": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/prompt.md"
       },
-      "userStories": [
-        {
-          "id": 86206,
-          "title": "Document API and user guide",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86204,
-          "title": "Write unit and integration tests",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86202,
-          "title": "Develop UI components and integration",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86200,
-          "title": "Implement API endpoint and business logic",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86198,
-          "title": "Define requirements and acceptance criteria",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
+      "userStories": []
     },
     {
       "id": 86208,
@@ -277,6 +207,29 @@
       ]
     },
     {
+      "id": 89537,
+      "title": "As Account Manager, I want to see a clear error message when my password is invalid so that I know exactly what went wrong",
+      "slug": "as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong/specs.md",
+        "requirements": "specs/as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong/requirements.md",
+        "tddTests": "specs/as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong/tdd-tests.md",
+        "prompt": "specs/as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 89539,
+          "title": "Implement inline error message display for invalid password near the password input field",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
       "id": 78380,
       "title": "As DevOps Engineer, I want to perform canary deployment validation to achieve risk-reduced production releases",
       "slug": "as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases",
@@ -336,7 +289,7 @@
       "slug": "as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality",
       "state": "planned",
       "status": "not-started",
-      "storyCount": 5,
+      "storyCount": 0,
       "totalStoryPoints": 0,
       "files": {
         "specs": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/specs.md",
@@ -344,38 +297,7 @@
         "tddTests": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/tdd-tests.md",
         "prompt": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/prompt.md"
       },
-      "userStories": [
-        {
-          "id": 86254,
-          "title": "Document API and user guide",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86252,
-          "title": "Write unit and integration tests",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86250,
-          "title": "Develop UI components and integration",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86248,
-          "title": "Implement API endpoint and business logic",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 86246,
-          "title": "Define requirements and acceptance criteria",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
+      "userStories": []
     }
   ]
 }
