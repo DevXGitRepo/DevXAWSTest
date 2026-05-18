@@ -1,50 +1,50 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-05-15T14:29:54.475Z",
+  "generatedAt": "2026-05-18T12:17:50.362Z",
   "enableTdd": true,
-  "totalFeatures": 13,
+  "totalFeatures": 2,
   "features": [
     {
-      "id": 86256,
-      "title": "As System Administrator, I want to perform login screen accessibility compliance to achieve inclusive access for all users",
-      "slug": "as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users",
+      "id": 75298,
+      "title": "As Compliance Officer, I want to perform offline note audit trail review to achieve regulatory adherence for field documentation",
+      "slug": "as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation",
       "state": "planned",
       "status": "not-started",
       "storyCount": 5,
       "totalStoryPoints": 0,
       "files": {
-        "specs": "specs/as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users/specs.md",
-        "requirements": "specs/as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users/requirements.md",
-        "tddTests": "specs/as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users/tdd-tests.md",
-        "prompt": "specs/as-system-administrator-i-want-to-perform-login-screen-accessibility-compliance-to-achieve-inclusive-access-for-all-users/prompt.md"
+        "specs": "specs/as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation/specs.md",
+        "requirements": "specs/as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation/requirements.md",
+        "tddTests": "specs/as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation/tdd-tests.md",
+        "prompt": "specs/as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation/prompt.md"
       },
       "userStories": [
         {
-          "id": 86266,
+          "id": 75303,
           "title": "Document API and user guide",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 86264,
+          "id": 75302,
           "title": "Write unit and integration tests",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 86262,
+          "id": 75301,
           "title": "Develop UI components and integration",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 86260,
+          "id": 75300,
           "title": "Implement API endpoint and business logic",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 86258,
+          "id": 75299,
           "title": "Define requirements and acceptance criteria",
           "state": "New",
           "storyPoints": null
@@ -52,252 +52,51 @@
       ]
     },
     {
-      "id": 89541,
-      "title": "As Account Manager, I want to see a specific error when my credentials are incorrect so that I can identify which field to correct",
-      "slug": "as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 1,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct/specs.md",
-        "requirements": "specs/as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct/requirements.md",
-        "tddTests": "specs/as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct/tdd-tests.md",
-        "prompt": "specs/as-account-manager-i-want-to-see-a-specific-error-when-my-credentials-are-incorrect-so-that-i-can-identify-which-field-to-correct/prompt.md"
-      },
-      "userStories": [
-        {
-          "id": 89543,
-          "title": "Return appropriate error codes and messages from authentication endpoint for different failure types",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
-    },
-    {
-      "id": 77589,
-      "title": "As Account Manager, I want to perform customer ranking by revenue potential to achieve focused attention on highest-value accounts",
-      "slug": "as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 0,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/specs.md",
-        "requirements": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/requirements.md",
-        "prompt": "specs/as-account-manager-i-want-to-perform-customer-ranking-by-revenue-potential-to-achieve-focused-attention-on-highest-value-accounts/prompt.md"
-      },
-      "userStories": []
-    },
-    {
-      "id": 86160,
-      "title": "As Production Manager, I want to perform login screen navigation to achieve quick access to the authentication page",
-      "slug": "as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 0,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/specs.md",
-        "requirements": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/requirements.md",
-        "tddTests": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/tdd-tests.md",
-        "prompt": "specs/as-production-manager-i-want-to-perform-login-screen-navigation-to-achieve-quick-access-to-the-authentication-page/prompt.md"
-      },
-      "userStories": []
-    },
-    {
-      "id": 86172,
-      "title": "As Plant Operator, I want to perform login button click to achieve authentication request submission",
-      "slug": "as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 0,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/specs.md",
-        "requirements": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/requirements.md",
-        "tddTests": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/tdd-tests.md",
-        "prompt": "specs/as-plant-operator-i-want-to-perform-login-button-click-to-achieve-authentication-request-submission/prompt.md"
-      },
-      "userStories": []
-    },
-    {
-      "id": 86196,
-      "title": "As System Administrator, I want to perform login form submission via keyboard to achieve efficient authentication without mouse dependency",
-      "slug": "as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 0,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/specs.md",
-        "requirements": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/requirements.md",
-        "tddTests": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/tdd-tests.md",
-        "prompt": "specs/as-system-administrator-i-want-to-perform-login-form-submission-via-keyboard-to-achieve-efficient-authentication-without-mouse-dependency/prompt.md"
-      },
-      "userStories": []
-    },
-    {
-      "id": 86208,
-      "title": "As Plant Operator, I want to perform login with empty field detection to achieve clear guidance on required inputs",
-      "slug": "as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs",
+      "id": 75292,
+      "title": "As Field Agent, I want to perform note categorization while offline to achieve organized retrieval of client information",
+      "slug": "as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information",
       "state": "planned",
       "status": "not-started",
       "storyCount": 5,
       "totalStoryPoints": 0,
       "files": {
-        "specs": "specs/as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs/specs.md",
-        "requirements": "specs/as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs/requirements.md",
-        "tddTests": "specs/as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs/tdd-tests.md",
-        "prompt": "specs/as-plant-operator-i-want-to-perform-login-with-empty-field-detection-to-achieve-clear-guidance-on-required-inputs/prompt.md"
+        "specs": "specs/as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information/specs.md",
+        "requirements": "specs/as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information/requirements.md",
+        "tddTests": "specs/as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information/tdd-tests.md",
+        "prompt": "specs/as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information/prompt.md"
       },
       "userStories": [
         {
-          "id": 86218,
+          "id": 75297,
           "title": "Document API and user guide",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 86216,
+          "id": 75296,
           "title": "Write unit and integration tests",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 86214,
+          "id": 75295,
           "title": "Develop UI components and integration",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 86212,
+          "id": 75294,
           "title": "Implement API endpoint and business logic",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 86210,
+          "id": 75293,
           "title": "Define requirements and acceptance criteria",
           "state": "New",
           "storyPoints": null
         }
       ]
-    },
-    {
-      "id": 77595,
-      "title": "As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts",
-      "slug": "as-account-manager-i-want-to-perform-customer-health-assessment-to-achieve-early-identification-of-at-risk-accounts",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 1,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-account-manager-i-want-to-perform-customer-health-assessment-to-achieve-early-identification-of-at-risk-accounts/specs.md",
-        "requirements": "specs/as-account-manager-i-want-to-perform-customer-health-assessment-to-achieve-early-identification-of-at-risk-accounts/requirements.md",
-        "prompt": "specs/as-account-manager-i-want-to-perform-customer-health-assessment-to-achieve-early-identification-of-at-risk-accounts/prompt.md"
-      },
-      "userStories": [
-        {
-          "id": 77595,
-          "title": "As Account Manager, I want to perform customer health assessment to achieve early identification of at-risk accounts",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
-    },
-    {
-      "id": 89537,
-      "title": "As Account Manager, I want to see a clear error message when my password is invalid so that I know exactly what went wrong",
-      "slug": "as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 1,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong/specs.md",
-        "requirements": "specs/as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong/requirements.md",
-        "tddTests": "specs/as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong/tdd-tests.md",
-        "prompt": "specs/as-account-manager-i-want-to-see-a-clear-error-message-when-my-password-is-invalid-so-that-i-know-exactly-what-went-wrong/prompt.md"
-      },
-      "userStories": [
-        {
-          "id": 89539,
-          "title": "Implement inline error message display for invalid password near the password input field",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
-    },
-    {
-      "id": 78380,
-      "title": "As DevOps Engineer, I want to perform canary deployment validation to achieve risk-reduced production releases",
-      "slug": "as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 0,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/specs.md",
-        "requirements": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/requirements.md",
-        "tddTests": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/tdd-tests.md",
-        "prompt": "specs/as-devops-engineer-i-want-to-perform-canary-deployment-validation-to-achieve-risk-reduced-production-releases/prompt.md"
-      },
-      "userStories": []
-    },
-    {
-      "id": 78386,
-      "title": "As Release Manager, I want to perform automated deployment scheduling to achieve predictable release timelines",
-      "slug": "as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 0,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/specs.md",
-        "requirements": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/requirements.md",
-        "tddTests": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/tdd-tests.md",
-        "prompt": "specs/as-release-manager-i-want-to-perform-automated-deployment-scheduling-to-achieve-predictable-release-timelines/prompt.md"
-      },
-      "userStories": []
-    },
-    {
-      "id": 77601,
-      "title": "As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy",
-      "slug": "as-account-manager-i-want-to-perform-priority-list-customization-to-achieve-alignment-with-personal-territory-strategy",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 1,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-account-manager-i-want-to-perform-priority-list-customization-to-achieve-alignment-with-personal-territory-strategy/specs.md",
-        "requirements": "specs/as-account-manager-i-want-to-perform-priority-list-customization-to-achieve-alignment-with-personal-territory-strategy/requirements.md",
-        "prompt": "specs/as-account-manager-i-want-to-perform-priority-list-customization-to-achieve-alignment-with-personal-territory-strategy/prompt.md"
-      },
-      "userStories": [
-        {
-          "id": 77601,
-          "title": "As Account Manager, I want to perform priority list customization to achieve alignment with personal territory strategy",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
-    },
-    {
-      "id": 86244,
-      "title": "As Plant Operator, I want to perform login with masked password display to achieve credential confidentiality",
-      "slug": "as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 0,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/specs.md",
-        "requirements": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/requirements.md",
-        "tddTests": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/tdd-tests.md",
-        "prompt": "specs/as-plant-operator-i-want-to-perform-login-with-masked-password-display-to-achieve-credential-confidentiality/prompt.md"
-      },
-      "userStories": []
     }
   ]
 }
