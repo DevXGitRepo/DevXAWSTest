@@ -1,7 +1,7 @@
 {
-  "name": "hiltiprojt-mcp-server",
+  "name": "project040526-mcp-server",
   "version": "1.0.0",
-  "description": "DevX MCP server for HiltiProjT specs",
+  "description": "DevX MCP server for project040526 specs",
   "type": "module",
   "main": "server.js",
   "scripts": {
