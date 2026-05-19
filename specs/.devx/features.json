@@ -1,97 +1,50 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-05-18T12:17:50.362Z",
+  "generatedAt": "2026-05-19T10:59:42.967Z",
   "enableTdd": true,
-  "totalFeatures": 2,
+  "totalFeatures": 1,
   "features": [
     {
-      "id": 75298,
-      "title": "As Compliance Officer, I want to perform offline note audit trail review to achieve regulatory adherence for field documentation",
-      "slug": "as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation",
+      "id": 78201,
+      "title": "As Account Manager, I want to perform authentication retry after failed login to achieve access recovery without losing context",
+      "slug": "as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context",
       "state": "planned",
       "status": "not-started",
       "storyCount": 5,
       "totalStoryPoints": 0,
       "files": {
-        "specs": "specs/as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation/specs.md",
-        "requirements": "specs/as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation/requirements.md",
-        "tddTests": "specs/as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation/tdd-tests.md",
-        "prompt": "specs/as-compliance-officer-i-want-to-perform-offline-note-audit-trail-review-to-achieve-regulatory-adherence-for-field-documentation/prompt.md"
+        "specs": "specs/as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context/specs.md",
+        "requirements": "specs/as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context/requirements.md",
+        "tddTests": "specs/as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context/tdd-tests.md",
+        "prompt": "specs/as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context/prompt.md"
       },
       "userStories": [
         {
-          "id": 75303,
+          "id": 78206,
           "title": "Document API and user guide",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 75302,
+          "id": 78205,
           "title": "Write unit and integration tests",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 75301,
+          "id": 78204,
           "title": "Develop UI components and integration",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 75300,
+          "id": 78203,
           "title": "Implement API endpoint and business logic",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 75299,
-          "title": "Define requirements and acceptance criteria",
-          "state": "New",
-          "storyPoints": null
-        }
-      ]
-    },
-    {
-      "id": 75292,
-      "title": "As Field Agent, I want to perform note categorization while offline to achieve organized retrieval of client information",
-      "slug": "as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information",
-      "state": "planned",
-      "status": "not-started",
-      "storyCount": 5,
-      "totalStoryPoints": 0,
-      "files": {
-        "specs": "specs/as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information/specs.md",
-        "requirements": "specs/as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information/requirements.md",
-        "tddTests": "specs/as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information/tdd-tests.md",
-        "prompt": "specs/as-field-agent-i-want-to-perform-note-categorization-while-offline-to-achieve-organized-retrieval-of-client-information/prompt.md"
-      },
-      "userStories": [
-        {
-          "id": 75297,
-          "title": "Document API and user guide",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 75296,
-          "title": "Write unit and integration tests",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 75295,
-          "title": "Develop UI components and integration",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 75294,
-          "title": "Implement API endpoint and business logic",
-          "state": "New",
-          "storyPoints": null
-        },
-        {
-          "id": 75293,
+          "id": 78202,
           "title": "Define requirements and acceptance criteria",
           "state": "New",
           "storyPoints": null
