@@ -1,14 +1,10 @@
-# Architecture — project040526
+# Architecture — project060526
 
 > Auto-generated architecture overview. Update this file as the system evolves.
 
 ## Feature Map
 
-### As Compliance Officer, I want to perform offline note audit trail review to achieve regulatory adherence for field documentation
-- 5 user stories
-- Stories: Document API and user guide, Write unit and integration tests, Develop UI components and integration, Implement API endpoint and business logic, Define requirements and acceptance criteria
-
-### As Field Agent, I want to perform note categorization while offline to achieve organized retrieval of client information
+### As Account Manager, I want to perform authentication retry after failed login to achieve access recovery without losing context
 - 5 user stories
 - Stories: Document API and user guide, Write unit and integration tests, Develop UI components and integration, Implement API endpoint and business logic, Define requirements and acceptance criteria
 
