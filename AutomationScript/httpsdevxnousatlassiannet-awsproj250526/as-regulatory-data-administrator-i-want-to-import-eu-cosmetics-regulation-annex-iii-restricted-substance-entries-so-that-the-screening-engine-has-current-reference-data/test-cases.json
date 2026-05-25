@@ -1,0 +1,1478 @@
+{
+  "storyId": "ado-113402",
+  "storyTitle": "As Regulatory Data Administrator, I want to import EU Cosmetics Regulation Annex III restricted substance entries so that the screening engine has current reference data",
+  "functional": [
+    {
+      "id": "TC-FUNC-001",
+      "title": "Successfully import a complete Annex III entry with all mandatory and optional fields",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator with import permissions",
+        "User is on the Reference Data Management > Import page",
+        "A valid structured import file (CSV/XML) containing a complete Annex III entry with substance name, CAS number, EC number, maximum concentration, product type restrictions, and other conditions of use is prepared",
+        "The reference database is accessible and operational"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the 'Import Annex III Data' button on the Reference Data Management page",
+          "expectedResult": "The Annex III import dialog/page opens with file upload area, format selection, and import options visible"
+        },
+        {
+          "step": 2,
+          "action": "Select the structured import file containing a single complete Annex III entry (e.g., substance name: 'Hydrogen peroxide', CAS: '7722-84-1', EC: '231-765-0', max concentration: '12%', product type: 'Hair products', conditions: 'Contains hydrogen peroxide')",
+          "expectedResult": "File is selected and file name is displayed in the upload area"
+        },
+        {
+          "step": 3,
+          "action": "Click the 'Upload' or 'Start Import' button",
+          "expectedResult": "System begins processing the file and displays a progress indicator"
+        },
+        {
+          "step": 4,
+          "action": "Wait for the import process to complete",
+          "expectedResult": "System displays a success message indicating '1 record imported successfully' with zero errors and zero warnings"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to the Reference Data > Annex III Substances list and search for 'Hydrogen peroxide'",
+          "expectedResult": "The imported substance 'Hydrogen peroxide' appears in the list with CAS number '7722-84-1', EC number '231-765-0', max concentration '12%', product type 'Hair products', and conditions 'Contains hydrogen peroxide'"
+        }
+      ],
+      "postconditions": [
+        "The Annex III entry is stored in the reference database with all fields correctly populated",
+        "The imported entry is immediately available for the screening engine to use in substance screening",
+        "An audit log entry is created recording the import action, user, timestamp, and record count"
+      ]
+    },
+    {
+      "id": "TC-FUNC-002",
+      "title": "Successfully import multiple Annex III entries in a single batch file",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "User is on the Reference Data Management > Import page",
+        "A valid structured import file containing 50 complete Annex III entries is prepared with unique substance names, CAS numbers, and EC numbers",
+        "The reference database is accessible"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click the 'Import Annex III Data' button",
+          "expectedResult": "The Annex III import dialog opens"
+        },
+        {
+          "step": 2,
+          "action": "Select the batch import file containing 50 Annex III entries",
+          "expectedResult": "File is selected and displayed in the upload area with file size shown"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Start Import' button",
+          "expectedResult": "System begins processing and shows progress (e.g., 'Processing record 1 of 50...')"
+        },
+        {
+          "step": 4,
+          "action": "Wait for the import to complete",
+          "expectedResult": "System displays success message: '50 records imported successfully, 0 errors, 0 warnings'"
+        },
+        {
+          "step": 5,
+          "action": "Navigate to Reference Data > Annex III Substances list",
+          "expectedResult": "All 50 newly imported substances are visible in the list and searchable"
+        },
+        {
+          "step": 6,
+          "action": "Search for the first and last substance from the import file",
+          "expectedResult": "Both substances are found with all their restriction conditions correctly stored"
+        }
+      ],
+      "postconditions": [
+        "All 50 Annex III entries are stored in the reference database",
+        "All 50 entries are immediately available for screening engine queries",
+        "Import summary report is available showing all successfully imported records",
+        "Audit trail records the batch import with total record count"
+      ]
+    },
+    {
+      "id": "TC-FUNC-003",
+      "title": "Verify imported entries are immediately available for screening engine",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A valid Annex III import file with substance 'Diaminotoluene' (CAS: '95-80-7') with max concentration '0%' (prohibited in certain product types) is prepared",
+        "The screening engine is operational",
+        "The substance 'Diaminotoluene' does not currently exist in the reference database"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Perform a screening query for 'Diaminotoluene' or CAS '95-80-7' against Annex III",
+          "expectedResult": "No results found - substance is not in the reference database"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to Reference Data Management > Import and click 'Import Annex III Data'",
+          "expectedResult": "Import dialog opens"
+        },
+        {
+          "step": 3,
+          "action": "Select and upload the import file containing 'Diaminotoluene' entry",
+          "expectedResult": "File is uploaded and processed successfully with '1 record imported' confirmation"
+        },
+        {
+          "step": 4,
+          "action": "Immediately perform a screening query for 'Diaminotoluene' or CAS '95-80-7' against Annex III",
+          "expectedResult": "The screening engine returns a match showing 'Diaminotoluene', CAS '95-80-7', with all restriction conditions displayed"
+        },
+        {
+          "step": 5,
+          "action": "Verify the screening result includes all restriction details (max concentration, product type restrictions, conditions of use)",
+          "expectedResult": "All imported restriction data is displayed in the screening result without requiring any cache refresh or system restart"
+        }
+      ],
+      "postconditions": [
+        "The imported substance is confirmed available in real-time for screening",
+        "No system restart or manual refresh was required for the data to become available",
+        "The screening engine correctly identifies the substance by both name and CAS number"
+      ]
+    },
+    {
+      "id": "TC-FUNC-004",
+      "title": "Validate mandatory field enforcement during import - all mandatory fields present",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "User is on the Import page",
+        "A structured import file is prepared with all mandatory fields populated: substance name, CAS number, EC number, and restriction conditions"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' button",
+          "expectedResult": "Import dialog opens"
+        },
+        {
+          "step": 2,
+          "action": "Select the file with all mandatory fields correctly populated",
+          "expectedResult": "File is selected and ready for upload"
+        },
+        {
+          "step": 3,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System validates all mandatory fields and finds them present"
+        },
+        {
+          "step": 4,
+          "action": "Review the import results",
+          "expectedResult": "All records pass validation and are imported successfully with a confirmation message showing zero validation errors"
+        }
+      ],
+      "postconditions": [
+        "All records are stored in the reference database",
+        "Validation report shows all records passed mandatory field checks",
+        "Records are available for screening"
+      ]
+    },
+    {
+      "id": "TC-FUNC-005",
+      "title": "Import file with maximum concentration values and product type restrictions",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A valid import file is prepared containing entries with various maximum concentration values (e.g., '6%', '0.3%', '1.0%') and different product type restrictions (e.g., 'Rinse-off hair products', 'Oral care products', 'Leave-on products')",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the prepared file",
+          "expectedResult": "File is loaded and ready for import"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System processes the file and imports all entries successfully"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to Reference Data > Annex III Substances and open the first imported entry",
+          "expectedResult": "Entry detail view shows the correct maximum concentration value (e.g., '6%') and product type restriction (e.g., 'Rinse-off hair products')"
+        },
+        {
+          "step": 4,
+          "action": "Open a second imported entry with different concentration and product type",
+          "expectedResult": "Entry shows its specific maximum concentration and product type restriction correctly stored"
+        },
+        {
+          "step": 5,
+          "action": "Verify the 'Other conditions of use' field for entries that have additional conditions",
+          "expectedResult": "Conditions of use text is stored and displayed correctly (e.g., 'Not to be used in products for children under 3 years')"
+        }
+      ],
+      "postconditions": [
+        "All concentration values are stored with correct numeric precision",
+        "Product type restrictions are correctly associated with their respective substance entries",
+        "Conditions of use text is preserved exactly as imported"
+      ]
+    },
+    {
+      "id": "TC-FUNC-006",
+      "title": "Import generates detailed error report for partially valid file",
+      "category": "Functional",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with 10 entries: 7 complete valid entries and 3 entries missing mandatory fields (one missing CAS number, one missing substance name, one missing restriction conditions)",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the mixed validity file",
+          "expectedResult": "File is loaded for processing"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System processes all 10 records and displays import results"
+        },
+        {
+          "step": 3,
+          "action": "Review the import summary",
+          "expectedResult": "Summary shows '7 records imported successfully, 3 records rejected with errors'"
+        },
+        {
+          "step": 4,
+          "action": "Click on 'View Error Details' or expand the error section",
+          "expectedResult": "Error report displays each rejected record with: row number, substance identifier (if available), specific missing field name, and clear error message (e.g., 'Row 3: CAS number is required but was not provided')"
+        },
+        {
+          "step": 5,
+          "action": "Verify the 7 valid records are in the reference database",
+          "expectedResult": "All 7 valid entries are searchable and available in the Annex III substances list"
+        },
+        {
+          "step": 6,
+          "action": "Verify the 3 rejected records are NOT in the reference database",
+          "expectedResult": "None of the 3 rejected entries appear in the Annex III substances list"
+        }
+      ],
+      "postconditions": [
+        "Only valid records (7) are stored in the reference database",
+        "Rejected records (3) are not stored",
+        "Error report is available for download or review with specific details per rejected record",
+        "Valid imported records are immediately available for screening"
+      ]
+    },
+    {
+      "id": "TC-FUNC-007",
+      "title": "Import Annex III entry with substance identified by CAS number and EC number",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A valid import file contains an entry with both CAS number (e.g., '80-54-6') and EC number (e.g., '201-289-8') for substance 'Butylphenyl methylpropional'",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Import the file containing the entry with both CAS and EC numbers",
+          "expectedResult": "Import completes successfully"
+        },
+        {
+          "step": 2,
+          "action": "Search for the substance by CAS number '80-54-6'",
+          "expectedResult": "Substance 'Butylphenyl methylpropional' is found with correct EC number '201-289-8'"
+        },
+        {
+          "step": 3,
+          "action": "Search for the substance by EC number '201-289-8'",
+          "expectedResult": "Same substance is found, confirming both identifiers are indexed and searchable"
+        },
+        {
+          "step": 4,
+          "action": "Search for the substance by name 'Butylphenyl methylpropional'",
+          "expectedResult": "Substance is found with both CAS and EC numbers displayed"
+        }
+      ],
+      "postconditions": [
+        "Substance is stored with both CAS and EC number identifiers",
+        "Both identifiers can be used for screening lookups",
+        "Substance identity data is complete and accurate"
+      ]
+    },
+    {
+      "id": "TC-FUNC-008",
+      "title": "Verify import audit trail is created for successful import",
+      "category": "Functional",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator named 'admin.user@company.com'",
+        "A valid Annex III import file with 5 entries is prepared",
+        "Audit logging is enabled in the system"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Note the current date and time before starting the import",
+          "expectedResult": "Timestamp noted for audit verification"
+        },
+        {
+          "step": 2,
+          "action": "Import the file with 5 Annex III entries successfully",
+          "expectedResult": "Import completes with '5 records imported successfully'"
+        },
+        {
+          "step": 3,
+          "action": "Navigate to the Audit Log or System Activity Log",
+          "expectedResult": "Audit log page is displayed"
+        },
+        {
+          "step": 4,
+          "action": "Search for import activities by the current user and today's date",
+          "expectedResult": "An audit entry is found showing: user 'admin.user@company.com', action 'Annex III Import', timestamp matching the import time, record count '5', and status 'Success'"
+        }
+      ],
+      "postconditions": [
+        "Audit trail entry exists with complete import details",
+        "Audit record includes user identity, action type, timestamp, and record count",
+        "Audit trail is immutable and cannot be modified by the user"
+      ]
+    }
+  ],
+  "negative": [
+    {
+      "id": "TC-NEGA-001",
+      "title": "Reject import file with missing mandatory CAS number field",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with one entry where the CAS number field is empty/missing (substance name: 'Test Substance', EC number: '200-001-8', restriction conditions present)",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with missing CAS number",
+          "expectedResult": "File is loaded for processing"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System validates the record and detects missing CAS number"
+        },
+        {
+          "step": 3,
+          "action": "Review the import results",
+          "expectedResult": "Record is rejected with error message: 'Row 1: CAS number is a mandatory field and cannot be empty'"
+        },
+        {
+          "step": 4,
+          "action": "Search for 'Test Substance' in the Annex III reference data",
+          "expectedResult": "No results found - the incomplete record was not imported"
+        }
+      ],
+      "postconditions": [
+        "The incomplete record is not stored in the reference database",
+        "Error details clearly identify the missing field and row number",
+        "No partial data is written to the database"
+      ]
+    },
+    {
+      "id": "TC-NEGA-002",
+      "title": "Reject import file with missing mandatory substance name field",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with one entry where the substance name is empty (CAS: '7722-84-1', EC: '231-765-0', restriction conditions present)",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with missing substance name",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System validates and detects missing substance name"
+        },
+        {
+          "step": 3,
+          "action": "Review the error details",
+          "expectedResult": "Error message states: 'Row 1: Substance name is a mandatory field and cannot be empty' with the CAS number shown for identification"
+        }
+      ],
+      "postconditions": [
+        "Record is not imported into the reference database",
+        "Error report clearly identifies the issue",
+        "Database remains unchanged"
+      ]
+    },
+    {
+      "id": "TC-NEGA-003",
+      "title": "Reject import file with missing mandatory EC number field",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with one entry where EC number is missing (substance name: 'Hydrogen peroxide', CAS: '7722-84-1', restriction conditions present)",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with missing EC number",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System validates and detects missing EC number"
+        },
+        {
+          "step": 3,
+          "action": "Review the error details",
+          "expectedResult": "Error message states: 'Row 1: EC number is a mandatory field and cannot be empty'"
+        }
+      ],
+      "postconditions": [
+        "Record is not imported",
+        "Error details specify the missing EC number field",
+        "Reference database is unchanged"
+      ]
+    },
+    {
+      "id": "TC-NEGA-004",
+      "title": "Reject import file with missing mandatory restriction conditions",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with one entry where restriction conditions are entirely missing (substance name: 'Hydrogen peroxide', CAS: '7722-84-1', EC: '231-765-0', no restriction conditions)",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with missing restriction conditions",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System validates and detects missing restriction conditions"
+        },
+        {
+          "step": 3,
+          "action": "Review the error details",
+          "expectedResult": "Error message states: 'Row 1: Restriction conditions are mandatory and cannot be empty'"
+        }
+      ],
+      "postconditions": [
+        "Record is not imported",
+        "Error clearly identifies the missing restriction conditions",
+        "Database remains unchanged"
+      ]
+    },
+    {
+      "id": "TC-NEGA-005",
+      "title": "Reject import of invalid CAS number format",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with an entry containing an invalid CAS number format (e.g., 'ABC-12-3' instead of numeric format like '7722-84-1')",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with invalid CAS number 'ABC-12-3'",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System validates CAS number format and rejects the record"
+        },
+        {
+          "step": 3,
+          "action": "Review the error details",
+          "expectedResult": "Error message states: 'Row 1: Invalid CAS number format. Expected format: XXXXXXX-XX-X (numeric digits with hyphens)'"
+        },
+        {
+          "step": 4,
+          "action": "Verify the record is not in the database",
+          "expectedResult": "No entry with the invalid CAS number exists in the reference data"
+        }
+      ],
+      "postconditions": [
+        "Record with invalid CAS format is rejected",
+        "Clear error message explains the expected format",
+        "Database integrity is maintained"
+      ]
+    },
+    {
+      "id": "TC-NEGA-006",
+      "title": "Reject import of unsupported file format",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A file in unsupported format (e.g., .docx, .pdf, or .jpg) is prepared",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data'",
+          "expectedResult": "Import dialog opens"
+        },
+        {
+          "step": 2,
+          "action": "Attempt to select a .docx file for upload",
+          "expectedResult": "System either prevents selection of unsupported file types via file filter, or allows selection"
+        },
+        {
+          "step": 3,
+          "action": "If file was selectable, click 'Start Import'",
+          "expectedResult": "System displays error message: 'Unsupported file format. Please upload a file in CSV or XML format' (or other supported formats)"
+        }
+      ],
+      "postconditions": [
+        "No data is imported from the unsupported file",
+        "User is informed of supported file formats",
+        "System remains in a stable state"
+      ]
+    },
+    {
+      "id": "TC-NEGA-007",
+      "title": "Reject import when user lacks Regulatory Data Administrator permissions",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in with a non-administrator role (e.g., 'Viewer' or 'Standard User')",
+        "User attempts to access the Reference Data Management > Import page",
+        "A valid Annex III import file is available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to Reference Data Management > Import page",
+          "expectedResult": "System either denies access with 'Access Denied: You do not have permission to import reference data' message, or the Import button is not visible/disabled"
+        },
+        {
+          "step": 2,
+          "action": "If page is accessible, attempt to click 'Import Annex III Data'",
+          "expectedResult": "Button is disabled or clicking it shows 'Insufficient permissions' error"
+        },
+        {
+          "step": 3,
+          "action": "Attempt to directly access the import API endpoint (if applicable) via URL manipulation",
+          "expectedResult": "System returns 403 Forbidden response"
+        }
+      ],
+      "postconditions": [
+        "No data is imported",
+        "Unauthorized access attempt is logged in the audit trail",
+        "System security is maintained"
+      ]
+    },
+    {
+      "id": "TC-NEGA-008",
+      "title": "Reject import of empty file with no data records",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "An empty file (0 bytes or containing only headers with no data rows) is prepared in the correct format",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the empty file",
+          "expectedResult": "File is selected"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System detects no data records in the file"
+        },
+        {
+          "step": 3,
+          "action": "Review the result",
+          "expectedResult": "System displays message: 'Import file contains no data records. Please provide a file with at least one Annex III entry.'"
+        }
+      ],
+      "postconditions": [
+        "No records are imported",
+        "User receives clear feedback about the empty file",
+        "System state is unchanged"
+      ]
+    },
+    {
+      "id": "TC-NEGA-009",
+      "title": "Reject import of corrupted/malformed structured file",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A corrupted file is prepared (e.g., CSV with inconsistent column counts, or XML with malformed tags)",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the corrupted file",
+          "expectedResult": "File is selected"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System attempts to parse the file and detects structural errors"
+        },
+        {
+          "step": 3,
+          "action": "Review the error message",
+          "expectedResult": "System displays error: 'File parsing error: The import file structure is invalid. Please verify the file format and column structure match the expected template.'"
+        }
+      ],
+      "postconditions": [
+        "No data is imported from the corrupted file",
+        "System provides actionable error message",
+        "Database remains unchanged and consistent"
+      ]
+    },
+    {
+      "id": "TC-NEGA-010",
+      "title": "Reject import with SQL injection attempt in substance name field",
+      "category": "Negative",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with substance name containing SQL injection: \"'; DROP TABLE substances; --\"",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with SQL injection in substance name",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System either sanitizes the input or rejects the record with a validation error about invalid characters"
+        },
+        {
+          "step": 3,
+          "action": "Verify database integrity",
+          "expectedResult": "All existing reference data tables and records remain intact and unaffected"
+        },
+        {
+          "step": 4,
+          "action": "Check if any data was imported",
+          "expectedResult": "Either the record is rejected, or if imported, the substance name is stored as sanitized text without executing any SQL commands"
+        }
+      ],
+      "postconditions": [
+        "Database integrity is maintained - no tables dropped or data corrupted",
+        "SQL injection attempt is neutralized",
+        "Security event may be logged"
+      ]
+    },
+    {
+      "id": "TC-NEGA-011",
+      "title": "Reject import when all records in file have missing mandatory fields",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with 5 entries, all missing at least one mandatory field",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file where all records are incomplete",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System validates all records and finds all are incomplete"
+        },
+        {
+          "step": 3,
+          "action": "Review the import results",
+          "expectedResult": "Summary shows '0 records imported, 5 records rejected' with individual error details for each record specifying which mandatory field is missing"
+        }
+      ],
+      "postconditions": [
+        "No records are imported to the database",
+        "Complete error report is available with details for all 5 rejected records",
+        "Database remains unchanged"
+      ]
+    },
+    {
+      "id": "TC-NEGA-012",
+      "title": "Reject import with invalid EC number format",
+      "category": "Negative",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with an entry containing an invalid EC number format (e.g., '999-999-999' which exceeds valid EC number range, or 'XYZ-123-4')",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with invalid EC number",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System validates EC number format and rejects the record"
+        },
+        {
+          "step": 3,
+          "action": "Review the error details",
+          "expectedResult": "Error message states: 'Row 1: Invalid EC number format. Expected format: XXX-XXX-X (numeric)'"
+        }
+      ],
+      "postconditions": [
+        "Record with invalid EC number is not imported",
+        "Error message clearly identifies the format issue",
+        "Database integrity maintained"
+      ]
+    }
+  ],
+  "edgeCases": [
+    {
+      "id": "TC-EDGE-001",
+      "title": "Import Annex III entry with very long substance name (maximum character limit)",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with a substance name at the maximum allowed character length (e.g., 500 characters of valid chemical nomenclature)",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with the extremely long substance name (500 characters)",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System processes the record without truncation errors"
+        },
+        {
+          "step": 3,
+          "action": "Search for the imported substance in the reference data",
+          "expectedResult": "Substance is found with the complete 500-character name stored without truncation"
+        },
+        {
+          "step": 4,
+          "action": "Verify the full name displays correctly in the substance detail view",
+          "expectedResult": "Complete substance name is displayed, possibly with scrolling or wrapping, but no data loss"
+        }
+      ],
+      "postconditions": [
+        "Long substance name is stored completely without truncation",
+        "Entry is available for screening with full name",
+        "UI handles display of long names gracefully"
+      ]
+    },
+    {
+      "id": "TC-EDGE-002",
+      "title": "Import Annex III entry with special characters in substance name",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with substance names containing special characters: Greek letters (α, β, γ), parentheses, brackets, hyphens, commas, and chemical notation (e.g., '2,2'-[(4-aminophenyl)imino]bisethanol')",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with special character substance names",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System processes records successfully without character encoding errors"
+        },
+        {
+          "step": 3,
+          "action": "Search for the imported substance with special characters",
+          "expectedResult": "Substance is found with all special characters preserved correctly (no mojibake or character replacement)"
+        },
+        {
+          "step": 4,
+          "action": "Verify the substance name in the detail view",
+          "expectedResult": "All special characters (Greek letters, brackets, hyphens) display correctly"
+        }
+      ],
+      "postconditions": [
+        "Special characters are stored and displayed correctly",
+        "Character encoding is preserved (UTF-8)",
+        "Screening engine can match substances with special characters"
+      ]
+    },
+    {
+      "id": "TC-EDGE-003",
+      "title": "Import very large batch file with 10,000 Annex III entries",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A valid structured import file containing 10,000 complete Annex III entries is prepared",
+        "System has sufficient resources to handle large imports",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the 10,000-record file",
+          "expectedResult": "File is accepted for upload (may take longer due to size)"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System begins processing with progress indicator showing advancement through records"
+        },
+        {
+          "step": 3,
+          "action": "Wait for import to complete (may take several minutes)",
+          "expectedResult": "Import completes without timeout, showing '10,000 records imported successfully' or appropriate count"
+        },
+        {
+          "step": 4,
+          "action": "Verify random samples from the imported data (first record, record 5000, last record)",
+          "expectedResult": "All sampled records are present and correctly stored in the reference database"
+        },
+        {
+          "step": 5,
+          "action": "Verify system performance is not degraded after large import",
+          "expectedResult": "Screening queries still respond within acceptable time limits"
+        }
+      ],
+      "postconditions": [
+        "All 10,000 records are stored correctly",
+        "System performance remains acceptable",
+        "All imported records are available for screening",
+        "No memory leaks or resource exhaustion occurred"
+      ]
+    },
+    {
+      "id": "TC-EDGE-004",
+      "title": "Import entry with minimum valid data - only mandatory fields populated",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with an entry containing only the mandatory fields (substance name, CAS number, EC number, restriction conditions) and all optional fields left empty",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the minimal data file",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System accepts the record with only mandatory fields and imports successfully"
+        },
+        {
+          "step": 3,
+          "action": "View the imported entry in the reference data",
+          "expectedResult": "Entry shows substance name, CAS number, EC number, and restriction conditions. Optional fields (like maximum concentration, product type) show as empty or 'Not specified'"
+        }
+      ],
+      "postconditions": [
+        "Record is stored with mandatory fields only",
+        "Optional fields are stored as null/empty without causing errors",
+        "Entry is available for screening"
+      ]
+    },
+    {
+      "id": "TC-EDGE-005",
+      "title": "Import duplicate CAS number that already exists in the database",
+      "category": "Edge Cases",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "An Annex III entry for 'Hydrogen peroxide' with CAS '7722-84-1' already exists in the reference database",
+        "A new import file contains an entry with the same CAS number '7722-84-1' but with updated restriction conditions",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with duplicate CAS number",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System detects the duplicate CAS number and handles it according to business rules (either updates existing record, rejects as duplicate, or prompts user)"
+        },
+        {
+          "step": 3,
+          "action": "Review the import result message",
+          "expectedResult": "System clearly communicates how the duplicate was handled (e.g., 'Record with CAS 7722-84-1 already exists. Record updated/skipped/rejected.')"
+        },
+        {
+          "step": 4,
+          "action": "Verify the state of the record in the database",
+          "expectedResult": "Record reflects the expected state based on the duplicate handling policy (updated with new data, or original data preserved)"
+        }
+      ],
+      "postconditions": [
+        "Duplicate handling is consistent with system policy",
+        "No duplicate records exist in the database (data integrity maintained)",
+        "User is clearly informed of the outcome"
+      ]
+    },
+    {
+      "id": "TC-EDGE-006",
+      "title": "Import entry with maximum concentration value at boundary (0% and 100%)",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with two entries: one with maximum concentration '0%' (effectively prohibited) and one with '100%' (no concentration limit)",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with boundary concentration values",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System processes both records"
+        },
+        {
+          "step": 3,
+          "action": "Verify the entry with 0% concentration",
+          "expectedResult": "Entry is stored with maximum concentration '0%' correctly"
+        },
+        {
+          "step": 4,
+          "action": "Verify the entry with 100% concentration",
+          "expectedResult": "Entry is stored with maximum concentration '100%' correctly"
+        },
+        {
+          "step": 5,
+          "action": "Verify both entries are available for screening",
+          "expectedResult": "Screening engine correctly identifies both entries and their concentration limits"
+        }
+      ],
+      "postconditions": [
+        "Boundary concentration values are stored correctly",
+        "No rounding or conversion errors occur",
+        "Screening engine handles boundary values appropriately"
+      ]
+    },
+    {
+      "id": "TC-EDGE-007",
+      "title": "Import entry with Unicode characters in conditions of use field",
+      "category": "Edge Cases",
+      "priority": "Low",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with conditions of use containing Unicode characters from multiple languages (e.g., French accents: 'résumé', German umlauts: 'für Kinder', Nordic characters: 'ø', 'å')",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with Unicode characters",
+          "expectedResult": "File is loaded without encoding errors"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System processes the record successfully"
+        },
+        {
+          "step": 3,
+          "action": "View the imported entry's conditions of use",
+          "expectedResult": "All Unicode characters are displayed correctly without replacement characters (?) or encoding artifacts"
+        },
+        {
+          "step": 4,
+          "action": "Search for the entry and verify conditions in screening results",
+          "expectedResult": "Unicode text is preserved in screening output"
+        }
+      ],
+      "postconditions": [
+        "Unicode characters are stored and retrieved correctly",
+        "No data loss or character corruption occurs",
+        "System handles multi-language text appropriately"
+      ]
+    },
+    {
+      "id": "TC-EDGE-008",
+      "title": "Concurrent import by two administrators simultaneously",
+      "category": "Edge Cases",
+      "priority": "Medium",
+      "preconditions": [
+        "Two users are logged in as Regulatory Data Administrators in separate browser sessions",
+        "Each has a different valid Annex III import file (File A with 10 entries, File B with 10 different entries)",
+        "Both users are on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "User A clicks 'Import Annex III Data' and selects File A",
+          "expectedResult": "File A is loaded in User A's session"
+        },
+        {
+          "step": 2,
+          "action": "User B clicks 'Import Annex III Data' and selects File B simultaneously",
+          "expectedResult": "File B is loaded in User B's session"
+        },
+        {
+          "step": 3,
+          "action": "Both users click 'Start Import' at approximately the same time",
+          "expectedResult": "Both imports begin processing without blocking each other"
+        },
+        {
+          "step": 4,
+          "action": "Wait for both imports to complete",
+          "expectedResult": "Both imports complete successfully without data corruption or conflicts"
+        },
+        {
+          "step": 5,
+          "action": "Verify all 20 entries (10 from each file) are in the database",
+          "expectedResult": "All 20 unique entries are present and correctly stored"
+        }
+      ],
+      "postconditions": [
+        "No data corruption from concurrent imports",
+        "All records from both imports are correctly stored",
+        "No deadlocks or race conditions occurred",
+        "Both audit trail entries are recorded correctly"
+      ]
+    },
+    {
+      "id": "TC-EDGE-009",
+      "title": "Import entry with CAS number containing leading zeros",
+      "category": "Edge Cases",
+      "priority": "Low",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with a CAS number that has leading zeros in segments (e.g., '0050-00-0' for Formaldehyde, standard CAS: '50-00-0')",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the file with leading-zero CAS number",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System either normalizes the CAS number by removing leading zeros, or validates and rejects with appropriate message"
+        },
+        {
+          "step": 3,
+          "action": "Review the import result",
+          "expectedResult": "System handles the leading zeros consistently (either normalizes to '50-00-0' and imports, or rejects with clear format guidance)"
+        },
+        {
+          "step": 4,
+          "action": "If imported, search for the substance by standard CAS '50-00-0'",
+          "expectedResult": "Substance is found regardless of how the CAS was originally formatted in the import file"
+        }
+      ],
+      "postconditions": [
+        "CAS number handling is consistent and predictable",
+        "No duplicate entries created due to formatting differences",
+        "Screening can find the substance by standard CAS format"
+      ]
+    },
+    {
+      "id": "TC-EDGE-010",
+      "title": "Import single record file (minimum batch size)",
+      "category": "Edge Cases",
+      "priority": "Low",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "A structured import file is prepared with exactly one valid Annex III entry",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Click 'Import Annex III Data' and select the single-record file",
+          "expectedResult": "File is loaded"
+        },
+        {
+          "step": 2,
+          "action": "Click 'Start Import'",
+          "expectedResult": "System processes the single record without issues"
+        },
+        {
+          "step": 3,
+          "action": "Review import results",
+          "expectedResult": "Success message shows '1 record imported successfully'"
+        },
+        {
+          "step": 4,
+          "action": "Verify the record in the reference database",
+          "expectedResult": "Single entry is correctly stored and available for screening"
+        }
+      ],
+      "postconditions": [
+        "Single record is imported successfully",
+        "Import process handles minimum batch size correctly",
+        "No errors related to batch processing of single items"
+      ]
+    }
+  ],
+  "accessibility": [
+    {
+      "id": "TC-ACCE-001",
+      "title": "Verify complete keyboard navigation through the import workflow",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "User is on the Reference Data Management page",
+        "A valid Annex III import file is available on the local system",
+        "No mouse is connected or mouse usage is disabled for testing"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Use Tab key to navigate to the 'Import Annex III Data' button",
+          "expectedResult": "Focus indicator is clearly visible on the 'Import Annex III Data' button with a distinct outline or highlight"
+        },
+        {
+          "step": 2,
+          "action": "Press Enter or Space to activate the button",
+          "expectedResult": "Import dialog opens and focus moves to the first interactive element within the dialog"
+        },
+        {
+          "step": 3,
+          "action": "Use Tab to navigate to the file upload control and press Enter/Space to open file browser",
+          "expectedResult": "System file browser opens allowing file selection via keyboard"
+        },
+        {
+          "step": 4,
+          "action": "Select a file using keyboard navigation in the file browser and confirm",
+          "expectedResult": "File is selected and focus returns to the import dialog with file name displayed"
+        },
+        {
+          "step": 5,
+          "action": "Tab to the 'Start Import' button and press Enter",
+          "expectedResult": "Import process begins, progress is announced to assistive technology"
+        },
+        {
+          "step": 6,
+          "action": "After import completes, verify focus management",
+          "expectedResult": "Focus moves to the import results summary, allowing keyboard navigation through success/error details"
+        },
+        {
+          "step": 7,
+          "action": "Press Escape to close the import dialog (if modal)",
+          "expectedResult": "Dialog closes and focus returns to the 'Import Annex III Data' button or the triggering element"
+        }
+      ],
+      "postconditions": [
+        "Entire import workflow is completable using only keyboard",
+        "Focus is never trapped in any element",
+        "All interactive elements are reachable via Tab/Shift+Tab",
+        "Focus order follows logical reading order"
+      ]
+    },
+    {
+      "id": "TC-ACCE-002",
+      "title": "Verify screen reader announces import status and error messages",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "Screen reader is active (NVDA, JAWS, or VoiceOver)",
+        "User is on the Import page",
+        "Both a valid and an invalid import file are available"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Navigate to the 'Import Annex III Data' button with screen reader active",
+          "expectedResult": "Screen reader announces: 'Import Annex III Data, button' (or equivalent accessible name)"
+        },
+        {
+          "step": 2,
+          "action": "Activate the button and listen for dialog announcement",
+          "expectedResult": "Screen reader announces the dialog title (e.g., 'Import Annex III Data dialog') and the dialog role"
+        },
+        {
+          "step": 3,
+          "action": "Upload a valid file and start import",
+          "expectedResult": "Screen reader announces progress updates (e.g., 'Import in progress') via aria-live region"
+        },
+        {
+          "step": 4,
+          "action": "Wait for successful import completion",
+          "expectedResult": "Screen reader announces success message (e.g., '5 records imported successfully, 0 errors') via aria-live region or focus change"
+        },
+        {
+          "step": 5,
+          "action": "Upload an invalid file and start import",
+          "expectedResult": "Screen reader announces error details (e.g., '3 records rejected. Error: Row 1 - CAS number is required') clearly and completely"
+        },
+        {
+          "step": 6,
+          "action": "Navigate through the error list using arrow keys or Tab",
+          "expectedResult": "Each error item is announced with row number, field name, and error description"
+        }
+      ],
+      "postconditions": [
+        "All status changes are announced to screen reader users",
+        "Error messages are fully accessible and descriptive",
+        "No information is conveyed only through visual means",
+        "ARIA live regions are properly implemented for dynamic content"
+      ]
+    },
+    {
+      "id": "TC-ACCE-003",
+      "title": "Verify sufficient color contrast for import status indicators and error messages",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "Import has been completed with mixed results (some successes, some errors)",
+        "Color contrast analyzer tool is available (e.g., axe DevTools, Colour Contrast Analyser)"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Inspect the success message text color against its background",
+          "expectedResult": "Contrast ratio meets WCAG 2.1 AA standard: at least 4.5:1 for normal text, 3:1 for large text"
+        },
+        {
+          "step": 2,
+          "action": "Inspect the error message text color against its background",
+          "expectedResult": "Contrast ratio meets WCAG 2.1 AA standard: at least 4.5:1 for normal text"
+        },
+        {
+          "step": 3,
+          "action": "Verify that success/error status is not conveyed by color alone",
+          "expectedResult": "Status indicators include text labels, icons with alt text, or other non-color indicators (e.g., 'Success: ✓' or 'Error: ✗' with text)"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the progress indicator contrast",
+          "expectedResult": "Progress bar or spinner has sufficient contrast against background (at least 3:1 for graphical elements)"
+        },
+        {
+          "step": 5,
+          "action": "Check the file upload area border/outline contrast",
+          "expectedResult": "Upload area boundaries are clearly visible with at least 3:1 contrast ratio against adjacent colors"
+        }
+      ],
+      "postconditions": [
+        "All text meets WCAG 2.1 AA contrast requirements",
+        "No information is conveyed solely through color",
+        "Users with color vision deficiencies can distinguish all status states"
+      ]
+    },
+    {
+      "id": "TC-ACCE-004",
+      "title": "Verify import page is usable at 200% browser zoom",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "User is on the Import page",
+        "Browser zoom is set to 100% initially"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Increase browser zoom to 200% using Ctrl+'+' (or Cmd+'+' on Mac)",
+          "expectedResult": "Page reflows to accommodate the zoom level without horizontal scrolling"
+        },
+        {
+          "step": 2,
+          "action": "Verify the 'Import Annex III Data' button is visible and clickable",
+          "expectedResult": "Button is fully visible, not cut off, and clickable at 200% zoom"
+        },
+        {
+          "step": 3,
+          "action": "Open the import dialog and verify all form elements are visible",
+          "expectedResult": "File upload area, buttons, and labels are all visible without horizontal scrolling; text does not overlap"
+        },
+        {
+          "step": 4,
+          "action": "Perform a file import at 200% zoom",
+          "expectedResult": "Import workflow functions correctly; success/error messages are fully visible and readable"
+        },
+        {
+          "step": 5,
+          "action": "Review error details at 200% zoom",
+          "expectedResult": "Error messages, row numbers, and field names are all readable without text being cut off or overlapping"
+        }
+      ],
+      "postconditions": [
+        "All functionality is accessible at 200% zoom",
+        "No content is lost or hidden due to zoom",
+        "No horizontal scrollbar appears for text content",
+        "Touch targets remain adequately sized"
+      ]
+    },
+    {
+      "id": "TC-ACCE-005",
+      "title": "Verify ARIA roles and labels on import dialog and form elements",
+      "category": "Accessibility",
+      "priority": "Medium",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "Browser developer tools or accessibility inspector is available",
+        "User is on the Import page"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Open the import dialog and inspect its ARIA attributes using developer tools",
+          "expectedResult": "Dialog has role='dialog', aria-modal='true', and aria-labelledby pointing to the dialog title"
+        },
+        {
+          "step": 2,
+          "action": "Inspect the file upload input element",
+          "expectedResult": "File input has an associated label (via 'for' attribute or aria-label) that clearly describes its purpose (e.g., 'Select Annex III import file')"
+        },
+        {
+          "step": 3,
+          "action": "Inspect the 'Start Import' button",
+          "expectedResult": "Button has accessible name via text content or aria-label, and appropriate role='button'"
+        },
+        {
+          "step": 4,
+          "action": "Inspect the progress indicator during import",
+          "expectedResult": "Progress element has role='progressbar' (if determinate) or role='status' with aria-live='polite', and aria-valuemin/aria-valuemax/aria-valuenow if applicable"
+        },
+        {
+          "step": 5,
+          "action": "Inspect the error results area after a failed import",
+          "expectedResult": "Error area has role='alert' or aria-live='assertive' for immediate announcement, and error list uses proper list semantics (role='list' with role='listitem')"
+        },
+        {
+          "step": 6,
+          "action": "Verify all form controls have programmatically associated labels",
+          "expectedResult": "No form controls exist without associated labels; all pass automated accessibility checks"
+        }
+      ],
+      "postconditions": [
+        "All ARIA roles are correctly implemented per WAI-ARIA specification",
+        "All interactive elements have accessible names",
+        "Dynamic content updates use appropriate ARIA live regions",
+        "Dialog follows ARIA dialog pattern correctly"
+      ]
+    },
+    {
+      "id": "TC-ACCE-006",
+      "title": "Verify focus management when import dialog opens and closes",
+      "category": "Accessibility",
+      "priority": "High",
+      "preconditions": [
+        "User is logged in as a Regulatory Data Administrator",
+        "User is on the Reference Data Management page",
+        "Focus is currently on the 'Import Annex III Data' button"
+      ],
+      "steps": [
+        {
+          "step": 1,
+          "action": "Press Enter to open the import dialog",
+          "expectedResult": "Focus moves into the dialog to the first focusable element (e.g., file upload input or close button)"
+        },
+        {
+          "step": 2,
+          "action": "Press Tab repeatedly to cycle through all focusable elements in the dialog",
+          "expectedResult": "Focus is trapped within the dialog - it does not move to elements behind the dialog"
+        },
+        {
+          "step": 3,
+          "action": "Press Shift+Tab from the first focusable element in the dialog",
+          "expectedResult": "Focus wraps to the last focusable element in the dialog (focus trap is maintained)"
+        },
+        {
+          "step": 4,
+          "action": "Press Escape to close the dialog",
+          "expectedResult": "Dialog closes and focus returns to the 'Import Annex III Data' button that triggered the dialog"
+        },
+        {
+          "step": 5,
+          "action": "Re-open the dialog, complete an import, and close via a 'Close' or 'Done' button",
+          "expectedResult": "Focus returns to a logical location on the page (the triggering button or the results area)"
+        }
+      ],
+      "postconditions": [
+        "Focus is properly managed throughout the dialog lifecycle",
+        "No focus traps exist outside of intentional modal behavior",
+        "Focus returns to a logical element when dialog closes",
+        "Background content is inert while dialog is open"
+      ]
+    }
+  ],
+  "performance": [],
+  "security": [],
+  "usability": [],
+  "reliability": [],
+  "selectedTypes": {
+    "functional": true,
+    "edgeCases": true,
+    "negative": true,
+    "accessibility": true,
+    "performance": false,
+    "security": false,
+    "usability": false,
+    "reliability": false
+  },
+  "userStoryObject": {
+    "id": "ado-113402",
+    "title": "As Regulatory Data Administrator, I want to import EU Cosmetics Regulation Annex III restricted substance entries so that the screening engine has current reference data",
+    "description": "Enable import of Annex III restricted substance list entries including substance identity, CAS number, maximum concentration, product type restrictions, and other conditions of use into the system reference database.\n\nPersona: Regulatory Data Administrator\n\nAcceptance Criteria:\n\n- System accepts structured import of Annex III entries with substance name, CAS number, EC number, and restriction conditions\n- Import validates mandatory fields and rejects incomplete records with error details\n- Successfully imported entries are available for screening immediately\n",
+    "acceptanceCriteria": "",
+    "adoWorkItemId": "113402",
+    "externalId": "AWSPROJ250-1520",
+    "state": "New",
+    "assignedTo": "devxnous2k25@gmail.com",
+    "createdDate": "2026-05-25T11:48:15.979Z",
+    "priority": "medium",
+    "storyPoints": null,
+    "tags": "",
+    "epicId": null,
+    "featureId": null,
+    "source": "jira",
+    "adoUrl": "https://devxnous.atlassian.net//browse/AWSPROJ250-1520"
+  }
+}
