@@ -1,23 +1,27 @@
-# project060526
+# Hilti_ProjTest
 
 > Auto-generated project context for AI-assisted development.
-> Last updated: 2026-05-19
+> Last updated: 2026-05-13
 
 **Organization:** https://devxnous.atlassian.net/
 
 ## Development Methodology
 
-This project follows **Spec-Driven Development (SDD)** with **Test-Driven Development (TDD)**.
+This project follows **Spec-Driven Development (SDD)**.
 
 Every feature has:
 - `specs.md` — Full technical specification
 - `requirements.md` — Acceptance criteria checklist
-- `tdd-tests.md` — Test specifications (Red → Green → Refactor)
 - `prompt.md` — Ready-to-use implementation prompt
 
-## Features (1)
+## Features (6)
 
-- **As Account Manager, I want to perform authentication retry after failed login to achieve access recovery without losing context** (5 user stories)
+- **As a user, I want to use Customer Profile Creation and Lifecycle Initiation so that I can benefit from its core functionality** (1 user stories)
+- **As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance** (0 user stories)
+- **As Dealership Receptionist, I want to perform customer name capture with validation to achieve accurate identity recording for the customer profile** (0 user stories)
+- **As Laundry Attendant, I want to perform laundry request pickup and processing to achieve timely fulfillment of guest requests** (5 user stories)
+- **As a user, I want to configure Contact Information Management and Verification settings so that I can customize it to my needs** (1 user stories)
+- **As a user, I want Contact Information Management and Verification to handle errors gracefully so that I can recover from issues easily** (1 user stories)
 
 ## Getting Started
 
@@ -41,7 +45,6 @@ specs/
   <feature-slug>/
     specs.md             ← Technical specification
     requirements.md      ← Acceptance criteria
-    tdd-tests.md         ← TDD test specifications
     prompt.md            ← Implementation prompt
 ```
 
