@@ -26,26 +26,18 @@ allowed-tools: Read, Grep, Glob, Edit, Write, Bash
    - Open `specs/<slug>/requirements.md`
    - This is the acceptance criteria — every item must be satisfied
 
-4. Read the TDD test specifications:
-   - Open `specs/<slug>/tdd-tests.md`
-   - For each acceptance criterion, follow the Red-Green-Refactor cycle:
-     a. **Red:** Write a failing test that maps to the criterion
-     b. **Green:** Write the minimum production code to make the test pass
-     c. **Refactor:** Clean up while keeping all tests green
-   - Do not proceed to the next criterion until the current one is fully green
 
-5. Create an implementation plan:
+4. Create an implementation plan:
    - Break the work into concrete steps based on the requirements
    - Identify files to create or modify
    - Identify dependencies between requirements
    - Present the plan to the user for approval
 
-6. Implement one requirement at a time:
+5. Implement one requirement at a time:
    - Follow the spec exactly — do not add features not described
    - After each requirement, verify it against requirements.md
-   - Ensure all TDD tests pass before moving to the next requirement
 
-7. After all requirements are complete:
+6. After all requirements are complete:
    - Review the full requirements.md checklist
    - Verify all user scenarios from specs.md work correctly
    - Update features.json status to "done"
@@ -55,5 +47,4 @@ allowed-tools: Read, Grep, Glob, Edit, Write, Bash
 - **Do not deviate from the specification.** If the spec is wrong, update it first.
 - **One requirement at a time.** Complete and validate before moving on.
 - **Requirements are the source of truth** for what "done" means.
-- **Follow TDD strictly.** No production code before a failing test exists.
 - **No gold-plating.** Do not add features beyond what the spec describes.
