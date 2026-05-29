@@ -1,51 +1,146 @@
 {
   "version": "1.0",
-  "generatedAt": "2026-05-19T10:59:42.967Z",
-  "enableTdd": true,
-  "totalFeatures": 1,
+  "generatedAt": "2026-05-13T09:34:36.722Z",
+  "enableTdd": false,
+  "totalFeatures": 6,
   "features": [
     {
-      "id": 78201,
-      "title": "As Account Manager, I want to perform authentication retry after failed login to achieve access recovery without losing context",
-      "slug": "as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context",
+      "id": 63144,
+      "title": "As a user, I want to use Customer Profile Creation and Lifecycle Initiation so that I can benefit from its core functionality",
+      "slug": "as-a-user-i-want-to-use-customer-profile-creation-and-lifecycle-initiation-so-that-i-can-benefit-from-its-core-functionality",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-a-user-i-want-to-use-customer-profile-creation-and-lifecycle-initiation-so-that-i-can-benefit-from-its-core-functionality/specs.md",
+        "requirements": "specs/as-a-user-i-want-to-use-customer-profile-creation-and-lifecycle-initiation-so-that-i-can-benefit-from-its-core-functionality/requirements.md",
+        "prompt": "specs/as-a-user-i-want-to-use-customer-profile-creation-and-lifecycle-initiation-so-that-i-can-benefit-from-its-core-functionality/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 63144,
+          "title": "As a user, I want to use Customer Profile Creation and Lifecycle Initiation so that I can benefit from its core functionality",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 63120,
+      "title": "As Dealership Receptionist, I want to perform government-issued ID capture and validation to achieve verified customer identity for regulatory compliance",
+      "slug": "as-dealership-receptionist-i-want-to-perform-government-issued-id-capture-and-validation-to-achieve-verified-customer-identity-for-regulatory-compliance",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-dealership-receptionist-i-want-to-perform-government-issued-id-capture-and-validation-to-achieve-verified-customer-identity-for-regulatory-compliance/specs.md",
+        "requirements": "specs/as-dealership-receptionist-i-want-to-perform-government-issued-id-capture-and-validation-to-achieve-verified-customer-identity-for-regulatory-compliance/requirements.md",
+        "prompt": "specs/as-dealership-receptionist-i-want-to-perform-government-issued-id-capture-and-validation-to-achieve-verified-customer-identity-for-regulatory-compliance/prompt.md"
+      },
+      "userStories": []
+    },
+    {
+      "id": 63108,
+      "title": "As Dealership Receptionist, I want to perform customer name capture with validation to achieve accurate identity recording for the customer profile",
+      "slug": "as-dealership-receptionist-i-want-to-perform-customer-name-capture-with-validation-to-achieve-accurate-identity-recording-for-the-customer-profile",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 0,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-dealership-receptionist-i-want-to-perform-customer-name-capture-with-validation-to-achieve-accurate-identity-recording-for-the-customer-profile/specs.md",
+        "requirements": "specs/as-dealership-receptionist-i-want-to-perform-customer-name-capture-with-validation-to-achieve-accurate-identity-recording-for-the-customer-profile/requirements.md",
+        "prompt": "specs/as-dealership-receptionist-i-want-to-perform-customer-name-capture-with-validation-to-achieve-accurate-identity-recording-for-the-customer-profile/prompt.md"
+      },
+      "userStories": []
+    },
+    {
+      "id": 75525,
+      "title": "As Laundry Attendant, I want to perform laundry request pickup and processing to achieve timely fulfillment of guest requests",
+      "slug": "as-laundry-attendant-i-want-to-perform-laundry-request-pickup-and-processing-to-achieve-timely-fulfillment-of-guest-requests",
       "state": "planned",
       "status": "not-started",
       "storyCount": 5,
       "totalStoryPoints": 0,
       "files": {
-        "specs": "specs/as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context/specs.md",
-        "requirements": "specs/as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context/requirements.md",
-        "tddTests": "specs/as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context/tdd-tests.md",
-        "prompt": "specs/as-account-manager-i-want-to-perform-authentication-retry-after-failed-login-to-achieve-access-recovery-without-losing-context/prompt.md"
+        "specs": "specs/as-laundry-attendant-i-want-to-perform-laundry-request-pickup-and-processing-to-achieve-timely-fulfillment-of-guest-requests/specs.md",
+        "requirements": "specs/as-laundry-attendant-i-want-to-perform-laundry-request-pickup-and-processing-to-achieve-timely-fulfillment-of-guest-requests/requirements.md",
+        "prompt": "specs/as-laundry-attendant-i-want-to-perform-laundry-request-pickup-and-processing-to-achieve-timely-fulfillment-of-guest-requests/prompt.md"
       },
       "userStories": [
         {
-          "id": 78206,
+          "id": 75530,
           "title": "Document API and user guide",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 78205,
+          "id": 75529,
           "title": "Write unit and integration tests",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 78204,
+          "id": 75528,
           "title": "Develop UI components and integration",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 78203,
+          "id": 75527,
           "title": "Implement API endpoint and business logic",
           "state": "New",
           "storyPoints": null
         },
         {
-          "id": 78202,
+          "id": 75526,
           "title": "Define requirements and acceptance criteria",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 63132,
+      "title": "As a user, I want to configure Contact Information Management and Verification settings so that I can customize it to my needs",
+      "slug": "as-a-user-i-want-to-configure-contact-information-management-and-verification-settings-so-that-i-can-customize-it-to-my-needs",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-a-user-i-want-to-configure-contact-information-management-and-verification-settings-so-that-i-can-customize-it-to-my-needs/specs.md",
+        "requirements": "specs/as-a-user-i-want-to-configure-contact-information-management-and-verification-settings-so-that-i-can-customize-it-to-my-needs/requirements.md",
+        "prompt": "specs/as-a-user-i-want-to-configure-contact-information-management-and-verification-settings-so-that-i-can-customize-it-to-my-needs/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 63137,
+          "title": "Code review and documentation",
+          "state": "New",
+          "storyPoints": null
+        }
+      ]
+    },
+    {
+      "id": 63138,
+      "title": "As a user, I want Contact Information Management and Verification to handle errors gracefully so that I can recover from issues easily",
+      "slug": "as-a-user-i-want-contact-information-management-and-verification-to-handle-errors-gracefully-so-that-i-can-recover-from-issues-easily",
+      "state": "planned",
+      "status": "not-started",
+      "storyCount": 1,
+      "totalStoryPoints": 0,
+      "files": {
+        "specs": "specs/as-a-user-i-want-contact-information-management-and-verification-to-handle-errors-gracefully-so-that-i-can-recover-from-issues-easily/specs.md",
+        "requirements": "specs/as-a-user-i-want-contact-information-management-and-verification-to-handle-errors-gracefully-so-that-i-can-recover-from-issues-easily/requirements.md",
+        "prompt": "specs/as-a-user-i-want-contact-information-management-and-verification-to-handle-errors-gracefully-so-that-i-can-recover-from-issues-easily/prompt.md"
+      },
+      "userStories": [
+        {
+          "id": 63138,
+          "title": "As a user, I want Contact Information Management and Verification to handle errors gracefully so that I can recover from issues easily",
           "state": "New",
           "storyPoints": null
         }
